@@ -709,6 +709,7 @@ input, textarea { cursor: url("assets/cursors/text.svg") 14 14, text; }
   </aside>
 </div>
 
+<script src="sound.js"></script>
 <script>
 const stage = document.getElementById('stage');
 const morph = document.getElementById('morph');
@@ -797,6 +798,7 @@ document.getElementById('form').addEventListener('submit', async (e) => {
 
     /* accesso riuscito */
     submitted = true;
+    sndGo();
     const raw = nameInput.value.trim().split(/\s+/)[0];
     const pretty = raw.charAt(0).toUpperCase() + raw.slice(1);
     document.getElementById('successName').textContent = 'Benvenuto, ' + pretty + '!';
