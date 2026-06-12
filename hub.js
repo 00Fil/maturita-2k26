@@ -45,6 +45,7 @@ if (boot) {
     if (shown < 100) { requestAnimationFrame(frame); return; }
     boot.classList.add('done');
     document.body.classList.remove('booting');
+    sndStart();
     setTimeout(() => boot.remove(), 750);
   };
   requestAnimationFrame(frame);
@@ -378,6 +379,42 @@ function sndTick() {
     note(1975.53, t, 0.05, v * 0.03);
   } catch (e) {}
 }
+function sndClick() {
+  const v = volInput.value / 100;
+  if (!v) return;
+  try {
+    const t = audio().currentTime + 0.005;
+    note(1318.51, t, 0.045, v * 0.05);
+    note(2637.02, t, 0.03, v * 0.012);
+  } catch (e) {}
+}
+function sndStart() {
+  const v = volInput.value / 100;
+  if (!v) return;
+  try {
+    const a = audio();
+    if (a.state === 'suspended') {
+      const once = () => { document.removeEventListener('pointerdown', once); sndStart(); };
+      document.addEventListener('pointerdown', once);
+      return;
+    }
+    const t = a.currentTime + 0.02;
+    note(349.23, t, 0.7, v * 0.07);
+    note(440, t + 0.05, 0.65, v * 0.06);
+    note(523.25, t + 0.1, 0.6, v * 0.055);
+    note(698.46, t + 0.16, 0.55, v * 0.04);
+  } catch (e) {}
+}
+function sndExit() {
+  const v = volInput.value / 100;
+  if (!v) return;
+  try {
+    const t = audio().currentTime + 0.01;
+    note(523.25, t, 0.22, v * 0.09);
+    note(392, t + 0.09, 0.24, v * 0.07);
+    note(261.63, t + 0.18, 0.34, v * 0.06);
+  } catch (e) {}
+}
 
 const bpct = document.getElementById('bpct');
 if (navigator.getBattery) {
@@ -389,4 +426,19 @@ if (navigator.getBattery) {
   });
 } else {
   bpct.remove();
+}
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('button, a');
+  if (!el || el.closest('.lights') || el.classList.contains('exit')) return;
+  sndClick();
+}, true);
+
+const exitLink = document.querySelector('.mitem.exit');
+if (exitLink) {
+  exitLink.addEventListener('click', e => {
+    e.preventDefault();
+    sndExit();
+    setTimeout(() => { location.href = exitLink.href; }, 380);
+  });
 }
