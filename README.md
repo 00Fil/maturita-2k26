@@ -32,9 +32,13 @@ anche copiato in `C:\laragon\www\pcto` senza Docker.
 
 ## Modalità Demo (per la presentazione)
 
-In basso a destra c'è il tasto **Demo backend** (in alternativa apri il sito con `?demo=1`).
-Quando è attiva, ad ogni accesso compare un pannello "Dietro le quinte" che mostra
-in tempo reale i passaggi che l'app esegue davvero:
+La demo si attiva **solo** aprendo il sito con `?demo=1` nell'URL (nessun tasto visibile).
+Sotto il form compare un widget schematico **Browser → Server PHP → MySQL**, integrato
+nello stesso stile del login: mostra un passaggio alla volta ed evidenzia dove sta
+avvenendo, con un "pacchetto" animato che viaggia sulla freccia giusta (andata e
+ritorno client ↔ server ↔ database). Un controllerino (indietro · play/pausa · avanti ·
+puntini cliccabili) permette di fermare la sequenza per spiegare con calma ogni
+messaggio. I passaggi mostrati sono quelli reali:
 
 1. il browser invia la richiesta (`fetch POST → login.php`)
 2. il server riceve nome + codice (il codice viene mascherato)
@@ -50,8 +54,9 @@ Se la modalità demo è spenta, il backend non calcola né invia nessun passaggi
 
 ## Pagina "Dietro le quinte" (schema.php)
 
-Dopo il login si viene portati su `schema.php`, **protetta dalla sessione**:
-senza login si torna automaticamente a `index.php`. Due modalità:
+Pagina di ripasso, raggiungibile a mano su `/schema.php` dopo aver fatto il login
+(**protetta dalla sessione**: senza login si torna automaticamente a `index.php`).
+Due modalità:
 
 - **Esposizione** (default): solo gli 8 passaggi, senza spiegazioni in chiaro nel sorgente
 - **Studio** (`?spiegazioni=1`): ogni passaggio spiegato con le nozioni del corso

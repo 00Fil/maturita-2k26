@@ -126,7 +126,9 @@ body {
   position: relative;
   z-index: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   width: 100%;
   padding: 16px;
 }
@@ -375,83 +377,85 @@ form { display: flex; flex-direction: column; gap: 8px; }
 .morph.shake { animation: shake 0.45s var(--spring-soft); }
 
 /* ------------------------------------------------------------
-   DEMO MODE — visualizza i passaggi reali del backend
+   DEMO (?demo=1) — widget schematico integrato sotto il login
    ------------------------------------------------------------ */
-.demo-toggle {
-  position: fixed;
-  bottom: 18px;
-  right: 18px;
-  z-index: 5;
-  height: 44px;
-  padding: 0 18px;
-  display: flex; align-items: center; gap: 9px;
-  border: 1.1px solid var(--border);
-  border-radius: var(--r-full);
-  background: var(--container);
-  color: var(--placeholder);
-  font-family: inherit; font-size: 13px; font-weight: 700;
-  letter-spacing: -0.01em;
-  cursor: pointer;
-  transition: background .3s ease, color .3s ease, transform .4s var(--spring);
-}
-.demo-toggle:hover { background: var(--container-hover); color: var(--text); }
-.demo-toggle:active { transform: scale(.95); }
-.demo-toggle .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--placeholder);
-  transition: background .3s ease, box-shadow .3s ease;
-}
-body.demo .demo-toggle { color: var(--text); }
-body.demo .demo-toggle .dot { background: #22C55E; box-shadow: 0 0 10px rgba(34,197,94,.6); }
+body.demo { overflow-y: auto; }
 
-.demo-panel {
-  position: fixed;
-  top: 50%;
-  right: 18px;
-  transform: translateY(-50%) translateX(16px);
-  width: min(360px, calc(100vw - 36px));
-  max-height: min(78vh, 640px);
-  overflow-y: auto;
-  z-index: 4;
+.demo-widget {
+  display: none;
+  width: min(420px, calc(100vw - 32px));
   border-radius: var(--r);
   background: var(--container);
   border: 1.1px solid var(--border);
   box-shadow: var(--shadow-panel);
-  padding: 18px 16px 12px;
-  opacity: 0;
-  pointer-events: none;
-  filter: blur(4px);
-  transition: opacity .5s var(--spring-soft), transform var(--dur) var(--spring), filter .5s var(--spring-soft);
+  padding: 12px;
 }
-body.demo .demo-panel.on {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(-50%) translateX(0);
-  filter: blur(0);
+body.demo .demo-widget {
+  display: block;
+  animation: demoIn var(--dur) var(--spring) 0.25s both;
 }
-.demo-panel h2 {
-  font-size: 11px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .12em;
+@keyframes demoIn {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* schema: Browser → Server PHP → MySQL */
+.schema { display: flex; align-items: center; gap: 10px; padding: 8px 10px 14px; }
+.node {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
   color: var(--placeholder);
-  padding-left: 6px; margin-bottom: 10px;
+  transition: color 0.3s ease, transform 0.5s var(--spring);
 }
-.step {
+.node .nico {
+  width: 46px; height: 46px;
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  display: flex; align-items: center; justify-content: center;
+  transition: box-shadow 0.3s ease;
+}
+.node .nico svg { width: 20px; height: 20px; }
+.node .nlab { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+.node.on, .node.ko { color: var(--text); transform: translateY(-2px); }
+.node.on .nico { box-shadow: 0 0 0 1.5px rgba(34, 197, 94, 0.4), 0 0 18px rgba(34, 197, 94, 0.25); }
+.node.ko .nico { box-shadow: 0 0 0 1.5px rgba(220, 38, 38, 0.4), 0 0 18px rgba(220, 38, 38, 0.2); }
+
+.wire { position: relative; flex: 1; height: 2px; border-radius: 2px; background: var(--border); }
+.wire .pk {
+  position: absolute; top: 50%; left: 0;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #22C55E;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.7);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+.wire.ko .pk { background: var(--error); box-shadow: 0 0 10px rgba(220, 38, 38, 0.7); }
+.wire.fwd .pk { animation: pkFwd 1.2s ease-in-out infinite; }
+.wire.rev .pk { animation: pkRev 1.2s ease-in-out infinite; }
+@keyframes pkFwd { 0% { left: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+@keyframes pkRev { 0% { left: 100%; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: 0; opacity: 0; } }
+
+/* card del passaggio corrente */
+.dstep {
   background: var(--surface);
   border-radius: 18px;
   box-shadow: var(--shadow-sm);
-  padding: 10px 12px;
-  margin-bottom: 8px;
-  opacity: 0; transform: translateY(8px) scale(.97); filter: blur(4px);
-  transition: opacity .45s var(--spring-soft), transform .55s var(--spring), filter .45s var(--spring-soft);
+  padding: 11px 13px;
+  transition: opacity 0.3s var(--spring-soft), transform 0.45s var(--spring), filter 0.3s var(--spring-soft);
 }
-.step.in { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-.step .head { display: flex; align-items: center; gap: 8px; }
-.step .st-dot { width: 8px; height: 8px; border-radius: 50%; background: #22C55E; flex-shrink: 0; }
-.step.ko .st-dot { background: var(--error); }
-.step .t { font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em; flex: 1; }
-.step .ms { font-size: 11px; font-weight: 700; color: var(--placeholder); background: var(--container); border-radius: var(--r-full); padding: 2px 8px; white-space: nowrap; }
-.step .d { font-size: 12.5px; color: var(--placeholder); font-weight: 500; margin-top: 3px; padding-left: 16px; line-height: 1.45; }
-.step pre {
+.dstep.swap { opacity: 0; transform: translateY(6px) scale(0.98); filter: blur(4px); }
+.dhead { display: flex; align-items: center; gap: 8px; }
+.ddot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--placeholder); flex-shrink: 0;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+.ddot.ok { background: #22C55E; box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); }
+.ddot.ko { background: var(--error); box-shadow: 0 0 10px rgba(220, 38, 38, 0.5); }
+.dt { font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em; flex: 1; }
+.dms { font-size: 11px; font-weight: 700; color: var(--placeholder); background: var(--container); border-radius: var(--r-full); padding: 2px 8px; white-space: nowrap; }
+.dd { font-size: 12.5px; color: var(--placeholder); font-weight: 500; margin-top: 3px; padding-left: 16px; line-height: 1.45; }
+#dsql {
   margin: 7px 0 2px 16px;
   background: var(--container);
   border-radius: 12px;
@@ -464,18 +468,28 @@ body.demo .demo-panel.on {
   word-break: break-word;
 }
 
-@media (max-width: 920px) {
-  .demo-panel {
-    top: auto;
-    bottom: 76px;
-    right: 18px;
-    left: 18px;
-    width: auto;
-    max-height: 46vh;
-    transform: translateY(16px);
-  }
-  body.demo .demo-panel.on { transform: translateY(0); }
+/* controllerino: indietro · play/pausa · avanti · puntini */
+.ctrl { display: flex; align-items: center; gap: 6px; padding: 10px 4px 2px; }
+.cbtn {
+  width: 34px; height: 34px;
+  border: none; border-radius: var(--r-full);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--text);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: transform 0.4s var(--spring), background 0.3s ease, opacity 0.3s ease;
 }
+.cbtn:hover { background: var(--surface-hover); }
+.cbtn:active { transform: scale(0.88); }
+.cbtn:disabled { opacity: 0.35; cursor: default; }
+.cbtn svg { width: 13px; height: 13px; }
+.cbtn.main { width: 40px; height: 40px; }
+.cbtn.main svg { width: 15px; height: 15px; }
+.dots { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 5px; margin-left: auto; padding-right: 4px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background 0.3s ease, transform 0.4s var(--spring); }
+.dots i.done { background: var(--placeholder); }
+.dots i.on { background: #22C55E; transform: scale(1.35); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
@@ -541,7 +555,7 @@ body.demo .demo-panel.on {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
             </span>
             <strong id="successName">Benvenuto!</strong>
-            <p>Apertura della presentazione PCTO…</p>
+            <p>Accesso registrato nel database.</p>
           </div>
         </div>
 
@@ -549,18 +563,59 @@ body.demo .demo-panel.on {
     </div>
 
   </div>
+
+  <!-- DEMO (?demo=1) — widget schematico integrato sotto il login -->
+  <aside class="demo-widget" id="demoWidget" aria-live="polite">
+
+    <div class="schema">
+      <div class="node" id="nClient">
+        <span class="nico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </span>
+        <span class="nlab">Browser</span>
+      </div>
+      <div class="wire" id="wCS"><i class="pk"></i></div>
+      <div class="node" id="nServer">
+        <span class="nico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="2"/><rect x="3" y="14" width="18" height="7" rx="2"/><path d="M7 6.5h.01M7 17.5h.01"/></svg>
+        </span>
+        <span class="nlab">Server PHP</span>
+      </div>
+      <div class="wire" id="wSD"><i class="pk"></i></div>
+      <div class="node" id="nDb">
+        <span class="nico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
+        </span>
+        <span class="nlab">MySQL</span>
+      </div>
+    </div>
+
+    <div class="dstep" id="dstep">
+      <div class="dhead">
+        <span class="ddot" id="ddot"></span>
+        <span class="dt" id="dt">In attesa di un accesso…</span>
+        <span class="dms" id="dms" hidden></span>
+      </div>
+      <div class="dd" id="dd">Compila il form e premi Entra: i passaggi del backend compariranno qui, uno alla volta.</div>
+      <pre id="dsql" hidden></pre>
+    </div>
+
+    <div class="ctrl">
+      <button class="cbtn" id="cPrev" type="button" disabled aria-label="Passo precedente">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM9.5 12l8.5 6V6z"/></svg>
+      </button>
+      <button class="cbtn main" id="cPlay" type="button" aria-label="Riproduci o metti in pausa">
+        <svg id="icoPlay" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="icoPause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </button>
+      <button class="cbtn" id="cNext" type="button" disabled aria-label="Passo successivo">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM14.5 12L6 18V6z"/></svg>
+      </button>
+      <div class="dots" id="dots"></div>
+    </div>
+
+  </aside>
 </div>
-
-<!-- DEMO MODE: tasto + pannello "dietro le quinte" -->
-<button class="demo-toggle" id="demoToggle" type="button" aria-pressed="false">
-  <span class="dot"></span>
-  Demo backend
-</button>
-
-<aside class="demo-panel" id="demoPanel" aria-live="polite">
-  <h2>Dietro le quinte</h2>
-  <div id="demoSteps"></div>
-</aside>
 
 <script>
 const stage = document.getElementById('stage');
@@ -658,13 +713,10 @@ document.getElementById('form').addEventListener('submit', async (e) => {
     paneSuccess.classList.remove('is-hidden');
     requestAnimationFrame(setOpenHeight);
 
-    /* dopo 1.6s vai allo schema "dietro le quinte" */
-    setTimeout(() => {
-      window.location.href = 'schema.php';
-    }, 1600);
+    /* niente redirect: in demo si resta qui per spiegare i passaggi col controllerino */
 
   } catch (err) {
-    if (demoMode) renderDemo([
+    if (demoMode) avviaDemo([
       { titolo: 'Il browser invia la richiesta', dettaglio: 'fetch POST → login.php (nome + codice)' },
       { titolo: 'Nessuna risposta dal server', dettaglio: String(err), stato: 'errore' }
     ]);
@@ -678,56 +730,139 @@ window.addEventListener('resize', () => {
 });
 
 /* ============================================================
-   DEMO MODE — mostra graficamente i passaggi reali del backend
-   Attivazione: tasto in basso a destra oppure ?demo=1 nell'URL
+   DEMO — visualizzazione schematica dei passaggi del backend
+   Attivazione SOLO con ?demo=1 nell'URL (nessun tasto visibile)
    ============================================================ */
-const demoToggle = document.getElementById('demoToggle');
-const demoPanel = document.getElementById('demoPanel');
-const demoSteps = document.getElementById('demoSteps');
-let demoMode = new URLSearchParams(location.search).get('demo') === '1'
-            || sessionStorage.getItem('demo') === '1';
+const demoMode = new URLSearchParams(location.search).get('demo') === '1';
 if (demoMode) document.body.classList.add('demo');
-demoToggle.setAttribute('aria-pressed', demoMode ? 'true' : 'false');
 
-demoToggle.addEventListener('click', (e) => {
-  e.stopPropagation();
-  demoMode = !demoMode;
-  sessionStorage.setItem('demo', demoMode ? '1' : '0');
-  document.body.classList.toggle('demo', demoMode);
-  demoToggle.setAttribute('aria-pressed', demoMode ? 'true' : 'false');
-  if (!demoMode) demoPanel.classList.remove('on');
-});
+const nClient = document.getElementById('nClient');
+const nServer = document.getElementById('nServer');
+const nDb     = document.getElementById('nDb');
+const wCS     = document.getElementById('wCS');
+const wSD     = document.getElementById('wSD');
+const dstepEl = document.getElementById('dstep');
+const ddot    = document.getElementById('ddot');
+const dtEl    = document.getElementById('dt');
+const dmsEl   = document.getElementById('dms');
+const ddEl    = document.getElementById('dd');
+const dsqlEl  = document.getElementById('dsql');
+const dotsEl  = document.getElementById('dots');
+const cPrev   = document.getElementById('cPrev');
+const cPlay   = document.getElementById('cPlay');
+const cNext   = document.getElementById('cNext');
+const icoPlay  = document.getElementById('icoPlay');
+const icoPause = document.getElementById('icoPause');
 
-function aggiungiPasso(p, i) {
-  const el = document.createElement('div');
-  el.className = 'step' + (p.stato === 'errore' ? ' ko' : '');
-  el.innerHTML = '<div class="head"><span class="st-dot"></span><span class="t"></span>' +
-                 (p.ms != null ? '<span class="ms">' + p.ms + ' ms</span>' : '') + '</div>';
-  el.querySelector('.t').textContent = p.titolo;
-  if (p.dettaglio) {
-    const d = document.createElement('div');
-    d.className = 'd';
-    d.textContent = p.dettaglio;
-    el.appendChild(d);
-  }
-  if (p.sql) {
-    const pre = document.createElement('pre');
-    pre.textContent = p.sql;
-    el.appendChild(pre);
-  }
-  demoSteps.appendChild(el);
-  setTimeout(() => el.classList.add('in'), 80 + i * 260);
+let passi = [];   /* i passaggi dell'ultimo accesso */
+let idx = -1;     /* passaggio attualmente mostrato */
+let timer = null; /* autoplay attivo (null = in pausa) */
+
+/* A quale parte dello schema appartiene un passaggio?
+   cs = browser → server · sc = server → browser
+   sd = server → MySQL   · db = dentro MySQL · server = dentro PHP */
+function zonaDi(p) {
+  const t = (p.titolo || '').toLowerCase();
+  if (t.includes('browser invia')) return 'cs';
+  if (t.includes('risposta'))      return 'sc';
+  if (t.includes('mysql') || t.includes('connessione')) return 'sd';
+  if (t.includes('query') || t.includes('lettura'))     return 'db';
+  return 'server';
 }
 
-function renderDemo(passi) {
-  demoSteps.innerHTML = '';
-  demoPanel.classList.add('on');
-  passi.forEach(aggiungiPasso);
+/* Accende nodi e fili dello schema in base al passaggio corrente */
+function evidenzia(p) {
+  [nClient, nServer, nDb].forEach(n => n.classList.remove('on', 'ko'));
+  [wCS, wSD].forEach(w => w.classList.remove('fwd', 'rev', 'ko'));
+  const ko = p.stato === 'errore';
+  const cls = ko ? 'ko' : 'on';
+  const zona = zonaDi(p);
+  let wire = null, verso = null;
+  if (zona === 'cs')      { nClient.classList.add(cls); nServer.classList.add(cls); wire = wCS; verso = 'fwd'; }
+  else if (zona === 'sc') { nServer.classList.add(cls); nClient.classList.add(cls); wire = wCS; verso = 'rev'; }
+  else if (zona === 'sd') { nServer.classList.add(cls); nDb.classList.add(cls);     wire = wSD; verso = 'fwd'; }
+  else if (zona === 'db') { nDb.classList.add(cls); }
+  else                    { nServer.classList.add(cls); }
+  if (wire) {
+    wire.classList.add(verso);
+    if (ko) wire.classList.add('ko');
+  }
+}
+
+/* Aggiorna la card con titolo, dettaglio, SQL e tempo */
+function aggiornaCard(p) {
+  ddot.className = 'ddot ' + (p.stato === 'errore' ? 'ko' : 'ok');
+  dtEl.textContent = p.titolo;
+  dmsEl.hidden = p.ms == null;
+  dmsEl.textContent = p.ms != null ? p.ms + ' ms' : '';
+  ddEl.hidden = !p.dettaglio;
+  ddEl.textContent = p.dettaglio || '';
+  dsqlEl.hidden = !p.sql;
+  dsqlEl.textContent = p.sql || '';
+}
+
+/* Mostra il passaggio i (con una piccola transizione della card) */
+function mostra(i) {
+  if (i < 0 || i >= passi.length) return;
+  idx = i;
+  const p = passi[i];
+  dstepEl.classList.add('swap');
+  setTimeout(() => {
+    aggiornaCard(p);
+    evidenzia(p);
+    dstepEl.classList.remove('swap');
+  }, 170);
+  [...dotsEl.children].forEach((d, j) => {
+    d.classList.toggle('on', j === i);
+    d.classList.toggle('done', j < i);
+  });
+  cPrev.disabled = i === 0;
+  cNext.disabled = i === passi.length - 1;
+}
+
+/* Controllerino: pausa per fermarsi a spiegare, poi riprendi */
+function riproduci() {
+  if (timer || passi.length === 0) return;
+  timer = setInterval(() => {
+    if (idx < passi.length - 1) mostra(idx + 1);
+    else pausa();
+  }, 2400);
+  icoPlay.style.display = 'none';
+  icoPause.style.display = 'block';
+}
+
+function pausa() {
+  clearInterval(timer);
+  timer = null;
+  icoPlay.style.display = 'block';
+  icoPause.style.display = 'none';
+}
+
+cPlay.addEventListener('click', () => {
+  if (timer) { pausa(); return; }
+  if (idx === passi.length - 1) mostra(0); /* replay dall'inizio */
+  riproduci();
+});
+cPrev.addEventListener('click', () => { pausa(); mostra(idx - 1); });
+cNext.addEventListener('click', () => { pausa(); mostra(idx + 1); });
+
+/* Avvia la sequenza con i passaggi appena ricevuti dal backend */
+function avviaDemo(nuoviPassi) {
+  pausa();
+  passi = nuoviPassi;
+  dotsEl.innerHTML = '';
+  passi.forEach((p, i) => {
+    const d = document.createElement('i');
+    d.addEventListener('click', () => { pausa(); mostra(i); });
+    dotsEl.appendChild(d);
+  });
+  mostra(0);
+  if (passi.length > 1) riproduci();
 }
 
 function mostraDemo(json, msTotali, statoHttp) {
   if (!demoMode || !json.passi) return;
-  const passi = [
+  avviaDemo([
     { titolo: 'Il browser invia la richiesta', dettaglio: 'fetch POST → login.php (nome + codice)' },
     ...json.passi,
     {
@@ -736,8 +871,7 @@ function mostraDemo(json, msTotali, statoHttp) {
       stato: json.ok ? 'ok' : 'errore',
       sql: JSON.stringify({ ok: json.ok, messaggio: json.messaggio || undefined })
     }
-  ];
-  renderDemo(passi);
+  ]);
 }
 
 /* Eye toggle */
