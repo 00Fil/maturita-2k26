@@ -1,7 +1,7 @@
 # PCTO · Maturità 2026
 
 Sito di presentazione del percorso PCTO per l'esame di Maturità.
-Login animato (morph button) → backend PHP minimale → MySQL.
+Login animato (morph button) → backend PHP minimale → MySQL → desktop in stile macOS con la presentazione.
 
 ## Struttura
 
@@ -9,7 +9,8 @@ Login animato (morph button) → backend PHP minimale → MySQL.
 |---|---|
 | `index.php` | La pagina con il tasto morph e il form di accesso |
 | `login.php` | Backend: verifica il codice e registra l'accesso su MySQL |
-| `schema.php` | "Dietro le quinte": il flusso del backend, protetta dalla sessione |
+| `hub.php` | Il desktop in stile macOS: la presentazione in 6 capitoli, protetta dalla sessione |
+| `hub.css` / `hub.js` | Stile e interazioni del desktop (finestre, dock, menu bar) |
 | `logout.php` | Chiude la sessione e torna al login |
 | `setup.sql` | Crea il database `pcto` e la tabella `accessi` |
 | `Dockerfile` | Immagine PHP 8.3 + Apache con `pdo_mysql` |
@@ -52,17 +53,22 @@ messaggio. I passaggi mostrati sono quelli reali:
 
 Se la modalità demo è spenta, il backend non calcola né invia nessun passaggio.
 
-## Pagina "Dietro le quinte" (schema.php)
+## Il desktop (hub.php)
 
-Pagina di ripasso, raggiungibile a mano su `/schema.php` dopo aver fatto il login
-(**protetta dalla sessione**: senza login si torna automaticamente a `index.php`).
-Due modalità:
+Dopo il login si arriva su un desktop in stile macOS — stessa estetica della pagina di
+accesso (superfici neutre, bordi hairline) con un colore accento per ogni app.
+La finestra "Scaletta" si apre da sola e guida i 10 minuti di esposizione in 6 capitoli:
 
-- **Esposizione** (default): solo gli 8 passaggi, senza spiegazioni in chiaro nel sorgente
-- **Studio** (`?spiegazioni=1`): ogni passaggio spiegato con le nozioni del corso
+1. **Da dove parto** — il filo conduttore personale (1')
+2. **Il percorso in azienda** — due anni in CS Metal Europe, 240 ore (3')
+3. **Cosa ho imparato** — tre lezioni oltre gli strumenti (2')
+4. **Il progetto** — questo sito, dal login al desktop (2')
+5. **I collegamenti** — le materie dentro l'esperienza (1')
+6. **Cosa porto via** — bilancio e direzione (1')
 
-Il contatore degli accessi in fondo è letto in tempo reale da MySQL.
-Il tasto **Esci** chiama `logout.php` (`session_unset` + `session_destroy` + nuovo ID di sessione).
+Ogni capitolo è un'app nel dock (ingrandimento al passaggio, rimbalzo all'apertura);
+le finestre si trascinano, si chiudono e si massimizzano con i semafori.
+La pagina è **protetta dalla sessione**: senza login si torna a `index.php`.
 
 ## Nozioni applicate nel backend
 
