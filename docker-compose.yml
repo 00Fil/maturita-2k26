@@ -15,6 +15,8 @@ services:
       DB_USER: pcto
       DB_PASS: ${DB_PASS:-pcto_password}
       CODICE_ACCESSO: ${CODICE_ACCESSO:-maturita2026}
+      # Consigliato in produzione: l'hash bcrypt del codice (password_hash)
+      CODICE_ACCESSO_HASH: ${CODICE_ACCESSO_HASH:-}
     depends_on:
       db:
         condition: service_healthy

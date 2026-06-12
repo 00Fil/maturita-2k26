@@ -640,7 +640,7 @@ document.getElementById('form').addEventListener('submit', async (e) => {
     const t0 = performance.now();
     const risposta = await fetch('login.php', { method: 'POST', body: dati });
     const json = await risposta.json();
-    mostraDemo(json, performance.now() - t0);
+    mostraDemo(json, performance.now() - t0, risposta.status);
 
     if (!json.ok) {
       shakeError(json.messaggio || 'Qualcosa è andato storto.');
@@ -725,14 +725,14 @@ function renderDemo(passi) {
   passi.forEach(aggiungiPasso);
 }
 
-function mostraDemo(json, msTotali) {
+function mostraDemo(json, msTotali, statoHttp) {
   if (!demoMode || !json.passi) return;
   const passi = [
     { titolo: 'Il browser invia la richiesta', dettaglio: 'fetch POST → login.php (nome + codice)' },
     ...json.passi,
     {
       titolo: 'Risposta JSON al browser',
-      dettaglio: 'Tempo totale (andata e ritorno): ' + Math.round(msTotali) + ' ms',
+      dettaglio: 'HTTP ' + statoHttp + ' · Tempo totale (andata e ritorno): ' + Math.round(msTotali) + ' ms',
       stato: json.ok ? 'ok' : 'errore',
       sql: JSON.stringify({ ok: json.ok, messaggio: json.messaggio || undefined })
     }

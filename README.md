@@ -17,7 +17,8 @@ Login animato (morph button) → backend PHP minimale → MySQL.
 
 | Variabile | Default | Descrizione |
 |---|---|---|
-| `CODICE_ACCESSO` | `maturita2026` | Codice richiesto per entrare |
+| `CODICE_ACCESSO` | `maturita2026` | Codice richiesto per entrare (in chiaro, solo per sviluppo) |
+| `CODICE_ACCESSO_HASH` | — | Hash bcrypt del codice (consigliato in produzione). Generalo con: `php -r "echo password_hash('iltuocodice', PASSWORD_DEFAULT);"` |
 | `DB_HOST` | `127.0.0.1` | Host MySQL (`db` in Docker) |
 | `DB_NAME` | `pcto` | Nome database |
 | `DB_USER` | `root` | Utente MySQL |
@@ -36,13 +37,26 @@ in tempo reale i passaggi che l'app esegue davvero:
 1. il browser invia la richiesta (`fetch POST → login.php`)
 2. il server riceve nome + codice (il codice viene mascherato)
 3. validazione dei campi
-4. verifica del codice con `hash_equals` (confronto a tempo costante)
-5. connessione PDO a MySQL
-6. la **query SQL eseguita** (`INSERT INTO accessi …` come prepared statement)
-7. lettura di controllo (`SELECT COUNT(*) FROM accessi`)
-8. risposta JSON al browser, con i tempi in millisecondi
+4. verifica del codice con `password_verify()` (hash bcrypt, mai confronti in chiaro)
+5. avvio della sessione (`$_SESSION` + `session_regenerate_id()`)
+6. connessione PDO a MySQL
+7. la **query SQL eseguita** (`INSERT INTO accessi …` come prepared statement)
+8. lettura di controllo (`SELECT COUNT(*) FROM accessi`)
+9. risposta JSON al browser, con codice di stato HTTP e tempi in millisecondi
 
 Se la modalità demo è spenta, il backend non calcola né invia nessun passaggio.
+
+## Nozioni applicate nel backend
+
+| Nozione | Dove |
+|---|---|
+| Form → `$_POST` (array associativo, chiavi = attributi `name`) | `login.php`, punto 1 |
+| `password_hash()` / `password_verify()` — mai confronti in chiaro | `login.php`, punto 2 |
+| Sessioni: `$_SESSION`, `session_regenerate_id()` contro la session fixation | `login.php`, punto 3 |
+| PDO con try/catch e `ERRMODE_EXCEPTION` | `login.php`, punto 4 |
+| Prepared statement contro la SQL injection | `login.php`, punto 4 |
+| Codici di stato HTTP (200, 400, 401, 503) | `login.php`, `rispondi()` |
+| `fetch` + oggetto `Response` (status + JSON) | `index.php`, invio form |
 
 ## Avvio locale con Docker
 
