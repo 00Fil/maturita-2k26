@@ -2,7 +2,7 @@
 session_start();
 if (!isset($_SESSION['nome'])) { header('Location: index.php'); exit; }
 $nome = htmlspecialchars($_SESSION['nome'], ENT_QUOTES, 'UTF-8');
-$boot = empty($_SESSION['booted']);
+$boot = empty($_SESSION['booted']) || isset($_GET['boot']);
 $_SESSION['booted'] = true;
 
 $RAW = 'https://raw.githubusercontent.com/vinceliuice/WhiteSur-icon-theme/3cc051a4709e67921a9d47cd2a3e0111bbe5e2bd';
