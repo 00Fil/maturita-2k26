@@ -3,9 +3,9 @@
    vetro stratificato con riflesso speculare in alto, sheen che
    segue il puntatore (--mx/--my da hub.js), un accento per app
    ============================================================ */
-@font-face { font-family: "SF Pro Display"; src: url("assets/fonts/sf-reg.otf") format("opentype"); font-weight: 100 450; font-display: swap; }
-@font-face { font-family: "SF Pro Display"; src: url("assets/fonts/sf-med.otf") format("opentype"); font-weight: 451 650; font-display: swap; }
-@font-face { font-family: "SF Pro Display"; src: url("assets/fonts/sf-bold.otf") format("opentype"); font-weight: 651 900; font-display: swap; }
+@font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SFPRODISPLAYREGULAR.OTF") format("opentype"); font-weight: 100 450; font-display: swap; }
+@font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SFPRODISPLAYMEDIUM.OTF") format("opentype"); font-weight: 451 650; font-display: swap; }
+@font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SFPRODISPLAYBOLD.OTF") format("opentype"); font-weight: 651 900; font-display: swap; }
 
 :root {
   --text: #18181B;
