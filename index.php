@@ -635,7 +635,7 @@ body.demo .demo-widget {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
             </span>
             <strong id="successName">Benvenuto!</strong>
-            <p>Accesso registrato nel database.</p>
+            <p id="successMsg">Accesso registrato nel database.</p>
           </div>
         </div>
 
@@ -798,7 +798,12 @@ document.getElementById('form').addEventListener('submit', async (e) => {
     paneSuccess.classList.remove('is-hidden');
     requestAnimationFrame(setOpenHeight);
 
-    /* niente redirect: in demo si resta qui per spiegare i passaggi col controllerino */
+    /* in demo si resta qui per spiegare i passaggi col controllerino;
+       altrimenti si entra nel desktop (hub.php) */
+    if (!demoMode) {
+      document.getElementById('successMsg').textContent = 'Accesso registrato. Apro il desktop…';
+      setTimeout(() => window.location.replace('hub.php'), 1100);
+    }
 
   } catch (err) {
     if (demoMode) avviaDemo([
