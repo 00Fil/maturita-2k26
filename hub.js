@@ -11,14 +11,43 @@ setInterval(tick, 10000);
 const boot = document.getElementById('boot');
 if (boot) {
   const fill = boot.querySelector('.bbar span');
-  [[260, 14], [700, 36], [1150, 58], [1600, 78], [2000, 93], [2300, 100]].forEach(([t, p]) => {
-    setTimeout(() => { fill.style.width = p + '%'; }, t);
-  });
-  setTimeout(() => {
+  const logo = boot.querySelector('img');
+  const t0 = performance.now();
+  const DUR = 2300;
+  const MAXWAIT = 6000;
+  let ready = !logo;
+  let shown = 0;
+  const fallback = () => {
+    const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    s.setAttribute('viewBox', '0 0 56 56');
+    s.setAttribute('class', 'bfall');
+    s.innerHTML = '<use href="#i-cap"/>';
+    logo.replaceWith(s);
+  };
+  if (logo) {
+    if (logo.complete) {
+      if (logo.naturalWidth === 0) fallback();
+      ready = true;
+    } else {
+      logo.addEventListener('load', () => { ready = true; });
+      logo.addEventListener('error', () => { fallback(); ready = true; });
+    }
+  }
+  const frame = now => {
+    const el = now - t0;
+    const t = Math.min(1, el / DUR);
+    const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    let target = eased * 100;
+    if (!ready && el < MAXWAIT) target = Math.min(target, 88);
+    shown += (target - shown) * 0.14;
+    if (target >= 100 && shown > 99.4) shown = 100;
+    fill.style.width = shown.toFixed(2) + '%';
+    if (shown < 100) { requestAnimationFrame(frame); return; }
     boot.classList.add('done');
     document.body.classList.remove('booting');
     setTimeout(() => boot.remove(), 750);
-  }, 2600);
+  };
+  requestAnimationFrame(frame);
 }
 
 const SVG_X    = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 2.5l5 5M7.5 2.5l-5 5"/></svg>';
