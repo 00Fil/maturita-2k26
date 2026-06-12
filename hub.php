@@ -72,10 +72,10 @@ function appicon(string $file, string $remote): string {
   </div>
 </nav>
 
-<!-- file sul desktop: PDF con l'icona reale di Anteprima -->
+<!-- file sul desktop: documenti PDF con icona documento in stile macOS -->
 <div class="deskicons">
-  <button class="dicon" data-open="w-fsl"><span class="fico"><?= appicon('preview.webp', '/src/apps/scalable/accessories-document-viewer.svg') ?></span><span>Diario di bordo.pdf</span></button>
-  <button class="dicon" data-open="w-io"><span class="fico"><?= appicon('preview.webp', '/src/apps/scalable/accessories-document-viewer.svg') ?></span><span>Curriculum dello studente.pdf</span></button>
+  <button class="dicon" data-open="w-fsl"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false"></span><span>Diario di bordo.pdf</span></button>
+  <button class="dicon" data-open="w-io"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false"></span><span>Curriculum dello studente.pdf</span></button>
 </div>
 
 <!-- SCALETTA — aperta all'avvio: il percorso dei 10 minuti -->
