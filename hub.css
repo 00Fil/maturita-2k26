@@ -54,21 +54,36 @@ body {
   user-select: none;
 }
 svg { display: block; }
+img { -webkit-user-drag: none; }
 
 /* ------------------------------------------------------------
-   SFONDO — la scena del login: neutra, con tinte appena accennate
-   sempre dietro a tutto (z-index negativo), niente sovrapposizioni
+   SFONDO — wallpaper in stile macOS Big Sur: onde di colore
+   sfumate, luminose di giorno e profonde in dark mode
    ------------------------------------------------------------ */
-.bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: var(--scene); }
-.bg .blob { position: absolute; border-radius: 50%; filter: blur(110px); opacity: 0.5; }
-.bg .b1 { width: 55vmax; height: 55vmax; top: -24vmax; left: -16vmax; background: radial-gradient(circle, rgba(10,132,255,0.16), transparent 65%); animation: drift1 30s ease-in-out infinite alternate; }
-.bg .b2 { width: 48vmax; height: 48vmax; bottom: -22vmax; right: -14vmax; background: radial-gradient(circle, rgba(255,55,95,0.10), transparent 65%); animation: drift2 36s ease-in-out infinite alternate; }
-.bg .b3 { width: 42vmax; height: 42vmax; top: 30%; right: -16vmax; background: radial-gradient(circle, rgba(255,149,0,0.08), transparent 65%); animation: drift1 42s ease-in-out infinite alternate-reverse; }
-@keyframes drift1 { from { transform: translate(0,0); } to { transform: translate(6vmax, 5vmax); } }
-@keyframes drift2 { from { transform: translate(0,0); } to { transform: translate(-5vmax, -4vmax); } }
+.bg {
+  position: fixed; inset: 0; z-index: -1; overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 88% -5%, #6FC3F0 0%, rgba(111,195,240,0) 55%),
+    radial-gradient(110% 85% at 10% 8%, #2E6FD8 0%, rgba(46,111,216,0) 62%),
+    radial-gradient(130% 100% at 85% 105%, #E8638C 0%, rgba(232,99,140,0) 58%),
+    radial-gradient(115% 95% at 12% 98%, #8E4EC6 0%, rgba(142,78,198,0) 62%),
+    linear-gradient(165deg, #1B4FA0 0%, #5A39A8 52%, #C8527E 100%);
+}
+.bg .blob { display: none; }
+@media (prefers-color-scheme: dark) {
+  .bg {
+    background:
+      radial-gradient(120% 90% at 88% -5%, #1D4A73 0%, rgba(29,74,115,0) 55%),
+      radial-gradient(110% 85% at 10% 8%, #122C66 0%, rgba(18,44,102,0) 62%),
+      radial-gradient(130% 100% at 85% 105%, #5E2447 0%, rgba(94,36,71,0) 58%),
+      radial-gradient(115% 95% at 12% 98%, #371D5E 0%, rgba(55,29,94,0) 62%),
+      linear-gradient(165deg, #0C1F42 0%, #221647 52%, #43203A 100%);
+  }
+}
 
 /* ------------------------------------------------------------
    ICONE APP — superficie del login + glifo nel colore dell'app
+   (usate nelle intestazioni e nelle righe delle finestre)
    ------------------------------------------------------------ */
 .ai {
   display: flex; align-items: center; justify-content: center;
@@ -114,33 +129,24 @@ svg { display: block; }
 .menubar .exit svg { width: 14px; height: 14px; }
 
 /* ------------------------------------------------------------
-   FILE SUL DESKTOP
+   FILE SUL DESKTOP — icona reale di Anteprima + etichetta
+   bianca con ombra, come sul desktop di macOS
    ------------------------------------------------------------ */
 .deskicons { position: fixed; top: 50px; right: 14px; z-index: 1; display: flex; flex-direction: column; gap: 6px; }
 .dicon {
-  width: 110px; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  width: 110px; display: flex; flex-direction: column; align-items: center; gap: 5px;
   padding: 10px 6px 8px; border-radius: 14px;
   background: none; border: none; cursor: pointer; font: inherit;
   transition: background .2s ease, transform .35s var(--spring);
 }
-.dicon:hover { background: rgba(127,127,135,0.1); }
+.dicon:hover { background: rgba(255,255,255,0.16); }
 .dicon:active { transform: scale(.93); }
 .dicon .fico {
-  width: 50px; height: 60px; position: relative;
-  background: var(--surface);
-  border-radius: 8px;
-  box-shadow: inset 0 0 0 1px var(--border), 0 2px 8px rgba(24,24,27,0.1);
+  width: 58px; height: 58px;
   display: flex; align-items: center; justify-content: center;
-  color: var(--acc);
 }
-.dicon .fico::before {
-  content: ""; position: absolute; top: 0; right: 0;
-  border-style: solid; border-width: 0 13px 13px 0;
-  border-color: transparent var(--container) transparent transparent;
-  border-radius: 0 8px 0 6px;
-}
-.dicon .fico svg { width: 22px; height: 22px; }
-.dicon span:last-child { font-size: 11.5px; font-weight: 650; text-align: center; line-height: 1.3; color: var(--muted); }
+.dicon .fico img { width: 100%; height: 100%; display: block; pointer-events: none; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3)); }
+.dicon span:last-child { font-size: 11.5px; font-weight: 650; text-align: center; line-height: 1.3; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.55); }
 
 /* ------------------------------------------------------------
    FINESTRE
@@ -329,12 +335,13 @@ svg { display: block; }
 }
 
 /* ------------------------------------------------------------
-   DOCK
+   DOCK — icone reali, lente d'ingrandimento che sposta le
+   vicine (scala la larghezza reale, non solo il transform)
    ------------------------------------------------------------ */
 .dock {
   position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
-  z-index: 900; display: flex; align-items: flex-end; gap: 8px;
-  padding: 8px 10px; border-radius: 22px;
+  z-index: 900; display: flex; align-items: flex-end; gap: 5px;
+  height: 64px; padding: 0 10px 8px; border-radius: 24px;
   background: var(--glass-bar);
   backdrop-filter: blur(26px) saturate(1.4);
   -webkit-backdrop-filter: blur(26px) saturate(1.4);
@@ -344,31 +351,34 @@ svg { display: block; }
 @keyframes dockIn { from { transform: translate(-50%, 140%); } to { transform: translate(-50%, 0); } }
 .dapp { position: relative; display: flex; flex-direction: column; align-items: center; }
 .dock .ai {
-  width: 50px; height: 50px;
-  transform: scale(var(--s, 1)) translateY(calc((var(--s, 1) - 1) * -15px));
-  transform-origin: bottom center;
-  transition: transform .14s ease-out;
+  width: calc(56px * var(--s, 1)); height: calc(56px * var(--s, 1));
+  padding: 0; background: none; box-shadow: none; border-radius: 0;
+  transition: width .1s ease-out, height .1s ease-out;
 }
-.dock .ai svg { width: 24px; height: 24px; }
-.dock .ai:active { filter: brightness(.94); }
+.dock .ai img { width: 100%; height: 100%; display: block; pointer-events: none; }
+.dock .ai:active { filter: brightness(.85); }
 .dock .ai.bounce { animation: bounce .7s var(--spring-soft); }
 @keyframes bounce { 0%, 100% { translate: 0 0; } 30% { translate: 0 -22px; } 60% { translate: 0 0; } 80% { translate: 0 -8px; } }
-.dapp .dot { position: absolute; bottom: -6px; width: 4px; height: 4px; border-radius: 50%; background: var(--faint); opacity: 0; transition: opacity .3s ease; }
-.dapp.running .dot { opacity: 1; }
+.dsep { width: 1px; align-self: stretch; margin: 8px 4px; background: var(--border); border-radius: 1px; }
+.dapp .dot { position: absolute; bottom: -6px; width: 4px; height: 4px; border-radius: 50%; background: var(--text); opacity: 0; transition: opacity .3s ease; }
+.dapp.running .dot { opacity: .55; }
 .dapp .tip {
-  position: absolute; bottom: 66px; padding: 5px 12px; border-radius: 8px;
+  position: absolute; left: 50%; bottom: calc(100% + 14px);
+  padding: 5px 12px; border-radius: 8px;
   background: var(--surface);
   box-shadow: inset 0 0 0 1px var(--border), var(--shadow-pop);
   font-size: 12px; font-weight: 700; white-space: nowrap;
-  opacity: 0; transform: translateY(5px) scale(.9); pointer-events: none;
+  opacity: 0; transform: translate(-50%, 5px) scale(.9); pointer-events: none;
   transition: opacity .2s ease, transform .35s var(--spring);
 }
-.dapp:hover .tip { opacity: 1; transform: translateY(0) scale(1); }
+.dapp:hover .tip { opacity: 1; transform: translate(-50%, 0) scale(1); }
 
 @media (max-width: 700px) {
   .menubar .hideS { display: none; }
   .deskicons { display: none; }
   .win { left: 3vw !important; top: 42px !important; width: 94vw !important; height: calc(100vh - 138px) !important; }
+  .dock { height: 52px; padding: 0 8px 6px; gap: 3px; }
+  .dock .ai { width: calc(42px * var(--s, 1)); height: calc(42px * var(--s, 1)); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
