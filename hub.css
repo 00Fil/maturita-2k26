@@ -81,12 +81,13 @@ img { -webkit-user-drag: none; }
 }
 #boot.done { opacity: 0; pointer-events: none; }
 #boot img { height: 88px; filter: brightness(0) invert(1); animation: bootIn .9s var(--spring-soft) both; }
+#boot .bfall { width: 88px; height: 88px; color: #fff; fill: currentColor; animation: bootIn .9s var(--spring-soft) both; }
 #boot .bbar {
   width: 230px; height: 6px; border-radius: 999px; overflow: hidden;
   background: rgba(255,255,255,0.22);
   animation: bootIn .9s var(--spring-soft) .3s both;
 }
-#boot .bbar span { display: block; width: 0; height: 100%; border-radius: inherit; background: #fff; transition: width .45s var(--spring-soft); }
+#boot .bbar span { display: block; width: 0; height: 100%; border-radius: inherit; background: #fff; }
 @keyframes bootIn { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
 body.booting .menubar, body.booting .dock, body.booting .dicon,
 body.booting .win.open, body.booting .win.open * { animation-play-state: paused; }
