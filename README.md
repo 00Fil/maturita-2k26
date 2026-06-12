@@ -27,6 +27,23 @@ Login animato (morph button) → backend PHP minimale → MySQL.
 Senza variabili impostate valgono i default di Laragon: il progetto funziona
 anche copiato in `C:\laragon\www\pcto` senza Docker.
 
+## Modalità Demo (per la presentazione)
+
+In basso a destra c'è il tasto **Demo backend** (in alternativa apri il sito con `?demo=1`).
+Quando è attiva, ad ogni accesso compare un pannello "Dietro le quinte" che mostra
+in tempo reale i passaggi che l'app esegue davvero:
+
+1. il browser invia la richiesta (`fetch POST → login.php`)
+2. il server riceve nome + codice (il codice viene mascherato)
+3. validazione dei campi
+4. verifica del codice con `hash_equals` (confronto a tempo costante)
+5. connessione PDO a MySQL
+6. la **query SQL eseguita** (`INSERT INTO accessi …` come prepared statement)
+7. lettura di controllo (`SELECT COUNT(*) FROM accessi`)
+8. risposta JSON al browser, con i tempi in millisecondi
+
+Se la modalità demo è spenta, il backend non calcola né invia nessun passaggio.
+
 ## Avvio locale con Docker
 
 ```bash

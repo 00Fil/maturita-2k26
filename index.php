@@ -374,6 +374,109 @@ form { display: flex; flex-direction: column; gap: 8px; }
 }
 .morph.shake { animation: shake 0.45s var(--spring-soft); }
 
+/* ------------------------------------------------------------
+   DEMO MODE — visualizza i passaggi reali del backend
+   ------------------------------------------------------------ */
+.demo-toggle {
+  position: fixed;
+  bottom: 18px;
+  right: 18px;
+  z-index: 5;
+  height: 44px;
+  padding: 0 18px;
+  display: flex; align-items: center; gap: 9px;
+  border: 1.1px solid var(--border);
+  border-radius: var(--r-full);
+  background: var(--container);
+  color: var(--placeholder);
+  font-family: inherit; font-size: 13px; font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background .3s ease, color .3s ease, transform .4s var(--spring);
+}
+.demo-toggle:hover { background: var(--container-hover); color: var(--text); }
+.demo-toggle:active { transform: scale(.95); }
+.demo-toggle .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--placeholder);
+  transition: background .3s ease, box-shadow .3s ease;
+}
+body.demo .demo-toggle { color: var(--text); }
+body.demo .demo-toggle .dot { background: #22C55E; box-shadow: 0 0 10px rgba(34,197,94,.6); }
+
+.demo-panel {
+  position: fixed;
+  top: 50%;
+  right: 18px;
+  transform: translateY(-50%) translateX(16px);
+  width: min(360px, calc(100vw - 36px));
+  max-height: min(78vh, 640px);
+  overflow-y: auto;
+  z-index: 4;
+  border-radius: var(--r);
+  background: var(--container);
+  border: 1.1px solid var(--border);
+  box-shadow: var(--shadow-panel);
+  padding: 18px 16px 12px;
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(4px);
+  transition: opacity .5s var(--spring-soft), transform var(--dur) var(--spring), filter .5s var(--spring-soft);
+}
+body.demo .demo-panel.on {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(-50%) translateX(0);
+  filter: blur(0);
+}
+.demo-panel h2 {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--placeholder);
+  padding-left: 6px; margin-bottom: 10px;
+}
+.step {
+  background: var(--surface);
+  border-radius: 18px;
+  box-shadow: var(--shadow-sm);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  opacity: 0; transform: translateY(8px) scale(.97); filter: blur(4px);
+  transition: opacity .45s var(--spring-soft), transform .55s var(--spring), filter .45s var(--spring-soft);
+}
+.step.in { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+.step .head { display: flex; align-items: center; gap: 8px; }
+.step .st-dot { width: 8px; height: 8px; border-radius: 50%; background: #22C55E; flex-shrink: 0; }
+.step.ko .st-dot { background: var(--error); }
+.step .t { font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em; flex: 1; }
+.step .ms { font-size: 11px; font-weight: 700; color: var(--placeholder); background: var(--container); border-radius: var(--r-full); padding: 2px 8px; white-space: nowrap; }
+.step .d { font-size: 12.5px; color: var(--placeholder); font-weight: 500; margin-top: 3px; padding-left: 16px; line-height: 1.45; }
+.step pre {
+  margin: 7px 0 2px 16px;
+  background: var(--container);
+  border-radius: 12px;
+  padding: 9px 11px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+@media (max-width: 920px) {
+  .demo-panel {
+    top: auto;
+    bottom: 76px;
+    right: 18px;
+    left: 18px;
+    width: auto;
+    max-height: 46vh;
+    transform: translateY(16px);
+  }
+  body.demo .demo-panel.on { transform: translateY(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
 }
@@ -448,6 +551,17 @@ form { display: flex; flex-direction: column; gap: 8px; }
   </div>
 </div>
 
+<!-- DEMO MODE: tasto + pannello "dietro le quinte" -->
+<button class="demo-toggle" id="demoToggle" type="button" aria-pressed="false">
+  <span class="dot"></span>
+  Demo backend
+</button>
+
+<aside class="demo-panel" id="demoPanel" aria-live="polite">
+  <h2>Dietro le quinte</h2>
+  <div id="demoSteps"></div>
+</aside>
+
 <script>
 const stage = document.getElementById('stage');
 const morph = document.getElementById('morph');
@@ -521,9 +635,12 @@ document.getElementById('form').addEventListener('submit', async (e) => {
     const dati = new URLSearchParams();
     dati.append('nome', nameInput.value.trim());
     dati.append('codice', codeInput.value);
+    if (demoMode) dati.append('demo', '1');
 
+    const t0 = performance.now();
     const risposta = await fetch('login.php', { method: 'POST', body: dati });
     const json = await risposta.json();
+    mostraDemo(json, performance.now() - t0);
 
     if (!json.ok) {
       shakeError(json.messaggio || 'Qualcosa è andato storto.');
@@ -547,6 +664,10 @@ document.getElementById('form').addEventListener('submit', async (e) => {
     }, 1600);
 
   } catch (err) {
+    if (demoMode) renderDemo([
+      { titolo: 'Il browser invia la richiesta', dettaglio: 'fetch POST → login.php (nome + codice)' },
+      { titolo: 'Nessuna risposta dal server', dettaglio: String(err), stato: 'errore' }
+    ]);
     shakeError('Server non raggiungibile.');
     submitBtn.disabled = false;
   }
@@ -555,6 +676,69 @@ document.getElementById('form').addEventListener('submit', async (e) => {
 window.addEventListener('resize', () => {
   if (stage.classList.contains('open')) setOpenHeight();
 });
+
+/* ============================================================
+   DEMO MODE — mostra graficamente i passaggi reali del backend
+   Attivazione: tasto in basso a destra oppure ?demo=1 nell'URL
+   ============================================================ */
+const demoToggle = document.getElementById('demoToggle');
+const demoPanel = document.getElementById('demoPanel');
+const demoSteps = document.getElementById('demoSteps');
+let demoMode = new URLSearchParams(location.search).get('demo') === '1'
+            || sessionStorage.getItem('demo') === '1';
+if (demoMode) document.body.classList.add('demo');
+demoToggle.setAttribute('aria-pressed', demoMode ? 'true' : 'false');
+
+demoToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  demoMode = !demoMode;
+  sessionStorage.setItem('demo', demoMode ? '1' : '0');
+  document.body.classList.toggle('demo', demoMode);
+  demoToggle.setAttribute('aria-pressed', demoMode ? 'true' : 'false');
+  if (!demoMode) demoPanel.classList.remove('on');
+});
+
+function aggiungiPasso(p, i) {
+  const el = document.createElement('div');
+  el.className = 'step' + (p.stato === 'errore' ? ' ko' : '');
+  el.innerHTML = '<div class="head"><span class="st-dot"></span><span class="t"></span>' +
+                 (p.ms != null ? '<span class="ms">' + p.ms + ' ms</span>' : '') + '</div>';
+  el.querySelector('.t').textContent = p.titolo;
+  if (p.dettaglio) {
+    const d = document.createElement('div');
+    d.className = 'd';
+    d.textContent = p.dettaglio;
+    el.appendChild(d);
+  }
+  if (p.sql) {
+    const pre = document.createElement('pre');
+    pre.textContent = p.sql;
+    el.appendChild(pre);
+  }
+  demoSteps.appendChild(el);
+  setTimeout(() => el.classList.add('in'), 80 + i * 260);
+}
+
+function renderDemo(passi) {
+  demoSteps.innerHTML = '';
+  demoPanel.classList.add('on');
+  passi.forEach(aggiungiPasso);
+}
+
+function mostraDemo(json, msTotali) {
+  if (!demoMode || !json.passi) return;
+  const passi = [
+    { titolo: 'Il browser invia la richiesta', dettaglio: 'fetch POST → login.php (nome + codice)' },
+    ...json.passi,
+    {
+      titolo: 'Risposta JSON al browser',
+      dettaglio: 'Tempo totale (andata e ritorno): ' + Math.round(msTotali) + ' ms',
+      stato: json.ok ? 'ok' : 'errore',
+      sql: JSON.stringify({ ok: json.ok, messaggio: json.messaggio || undefined })
+    }
+  ];
+  renderDemo(passi);
+}
 
 /* Eye toggle */
 const eyeOn = document.getElementById('eyeOn');
