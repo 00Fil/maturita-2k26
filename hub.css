@@ -78,7 +78,7 @@ svg { display: block; }
 .g-blue   { background: linear-gradient(180deg, #56b1ff, #0a66f0); }
 .g-orange { background: linear-gradient(180deg, #ffc145, #ff7d05); }
 .g-teal   { background: linear-gradient(180deg, #51e0ff, #0095b8); }
-.g-green  { background: linear-gradient(180deg, #4cે0; background: linear-gradient(180deg, #4ce062, #1d9e33); }
+.g-green  { background: linear-gradient(180deg, #4ce062, #1d9e33); }
 .g-indigo { background: linear-gradient(180deg, #8c8aff, #4b4acf); }
 .g-pink   { background: linear-gradient(180deg, #ff7d9b, #e0245e); }
 .g-purple { background: linear-gradient(180deg, #d278ff, #8944ab); }
