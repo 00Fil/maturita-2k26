@@ -570,7 +570,7 @@ a.favcard:hover .favsay { opacity: 1; transform: translateY(0) scale(1); }
 .dapp:hover .tip { opacity: 1; transform: translate(-50%, 0) scale(1); }
 
 
-#dim { position: fixed; inset: 0; z-index: 6000; background: #000; opacity: 0; pointer-events: none; }
+#dim { position: fixed; inset: 0; z-index: 6000; background: #000; opacity: 0; pointer-events: none; transition: opacity .22s linear; }
 .ccpanel {
   position: fixed; top: 40px; right: 10px; z-index: 4500;
   width: 330px; padding: 10px;
