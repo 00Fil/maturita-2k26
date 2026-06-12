@@ -13,9 +13,10 @@ if (boot) {
   const fill = boot.querySelector('.bbar span');
   const logo = boot.querySelector('img');
   const t0 = performance.now();
-  const DUR = 2300;
-  const MAXWAIT = 6000;
-  let ready = !logo;
+  const MINTIME = 1100;
+  const MAXWAIT = 15000;
+  let total = 1;
+  let loaded = 0;
   let shown = 0;
   const fallback = () => {
     const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -24,22 +25,39 @@ if (boot) {
     s.innerHTML = '<use href="#i-cap"/>';
     logo.replaceWith(s);
   };
-  if (logo) {
-    if (logo.complete) {
-      if (logo.naturalWidth === 0) fallback();
-      ready = true;
-    } else {
-      logo.addEventListener('load', () => { ready = true; });
-      logo.addEventListener('error', () => { fallback(); ready = true; });
+  const track = el => {
+    total += 1;
+    if (el.complete) { loaded += 1; return; }
+    const done = () => { loaded += 1; };
+    el.addEventListener('load', done, { once: true });
+    el.addEventListener('error', done, { once: true });
+  };
+  const rest = () => {
+    loaded += 1;
+    const wall = new Image();
+    track(wall);
+    wall.src = 'assets/bg.png';
+    document.querySelectorAll('img').forEach(img => { if (img !== logo) track(img); });
+    if (document.fonts && document.fonts.ready) {
+      total += 1;
+      document.fonts.ready.then(() => { loaded += 1; });
     }
+  };
+  if (!logo) {
+    rest();
+  } else if (logo.complete) {
+    if (logo.naturalWidth === 0) fallback();
+    rest();
+  } else {
+    logo.addEventListener('load', rest, { once: true });
+    logo.addEventListener('error', () => { fallback(); rest(); }, { once: true });
   }
   const frame = now => {
     const el = now - t0;
-    const t = Math.min(1, el / DUR);
-    const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    let target = eased * 100;
-    if (!ready && el < MAXWAIT) target = Math.min(target, 88);
-    shown += (target - shown) * 0.14;
+    let target = loaded / total * 100;
+    if (el >= MAXWAIT) target = 100;
+    if (el < MINTIME) target = Math.min(target, el / MINTIME * 100);
+    shown += (target - shown) * 0.08;
     if (target >= 100 && shown > 99.4) shown = 100;
     fill.style.width = shown.toFixed(2) + '%';
     if (shown < 100) { requestAnimationFrame(frame); return; }
