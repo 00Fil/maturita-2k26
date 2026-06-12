@@ -8,6 +8,6 @@ FROM php:8.3-apache
 RUN docker-php-ext-install pdo_mysql
 
 # Copia il sito
-COPY index.php login.php /var/www/html/
+COPY index.php login.php schema.php logout.php /var/www/html/
 
 EXPOSE 80

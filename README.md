@@ -9,6 +9,8 @@ Login animato (morph button) → backend PHP minimale → MySQL.
 |---|---|
 | `index.php` | La pagina con il tasto morph e il form di accesso |
 | `login.php` | Backend: verifica il codice e registra l'accesso su MySQL |
+| `schema.php` | "Dietro le quinte": il flusso del backend, protetta dalla sessione |
+| `logout.php` | Chiude la sessione e torna al login |
 | `setup.sql` | Crea il database `pcto` e la tabella `accessi` |
 | `Dockerfile` | Immagine PHP 8.3 + Apache con `pdo_mysql` |
 | `docker-compose.yml` | Stack completo: app + MySQL 8.4 (con init automatico) |
@@ -45,6 +47,17 @@ in tempo reale i passaggi che l'app esegue davvero:
 9. risposta JSON al browser, con codice di stato HTTP e tempi in millisecondi
 
 Se la modalità demo è spenta, il backend non calcola né invia nessun passaggio.
+
+## Pagina "Dietro le quinte" (schema.php)
+
+Dopo il login si viene portati su `schema.php`, **protetta dalla sessione**:
+senza login si torna automaticamente a `index.php`. Due modalità:
+
+- **Esposizione** (default): solo gli 8 passaggi, senza spiegazioni in chiaro nel sorgente
+- **Studio** (`?spiegazioni=1`): ogni passaggio spiegato con le nozioni del corso
+
+Il contatore degli accessi in fondo è letto in tempo reale da MySQL.
+Il tasto **Esci** chiama `logout.php` (`session_unset` + `session_destroy` + nuovo ID di sessione).
 
 ## Nozioni applicate nel backend
 

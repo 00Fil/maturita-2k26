@@ -658,9 +658,9 @@ document.getElementById('form').addEventListener('submit', async (e) => {
     paneSuccess.classList.remove('is-hidden');
     requestAnimationFrame(setOpenHeight);
 
-    /* dopo 1.6s vai alla presentazione (cambia destinazione qui) */
+    /* dopo 1.6s vai allo schema "dietro le quinte" */
     setTimeout(() => {
-      // window.location.href = 'presentazione.php';
+      window.location.href = 'schema.php';
     }, 1600);
 
   } catch (err) {
