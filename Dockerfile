@@ -7,7 +7,7 @@ FROM php:8.3-apache
 # Driver MySQL per PDO (unica estensione necessaria)
 RUN docker-php-ext-install pdo_mysql
 
-# Copia il sito
-COPY index.php login.php schema.php logout.php /var/www/html/
+# Copia il sito (login + desktop)
+COPY index.php login.php schema.php logout.php hub.php hub.css hub.js /var/www/html/
 
 EXPOSE 80
