@@ -43,13 +43,53 @@ function appicon(string $file, string $remote): string {
   <button class="mitem hideS" data-open="w-prog">Progetto</button>
   <button class="mitem hideS" data-open="w-coll">Curriculum</button>
   <div class="right">
-    <span class="sico hideS"><svg><use href="#i-wifi"/></svg></span>
-    <span class="sico hideS"><svg><use href="#i-batt"/></svg></span>
+    <span class="sico hideS"><span class="bpct" id="bpct"></span><svg><use href="#i-batt"/></svg></span>
+    <span class="sico hideS" id="mb-wifi"><svg><use href="#i-wifi"/></svg></span>
+    <button class="ccbtn" id="ccbtn" aria-label="Centro di Controllo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2.75" y="3.75" width="18.5" height="7" rx="3.5"/><circle cx="6.75" cy="7.25" r="2.1" fill="currentColor" stroke="none"/><rect x="2.75" y="13.25" width="18.5" height="7" rx="3.5"/><circle cx="17.25" cy="16.75" r="2.1" fill="currentColor" stroke="none"/></svg></button>
     <span class="who hideS"><span class="dot"></span><?= $nome ?></span>
     <span class="clock" id="clock"></span>
     <a class="mitem exit" href="logout.php"><svg><use href="#i-out"/></svg>Esci</a>
   </div>
 </nav>
+
+<div id="dim" aria-hidden="true"></div>
+
+<div class="ccpanel" id="ccpanel">
+  <div class="ccgrid">
+    <div class="ccmod ccconn">
+      <button class="ccrow" id="cc-wifi" type="button">
+        <span class="ccico on" id="cc-wifi-ic"><svg><use href="#i-wifi"/></svg></span>
+        <span class="cctxt"><b>Wi-Fi</b><small id="cc-wifi-st">Connesso</small></span>
+      </button>
+      <button class="ccrow" id="cc-share" type="button">
+        <span class="ccico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/><path d="M7.4 16.6a6.5 6.5 0 0 1 0-9.2M16.6 7.4a6.5 6.5 0 0 1 0 9.2M4.6 19.4a10.5 10.5 0 0 1 0-14.8M19.4 4.6a10.5 10.5 0 0 1 0 14.8"/></svg></span>
+        <span class="cctxt"><b>AirDrop</b><small>Condividi il sito</small></span>
+      </button>
+      <button class="ccrow" id="cc-copy" type="button">
+        <span class="ccico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M10.2 13.8a3.6 3.6 0 0 0 5.4.4l2.6-2.6a3.6 3.6 0 1 0-5.1-5.1l-1.3 1.3"/><path d="M13.8 10.2a3.6 3.6 0 0 0-5.4-.4l-2.6 2.6a3.6 3.6 0 1 0 5.1 5.1l1.3-1.3"/></svg></span>
+        <span class="cctxt"><b>Copia link</b><small id="cc-copy-st">Per la commissione</small></span>
+      </button>
+    </div>
+    <div class="cccol">
+      <button class="ccmod ccfocus" id="cc-pres" type="button">
+        <span class="ccico" style="background:var(--purple)"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.8c0-1 1.1-1.6 2-1.1l9.2 6.2c.8.5.8 1.7 0 2.2L10 19.3c-.9.5-2-.1-2-1.1z"/></svg></span>
+        <span class="cctxt"><b>Presentazione</b><small>Avvia i 10 minuti</small></span>
+      </button>
+      <div class="ccduo">
+        <button class="ccmini" id="cc-full" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg>Schermo intero</button>
+        <button class="ccmini" id="cc-boot" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 3v8"/><path d="M6.3 6.6a8 8 0 1 0 11.4 0"/></svg>Riavvia demo</button>
+      </div>
+    </div>
+  </div>
+  <div class="ccmod ccsl">
+    <b class="cclab">Schermo</b>
+    <div class="ccrange"><input type="range" id="cc-bri" min="55" max="100" value="100" aria-label="Luminosità"><span class="cic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 2.8v2M12 19.2v2M2.8 12h2M19.2 12h2M5.5 5.5l1.4 1.4M17.1 17.1l1.4 1.4M18.5 5.5l-1.4 1.4M6.9 17.1l-1.4 1.4"/></svg></span></div>
+  </div>
+  <div class="ccmod ccsl">
+    <b class="cclab">Audio</b>
+    <div class="ccrange"><input type="range" id="cc-vol" min="0" max="100" value="25" aria-label="Volume effetti"><span class="cic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3L11.5 6v12L7 14.5H4z" fill="currentColor" stroke="none"/><path d="M14.5 9.2a4 4 0 0 1 0 5.6M17.2 6.8a7.6 7.6 0 0 1 0 10.4"/></svg></span></div>
+  </div>
+</div>
 
 <div class="deskicons">
   <button class="dicon" data-open="w-fsl"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false"></span><span>Diario di bordo.pdf</span></button>
