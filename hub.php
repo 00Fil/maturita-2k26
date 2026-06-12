@@ -1,16 +1,10 @@
 <?php
-/* ============================================================
-   hub.php — il desktop: la presentazione per il colloquio
-   sette app in Liquid Glass, una per capitolo
-   accessibile solo dopo il login (sessione attiva)
-   ============================================================ */
 session_start();
 if (!isset($_SESSION['nome'])) { header('Location: index.php'); exit; }
 $nome = htmlspecialchars($_SESSION['nome'], ENT_QUOTES, 'UTF-8');
+$boot = empty($_SESSION['booted']);
+$_SESSION['booted'] = true;
 
-/* icone ufficiali delle app macOS (PNG forniti, convertiti in WebP):
-   decodificate alla build Docker in assets/icons/; Terminal resta
-   WhiteSur (GPL-3.0) con fallback online alla stessa versione */
 $RAW = 'https://raw.githubusercontent.com/vinceliuice/WhiteSur-icon-theme/3cc051a4709e67921a9d47cd2a3e0111bbe5e2bd';
 function appicon(string $file, string $remote): string {
   global $RAW;
@@ -25,9 +19,12 @@ function appicon(string $file, string $remote): string {
 <title>Desktop · Maturità 2026</title>
 <link rel="stylesheet" href="hub.css">
 </head>
-<body>
+<body<?= $boot ? ' class="booting"' : '' ?>>
 
-<!-- sprite SVG: logo Apple + glifi di stato (set SF di framework7-icons, MIT) -->
+<?php if ($boot): ?>
+<div id="boot" aria-hidden="true"><img src="assets/iisc-logo.png" alt=""><div class="bbar"><span></span></div></div>
+<?php endif; ?>
+
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-cap" viewBox="0 0 56 56" fill="currentColor"><path d="M33.9370467,26.5128481 C34.0071746,34.0650232 40.5622987,36.5781967 40.6349206,36.6102741 C40.579494,36.787517 39.5875211,40.1917925 37.1813698,43.708166 C35.1013579,46.748249 32.9425798,49.7771957 29.5418665,49.8399278 C26.2003256,49.9014987 25.1258336,47.8583854 21.3055063,47.8583854 C17.486333,47.8583854 16.2925236,49.7771906 13.129383,49.9014987 C9.84683186,50.0257159 7.34720367,46.6140516 5.24990601,43.5851051 C0.964332248,37.3892927 -2.31073284,26.0771949 2.08685175,18.4413444 C4.27147795,14.64935 8.17557011,12.2481009 12.4131131,12.1865253 C15.6364944,12.125039 18.6789832,14.3551087 20.649477,14.3551087 C22.6187214,14.3551087 26.3159929,11.6732544 30.2027979,12.0671186 C31.8299473,12.1348421 36.3973824,12.7243949 39.3302579,17.0173633 C39.0939405,17.1638624 33.880373,20.1989532 33.9370467,26.5128552 M27.6570067,7.96804814 C29.3997351,5.85854475 30.5726917,2.92192094 30.2526965,0 C27.7406844,0.100960353 24.7030975,1.67393506 22.9012871,3.78227787 C21.286519,5.64931362 19.8723452,8.63762341 20.2539138,11.5017132 C23.0538462,11.7183402 25.9141925,10.078893 27.6570067,7.96805157" transform="translate(8 3)"/></symbol>
 <symbol id="i-wifi" viewBox="0 0 56 56" fill="currentColor"><path d="M 5.4648 25.0352 C 5.9102 25.4805 6.5664 25.4571 6.9882 25.0118 C 12.5195 19.1289 19.8320 16.0352 28.0117 16.0352 C 36.2382 16.0352 43.5742 19.1523 49.0819 25.0352 C 49.4803 25.4336 50.1135 25.4336 50.5354 24.9883 L 53.6525 21.8711 C 54.0274 21.4727 54.0274 20.9571 53.7226 20.5820 C 48.4258 14.0664 38.4648 9.2617 28.0117 9.2617 C 17.5586 9.2617 7.5976 14.0664 2.3007 20.5820 C 1.9726 20.9571 1.9961 21.4727 2.3711 21.8711 Z M 14.8398 34.4336 C 15.3086 34.9258 15.9180 34.8789 16.3633 34.3633 C 19.0820 31.3398 23.4882 29.1602 28.0117 29.2071 C 32.5820 29.1602 36.9648 31.4102 39.7070 34.4336 C 40.1523 34.9023 40.7382 34.9023 41.1836 34.4102 L 44.6758 30.9649 C 45.0507 30.5898 45.0976 30.0977 44.7461 29.6992 C 41.3476 25.5039 35.0429 22.4102 28.0117 22.4102 C 20.9804 22.4102 14.6758 25.5274 11.2773 29.6992 C 10.9258 30.0977 10.9726 30.5664 11.3476 30.9649 Z M 28.0117 46.7383 C 28.5039 46.7383 28.9492 46.4805 29.8164 45.6367 L 35.3007 40.3633 C 35.6523 40.0352 35.7226 39.5196 35.4180 39.1211 C 33.9414 37.2227 31.1758 35.5820 28.0117 35.5820 C 24.7773 35.5820 21.9648 37.2930 20.5117 39.2617 C 20.3007 39.5898 20.3711 40.0352 20.7226 40.3633 L 26.2070 45.6367 C 27.0742 46.4805 27.5195 46.7383 28.0117 46.7383 Z"/></symbol>
@@ -35,12 +32,10 @@ function appicon(string $file, string $remote): string {
 <symbol id="i-out" viewBox="0 0 56 56" fill="currentColor"><path d="M 13.7851 49.5742 L 42.2382 49.5742 C 47.1366 49.5742 49.5743 47.1367 49.5743 42.3086 L 49.5743 13.6914 C 49.5743 8.8633 47.1366 6.4258 42.2382 6.4258 L 13.7851 6.4258 C 8.9101 6.4258 6.4257 8.8398 6.4257 13.6914 L 6.4257 42.3086 C 6.4257 47.1602 8.9101 49.5742 13.7851 49.5742 Z M 42.2851 27.9414 C 42.2851 28.5508 42.0507 29.0196 41.5351 29.5352 L 32.5585 38.4883 C 32.2070 38.8164 31.7382 39.0508 31.1757 39.0508 C 30.0742 39.0508 29.2070 38.2071 29.2070 37.1055 C 29.2070 36.5196 29.4648 36.0274 29.8163 35.6758 L 33.1210 32.4414 L 36.3085 29.7461 L 30.6601 29.9571 L 16.9257 29.9571 C 15.7304 29.9571 14.9335 29.1133 14.9335 27.9414 C 14.9335 26.7696 15.7304 25.9258 16.9257 25.9258 L 30.6601 25.9258 L 36.2851 26.1602 L 33.1210 23.4883 L 29.8163 20.2071 C 29.4882 19.8789 29.2070 19.3633 29.2070 18.8008 C 29.2070 17.6992 30.0742 16.8555 31.1757 16.8555 C 31.7382 16.8555 32.2070 17.0430 32.5585 17.3945 L 41.5351 26.3711 C 42.0742 26.9102 42.2851 27.3789 42.2851 27.9414 Z"/></symbol>
 </defs></svg>
 
-<!-- sfondo: wallpaper in stile macOS, sempre dietro a tutto -->
 <div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
 
-<!-- menu bar -->
 <nav class="menubar">
-  <span class="logo"><svg><use href="#i-cap"/></svg></span>
+  <button class="logo" data-open="w-pres" aria-label="Apri la presentazione"><svg><use href="#i-cap"/></svg></button>
   <span class="appname">Maturità 2026</span>
   <button class="mitem hideS" data-open="w-pres">Scaletta</button>
   <button class="mitem hideS" data-open="w-fsl">Percorso</button>
@@ -55,50 +50,47 @@ function appicon(string $file, string $remote): string {
   </div>
 </nav>
 
-<!-- file sul desktop -->
 <div class="deskicons">
   <button class="dicon" data-open="w-fsl"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false"></span><span>Diario di bordo.pdf</span></button>
   <button class="dicon" data-open="w-coll"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false"></span><span>Curriculum dello studente.pdf</span></button>
 </div>
 
-<!-- ============ 1 · FINDER — la scaletta dei 10 minuti ============ -->
-<section class="win open a-blue" id="w-pres" style="left:7%;top:9%;width:730px;height:560px">
+<section class="win open a-blue" id="w-pres" style="left:7%;top:8%;width:760px">
   <div class="titlebar"><span class="wt">Presentazione — i miei 10 minuti</span></div>
   <div class="split">
     <aside class="sidebar">
       <div class="sb-title">Preferiti</div>
-      <div class="sb-item on"><span class="ic" style="background:#0A84FF">10′</span>Presentazione<span class="cnt">6</span></div>
-      <div class="sb-item"><span class="ic" style="background:#FF9500">Io</span>Chi sono</div>
-      <div class="sb-item"><span class="ic" style="background:#34C759">FS</span>Scuola-lavoro</div>
-      <div class="sb-item"><span class="ic" style="background:#AF52DE">CV</span>Curriculum</div>
+      <button class="sb-item on" data-open="w-pres"><span class="ic" style="background:#0A84FF">10′</span>Presentazione<span class="cnt">6</span></button>
+      <button class="sb-item" data-open="w-io"><span class="ic" style="background:#FF9500">Io</span>Chi sono</button>
+      <button class="sb-item" data-open="w-fsl"><span class="ic" style="background:#34C759">FS</span>Scuola-lavoro</button>
+      <button class="sb-item" data-open="w-coll"><span class="ic" style="background:#AF52DE">CV</span>Curriculum</button>
       <div class="sb-title">Tag</div>
-      <div class="sb-item"><span class="dotk" style="background:#0A84FF"></span>Riflessione</div>
-      <div class="sb-item"><span class="dotk" style="background:#34C759"></span>Esperienza FSL</div>
-      <div class="sb-item"><span class="dotk" style="background:#AF52DE"></span>Capolavori</div>
+      <button class="sb-item" data-tag="rifl"><span class="dotk" style="background:#0A84FF"></span>Riflessione</button>
+      <button class="sb-item" data-tag="fsl"><span class="dotk" style="background:#34C759"></span>Esperienza FSL</button>
+      <button class="sb-item" data-tag="cap"><span class="dotk" style="background:#AF52DE"></span>Capolavori</button>
     </aside>
     <div class="main">
-      <div class="ftools"><b>I miei 10 minuti</b><span>riflessione sul percorso + relazione sulla scuola-lavoro</span><span class="fseg"><span class="on">Galleria</span><span>Elenco</span></span></div>
+      <div class="ftools"><b>I miei 10 minuti</b><span>riflessione sul percorso + relazione sulla scuola-lavoro</span><span class="fseg"><button class="on" data-view="gallery">Galleria</button><button data-view="list">Elenco</button></span></div>
       <div class="fgrid">
-        <button class="fitem lgcard" data-open="w-io" style="animation-delay:.05s"><span class="fbadge" style="background:#FF9500">01</span><b>Da dove parto</b><span>La riflessione iniziale: chi sono, il percorso all’ITIS, cosa mi ha formato dentro e fuori da scuola.</span><span class="tt">Apri · Contatti</span></button>
-        <button class="fitem lgcard" data-open="w-fsl" style="animation-delay:.1s"><span class="fbadge" style="background:#34C759">02</span><b>Il percorso in azienda</b><span>240 ore di formazione scuola-lavoro in terza e quarta: dove, quando e con quali compiti.</span><span class="tt">Apri · Calendario</span></button>
-        <button class="fitem lgcard" data-open="w-skills" style="animation-delay:.15s"><span class="fbadge" style="background:#5856D6">03</span><b>Cosa ho imparato</b><span>Le competenze maturate in azienda: tre lezioni e cinque strumenti che oggi so usare.</span><span class="tt">Apri · App Store</span></button>
-        <button class="fitem lgcard" data-open="w-prog" style="animation-delay:.2s"><span class="fbadge" style="background:#1C1C1E">04</span><b>Il progetto</b><span>Questo sito: il lavoro multimediale con cui presento l’esperienza, spiegato passo per passo.</span><span class="tt">Apri · Terminale</span></button>
-        <button class="fitem lgcard" data-open="w-coll" style="animation-delay:.25s"><span class="fbadge" style="background:#30B0C7">05</span><b>Il Curriculum</b><span>I capolavori pubblicati online: il sito sul romanzo e il project work di GPOI, visitabili adesso.</span><span class="tt">Apri · Safari</span></button>
-        <button class="fitem lgcard" data-open="w-fine" style="animation-delay:.3s"><span class="fbadge" style="background:#34C759">06</span><b>Cosa porto via</b><span>Il punto di arrivo e la direzione: dall’ITIS a Ingegneria Informatica. Poi la parola alla commissione.</span><span class="tt">Apri · Mappe</span></button>
+        <button class="fitem lgcard" data-open="w-io" data-tag="rifl" style="animation-delay:.05s"><span class="fbadge" style="background:#FF9500">01</span><b>Da dove parto</b><span>La riflessione iniziale: chi sono, il percorso all’ITIS, cosa mi ha formato dentro e fuori da scuola.</span><span class="tt">Apri · Contatti</span></button>
+        <button class="fitem lgcard" data-open="w-fsl" data-tag="fsl" style="animation-delay:.1s"><span class="fbadge" style="background:#34C759">02</span><b>Il percorso in azienda</b><span>240 ore di formazione scuola-lavoro in terza e quarta: dove, quando e con quali compiti.</span><span class="tt">Apri · Calendario</span></button>
+        <button class="fitem lgcard" data-open="w-skills" data-tag="fsl" style="animation-delay:.15s"><span class="fbadge" style="background:#5856D6">03</span><b>Cosa ho imparato</b><span>Le competenze maturate in azienda: tre lezioni e cinque strumenti che oggi so usare.</span><span class="tt">Apri · App Store</span></button>
+        <button class="fitem lgcard" data-open="w-prog" data-tag="fsl" style="animation-delay:.2s"><span class="fbadge" style="background:#1C1C1E">04</span><b>Il progetto</b><span>Questo sito: il lavoro multimediale con cui presento l’esperienza, spiegato passo per passo.</span><span class="tt">Apri · Terminale</span></button>
+        <button class="fitem lgcard" data-open="w-coll" data-tag="cap" style="animation-delay:.25s"><span class="fbadge" style="background:#30B0C7">05</span><b>Il Curriculum</b><span>I capolavori pubblicati online: il sito sul romanzo e il project work di GPOI, visitabili adesso.</span><span class="tt">Apri · Safari</span></button>
+        <button class="fitem lgcard" data-open="w-fine" data-tag="rifl" style="animation-delay:.3s"><span class="fbadge" style="background:#34C759">06</span><b>Cosa porto via</b><span>Il punto di arrivo e la direzione: dall’ITIS a Ingegneria Informatica. Poi la parola alla commissione.</span><span class="tt">Apri · Mappe</span></button>
       </div>
       <div class="pathbar">Apertura mia, poi le domande dei professori <i>·</i> 6 capitoli <i>·</i> un’app per capitolo</div>
     </div>
   </div>
 </section>
 
-<!-- ============ 2 · CONTATTI — da dove parto ============ -->
-<section class="win a-orange" id="w-io" style="left:13%;top:12%;width:660px;height:540px">
+<section class="win a-orange" id="w-io" style="left:13%;top:10%;width:660px">
   <div class="titlebar"><span class="wt">Contatti — la mia scheda</span></div>
   <div class="wbody cmain" style="display:flex;flex-direction:column">
     <div class="chead">
       <span class="cavatar">FC</span>
       <div class="cid"><h2>Filippo Corsini</h2><p>Studente · ITIS · Informatica e Telecomunicazioni</p></div>
-      <div class="cacts"><span class="cact"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>chiama</span><span class="cact"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6L22 7"/></svg>mail</span></div>
+      <div class="cacts"><a class="cact" href="mailto:ciao@denuvo.studio"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6L22 7"/></svg>mail</a><a class="cact" href="https://github.com/00Fil" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4"/><path d="m16 8 4 4-4 4"/><path d="m13 5-2 14"/></svg>GitHub</a></div>
     </div>
     <div class="crows">
       <div class="crow lgcard"><span class="k" style="color:#FF9500">2021–2026</span><div><b>Studente ITIS · Informatica e Telecomunicazioni</b><p>Cinque anni di indirizzo tecnico: dalle basi di elettronica e sistemi fino a sviluppo web, database e reti.</p></div></div>
@@ -110,8 +102,7 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<!-- ============ 3 · CALENDARIO — il percorso in azienda ============ -->
-<section class="win a-green" id="w-fsl" style="left:18%;top:10%;width:700px;height:560px">
+<section class="win a-green" id="w-fsl" style="left:18%;top:9%;width:700px">
   <div class="titlebar"><span class="wt">Calendario — formazione scuola-lavoro</span></div>
   <div class="wbody" style="display:flex;flex-direction:column">
     <div class="cal-tb"><h3>Formazione scuola-lavoro <span>· CS Metal</span></h3>
@@ -135,8 +126,7 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<!-- ============ 4 · APP STORE — cosa ho imparato ============ -->
-<section class="win a-indigo" id="w-skills" style="left:23%;top:8%;width:680px;height:580px">
+<section class="win a-indigo" id="w-skills" style="left:23%;top:7%;width:680px">
   <div class="titlebar"><span class="wt">App Store — competenze installate</span></div>
   <div class="wbody as-body">
     <div class="as-hero lgcard"><span class="as-kicker">In evidenza</span><h3>Tre lezioni dall’azienda</h3><p>Le 240 ore in CS Metal non mi hanno insegnato solo strumenti: mi hanno insegnato un metodo. Tre cose su tutte.</p></div>
@@ -156,8 +146,7 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<!-- ============ 5 · TERMINALE — il progetto, bilingue ============ -->
-<section class="win a-dark" id="w-prog" style="left:10%;top:14%;width:820px;height:540px">
+<section class="win a-dark" id="w-prog" style="left:10%;top:12%;width:820px">
   <div class="titlebar"><span class="wt">maturita-2k26 — zsh</span></div>
   <div class="tsplit">
     <div class="tml">
@@ -180,11 +169,10 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<!-- ============ 6 · SAFARI — il Curriculum: capolavori online ============ -->
-<section class="win a-teal" id="w-coll" style="left:16%;top:13%;width:740px;height:560px">
+<section class="win a-teal" id="w-coll" style="left:16%;top:11%;width:740px">
   <div class="titlebar"><span class="wt">Safari — il Curriculum</span></div>
   <div class="stb">
-    <span class="snav"><span>‹</span><span>›</span></span>
+    <span class="snav"><button data-nav="prev" aria-label="Capitolo precedente">‹</button><button data-nav="next" aria-label="Capitolo successivo">›</button></span>
     <span class="urlfield"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>maturita2026.local/curriculum</span>
   </div>
   <div class="sf-body">
@@ -219,8 +207,7 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<!-- ============ 7 · MAPPE — cosa porto via ============ -->
-<section class="win a-purple" id="w-fine" style="left:21%;top:15%;width:820px;height:530px">
+<section class="win a-purple" id="w-fine" style="left:21%;top:12%;width:820px">
   <div class="titlebar"><span class="wt">Mappe — il percorso</span></div>
   <div class="mapwrap">
     <div class="mpanel">
@@ -254,7 +241,6 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<!-- dock -->
 <nav class="dock" id="dock">
   <span class="dapp" data-w="w-pres"><button class="ai" aria-label="Presentazione"><?= appicon('finder.webp', '/original/file-manager.svg') ?></button><span class="dot"></span><span class="tip">Presentazione · Finder</span></span>
   <span class="dapp" data-w="w-io"><button class="ai" aria-label="Chi sono"><?= appicon('contacts.webp', '/src/apps/scalable/addressbook.svg') ?></button><span class="dot"></span><span class="tip">Chi sono · Contatti</span></span>
@@ -264,7 +250,7 @@ function appicon(string $file, string $remote): string {
   <span class="dapp" data-w="w-coll"><button class="ai" aria-label="Curriculum"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></button><span class="dot"></span><span class="tip">Curriculum · Safari</span></span>
   <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Cosa porto via"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Cosa porto via · Mappe</span></span>
   <span class="dsep"></span>
-  <span class="dapp"><button class="ai" aria-label="Cestino"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino</span></span>
+  <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
 </nav>
 
 <script src="hub.js"></script>
