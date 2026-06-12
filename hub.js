@@ -430,15 +430,125 @@ if (navigator.getBattery) {
 
 document.addEventListener('click', e => {
   const el = e.target.closest('button, a');
-  if (!el || el.closest('.lights') || el.classList.contains('exit')) return;
+  if (!el || el.closest('.lights')) return;
   sndClick();
 }, true);
 
-const exitLink = document.querySelector('.mitem.exit');
-if (exitLink) {
-  exitLink.addEventListener('click', e => {
+/* Gestione alimentazione in stile macOS: conferma di spegnimento,
+   dissolvenza dello schermo e schermata di commiato scritta a mano. */
+const pwrCss = document.createElement('style');
+pwrCss.textContent =
+  '#pwrdlg{position:fixed;inset:0;z-index:7000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .22s ease}' +
+  '#pwrdlg.show{opacity:1;pointer-events:auto}' +
+  '#pwrdlg .box{width:264px;background:rgba(244,244,247,.86);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border-radius:14px;border:1px solid rgba(255,255,255,.55);box-shadow:0 24px 64px rgba(0,0,0,.4);padding:20px 18px 16px;text-align:center;transform:scale(.9);transition:transform .26s cubic-bezier(.2,1.45,.45,1)}' +
+  '#pwrdlg.show .box{transform:scale(1)}' +
+  '#pwrdlg .pico{width:42px;height:42px;margin:0 auto 10px;color:#48484e}' +
+  '#pwrdlg .pico svg{width:100%;height:100%}' +
+  '#pwrdlg h3{font-size:13px;font-weight:700;color:#1d1d1f;margin:0 0 5px;letter-spacing:-.01em}' +
+  '#pwrdlg p{font-size:11px;font-weight:500;color:rgba(60,60,67,.72);line-height:1.45;margin:0 0 14px}' +
+  '#pwrdlg .row{display:flex;gap:8px}' +
+  '#pwrdlg .row button{flex:1;height:30px;border:none;border-radius:8px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:transform .15s ease,filter .15s ease}' +
+  '#pwrdlg .row button:hover{filter:brightness(1.04)}' +
+  '#pwrdlg .row button:active{transform:scale(.96)}' +
+  '#pwr-no{background:rgba(255,255,255,.92);color:#1d1d1f;box-shadow:0 1px 2px rgba(0,0,0,.12)}' +
+  '#pwr-si{background:#0a84ff;color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.18)}' +
+  '#shut{position:fixed;inset:0;z-index:8000;background:#000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .9s ease}' +
+  '#shut.on{opacity:1;pointer-events:auto}' +
+  '#shut svg{width:min(72vw,540px);height:auto;opacity:0;transition:opacity .45s ease}' +
+  '#shut.draw svg{opacity:1}' +
+  '#shut.end svg{opacity:0;transition:opacity .6s ease}' +
+  '#shut .gr{fill:none;stroke:#fff;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}';
+document.head.appendChild(pwrCss);
+
+const pwrDlg = document.createElement('div');
+pwrDlg.id = 'pwrdlg';
+pwrDlg.innerHTML =
+  '<div class="box">' +
+  '<div class="pico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 3v9"/><path d="M17.66 6.34a8 8 0 1 1-11.32 0"/></svg></div>' +
+  '<h3 id="pwr-t"></h3><p id="pwr-m"></p>' +
+  '<div class="row"><button type="button" id="pwr-no">Annulla</button><button type="button" id="pwr-si"></button></div>' +
+  '</div>';
+document.body.appendChild(pwrDlg);
+
+const shut = document.createElement('div');
+shut.id = 'shut';
+shut.innerHTML =
+  '<svg viewBox="0 0 430 250" aria-label="Grazie">' +
+  '<path id="gr-main" class="gr" d="M132 64 C108 40 56 46 38 94 C22 138 44 178 88 178 C116 178 132 158 134 132 C120 140 104 142 96 134 C100 152 108 168 126 170 C140 170 148 152 150 134 C152 124 162 120 168 126 C172 131 170 137 165 139 C170 152 174 166 184 168 C196 168 214 148 224 130 C216 120 198 118 188 134 C178 150 184 168 200 168 C212 168 222 152 226 132 C227 150 232 166 246 166 C256 162 264 148 270 136 C276 128 288 126 294 132 C286 146 274 158 264 166 C280 162 294 164 300 176 C306 190 298 206 284 206 C272 206 268 194 274 186 C284 172 300 164 314 162 C322 156 328 146 330 136 C332 150 336 162 346 164 C356 166 364 156 364 146 C364 134 350 132 344 142 C336 154 344 168 360 168 C372 168 382 158 390 146"/>' +
+  '<path id="gr-dot" class="gr" d="M332 112 l 0.01 0"/>' +
+  '</svg>';
+document.body.appendChild(shut);
+
+const pwrT = document.getElementById('pwr-t');
+const pwrM = document.getElementById('pwr-m');
+const pwrNo = document.getElementById('pwr-no');
+const pwrSi = document.getElementById('pwr-si');
+let pwrFn = null;
+
+function pwrAsk(titolo, testo, azione, fn) {
+  pwrT.textContent = titolo;
+  pwrM.textContent = testo;
+  pwrSi.textContent = azione;
+  pwrFn = fn;
+  pwrDlg.classList.add('show');
+}
+pwrNo.addEventListener('click', () => pwrDlg.classList.remove('show'));
+pwrDlg.addEventListener('click', e => { if (e.target === pwrDlg) pwrDlg.classList.remove('show'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') pwrDlg.classList.remove('show'); });
+pwrSi.addEventListener('click', () => {
+  pwrDlg.classList.remove('show');
+  if (pwrFn) pwrFn();
+});
+
+function fadeOff(poi, attesa) {
+  ccClose();
+  sndExit();
+  closeAll();
+  shut.classList.add('on');
+  setTimeout(poi, attesa);
+}
+
+function spegni() {
+  fadeOff(() => {
+    shut.classList.add('draw');
+    const main = document.getElementById('gr-main');
+    const dot = document.getElementById('gr-dot');
+    const lm = main.getTotalLength();
+    main.style.strokeDasharray = lm;
+    main.style.strokeDashoffset = lm;
+    const ld = Math.max(dot.getTotalLength(), 0.1);
+    dot.style.strokeDasharray = ld;
+    dot.style.strokeDashoffset = ld;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        main.style.transition = 'stroke-dashoffset 2.4s cubic-bezier(.45,.05,.35,1)';
+        main.style.strokeDashoffset = '0';
+        setTimeout(() => {
+          dot.style.transition = 'stroke-dashoffset .18s ease';
+          dot.style.strokeDashoffset = '0';
+        }, 2350);
+      });
+    });
+    setTimeout(() => shut.classList.add('end'), 4400);
+    setTimeout(() => { location.replace('logout.php'); }, 5100);
+  }, 1050);
+}
+
+function riavvia() {
+  fadeOff(() => { location.replace('hub.php?boot=1'); }, 1150);
+}
+
+const shutBtn = document.querySelector('.mitem.exit');
+if (shutBtn) {
+  shutBtn.addEventListener('click', e => {
     e.preventDefault();
-    sndExit();
-    setTimeout(() => { location.href = exitLink.href; }, 380);
+    pwrAsk('Vuoi spegnere il computer adesso?', 'La sessione della presentazione verr\u00e0 chiusa.', 'Spegni', spegni);
+  });
+}
+const rebBtn = document.querySelector('.mitem.reboot');
+if (rebBtn) {
+  rebBtn.addEventListener('click', e => {
+    e.preventDefault();
+    pwrAsk('Vuoi riavviare il computer adesso?', 'Il desktop ripartir\u00e0 dalla schermata di avvio.', 'Riavvia', riavvia);
   });
 }
