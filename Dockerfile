@@ -21,4 +21,8 @@ RUN set -eux; \
     done; \
     rm -rf /var/www/html/assets/icons-b64
 
+# Font SF Pro Display: file .otf caricati direttamente in assets/fonts/
+# (pulizia di eventuali residui base64 di vecchi commit)
+RUN rm -rf /var/www/html/assets/fonts-b64
+
 EXPOSE 80
