@@ -1,10 +1,3 @@
-/* ============================================================
-   hub.js — il comportamento del desktop
-   finestre, dock con lente, semafori, drag, sheen Liquid Glass
-   e il fumetto delle card del Curriculum
-   ============================================================ */
-
-/* ---------- orologio della menu bar ---------- */
 const clockEl = document.getElementById('clock');
 function tick() {
   const d = new Date();
@@ -15,7 +8,19 @@ function tick() {
 tick();
 setInterval(tick, 10000);
 
-/* ---------- semafori: generati una volta sola ---------- */
+const boot = document.getElementById('boot');
+if (boot) {
+  const fill = boot.querySelector('.bbar span');
+  [[260, 14], [700, 36], [1150, 58], [1600, 78], [2000, 93], [2300, 100]].forEach(([t, p]) => {
+    setTimeout(() => { fill.style.width = p + '%'; }, t);
+  });
+  setTimeout(() => {
+    boot.classList.add('done');
+    document.body.classList.remove('booting');
+    setTimeout(() => boot.remove(), 750);
+  }, 2600);
+}
+
 const SVG_X    = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 2.5l5 5M7.5 2.5l-5 5"/></svg>';
 const SVG_MIN  = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 5h6"/></svg>';
 const SVG_MAX  = '<svg viewBox="0 0 10 10" fill="currentColor"><path d="M2.6 6.6L6.6 2.6H2.6zM7.4 3.4L3.4 7.4h4z"/></svg>';
@@ -29,13 +34,19 @@ document.querySelectorAll('.win .titlebar').forEach(tb => {
   tb.prepend(lights);
 });
 
-/* ---------- finestre: apri, chiudi, porta in primo piano ---------- */
 let zTop = 20;
 function focusWin(win) { zTop += 1; win.style.zIndex = zTop; }
 function syncDock() {
   document.querySelectorAll('.dapp[data-w]').forEach(d => {
     const w = document.getElementById(d.dataset.w);
     d.classList.toggle('running', !!w && w.classList.contains('open'));
+  });
+}
+function fitWin(win) {
+  requestAnimationFrame(() => {
+    const r = win.getBoundingClientRect();
+    const limit = window.innerHeight - 82;
+    if (r.bottom > limit) win.style.top = Math.max(40, Math.round(limit - r.height)) + 'px';
   });
 }
 function openWin(id) {
@@ -46,11 +57,15 @@ function openWin(id) {
     win.classList.add('open');
   }
   focusWin(win);
+  fitWin(win);
   syncDock();
 }
 function closeWin(win) {
   win.classList.add('closing');
   setTimeout(() => { win.classList.remove('open', 'closing', 'maxi'); syncDock(); }, 260);
+}
+function closeAll() {
+  document.querySelectorAll('.win.open').forEach((w, i) => setTimeout(() => closeWin(w), i * 60));
 }
 
 document.querySelectorAll('.win').forEach(win => {
@@ -60,42 +75,54 @@ document.querySelectorAll('.win').forEach(win => {
   win.querySelector('.c-max').addEventListener('click', e => { e.stopPropagation(); win.classList.toggle('maxi'); focusWin(win); });
 });
 
-/* click delegato: tutto ciò che ha data-open apre una finestra */
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-open]');
   if (t) openWin(t.dataset.open);
 });
 
-/* ---------- drag delle finestre dalla titlebar ---------- */
-document.querySelectorAll('.win').forEach(win => {
-  const tb = win.querySelector('.titlebar');
-  let sx = 0, sy = 0, ox = 0, oy = 0, dragging = false;
-  tb.addEventListener('pointerdown', e => {
-    if (e.target.closest('.lights') || win.classList.contains('maxi')) return;
-    dragging = true;
-    sx = e.clientX; sy = e.clientY;
-    const r = win.getBoundingClientRect();
-    ox = r.left; oy = r.top;
-    tb.setPointerCapture(e.pointerId);
+const ORDER = ['w-pres', 'w-io', 'w-fsl', 'w-skills', 'w-prog', 'w-coll', 'w-fine'];
+function topChapter() {
+  let best = null, z = -1;
+  ORDER.forEach(id => {
+    const w = document.getElementById(id);
+    if (w && w.classList.contains('open') && (+w.style.zIndex || 0) >= z) { z = +w.style.zIndex || 0; best = id; }
   });
-  tb.addEventListener('pointermove', e => {
-    if (!dragging) return;
-    const x = Math.min(Math.max(ox + e.clientX - sx, -win.offsetWidth + 90), innerWidth - 90);
-    const y = Math.min(Math.max(oy + e.clientY - sy, 34), innerHeight - 60);
-    win.style.left = x + 'px';
-    win.style.top = y + 'px';
+  return best || 'w-coll';
+}
+document.querySelectorAll('[data-nav]').forEach(b => {
+  b.addEventListener('click', () => {
+    const i = ORDER.indexOf(topChapter());
+    const n = b.dataset.nav === 'next' ? (i + 1) % ORDER.length : (i - 1 + ORDER.length) % ORDER.length;
+    openWin(ORDER[n]);
   });
-  const stop = () => { dragging = false; };
-  tb.addEventListener('pointerup', stop);
-  tb.addEventListener('pointercancel', stop);
 });
 
-/* ---------- dock: lente con campana cosinusoidale (rAF + lerp) ---------- */
+const fgrid = document.querySelector('.fgrid');
+document.querySelectorAll('.fseg button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.fseg button').forEach(x => x.classList.toggle('on', x === b));
+    fgrid.classList.toggle('list', b.dataset.view === 'list');
+  });
+});
+
+let hlTimer = null;
+document.querySelectorAll('.sidebar [data-tag]').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.fitem').forEach(c => {
+      c.classList.toggle('hl', (c.dataset.tag || '') === b.dataset.tag);
+    });
+    clearTimeout(hlTimer);
+    hlTimer = setTimeout(() => {
+      document.querySelectorAll('.fitem.hl').forEach(c => c.classList.remove('hl'));
+    }, 1900);
+  });
+});
+
 const dock = document.getElementById('dock');
 const dockIcons = Array.from(dock.querySelectorAll('.dapp .ai'));
-const DOCK_GROW = 0.8;     // crescita massima (+80%)
-const DOCK_RANGE = 160;    // raggio d'influenza in px
-const LERP = 0.25;         // morbidezza dell'inseguimento
+const DOCK_GROW = 0.8;
+const DOCK_RANGE = 160;
+const LERP = 0.25;
 let targetS = dockIcons.map(() => 1);
 let currentS = dockIcons.map(() => 1);
 let rafOn = false;
@@ -128,7 +155,6 @@ dock.addEventListener('pointerleave', () => {
   wakeDock();
 });
 
-/* click sul dock: rimbalzo + apertura */
 dock.querySelectorAll('.dapp').forEach(d => {
   const btn = d.querySelector('.ai');
   btn.addEventListener('click', () => {
@@ -136,10 +162,10 @@ dock.querySelectorAll('.dapp').forEach(d => {
     void btn.offsetWidth;
     btn.classList.add('bounce');
     if (d.dataset.w) openWin(d.dataset.w);
+    if (d.dataset.act === 'trash') closeAll();
   });
 });
 
-/* ---------- Liquid Glass: lo sheen segue il puntatore ---------- */
 document.addEventListener('pointermove', e => {
   const card = e.target.closest('.lgcard');
   if (!card) return;
@@ -148,7 +174,6 @@ document.addEventListener('pointermove', e => {
   card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
 });
 
-/* ---------- le card del Curriculum parlano in hover ---------- */
 document.querySelectorAll('.favcard[data-say]').forEach(card => {
   const frasi = card.dataset.say.split('|').filter(Boolean);
   const bubble = card.querySelector('.favsay');
@@ -161,7 +186,26 @@ document.querySelectorAll('.favcard[data-say]').forEach(card => {
   });
 });
 
-/* ---------- stato iniziale ---------- */
+document.querySelectorAll('.win').forEach(win => {
+  const tb = win.querySelector('.titlebar');
+  let drag = false, sx = 0, sy = 0, ox = 0, oy = 0;
+  tb.addEventListener('pointerdown', e => {
+    if (e.target.closest('.lights') || win.classList.contains('maxi')) return;
+    drag = true;
+    const r = win.getBoundingClientRect();
+    sx = e.clientX; sy = e.clientY; ox = r.left; oy = r.top;
+    tb.setPointerCapture(e.pointerId);
+  });
+  tb.addEventListener('pointermove', e => {
+    if (!drag) return;
+    win.style.left = Math.round(ox + e.clientX - sx) + 'px';
+    win.style.top = Math.max(36, Math.round(oy + e.clientY - sy)) + 'px';
+  });
+  const end = () => { drag = false; };
+  tb.addEventListener('pointerup', end);
+  tb.addEventListener('pointercancel', end);
+});
+
 syncDock();
 const first = document.querySelector('.win.open');
-if (first) focusWin(first);
+if (first) { focusWin(first); fitWin(first); }
