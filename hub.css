@@ -336,7 +336,10 @@ img { -webkit-user-drag: none; }
 
 /* ------------------------------------------------------------
    DOCK — icone reali, lente d'ingrandimento che sposta le
-   vicine (scala la larghezza reale, non solo il transform)
+   vicine (scala la larghezza reale, non solo il transform).
+   La scala --s è animata frame-per-frame da hub.js con
+   requestAnimationFrame: qui NIENTE transition su width/height,
+   altrimenti l'onda risulterebbe gommosa e in ritardo.
    ------------------------------------------------------------ */
 .dock {
   position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
@@ -353,7 +356,8 @@ img { -webkit-user-drag: none; }
 .dock .ai {
   width: calc(56px * var(--s, 1)); height: calc(56px * var(--s, 1));
   padding: 0; background: none; box-shadow: none; border-radius: 0;
-  transition: width .1s ease-out, height .1s ease-out;
+  transition: none;
+  will-change: width, height;
 }
 .dock .ai img { width: 100%; height: 100%; display: block; pointer-events: none; }
 .dock .ai:active { filter: brightness(.85); }
