@@ -13,10 +13,9 @@ if (boot) {
   const fill = boot.querySelector('.bbar span');
   const logo = boot.querySelector('img');
   const t0 = performance.now();
-  const MINTIME = 1100;
-  const MAXWAIT = 15000;
-  let total = 1;
-  let loaded = 0;
+  const DUR = 2300;
+  const MAXWAIT = 6000;
+  let ready = !logo;
   let shown = 0;
   const fallback = () => {
     const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -25,39 +24,22 @@ if (boot) {
     s.innerHTML = '<use href="#i-cap"/>';
     logo.replaceWith(s);
   };
-  const track = el => {
-    total += 1;
-    if (el.complete) { loaded += 1; return; }
-    const done = () => { loaded += 1; };
-    el.addEventListener('load', done, { once: true });
-    el.addEventListener('error', done, { once: true });
-  };
-  const rest = () => {
-    loaded += 1;
-    const wall = new Image();
-    track(wall);
-    wall.src = 'assets/bg.png';
-    document.querySelectorAll('img').forEach(img => { if (img !== logo) track(img); });
-    if (document.fonts && document.fonts.ready) {
-      total += 1;
-      document.fonts.ready.then(() => { loaded += 1; });
+  if (logo) {
+    if (logo.complete) {
+      if (logo.naturalWidth === 0) fallback();
+      ready = true;
+    } else {
+      logo.addEventListener('load', () => { ready = true; });
+      logo.addEventListener('error', () => { fallback(); ready = true; });
     }
-  };
-  if (!logo) {
-    rest();
-  } else if (logo.complete) {
-    if (logo.naturalWidth === 0) fallback();
-    rest();
-  } else {
-    logo.addEventListener('load', rest, { once: true });
-    logo.addEventListener('error', () => { fallback(); rest(); }, { once: true });
   }
   const frame = now => {
     const el = now - t0;
-    let target = loaded / total * 100;
-    if (el >= MAXWAIT) target = 100;
-    if (el < MINTIME) target = Math.min(target, el / MINTIME * 100);
-    shown += (target - shown) * 0.08;
+    const t = Math.min(1, el / DUR);
+    const eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    let target = eased * 100;
+    if (!ready && el < MAXWAIT) target = Math.min(target, 88);
+    shown += (target - shown) * 0.14;
     if (target >= 100 && shown > 99.4) shown = 100;
     fill.style.width = shown.toFixed(2) + '%';
     if (shown < 100) { requestAnimationFrame(frame); return; }
@@ -102,12 +84,14 @@ function openWin(id) {
   if (!win.classList.contains('open')) {
     win.classList.remove('closing');
     win.classList.add('open');
+    pop(620);
   }
   focusWin(win);
   fitWin(win);
   syncDock();
 }
 function closeWin(win) {
+  pop(380);
   win.classList.add('closing');
   setTimeout(() => { win.classList.remove('open', 'closing', 'maxi'); syncDock(); }, 260);
 }
@@ -256,3 +240,110 @@ document.querySelectorAll('.win').forEach(win => {
 syncDock();
 const first = document.querySelector('.win.open');
 if (first) { focusWin(first); fitWin(first); }
+
+const ccBtn = document.getElementById('ccbtn');
+const ccPanel = document.getElementById('ccpanel');
+function ccClose() { ccPanel.classList.remove('show'); ccBtn.classList.remove('on'); }
+ccBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  const open = ccPanel.classList.toggle('show');
+  ccBtn.classList.toggle('on', open);
+});
+document.addEventListener('click', e => {
+  if (ccPanel.classList.contains('show') && !ccPanel.contains(e.target) && !ccBtn.contains(e.target)) ccClose();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') ccClose(); });
+
+const wifiIc = document.getElementById('cc-wifi-ic');
+const wifiSt = document.getElementById('cc-wifi-st');
+const mbWifi = document.getElementById('mb-wifi');
+function wifiSync() {
+  const on = navigator.onLine;
+  wifiIc.classList.toggle('on', on);
+  wifiSt.textContent = on ? 'Connesso' : 'Offline';
+  mbWifi.style.opacity = on ? '' : '.35';
+}
+wifiSync();
+window.addEventListener('online', wifiSync);
+window.addEventListener('offline', wifiSync);
+
+const PAGE = { title: 'Maturità 2026 — Filippo Corsini', url: location.origin + location.pathname };
+const copySt = document.getElementById('cc-copy-st');
+function copyLink() {
+  navigator.clipboard.writeText(PAGE.url).then(() => {
+    copySt.textContent = 'Copiato negli appunti';
+    setTimeout(() => { copySt.textContent = 'Per la commissione'; }, 1800);
+  }).catch(() => {});
+}
+document.getElementById('cc-share').addEventListener('click', () => {
+  if (navigator.share) navigator.share(PAGE).catch(() => {});
+  else copyLink();
+});
+document.getElementById('cc-copy').addEventListener('click', copyLink);
+
+const fullBtn = document.getElementById('cc-full');
+fullBtn.addEventListener('click', () => {
+  if (document.fullscreenElement) document.exitFullscreen();
+  else document.documentElement.requestFullscreen().catch(() => {});
+});
+document.addEventListener('fullscreenchange', () => {
+  fullBtn.classList.toggle('on', !!document.fullscreenElement);
+});
+
+document.getElementById('cc-pres').addEventListener('click', () => {
+  ccClose();
+  closeAll();
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+  setTimeout(() => openWin('w-pres'), 520);
+});
+document.getElementById('cc-boot').addEventListener('click', () => { location.href = 'hub.php?boot=1'; });
+
+const dim = document.getElementById('dim');
+const briInput = document.getElementById('cc-bri');
+const volInput = document.getElementById('cc-vol');
+function rangeFill(el) {
+  const pct = (el.value - el.min) / (el.max - el.min) * 100;
+  el.style.setProperty('--val', pct + '%');
+}
+function briApply() {
+  rangeFill(briInput);
+  dim.style.opacity = ((100 - briInput.value) / 100 * 0.82).toFixed(3);
+}
+briInput.value = localStorage.getItem('cc-bri') || 100;
+briApply();
+briInput.addEventListener('input', () => { briApply(); localStorage.setItem('cc-bri', briInput.value); });
+
+volInput.value = localStorage.getItem('cc-vol') ?? 25;
+rangeFill(volInput);
+volInput.addEventListener('input', () => { rangeFill(volInput); localStorage.setItem('cc-vol', volInput.value); pop(620); });
+
+let actx = null;
+function pop(freq) {
+  const v = volInput.value / 100;
+  if (!v) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const o = actx.createOscillator();
+    const g = actx.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(freq, actx.currentTime);
+    o.frequency.exponentialRampToValueAtTime(freq * 0.55, actx.currentTime + 0.09);
+    g.gain.setValueAtTime(v * 0.16, actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + 0.1);
+    o.connect(g).connect(actx.destination);
+    o.start();
+    o.stop(actx.currentTime + 0.11);
+  } catch (e) {}
+}
+
+const bpct = document.getElementById('bpct');
+if (navigator.getBattery) {
+  navigator.getBattery().then(b => {
+    const upd = () => { bpct.textContent = Math.round(b.level * 100) + '%'; };
+    upd();
+    b.addEventListener('levelchange', upd);
+    b.addEventListener('chargingchange', upd);
+  });
+} else {
+  bpct.remove();
+}
