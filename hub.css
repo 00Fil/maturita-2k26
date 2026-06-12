@@ -373,3 +373,12 @@ svg { display: block; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
 }
+
+/* ------------------------------------------------------------
+   CURSORI — i cursori reali di macOS (apple_cursor di ful1e5, MIT)
+   arrow = freccia, pointer = manina, text = trave di testo
+   ------------------------------------------------------------ */
+body { cursor: url("assets/cursors/arrow.svg") 9 4, default; }
+button, a, .ai, .mitem, .cap, .dicon, .pillbtn, .lights button, .dapp .ai { cursor: url("assets/cursors/pointer.svg") 10 5, pointer; }
+.titlebar, .titlebar:active, .whead .ai, .row .ai { cursor: url("assets/cursors/arrow.svg") 9 4, default; }
+input, textarea { cursor: url("assets/cursors/text.svg") 14 14, text; }
