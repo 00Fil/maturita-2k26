@@ -455,8 +455,8 @@ pwrCss.textContent =
   '#shut{position:fixed;inset:0;z-index:8000;background:#000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 1.2s cubic-bezier(.4,0,.2,1)}' +
   '#shut.on{opacity:1;pointer-events:auto}' +
   '#shut .gwrap{display:flex;flex-direction:column;align-items:center;gap:28px;transition:opacity 1.1s cubic-bezier(.4,0,.2,1),filter 1.1s cubic-bezier(.4,0,.2,1)}' +
-  '#shut .gtx{font-size:clamp(56px,11vw,116px);font-weight:600;letter-spacing:-.015em;color:#fff;line-height:1;opacity:0;transform:scale(.96);transition:opacity 1.8s cubic-bezier(.25,.1,.25,1),transform 2.8s cubic-bezier(.25,.1,.25,1)}' +
-  '#shut.draw .gtx{opacity:1;transform:scale(1)}' +
+  '#shut .gtx{font-size:clamp(56px,11vw,116px);font-weight:600;letter-spacing:-.015em;line-height:1;background:linear-gradient(100deg,#fff 0%,#fff 38%,#a8c4ff 46%,#e0bbff 50%,#ffb8d6 54%,#fff 62%,#fff 100%);background-size:240% 100%;background-position:120% 0;-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;transform:scale(.96);filter:blur(14px);transition:opacity 1.8s cubic-bezier(.25,.1,.25,1),transform 2.8s cubic-bezier(.25,.1,.25,1),filter 1.8s cubic-bezier(.25,.1,.25,1)}' +
+  '#shut.draw .gtx{opacity:1;transform:scale(1);filter:blur(0);animation:gsheen 5.5s cubic-bezier(.4,0,.2,1) 1.8s infinite}' +
   '#shut .gsub{font-size:15px;font-weight:500;letter-spacing:.01em;color:#86868b;opacity:0;transform:translateY(10px);transition:opacity 1.3s cubic-bezier(.16,1,.3,1),transform 1.3s cubic-bezier(.16,1,.3,1)}' +
   '#shut.draw .gsub{opacity:1;transform:none;transition-delay:1.4s}' +
   '#shut .gspin{position:relative;width:30px;height:30px;opacity:0;transition:opacity 1s cubic-bezier(.4,0,.2,1)}' +
@@ -471,7 +471,8 @@ pwrCss.textContent =
   '#shut .gspin i:nth-child(7){transform:rotate(270deg);animation-delay:-.1125s}' +
   '#shut .gspin i:nth-child(8){transform:rotate(315deg);animation-delay:0s}' +
   '#shut.end .gwrap{opacity:0;filter:blur(10px)}' +
-  '@keyframes gspin{0%{opacity:1}100%{opacity:.12}}';
+  '@keyframes gspin{0%{opacity:1}100%{opacity:.12}}' +
+  '@keyframes gsheen{0%{background-position:120% 0}60%{background-position:-80% 0}100%{background-position:-80% 0}}';
 document.head.appendChild(pwrCss);
 
 const pwrDlg = document.createElement('div');
