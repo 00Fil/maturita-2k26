@@ -80,7 +80,7 @@ img { -webkit-user-drag: none; }
   transition: opacity .7s ease;
 }
 #boot.done { opacity: 0; pointer-events: none; }
-#boot img { height: 88px; filter: brightness(0) invert(1); animation: bootIn .9s var(--spring-soft) both; }
+#boot img { height: 96px; border-radius: 18px; animation: bootIn .9s var(--spring-soft) both; }
 #boot .bfall { width: 88px; height: 88px; color: #fff; fill: currentColor; animation: bootIn .9s var(--spring-soft) both; }
 #boot .bbar {
   width: 230px; height: 6px; border-radius: 999px; overflow: hidden;
