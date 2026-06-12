@@ -91,6 +91,10 @@ img { -webkit-user-drag: none; }
 @keyframes bootIn { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
 body.booting .menubar, body.booting .dock, body.booting .dicon,
 body.booting .win.open, body.booting .win.open * { animation-play-state: paused; }
+body.booting .bg { background: linear-gradient(165deg, #1B4FA0 0%, #5A39A8 52%, #C8527E 100%); }
+@media (prefers-color-scheme: dark) {
+  body.booting .bg { background: linear-gradient(165deg, #0C1F42 0%, #221647 52%, #43203A 100%); }
+}
 
 .lgcard {
   position: relative; overflow: hidden;
