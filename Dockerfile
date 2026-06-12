@@ -15,7 +15,7 @@ RUN mkdir -p /var/www/html/assets/icons && cd /var/www/html/assets/icons \
  && curl -fsSL -o finder.svg   "$ICONS/original/file-manager.svg" \
  && curl -fsSL -o contacts.svg "$ICONS/src/apps/scalable/addressbook.svg" \
  && curl -fsSL -o calendar.svg "$ICONS/original/calendar.svg" \
- && curl -fsSL -o appstore.svg "$ICONS/src/apps/scalable/gnome-software.svg" \
+ && curl -fsSL -o appstore.svg "$ICONS/original/softwarecenter.svg" \
  && curl -fsSL -o terminal.svg "$ICONS/src/apps/scalable/terminal.svg" \
  && curl -fsSL -o safari.svg   "$ICONS/src/apps/scalable/safari.svg" \
  && curl -fsSL -o maps.svg     "$ICONS/original/gnome-maps.svg" \
