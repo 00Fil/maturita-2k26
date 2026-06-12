@@ -91,20 +91,52 @@ wins.forEach(w => {
   bar.addEventListener('pointerup', () => { dragging = false; w.style.transition = ''; });
 });
 
-/* ---------- dock: lente d'ingrandimento come macOS ---------- */
+/* ------------------------------------------------------------
+   DOCK — lente d'ingrandimento fedele a macOS.
+   L'onda usa una campana cosinusoidale (lo stesso falloff del
+   dock vero) e ogni icona insegue dolcemente la sua scala
+   obiettivo a 60 fps con requestAnimationFrame: niente scatti
+   da transition CSS, l'onda segue il mouse in modo fluido e
+   si richiude morbidamente quando il cursore esce dal dock.
+   ------------------------------------------------------------ */
 const dock = document.getElementById('dock');
 const dockIcons = [...dock.querySelectorAll('.ai')];
-dock.addEventListener('mousemove', (e) => {
-  dockIcons.forEach(ic => {
+const DOCK_GROW  = 0.8;   // ingrandimento massimo: 1 → 1.8x come macOS
+const DOCK_RANGE = 160;   // raggio d'influenza dell'onda in px
+const dockScales = dockIcons.map(() => 1);
+let dockMouseX = null;    // null = cursore fuori dal dock
+let dockRaf = null;
+
+function dockTargets() {
+  return dockIcons.map(ic => {
+    if (dockMouseX === null) return 1;
     const r = ic.getBoundingClientRect();
-    const d = Math.abs(e.clientX - (r.left + r.width / 2));
-    const s = Math.max(1, 1.5 - d / 150);
-    ic.style.setProperty('--s', s.toFixed(3));
+    const d = Math.abs(dockMouseX - (r.left + r.width / 2));
+    if (d >= DOCK_RANGE) return 1;
+    /* campana cosinusoidale: 1 al centro, 0 ai bordi, derivata nulla agli estremi */
+    const wave = 0.5 * (1 + Math.cos(Math.PI * d / DOCK_RANGE));
+    return 1 + DOCK_GROW * wave;
   });
-});
-dock.addEventListener('mouseleave', () => {
-  dockIcons.forEach(ic => ic.style.setProperty('--s', 1));
-});
+}
+
+function dockStep() {
+  const targets = dockTargets();
+  let active = false;
+  dockIcons.forEach((ic, i) => {
+    /* inseguimento esponenziale: morbido ma reattivo */
+    dockScales[i] += (targets[i] - dockScales[i]) * 0.25;
+    if (Math.abs(targets[i] - dockScales[i]) > 0.001) active = true;
+    else dockScales[i] = targets[i];
+    ic.style.setProperty('--s', dockScales[i].toFixed(4));
+  });
+  if (active || dockMouseX !== null) dockRaf = requestAnimationFrame(dockStep);
+  else dockRaf = null;
+}
+
+function dockWake() { if (dockRaf === null) dockRaf = requestAnimationFrame(dockStep); }
+
+dock.addEventListener('mousemove', (e) => { dockMouseX = e.clientX; dockWake(); });
+dock.addEventListener('mouseleave', () => { dockMouseX = null; dockWake(); });
 
 /* rimbalzo dell'icona quando apre la sua app */
 function bounce(ic) {
