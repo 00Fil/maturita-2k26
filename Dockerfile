@@ -1,29 +1,24 @@
-# ============================================
 # PCTO · Maturità 2026 — immagine app
-# PHP 8.3 + Apache, con driver MySQL per PDO
-# ============================================
 FROM php:8.3-apache
 
-# Driver MySQL per PDO (unica estensione necessaria)
+# Estensione PDO per MySQL
 RUN docker-php-ext-install pdo_mysql
 
-# Icone reali delle app di macOS (WhiteSur-icon-theme di vinceliuice, GPL-3.0):
-# riproduzione fedele 1:1 delle icone di Big Sur, scaricate alla build
-# e servite in locale da assets/icons/ (così funzionano anche offline)
+# Icona Terminal (WhiteSur — non presente nel set ufficiale fornito)
 ARG ICONS=https://raw.githubusercontent.com/vinceliuice/WhiteSur-icon-theme/3cc051a4709e67921a9d47cd2a3e0111bbe5e2bd
-RUN mkdir -p /var/www/html/assets/icons && cd /var/www/html/assets/icons \
- && curl -fsSL -o finder.svg   "$ICONS/original/file-manager.svg" \
- && curl -fsSL -o contacts.svg "$ICONS/src/apps/scalable/addressbook.svg" \
- && curl -fsSL -o calendar.svg "$ICONS/original/calendar.svg" \
- && curl -fsSL -o appstore.svg "$ICONS/original/softwarecenter.svg" \
- && curl -fsSL -o terminal.svg "$ICONS/src/apps/scalable/terminal.svg" \
- && curl -fsSL -o safari.svg   "$ICONS/src/apps/scalable/safari.svg" \
- && curl -fsSL -o maps.svg     "$ICONS/original/gnome-maps.svg" \
- && curl -fsSL -o preview.svg  "$ICONS/src/apps/scalable/accessories-document-viewer.svg" \
- && curl -fsSL -o trash.svg    "$ICONS/src/places/scalable/user-trash.svg"
+RUN mkdir -p /var/www/html/assets/icons && \
+    curl -fsSL "$ICONS/src/apps/scalable/terminal.svg" -o /var/www/html/assets/icons/terminal.svg
 
-# Copia il sito (login + desktop) e gli asset locali (cursori macOS)
+# File dell'app
 COPY index.php login.php logout.php hub.php hub.css hub.js /var/www/html/
 COPY assets/ /var/www/html/assets/
+
+# Decodifica le icone ufficiali macOS (vendorizzate come base64 nel repo)
+RUN set -eux; \
+    for f in /var/www/html/assets/icons-b64/*.b64; do \
+      n="$(basename "$f" .b64)"; \
+      base64 -d "$f" > "/var/www/html/assets/icons/$n"; \
+    done; \
+    rm -rf /var/www/html/assets/icons-b64
 
 EXPOSE 80
