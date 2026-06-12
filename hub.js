@@ -84,14 +84,14 @@ function openWin(id) {
   if (!win.classList.contains('open')) {
     win.classList.remove('closing');
     win.classList.add('open');
-    pop(620);
+    sndOpen();
   }
   focusWin(win);
   fitWin(win);
   syncDock();
 }
 function closeWin(win) {
-  pop(380);
+  sndClose();
   win.classList.add('closing');
   setTimeout(() => { win.classList.remove('open', 'closing', 'maxi'); syncDock(); }, 260);
 }
@@ -302,37 +302,80 @@ const dim = document.getElementById('dim');
 const briInput = document.getElementById('cc-bri');
 const volInput = document.getElementById('cc-vol');
 function rangeFill(el) {
-  const pct = (el.value - el.min) / (el.max - el.min) * 100;
-  el.style.setProperty('--val', pct + '%');
+  const pct = (el.value - el.min) / (el.max - el.min);
+  el.style.setProperty('--val', 'calc((100% - 20px) * ' + pct.toFixed(4) + ' + 10px)');
 }
 function briApply() {
   rangeFill(briInput);
   dim.style.opacity = ((100 - briInput.value) / 100 * 0.82).toFixed(3);
 }
+briInput.step = 'any';
+volInput.step = 'any';
 briInput.value = localStorage.getItem('cc-bri') || 100;
 briApply();
 briInput.addEventListener('input', () => { briApply(); localStorage.setItem('cc-bri', briInput.value); });
 
 volInput.value = localStorage.getItem('cc-vol') ?? 25;
 rangeFill(volInput);
-volInput.addEventListener('input', () => { rangeFill(volInput); localStorage.setItem('cc-vol', volInput.value); pop(620); });
+volInput.addEventListener('input', () => { rangeFill(volInput); localStorage.setItem('cc-vol', volInput.value); sndTick(); });
+volInput.addEventListener('change', () => { tickAt = 0; sndTick(); });
 
-let actx = null;
-function pop(freq) {
+let actx = null, sndBus = null, tickAt = 0;
+function audio() {
+  if (!actx) {
+    actx = new (window.AudioContext || window.webkitAudioContext)();
+    const lp = actx.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.value = 2400;
+    lp.Q.value = 0.5;
+    sndBus = actx.createGain();
+    sndBus.connect(lp);
+    lp.connect(actx.destination);
+  }
+  if (actx.state === 'suspended') actx.resume();
+  return actx;
+}
+function note(freq, at, dur, peak) {
+  const o = actx.createOscillator();
+  const g = actx.createGain();
+  o.type = 'sine';
+  o.frequency.value = freq;
+  g.gain.setValueAtTime(0.0001, at);
+  g.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0002), at + 0.008);
+  g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+  o.connect(g).connect(sndBus);
+  o.start(at);
+  o.stop(at + dur + 0.04);
+}
+function sndOpen() {
   const v = volInput.value / 100;
   if (!v) return;
   try {
-    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
-    const o = actx.createOscillator();
-    const g = actx.createGain();
-    o.type = 'sine';
-    o.frequency.setValueAtTime(freq, actx.currentTime);
-    o.frequency.exponentialRampToValueAtTime(freq * 0.55, actx.currentTime + 0.09);
-    g.gain.setValueAtTime(v * 0.16, actx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.0001, actx.currentTime + 0.1);
-    o.connect(g).connect(actx.destination);
-    o.start();
-    o.stop(actx.currentTime + 0.11);
+    const t = audio().currentTime + 0.01;
+    note(523.25, t, 0.26, v * 0.11);
+    note(783.99, t + 0.014, 0.22, v * 0.05);
+    note(1046.5, t + 0.014, 0.17, v * 0.022);
+  } catch (e) {}
+}
+function sndClose() {
+  const v = volInput.value / 100;
+  if (!v) return;
+  try {
+    const t = audio().currentTime + 0.01;
+    note(415.3, t, 0.2, v * 0.1);
+    note(523.25, t + 0.012, 0.15, v * 0.04);
+  } catch (e) {}
+}
+function sndTick() {
+  const v = volInput.value / 100;
+  if (!v) return;
+  const now = performance.now();
+  if (now - tickAt < 85) return;
+  tickAt = now;
+  try {
+    const t = audio().currentTime + 0.005;
+    note(987.77, t, 0.08, v * 0.13);
+    note(1975.53, t, 0.05, v * 0.03);
   } catch (e) {}
 }
 
