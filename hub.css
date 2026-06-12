@@ -91,10 +91,6 @@ img { -webkit-user-drag: none; }
 @keyframes bootIn { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
 body.booting .menubar, body.booting .dock, body.booting .dicon,
 body.booting .win.open, body.booting .win.open * { animation-play-state: paused; }
-body.booting .bg { background: linear-gradient(165deg, #1B4FA0 0%, #5A39A8 52%, #C8527E 100%); }
-@media (prefers-color-scheme: dark) {
-  body.booting .bg { background: linear-gradient(165deg, #0C1F42 0%, #221647 52%, #43203A 100%); }
-}
 
 .lgcard {
   position: relative; overflow: hidden;
@@ -153,7 +149,12 @@ body.booting .bg { background: linear-gradient(165deg, #1B4FA0 0%, #5A39A8 52%, 
 .menubar .mitem:hover { background: rgba(255,255,255,0.22); box-shadow: var(--edge); }
 .menubar .mitem:active { transform: scale(.94); }
 .menubar .right { margin-left: auto; display: flex; align-items: center; gap: 2px; }
-.menubar .sico { display: flex; padding: 4px 7px; color: var(--text); }
+.menubar .sico { display: flex; align-items: center; gap: 4px; padding: 4px 7px; color: var(--text); }
+.menubar .bpct { font-size: 11px; font-weight: 650; }
+.menubar .ccbtn { display: flex; align-items: center; padding: 4px 7px; color: var(--text); background: none; border: none; border-radius: 8px; transition: background .2s ease, transform .35s var(--spring); }
+.menubar .ccbtn:hover, .menubar .ccbtn.on { background: rgba(255,255,255,0.22); box-shadow: var(--edge); }
+.menubar .ccbtn:active { transform: scale(.92); }
+.menubar .ccbtn svg { width: 15px; height: 15px; }
 .menubar .sico svg { width: 15px; height: 15px; }
 .menubar .who { display: flex; align-items: center; gap: 6px; font-weight: 700; padding: 4px 9px; }
 .menubar .who .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 6px var(--ok); }
@@ -568,6 +569,50 @@ a.favcard:hover .favsay { opacity: 1; transform: translateY(0) scale(1); }
 }
 .dapp:hover .tip { opacity: 1; transform: translate(-50%, 0) scale(1); }
 
+
+#dim { position: fixed; inset: 0; z-index: 6000; background: #000; opacity: 0; pointer-events: none; }
+.ccpanel {
+  position: fixed; top: 40px; right: 10px; z-index: 4500;
+  width: 330px; padding: 10px;
+  display: flex; flex-direction: column; gap: 10px;
+  border-radius: 20px;
+  background: var(--glass-bar);
+  backdrop-filter: blur(40px) saturate(1.9);
+  -webkit-backdrop-filter: blur(40px) saturate(1.9);
+  box-shadow: inset 0 1px 0 var(--hairline), inset 0 0 0 1px rgba(255,255,255,0.16), 0 18px 44px rgba(12,16,40,0.3);
+  opacity: 0; visibility: hidden; transform: translateY(-8px) scale(.96); transform-origin: top right;
+  transition: opacity .18s ease, transform .35s var(--spring), visibility .2s;
+}
+.ccpanel.show { opacity: 1; visibility: visible; transform: none; }
+.ccgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ccmod { border-radius: 15px; background: var(--surface); box-shadow: var(--edge), 0 2px 8px rgba(12,16,40,0.08); padding: 7px; }
+.ccconn { display: flex; flex-direction: column; gap: 1px; }
+.ccrow { display: flex; align-items: center; gap: 8px; width: 100%; padding: 5px 6px; border-radius: 11px; background: none; border: none; font: inherit; text-align: left; color: var(--text); transition: background .2s ease; }
+.ccrow:hover { background: rgba(127,127,135,0.16); }
+.ccrow:active { background: rgba(127,127,135,0.26); }
+.ccico { width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(127,127,135,0.36); color: #fff; transition: background .25s ease; }
+.ccico svg { width: 15px; height: 15px; }
+.ccico.on { background: var(--blue); }
+.cctxt { min-width: 0; }
+.cctxt b { display: block; font-size: 12px; font-weight: 700; letter-spacing: -0.01em; }
+.cctxt small { display: block; font-size: 10.5px; font-weight: 550; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cccol { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.ccfocus { flex: 1; display: flex; align-items: center; gap: 8px; border: none; font: inherit; text-align: left; color: var(--text); padding: 7px 8px; transition: transform .3s var(--spring); }
+.ccfocus:active { transform: scale(.97); }
+.ccduo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ccmini { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; padding: 9px 4px 8px; border-radius: 15px; background: var(--surface); box-shadow: var(--edge), 0 2px 8px rgba(12,16,40,0.08); border: none; font: inherit; font-size: 10px; font-weight: 650; line-height: 1.25; text-align: center; color: var(--text); transition: transform .3s var(--spring), background .25s ease, color .25s ease; }
+.ccmini svg { width: 17px; height: 17px; }
+.ccmini:active { transform: scale(.94); }
+.ccmini.on { background: var(--blue); color: #fff; }
+.cclab { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: -0.01em; padding: 2px 4px 7px; }
+.ccsl { padding: 9px 10px 11px; }
+.ccrange { position: relative; }
+.ccrange input { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 22px; margin: 0; border-radius: 999px; background: linear-gradient(to right, #fff var(--val, 100%), rgba(127,127,135,0.32) var(--val, 100%)); box-shadow: inset 0 0 0 0.5px rgba(20,22,40,0.12); outline: none; cursor: url("assets/cursors/pointer.svg") 10 5, pointer; }
+.ccrange input::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 0.5px rgba(0,0,0,0.14), 0 1px 4px rgba(12,16,40,0.32); }
+.ccrange input::-moz-range-thumb { width: 20px; height: 20px; border: none; border-radius: 50%; background: #fff; box-shadow: 0 0 0 0.5px rgba(0,0,0,0.14), 0 1px 4px rgba(12,16,40,0.32); }
+.ccrange .cic { position: absolute; left: 6px; top: 50%; translate: 0 -50%; width: 11px; height: 11px; color: rgba(60,60,67,0.55); pointer-events: none; }
+.ccrange .cic svg { width: 11px; height: 11px; }
+
 @media (max-width: 760px) {
   .menubar .hideS { display: none; }
   .deskicons { display: none; }
@@ -580,6 +625,7 @@ a.favcard:hover .favsay { opacity: 1; transform: translateY(0) scale(1); }
   .mpanel { width: 100%; }
   .mappane { min-height: 180px; }
   .cacts { display: none; }
+  .ccpanel { right: 6px; width: min(330px, 94vw); }
   .dock { height: 48px; padding: 0 8px 5px; gap: 3px; }
   .dock .ai { width: calc(38px * var(--s, 1)); height: calc(38px * var(--s, 1)); }
 }
