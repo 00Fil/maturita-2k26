@@ -454,10 +454,31 @@ pwrCss.textContent =
   '#pwr-si{background:#0a84ff;color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.18)}' +
   '#shut{position:fixed;inset:0;z-index:8000;background:#000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .9s ease}' +
   '#shut.on{opacity:1;pointer-events:auto}' +
-  '#shut svg{width:min(76vw,600px);height:auto;opacity:0;transition:opacity .45s ease}' +
-  '#shut.draw svg{opacity:1}' +
-  '#shut.end svg{opacity:0;transition:opacity .6s ease}' +
-  '#shut .gr{fill:none;stroke:#fff;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}';
+  '#shut .gwrap{display:flex;flex-direction:column;align-items:center;gap:26px;transition:opacity .6s ease}' +
+  '#shut .gtx{display:flex;font-size:clamp(56px,11vw,116px);font-weight:600;color:#fff;line-height:1}' +
+  '#shut .gtx span{opacity:0;filter:blur(16px);transform:translateY(16px);transition:opacity .8s ease,filter .8s ease,transform .8s ease}' +
+  '#shut.draw .gtx span{opacity:1;filter:blur(0);transform:none}' +
+  '#shut.draw .gtx span:nth-child(1){transition-delay:.05s}' +
+  '#shut.draw .gtx span:nth-child(2){transition-delay:.17s}' +
+  '#shut.draw .gtx span:nth-child(3){transition-delay:.29s}' +
+  '#shut.draw .gtx span:nth-child(4){transition-delay:.41s}' +
+  '#shut.draw .gtx span:nth-child(5){transition-delay:.53s}' +
+  '#shut.draw .gtx span:nth-child(6){transition-delay:.65s}' +
+  '#shut .gsub{font-size:15px;font-weight:500;letter-spacing:.01em;color:#86868b;opacity:0;transform:translateY(10px);transition:opacity .8s ease,transform .8s ease}' +
+  '#shut.draw .gsub{opacity:1;transform:none;transition-delay:1.25s}' +
+  '#shut .gspin{position:relative;width:30px;height:30px;opacity:0;transition:opacity .7s ease}' +
+  '#shut.draw .gspin{opacity:1;transition-delay:2s}' +
+  '#shut .gspin i{position:absolute;left:50%;top:50%;width:3px;height:9px;margin:-15px 0 0 -1.5px;border-radius:1.5px;background:#fff;transform-origin:1.5px 15px;animation:gspin .9s linear infinite}' +
+  '#shut .gspin i:nth-child(1){transform:rotate(0deg);animation-delay:-.7875s}' +
+  '#shut .gspin i:nth-child(2){transform:rotate(45deg);animation-delay:-.675s}' +
+  '#shut .gspin i:nth-child(3){transform:rotate(90deg);animation-delay:-.5625s}' +
+  '#shut .gspin i:nth-child(4){transform:rotate(135deg);animation-delay:-.45s}' +
+  '#shut .gspin i:nth-child(5){transform:rotate(180deg);animation-delay:-.3375s}' +
+  '#shut .gspin i:nth-child(6){transform:rotate(225deg);animation-delay:-.225s}' +
+  '#shut .gspin i:nth-child(7){transform:rotate(270deg);animation-delay:-.1125s}' +
+  '#shut .gspin i:nth-child(8){transform:rotate(315deg);animation-delay:0s}' +
+  '#shut.end .gwrap{opacity:0}' +
+  '@keyframes gspin{0%{opacity:1}100%{opacity:.12}}';
 document.head.appendChild(pwrCss);
 
 const pwrDlg = document.createElement('div');
@@ -473,10 +494,11 @@ document.body.appendChild(pwrDlg);
 const shut = document.createElement('div');
 shut.id = 'shut';
 shut.innerHTML =
-  '<svg viewBox="0 0 560 240" aria-label="Grazie">' +
-  '<path id="gr-main" class="gr" d="M 45.7 142 C 70.8 130.6 83.1 107.8 96.7 85.3 C 105.1 70.2 121.4 18.3 96.7 22.8 C 72.6 31.2 77.9 60.7 91.1 68.2 C 113.8 83.1 139.9 77.9 153.4 51.3 C 153.5 86.9 153 124.5 130.7 136.3 C 96.8 151.6 56.6 141.3 57 102.4 M 170.3 113.6 C 179.5 92.4 182.5 93.6 187.2 85.3 L 187.2 96.6 C 200.9 92.1 215.5 97.9 209.9 113.6 C 206.3 124.6 198.8 144.5 215.7 142 C 228.3 140.8 240.2 127.6 243.9 113.6 M 295.5 108 C 281.1 78.2 247.4 89.8 244.5 113.6 C 242.1 130 252 141.7 271.2 141.7 C 290.7 141.6 294.3 111.7 301.1 90.9 C 299.8 103.5 285.5 142.5 306.8 142 C 320.1 141.7 331.4 126.2 335.3 113.6 M 335.5 113.6 C 344.6 87.1 369.8 80.9 380.8 102.4 C 388.4 123 371.1 140.4 346.6 142 C 365.7 150.4 363.7 156.9 363.7 176 C 360.8 193.7 355.6 212.2 341 210 C 331.3 207.9 329.7 187.1 341 176 C 364.4 152.3 405.6 141.9 414.7 113.6 M 422.6 90.9 C 418.4 108.5 401.2 136.6 417 142 C 433.6 146.1 447.2 127.1 451 113.6 M 453.8 128.3 C 472.9 125.5 494.4 105.5 487.8 93 C 482.3 82.8 464.6 91.8 456.8 102.4 C 440.2 124.6 459.8 144.1 485 142 C 498.2 140.9 509.6 126.2 513.5 113.6"/>' +
-  '<path id="gr-dot" class="gr" d="M 429.7 65.4 L 432.7 65.4"/>' +
-  '</svg>';
+  '<div class="gwrap">' +
+  '<div class="gtx" aria-label="Grazie"><span>G</span><span>r</span><span>a</span><span>z</span><span>i</span><span>e</span></div>' +
+  '<div class="gsub">La presentazione \u00e8 terminata</div>' +
+  '<div class="gspin"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>' +
+  '</div>';
 document.body.appendChild(shut);
 
 const pwrT = document.getElementById('pwr-t');
@@ -511,26 +533,8 @@ function fadeOff(poi, attesa) {
 function spegni() {
   fadeOff(() => {
     shut.classList.add('draw');
-    const main = document.getElementById('gr-main');
-    const dot = document.getElementById('gr-dot');
-    const lm = main.getTotalLength();
-    main.style.strokeDasharray = lm;
-    main.style.strokeDashoffset = lm;
-    const ld = Math.max(dot.getTotalLength(), 0.1);
-    dot.style.strokeDasharray = ld;
-    dot.style.strokeDashoffset = ld;
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        main.style.transition = 'stroke-dashoffset 3s cubic-bezier(.45,.05,.35,1)';
-        main.style.strokeDashoffset = '0';
-        setTimeout(() => {
-          dot.style.transition = 'stroke-dashoffset .18s ease';
-          dot.style.strokeDashoffset = '0';
-        }, 2950);
-      });
-    });
-    setTimeout(() => shut.classList.add('end'), 5000);
-    setTimeout(() => { location.replace('logout.php'); }, 5700);
+    setTimeout(() => shut.classList.add('end'), 4600);
+    setTimeout(() => { location.replace('logout.php'); }, 5300);
   }, 1050);
 }
 
