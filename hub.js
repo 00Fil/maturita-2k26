@@ -452,22 +452,23 @@ pwrCss.textContent =
   '#pwrdlg .row button:active{transform:scale(.96)}' +
   '#pwr-no{background:rgba(255,255,255,.92);color:#1d1d1f;box-shadow:0 1px 2px rgba(0,0,0,.12)}' +
   '#pwr-si{background:#0a84ff;color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.18)}' +
-  '#shut{position:fixed;inset:0;z-index:8000;background:#000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .9s ease}' +
+  '#shut{position:fixed;inset:0;z-index:8000;background:#000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 1.2s cubic-bezier(.4,0,.2,1)}' +
   '#shut.on{opacity:1;pointer-events:auto}' +
-  '#shut .gwrap{display:flex;flex-direction:column;align-items:center;gap:26px;transition:opacity .6s ease}' +
+  '#shut .gwrap{display:flex;flex-direction:column;align-items:center;gap:28px;transition:opacity 1.1s cubic-bezier(.4,0,.2,1),filter 1.1s cubic-bezier(.4,0,.2,1)}' +
   '#shut .gtx{display:flex;font-size:clamp(56px,11vw,116px);font-weight:600;color:#fff;line-height:1}' +
-  '#shut .gtx span{opacity:0;filter:blur(16px);transform:translateY(16px);transition:opacity .8s ease,filter .8s ease,transform .8s ease}' +
+  '#shut .gtx span{opacity:0;filter:blur(22px);transform:translateY(30px) scale(.92);transition:opacity 1.5s cubic-bezier(.16,1,.3,1),filter 1.5s cubic-bezier(.16,1,.3,1),transform 1.5s cubic-bezier(.16,1,.3,1)}' +
   '#shut.draw .gtx span{opacity:1;filter:blur(0);transform:none}' +
-  '#shut.draw .gtx span:nth-child(1){transition-delay:.05s}' +
-  '#shut.draw .gtx span:nth-child(2){transition-delay:.17s}' +
-  '#shut.draw .gtx span:nth-child(3){transition-delay:.29s}' +
-  '#shut.draw .gtx span:nth-child(4){transition-delay:.41s}' +
-  '#shut.draw .gtx span:nth-child(5){transition-delay:.53s}' +
-  '#shut.draw .gtx span:nth-child(6){transition-delay:.65s}' +
-  '#shut .gsub{font-size:15px;font-weight:500;letter-spacing:.01em;color:#86868b;opacity:0;transform:translateY(10px);transition:opacity .8s ease,transform .8s ease}' +
-  '#shut.draw .gsub{opacity:1;transform:none;transition-delay:1.25s}' +
-  '#shut .gspin{position:relative;width:30px;height:30px;opacity:0;transition:opacity .7s ease}' +
-  '#shut.draw .gspin{opacity:1;transition-delay:2s}' +
+  '#shut.draw .gtx span:nth-child(1){transition-delay:.1s}' +
+  '#shut.draw .gtx span:nth-child(2){transition-delay:.3s}' +
+  '#shut.draw .gtx span:nth-child(3){transition-delay:.5s}' +
+  '#shut.draw .gtx span:nth-child(4){transition-delay:.7s}' +
+  '#shut.draw .gtx span:nth-child(5){transition-delay:.9s}' +
+  '#shut.draw .gtx span:nth-child(6){transition-delay:1.1s}' +
+  '#shut.draw .gtx{animation:gzoom 7s cubic-bezier(.25,.1,.25,1) forwards}' +
+  '#shut .gsub{font-size:15px;font-weight:500;letter-spacing:.01em;color:#86868b;opacity:0;transform:translateY(10px);transition:opacity 1.3s cubic-bezier(.16,1,.3,1),transform 1.3s cubic-bezier(.16,1,.3,1)}' +
+  '#shut.draw .gsub{opacity:1;transform:none;transition-delay:2s}' +
+  '#shut .gspin{position:relative;width:30px;height:30px;opacity:0;transition:opacity 1s cubic-bezier(.4,0,.2,1)}' +
+  '#shut.draw .gspin{opacity:1;transition-delay:3s}' +
   '#shut .gspin i{position:absolute;left:50%;top:50%;width:3px;height:9px;margin:-15px 0 0 -1.5px;border-radius:1.5px;background:#fff;transform-origin:1.5px 15px;animation:gspin .9s linear infinite}' +
   '#shut .gspin i:nth-child(1){transform:rotate(0deg);animation-delay:-.7875s}' +
   '#shut .gspin i:nth-child(2){transform:rotate(45deg);animation-delay:-.675s}' +
@@ -477,8 +478,9 @@ pwrCss.textContent =
   '#shut .gspin i:nth-child(6){transform:rotate(225deg);animation-delay:-.225s}' +
   '#shut .gspin i:nth-child(7){transform:rotate(270deg);animation-delay:-.1125s}' +
   '#shut .gspin i:nth-child(8){transform:rotate(315deg);animation-delay:0s}' +
-  '#shut.end .gwrap{opacity:0}' +
-  '@keyframes gspin{0%{opacity:1}100%{opacity:.12}}';
+  '#shut.end .gwrap{opacity:0;filter:blur(10px)}' +
+  '@keyframes gspin{0%{opacity:1}100%{opacity:.12}}' +
+  '@keyframes gzoom{0%{transform:scale(1)}100%{transform:scale(1.045)}}';
 document.head.appendChild(pwrCss);
 
 const pwrDlg = document.createElement('div');
@@ -533,9 +535,9 @@ function fadeOff(poi, attesa) {
 function spegni() {
   fadeOff(() => {
     shut.classList.add('draw');
-    setTimeout(() => shut.classList.add('end'), 4600);
-    setTimeout(() => { location.replace('logout.php'); }, 5300);
-  }, 1050);
+    setTimeout(() => shut.classList.add('end'), 6200);
+    setTimeout(() => { location.replace('logout.php'); }, 7400);
+  }, 1250);
 }
 
 function riavvia() {
