@@ -383,12 +383,12 @@ body.demo { overflow-y: auto; }
 
 .demo-widget {
   display: none;
-  width: min(420px, calc(100vw - 32px));
+  width: min(376px, calc(100vw - 32px)); /* identica al pannello aperto */
   border-radius: var(--r);
   background: var(--container);
   border: 1.1px solid var(--border);
   box-shadow: var(--shadow-panel);
-  padding: 12px;
+  padding: 18px 18px 14px;
 }
 body.demo .demo-widget {
   display: block;
@@ -399,48 +399,104 @@ body.demo .demo-widget {
   to   { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 }
 
-/* schema: Browser → Server PHP → MySQL */
-.schema { display: flex; align-items: center; gap: 10px; padding: 8px 10px 14px; }
-.node {
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  color: var(--placeholder);
-  transition: color 0.3s ease, transform 0.5s var(--spring);
+/* intestazione — stessa lingua dell'eyebrow del form */
+.demo-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 6px;
+  margin-bottom: 14px;
 }
-.node .nico {
-  width: 46px; height: 46px;
-  border-radius: 16px;
+.demo-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--placeholder);
+}
+.dcount {
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  color: var(--placeholder);
   background: var(--surface);
   box-shadow: var(--shadow-sm);
-  display: flex; align-items: center; justify-content: center;
-  transition: box-shadow 0.3s ease;
+  border-radius: var(--r-full);
+  padding: 3px 10px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.3s ease, transform 0.4s var(--spring);
 }
-.node .nico svg { width: 20px; height: 20px; }
-.node .nlab { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
-.node.on, .node.ko { color: var(--text); transform: translateY(-2px); }
-.node.on .nico { box-shadow: 0 0 0 1.5px rgba(34, 197, 94, 0.4), 0 0 18px rgba(34, 197, 94, 0.25); }
-.node.ko .nico { box-shadow: 0 0 0 1.5px rgba(220, 38, 38, 0.4), 0 0 18px rgba(220, 38, 38, 0.2); }
+.dcount.show { opacity: 1; transform: scale(1); }
 
-.wire { position: relative; flex: 1; height: 2px; border-radius: 2px; background: var(--border); }
+/* schema: Browser → Server PHP → MySQL */
+.schema {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 0 6px;
+  margin-bottom: 16px;
+}
+.node {
+  display: flex; flex-direction: column; align-items: center; gap: 7px;
+  transition: transform 0.5s var(--spring);
+}
+.node .nico {
+  width: 48px; height: 48px;
+  border-radius: var(--r-full); /* cerchi, come le icone del form */
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  color: var(--placeholder);
+  display: flex; align-items: center; justify-content: center;
+  transition: color 0.3s ease, box-shadow 0.35s ease;
+}
+.node .nico svg { width: 19px; height: 19px; }
+.node .nlab {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--placeholder);
+  transition: color 0.3s ease;
+}
+.node.on, .node.ko { transform: translateY(-2px); }
+.node.on .nico, .node.ko .nico { color: var(--text-strong); }
+.node.on .nlab, .node.ko .nlab { color: var(--text); }
+.node.on .nico { box-shadow: var(--shadow-sm), 0 0 0 1.5px rgba(34, 197, 94, 0.55), 0 4px 16px -2px rgba(34, 197, 94, 0.35); }
+.node.ko .nico { box-shadow: var(--shadow-sm), 0 0 0 1.5px rgba(220, 38, 38, 0.5), 0 4px 16px -2px rgba(220, 38, 38, 0.3); }
+
+/* fili allineati al centro esatto delle icone (48px → 24px) */
+.wire {
+  position: relative;
+  flex: 1;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--border);
+  margin-top: 23px;
+}
 .wire .pk {
   position: absolute; top: 50%; left: 0;
-  width: 8px; height: 8px; border-radius: 50%;
+  width: 7px; height: 7px; border-radius: 50%;
   background: #22C55E;
-  box-shadow: 0 0 10px rgba(34, 197, 94, 0.7);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.55);
   transform: translate(-50%, -50%);
   opacity: 0;
 }
-.wire.ko .pk { background: var(--error); box-shadow: 0 0 10px rgba(220, 38, 38, 0.7); }
-.wire.fwd .pk { animation: pkFwd 1.2s ease-in-out infinite; }
-.wire.rev .pk { animation: pkRev 1.2s ease-in-out infinite; }
-@keyframes pkFwd { 0% { left: 0; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
-@keyframes pkRev { 0% { left: 100%; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { left: 0; opacity: 0; } }
+.wire.ko .pk { background: var(--error); box-shadow: 0 0 8px rgba(220, 38, 38, 0.55); }
+.wire.fwd .pk { animation: pkFwd 1.3s var(--spring-soft) infinite; }
+.wire.rev .pk { animation: pkRev 1.3s var(--spring-soft) infinite; }
+@keyframes pkFwd { 0% { left: 0; opacity: 0; } 18% { opacity: 1; } 82% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+@keyframes pkRev { 0% { left: 100%; opacity: 0; } 18% { opacity: 1; } 82% { opacity: 1; } 100% { left: 0; opacity: 0; } }
 
-/* card del passaggio corrente */
+/* card del passaggio — stessa lingua delle pillole del form */
 .dstep {
   background: var(--surface);
-  border-radius: 18px;
+  border-radius: 22px;
   box-shadow: var(--shadow-sm);
-  padding: 11px 13px;
+  padding: 14px 16px;
+  min-height: 78px; /* il widget non "salta" tra un passaggio e l'altro */
   transition: opacity 0.3s var(--spring-soft), transform 0.45s var(--spring), filter 0.3s var(--spring-soft);
 }
 .dstep.swap { opacity: 0; transform: translateY(6px) scale(0.98); filter: blur(4px); }
@@ -450,28 +506,37 @@ body.demo .demo-widget {
   background: var(--placeholder); flex-shrink: 0;
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
-.ddot.ok { background: #22C55E; box-shadow: 0 0 10px rgba(34, 197, 94, 0.6); }
-.ddot.ko { background: var(--error); box-shadow: 0 0 10px rgba(220, 38, 38, 0.5); }
-.dt { font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em; flex: 1; }
-.dms { font-size: 11px; font-weight: 700; color: var(--placeholder); background: var(--container); border-radius: var(--r-full); padding: 2px 8px; white-space: nowrap; }
-.dd { font-size: 12.5px; color: var(--placeholder); font-weight: 500; margin-top: 3px; padding-left: 16px; line-height: 1.45; }
-#dsql {
-  margin: 7px 0 2px 16px;
+.ddot.ok { background: #22C55E; box-shadow: 0 0 8px rgba(34, 197, 94, 0.5); }
+.ddot.ko { background: var(--error); box-shadow: 0 0 8px rgba(220, 38, 38, 0.45); }
+.dt { font-size: 14px; font-weight: 700; letter-spacing: -0.015em; flex: 1; }
+.dms {
+  font-size: 11px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--placeholder);
   background: var(--container);
-  border-radius: 12px;
-  padding: 9px 11px;
+  border-radius: var(--r-full);
+  padding: 3px 9px;
+  white-space: nowrap;
+}
+.dd { font-size: 12.5px; color: var(--placeholder); font-weight: 500; margin-top: 4px; padding-left: 16px; line-height: 1.5; }
+#dsql {
+  margin: 8px 0 2px 16px;
+  background: var(--container);
+  border-radius: 14px;
+  padding: 10px 12px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 11.5px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--text);
   white-space: pre-wrap;
   word-break: break-word;
 }
 
 /* controllerino: indietro · play/pausa · avanti · puntini */
-.ctrl { display: flex; align-items: center; gap: 6px; padding: 10px 4px 2px; }
+.ctrl { display: flex; align-items: center; gap: 7px; padding: 12px 2px 2px; }
 .cbtn {
-  width: 34px; height: 34px;
+  width: 36px; height: 36px;
   border: none; border-radius: var(--r-full);
   background: var(--surface);
   box-shadow: var(--shadow-sm);
@@ -484,12 +549,27 @@ body.demo .demo-widget {
 .cbtn:active { transform: scale(0.88); }
 .cbtn:disabled { opacity: 0.35; cursor: default; }
 .cbtn svg { width: 13px; height: 13px; }
-.cbtn.main { width: 40px; height: 40px; }
-.cbtn.main svg { width: 15px; height: 15px; }
-.dots { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 5px; margin-left: auto; padding-right: 4px; }
-.dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--border); cursor: pointer; transition: background 0.3s ease, transform 0.4s var(--spring); }
+.cbtn.main { width: 44px; height: 44px; }
+.cbtn.main svg { width: 16px; height: 16px; }
+.dots {
+  display: flex; flex-wrap: wrap; justify-content: flex-end;
+  gap: 6px; margin-left: auto; padding-right: 6px;
+}
+.dots i {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.4s var(--spring);
+}
+.dots i:hover { background: var(--placeholder); }
 .dots i.done { background: var(--placeholder); }
-.dots i.on { background: #22C55E; transform: scale(1.35); }
+.dots i.on { background: #22C55E; transform: scale(1.4); }
+
+/* in dark mode il bordo è quasi invisibile: fili e puntini più leggibili */
+@media (prefers-color-scheme: dark) {
+  .wire { background: rgba(255, 255, 255, 0.14); }
+  .dots i { background: rgba(255, 255, 255, 0.16); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
@@ -566,6 +646,11 @@ body.demo .demo-widget {
 
   <!-- DEMO (?demo=1) — widget schematico integrato sotto il login -->
   <aside class="demo-widget" id="demoWidget" aria-live="polite">
+
+    <div class="demo-head">
+      <span class="demo-eyebrow">Dietro le quinte</span>
+      <span class="dcount" id="dcount">0 / 0</span>
+    </div>
 
     <div class="schema">
       <div class="node" id="nClient">
@@ -748,6 +833,7 @@ const dmsEl   = document.getElementById('dms');
 const ddEl    = document.getElementById('dd');
 const dsqlEl  = document.getElementById('dsql');
 const dotsEl  = document.getElementById('dots');
+const dcount  = document.getElementById('dcount');
 const cPrev   = document.getElementById('cPrev');
 const cPlay   = document.getElementById('cPlay');
 const cNext   = document.getElementById('cNext');
@@ -818,6 +904,8 @@ function mostra(i) {
   });
   cPrev.disabled = i === 0;
   cNext.disabled = i === passi.length - 1;
+  dcount.textContent = (i + 1) + ' / ' + passi.length;
+  dcount.classList.add('show');
 }
 
 /* Controllerino: pausa per fermarsi a spiegare, poi riprendi */
