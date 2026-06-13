@@ -99,7 +99,7 @@ function appicon(string $file, string $remote): string {
 </div>
 
 <section class="win open a-blue" id="w-pres" style="left:7%;top:8%;width:760px">
-  <div class="titlebar"><span class="wt">Presentazione — i miei 10 minuti</span></div>
+  <div class="titlebar"><span class="wt">Presentazione</span></div>
   <div class="split">
     <aside class="sidebar">
       <div class="sb-title">Preferiti</div>
@@ -114,7 +114,7 @@ function appicon(string $file, string $remote): string {
       <button class="sb-item" data-tag="fsl"><span class="dotk" style="background:#34C759"></span>Esperienza FSL</button>
     </aside>
     <div class="main">
-      <div class="ftools"><b>I miei 10 minuti</b><span>Apro io con la mia storia, poi lascio la parola alla commissione.</span><span class="fseg"><button class="on" data-view="gallery">Galleria</button><button data-view="list">Elenco</button></span></div>
+      <div class="ftools"><b>I miei 10 minuti</b><span>Apro io raccontando la mia storia, poi rispondo alle domande della commissione.</span><span class="fseg"><button class="on" data-view="gallery">Galleria</button><button data-view="list">Elenco</button></span></div>
       <div class="fgrid">
         <button class="fitem lgcard" data-open="w-io" data-tag="rifl" style="animation-delay:.05s"><span class="fbadge" style="background:#FF9500">01</span><b>Su di me</b><span>Chi sono, cosa mi appassiona e da dove nasce la mia voglia di costruire.</span><span class="tt">Apri · Informazioni</span></button>
         <button class="fitem lgcard" data-open="w-skills" data-tag="fuori" style="animation-delay:.1s"><span class="fbadge" style="background:#5856D6">02</span><b>Fuori dall'aula</b><span>I progetti, i concorsi e il volontariato che ho seguito fuori dalla scuola.</span><span class="tt">Apri · Launchpad</span></button>
@@ -122,7 +122,6 @@ function appicon(string $file, string $remote): string {
         <button class="fitem lgcard" data-open="w-fine" data-tag="rifl" style="animation-delay:.2s"><span class="fbadge" style="background:#AF52DE">04</span><b>Dove voglio andare</b><span>Il percorso che voglio seguire dopo il diploma.</span><span class="tt">Apri · Mappe</span></button>
         <button class="fitem lgcard" data-spot data-tag="fsl" style="animation-delay:.25s"><span class="fbadge" style="background:#30B0C7">05</span><b>Spotlight</b><span>La frase con cui voglio chiudere, prima delle domande.</span><span class="tt">Apri · Spotlight</span></button>
       </div>
-      <div class="pathbar">Apro io · poi le domande dei professori <i>·</i> 5 momenti <i>·</i> un'app per ciascuno</div>
     </div>
   </div>
 </section>
@@ -136,183 +135,4 @@ function appicon(string $file, string $remote): string {
       <div class="cacts"><a class="cact" href="mailto:ciao@denuvo.studio"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6L22 7"/></svg>mail</a><a class="cact" href="https://github.com/00Fil" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4"/><path d="m16 8 4 4-4 4"/><path d="m13 5-2 14"/></svg>GitHub</a></div>
     </div>
     <div class="crows">
-      <div class="crow lgcard"><span class="k" style="color:#FF9500">La curiosità</span><div><b>Mi piace capire come funzionano le cose e poi costruirle.</b><p>È la curiosità che mi ha portato a scegliere informatica e a realizzare progetti miei.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#AF52DE">Dal 2018</span><div><b>Suono il violoncello.</b><p>Mi ha insegnato la costanza: per migliorare mi esercito ogni giorno, con metodo.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#34C759">Sport</span><div><b>Ho praticato nuoto, atletica, pallavolo, basket e palestra.</b><p>Lo sport mi ha insegnato a impegnarmi e a migliorare un passo alla volta.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#0A84FF">Sempre</span><div><b>Costruisco siti e piccoli programmi.</b><p>Parto da un'idea e ci lavoro finché non funziona davvero.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#FF3B30">Come sono</span><div><b>Sono preciso e determinato, e mi piace lavorare con gli altri.</b><p>Quando un problema non si risolve insisto finché non trovo la soluzione, ma con il gruppo ho imparato anche ad ascoltare.</p></div></div>
-    </div>
-    <div class="cnote">Apro il colloquio raccontando chi sono, dentro e fuori dalla scuola: queste sono le cose che mi hanno formato.</div>
-  </div>
-</section>
-
-<section class="win a-indigo" id="w-skills" style="left:17%;top:7%;width:700px">
-  <div class="titlebar"><span class="wt">Fuori dall'aula — Launchpad</span></div>
-  <div class="wbody as-body">
-    <div class="as-hero lgcard"><span class="as-kicker">Fuori da scuola</span><h3>Quello che faccio fuori dall'aula</h3><p>Fuori dalla scuola ho seguito progetti, concorsi e attività di volontariato. Sono le esperienze in cui ho imparato a collaborare e a portare a termine quello che inizio.</p></div>
-    <div class="as-duo">
-      <div class="as-mini lgcard" style="background:#0A84FF"><span class="as-kicker">Concorso · vinto</span><h4>Volo tra le Righe</h4><p>Ho presentato un romanzo con una playlist narrativa, unendo testo, musica e immagini. Il progetto ha vinto il concorso.</p></div>
-      <div class="as-mini lgcard" style="background:#34C759"><span class="as-kicker">Dal progetto alla startup</span><h4>GPOI · Sportly</h4><p>Da un lavoro di gestione di progetto è nato Sportly, portato dall'idea iniziale fino al prototipo pubblicato online.</p></div>
-    </div>
-    <div class="as-sec">Le altre cose che mi tengono vivo</div>
-    <div class="aprows">
-      <div class="aprow lgcard"><span class="apic" style="background:#1C1C1E;color:#7AC74F">Mc</span><div><b>Server Minecraft</b><p>Il primo servizio che ho gestito, con utenti reali collegati.</p></div><span class="getb">Fuori</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#5856D6">ds</span><div><b>denuvo.studio</b><p>Il mio sito personale, dove pubblico i progetti e curo ogni dettaglio, dal codice alla grafica.</p></div><span class="getb">Fuori</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#FF9500">Vo</span><div><b>Volontariato</b><p>Festa del Sorriso e Torneo dei Roncai: aiuto a organizzare e mi metto a disposizione degli altri.</p></div><span class="getb">Fuori</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#AF52DE">Ms</span><div><b>Musica e sport</b><p>Il violoncello e l'allenamento sono la disciplina che porto in tutto quello che faccio.</p></div><span class="getb">Fuori</span></div>
-    </div>
-    <div class="sf-note">Per me sono modi diversi di fare la stessa cosa: costruire qualcosa e portarlo fino in fondo.</div>
-  </div>
-</section>
-
-<section class="win a-green" id="w-fsl" style="left:14%;top:8%;width:740px">
-  <div class="titlebar"><span class="wt">CS Metal Europe — la mia alternanza</span></div>
-  <div class="wbody" style="display:flex;flex-direction:column">
-    <div class="cal-tb"><h3>Formazione scuola-lavoro <span>· CS Metal Europe</span></h3>
-      <div class="cal-stats"><span class="cstat lgcard"><b>240</b><span>ore</span></span><span class="cstat lgcard"><b>2</b><span>anni</span></span><span class="cstat lgcard"><b>12</b><span>persone</span></span></div>
-    </div>
-    <div class="agenda">
-      <div class="agroup"><h4><b>L'azienda e io</b></h4>
-        <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#34C759"></span><span class="tm">Bedizzole</span><div><b>Acciai speciali, dentro il gruppo giapponese Proterial</b><p>CS Metal Europe è un'azienda di Bedizzole con dodici persone, parte del gruppo giapponese Proterial. Ho svolto 240 ore in due anni, in un unico percorso continuo.</p></div></div>
-        </div>
-      </div>
-      <div class="agroup"><h4><b>Due anni di crescita</b></h4>
-        <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#31A8FF"></span><span class="tm">3ª</span><div><b>I primi compiti: dati e grafica</b><p>Ho lavorato sui dati di produzione e sulle immagini dell'azienda, e ho seguito il sito e il blog. Così sono entrato nel modo di lavorare dell'azienda.</p></div></div>
-          <div class="evt lgcard"><span class="bar" style="background:#FF9500"></span><span class="tm">4ª</span><div><b>Dal magazzino alla comunicazione</b><p>Sono passato dalla gestione del magazzino e dei materiali alla comunicazione dell'azienda sui social, vedendo la stessa realtà da due lati diversi.</p></div></div>
-        </div>
-      </div>
-      <div class="agroup"><h4><b>La difficoltà che mi ha cambiato</b></h4>
-        <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#FF3B30"></span><span class="tm">La lezione</span><div><b>Scrivere vuol dire pensare a chi legge</b><p>Preparando l'invito a un evento ho capito che ogni parola ha uno scopo e va scelta pensando a chi legge.</p></div></div>
-        </div>
-      </div>
-      <div class="agroup"><h4><b>Il risultato</b></h4>
-        <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#1D6F42"></span><span class="tm">Contratto</span><div><b>Un e-commerce vero e il mio primo contratto</b><p>Ho realizzato un negozio online e la vendita su Amazon, con un programma in PHP che mantiene allineato il catalogo. Per questo lavoro ho firmato il mio primo contratto.</p></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="win a-purple" id="w-fine" style="left:19%;top:9%;width:840px">
-  <div class="titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
-  <div class="mapwrap">
-    <div class="mpanel">
-      <span class="msearch"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Il mio percorso, da scuola all'università</span>
-      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#34C759">A</span><span class="lne"></span></span><div><b>IIS Cerebotani · 2021–2026</b><p>Cinque anni di scuola superiore. Qui ho preso le basi tecniche e un metodo per studiare e risolvere i problemi.</p></div></div>
-      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#0A84FF">B</span><span class="lne"></span></span><div><b>CS Metal Europe · 240 ore</b><p>La tappa che mi ha dato la direzione: in azienda ho capito quale parte di questo lavoro mi piace di più.</p></div></div>
-      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#FF3B30">C</span></span><div><b>Università · Informatica</b><p>Dopo il diploma voglio continuare a studiare informatica, per costruire software con basi più solide.</p></div></div>
-      <div class="eta"><span>In sintesi</span>L'alternanza mi ha mostrato dove voglio andare. Uso l'intelligenza artificiale come un aiuto, non come una scorciatoia: le decisioni restano mie. Da qui passo la parola alla commissione.</div>
-    </div>
-    <div class="mappane">
-      <svg viewBox="0 0 640 420" preserveAspectRatio="none">
-        <rect width="640" height="420" fill="#EAE6DD"/>
-        <path d="M-20 64 C120 92 188 34 300 70 C420 108 472 58 660 88 L660 -20 L-20 -20 Z" fill="#AFCDE9"/>
-        <path d="M-20 64 C120 92 188 34 300 70 C420 108 472 58 660 88" stroke="#9CBFE0" stroke-width="2" fill="none"/>
-        <circle cx="78" cy="332" r="54" fill="#C9E2BC"/>
-        <circle cx="590" cy="302" r="42" fill="#C9E2BC"/>
-        <rect x="250" y="248" width="122" height="92" rx="15" fill="#C9E2BC"/>
-        <path d="M-20 252 C160 242 322 272 660 240" stroke="#fff" stroke-width="22" fill="none" stroke-linecap="round"/>
-        <path d="M-20 360 C200 350 360 382 660 350" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round"/>
-        <path d="M-20 150 C160 140 380 176 660 150" stroke="#fff" stroke-width="9" fill="none"/>
-        <path d="M120 -20 C140 120 95 280 130 440" stroke="#fff" stroke-width="13" fill="none"/>
-        <path d="M330 -20 C312 130 360 280 330 440" stroke="#fff" stroke-width="16" fill="none"/>
-        <path d="M520 -20 C540 120 500 300 530 440" stroke="#fff" stroke-width="11" fill="none"/>
-        <rect x="150" y="118" width="64" height="42" rx="7" fill="#DCD5C6"/>
-        <rect x="60" y="150" width="44" height="40" rx="7" fill="#DCD5C6"/>
-        <rect x="392" y="150" width="54" height="38" rx="7" fill="#DCD5C6"/>
-        <rect x="470" y="300" width="58" height="40" rx="7" fill="#DCD5C6"/>
-        <path d="M106 340 C200 300 280 220 330 172 C390 120 470 130 518 120" stroke="#fff" stroke-width="9.5" fill="none" stroke-linecap="round"/>
-        <path id="route" pathLength="1" d="M106 340 C200 300 280 220 330 172 C390 120 470 130 518 120" stroke="#0A84FF" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-        <g>
-          <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear"><mpath href="#route"/></animateMotion>
-          <circle r="9" fill="#0A84FF" opacity="0.3"><animate attributeName="r" values="8;14;8" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.32;0.07;0.32" dur="1.8s" repeatCount="indefinite"/></circle>
-          <circle r="6" fill="#0A84FF" stroke="#fff" stroke-width="2.5"/>
-        </g>
-        <g transform="translate(598 54)" opacity="0.92">
-          <circle r="17" fill="rgba(255,255,255,0.82)"/>
-          <path d="M0 -11 L4 1 L0 4 L-4 1 Z" fill="#FF3B30"/>
-          <path d="M0 11 L4 -1 L0 -4 L-4 -1 Z" fill="#8E8E93" opacity="0.55"/>
-        </g>
-      </svg>
-      <span class="mpin" style="left:16.5%;top:81%"><span class="mtag">IIS Cerebotani</span><span class="mdot" style="background:#34C759"></span></span>
-      <span class="mpin" style="left:51.5%;top:41%"><span class="mtag">CS Metal Europe</span><span class="mdot" style="background:#0A84FF"></span></span>
-      <span class="mpin" style="left:81%;top:28.5%"><span class="mtag">Università</span><span class="mdot" style="background:#FF3B30"></span></span>
-    </div>
-  </div>
-</section>
-
-<div id="spot" class="spot" aria-hidden="true">
-  <style>
-    .spot{position:fixed;inset:0;z-index:4700;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:20vh;background:rgba(0,0,0,.14);backdrop-filter:blur(7px) saturate(1.1);-webkit-backdrop-filter:blur(7px) saturate(1.1);opacity:0;pointer-events:none;transition:opacity .2s ease}
-    .spot.on{opacity:1;pointer-events:auto}
-    .spot-box{width:min(620px,92vw);display:flex;align-items:center;gap:18px;padding:15px 26px;border-radius:24px;background:rgba(245,245,247,.7);border:1px solid rgba(255,255,255,.65);box-shadow:0 26px 72px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.55);backdrop-filter:blur(42px) saturate(1.8);-webkit-backdrop-filter:blur(42px) saturate(1.8);transform:scale(.94) translateY(-10px);opacity:0;transition:transform .34s cubic-bezier(.2,1.35,.4,1),opacity .22s ease}
-    .spot.on .spot-box{transform:none;opacity:1}
-    .spot-ic{flex:none;color:#6e6e73}
-    .spot-q{display:flex;align-items:center;min-height:32px}
-    .spot-type{font-size:27px;font-weight:400;color:#1d1d1f;letter-spacing:-.015em;white-space:nowrap}
-    .spot-cur{display:inline-block;width:2px;height:27px;margin-left:1px;background:#0a84ff;border-radius:1px;animation:spotcur 1.05s steps(1) infinite}
-    @keyframes spotcur{50%{opacity:0}}
-    .spot-sub{margin-top:20px;font-size:13px;font-weight:500;color:rgba(255,255,255,.92);text-shadow:0 1px 16px rgba(0,0,0,.55);opacity:0;transform:translateY(6px);transition:opacity .3s ease .12s,transform .3s ease .12s}
-    .spot.on .spot-sub{opacity:1;transform:none}
-  </style>
-  <div class="spot-box">
-    <svg class="spot-ic" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
-    <span class="spot-q"><span class="spot-type"></span><span class="spot-cur"></span></span>
-  </div>
-  <p class="spot-sub">L'ultima parola prima delle domande</p>
-</div>
-
-<nav class="dock" id="dock">
-  <span class="dapp" data-w="w-pres"><button class="ai" aria-label="Presentazione"><?= appicon('finder.webp', '/original/file-manager.svg') ?></button><span class="dot"></span><span class="tip">Presentazione · Finder</span></span>
-  <span class="dapp" data-w="w-io"><button class="ai" aria-label="Su di me"><?= appicon('contacts.webp', '/src/apps/scalable/addressbook.svg') ?></button><span class="dot"></span><span class="tip">Su di me · Informazioni</span></span>
-  <span class="dapp" data-w="w-skills"><button class="ai" aria-label="Fuori dall'aula"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></button><span class="dot"></span><span class="tip">Fuori dall'aula · Launchpad</span></span>
-  <span class="dapp" data-w="w-fsl"><button class="ai" aria-label="CS Metal Europe"><?= appicon('calendar.webp', '/original/calendar.svg') ?></button><span class="dot"></span><span class="tip">CS Metal Europe · Calendario</span></span>
-  <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Dove voglio andare"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Dove voglio andare · Mappe</span></span>
-  <span class="dapp" data-spot><button class="ai" aria-label="Spotlight"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></button><span class="dot"></span><span class="tip">Spotlight</span></span>
-  <span class="dsep"></span>
-  <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
-</nav>
-
-<script src="hub.js"></script>
-<script>
-(function(){
-  var spot=document.getElementById('spot');
-  if(!spot)return;
-  var box=spot.querySelector('.spot-box');
-  var type=spot.querySelector('.spot-type');
-  var TEXT='Le parole non sono mai neutre';
-  var timer=null;
-  function openSpot(){
-    if(spot.classList.contains('on'))return;
-    spot.classList.add('on');
-    spot.setAttribute('aria-hidden','false');
-    if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}
-    type.textContent='';
-    var i=0;
-    clearInterval(timer);
-    timer=setInterval(function(){
-      type.textContent=TEXT.slice(0,++i);
-      if(i>=TEXT.length)clearInterval(timer);
-    },48);
-  }
-  function closeSpot(){
-    if(!spot.classList.contains('on'))return;
-    spot.classList.remove('on');
-    spot.setAttribute('aria-hidden','true');
-    clearInterval(timer);
-    if(typeof sndClose==='function'){try{sndClose();}catch(e){}}
-  }
-  document.addEventListener('click',function(e){
-    var t=e.target.closest('[data-spot]');
-    if(t){e.preventDefault();openSpot();return;}
-    if(spot.classList.contains('on')&&!box.contains(e.target))closeSpot();
-  });
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSpot();});
-})();
-</script>
-</body>
-</html>
+      <div class="crow lgcard"><span class="k" style="color:#FF9500">La curiosità</span><div><b>M
