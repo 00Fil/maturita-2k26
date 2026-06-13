@@ -110,7 +110,7 @@ function closeAll() {
 
 const MAXI_EASE = 'cubic-bezier(.32,.72,0,1)';
 function maxiBounds() {
-  return { left: 8, top: 42, width: window.innerWidth - 16, height: window.innerHeight - 132 };
+  return { left: 8, top: 34, width: window.innerWidth - 16, height: window.innerHeight - 42 };
 }
 function setWinBox(win, r, anim) {
   win.style.setProperty('max-height', 'none', 'important');
@@ -240,6 +240,24 @@ dock.addEventListener('pointerleave', () => {
   targetS = targetS.map(() => 1);
   wakeDock();
 });
+
+// Auto-hide del dock in stile macOS: resta nascosto e riappare avvicinandosi al bordo inferiore.
+const dockCss = document.createElement('style');
+dockCss.textContent =
+  '.dock{transition:bottom .42s cubic-bezier(.32,.72,0,1),opacity .42s ease}' +
+  '.dock.autohide{bottom:-82px;opacity:0;pointer-events:none}';
+document.head.appendChild(dockCss);
+
+let dockHot = false;
+function dockShow() { dock.classList.remove('autohide'); }
+function dockHide() { if (!dockHot) dock.classList.add('autohide'); }
+document.addEventListener('pointermove', e => {
+  if (e.clientY >= window.innerHeight - 80) dockShow();
+  else if (e.clientY < window.innerHeight - 110) dockHide();
+});
+dock.addEventListener('pointerenter', () => { dockHot = true; dockShow(); });
+dock.addEventListener('pointerleave', () => { dockHot = false; dockHide(); });
+setTimeout(() => dock.classList.add('autohide'), 2800);
 
 dock.querySelectorAll('.dapp').forEach(d => {
   const btn = d.querySelector('.ai');
