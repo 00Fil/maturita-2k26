@@ -1,0 +1,106 @@
+/* hub-polish.css — rifiniture grafiche stile Apple. Caricato dopo hub.css, non sostituisce nulla. */
+
+:root{
+  --ease-apple: cubic-bezier(0.32, 0.72, 0, 1);
+  --spring-pop: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ===== Finestre: apertura più morbida e materica ===== */
+@keyframes winIn{
+  0%{opacity:0;transform:scale(.9) translateY(26px);filter:blur(7px)}
+  55%{filter:blur(0)}
+  100%{opacity:1;transform:scale(1) translateY(0);filter:blur(0)}
+}
+@keyframes winOut{
+  from{opacity:1;transform:scale(1);filter:blur(0)}
+  to{opacity:0;transform:scale(.93) translateY(12px);filter:blur(5px)}
+}
+.win.open{animation:winIn .52s var(--ease-apple) both}
+.win.closing{animation:winOut .28s var(--spring-soft) both}
+.win{transition:box-shadow .4s var(--ease-apple)}
+
+/* ===== Ingresso a cascata dei contenuti all'apertura ===== */
+@keyframes riseIn{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:none}}
+.win.open .as-hero,
+.win.open .crow,
+.win.open .evt,
+.win.open .stop,
+.win.open .aprow,
+.win.open .as-duo>*,
+.win.open .cstat,
+.win.open .favcard,
+.win.open .cnote,
+.win.open .eta,
+.win.open .sf-note{animation:riseIn .5s var(--ease-apple) both}
+.win.open .crow:nth-child(1),.win.open .evt:nth-child(1),.win.open .aprow:nth-child(1),.win.open .as-duo>*:nth-child(1),.win.open .cstat:nth-child(1),.win.open .favcard:nth-child(1){animation-delay:.05s}
+.win.open .crow:nth-child(2),.win.open .evt:nth-child(2),.win.open .aprow:nth-child(2),.win.open .as-duo>*:nth-child(2),.win.open .cstat:nth-child(2),.win.open .favcard:nth-child(2){animation-delay:.10s}
+.win.open .crow:nth-child(3),.win.open .aprow:nth-child(3),.win.open .cstat:nth-child(3),.win.open .favcard:nth-child(3){animation-delay:.15s}
+.win.open .crow:nth-child(4),.win.open .aprow:nth-child(4),.win.open .favcard:nth-child(4){animation-delay:.20s}
+.win.open .crow:nth-child(5),.win.open .aprow:nth-child(5){animation-delay:.25s}
+.win.open .agroup:nth-child(2) .evt{animation-delay:.10s}
+.win.open .agroup:nth-child(3) .evt{animation-delay:.16s}
+.win.open .agroup:nth-child(4) .evt{animation-delay:.22s}
+.win.open .stop:nth-child(2){animation-delay:.06s}
+.win.open .stop:nth-child(3){animation-delay:.12s}
+.win.open .stop:nth-child(4){animation-delay:.18s}
+
+/* ===== Righe e schede: hover/press più precisi ===== */
+.crow,.evt,.stop,.aprow{transition:transform .38s var(--spring-soft),box-shadow .3s ease,background .25s ease}
+.crow:hover,.evt:hover,.stop:hover,.aprow:hover{transform:translateY(-2px);box-shadow:var(--edge),var(--shadow-pop)}
+.crow:active,.evt:active,.stop:active,.aprow:active{transform:translateY(0) scale(.992)}
+
+/* ===== Sidebar: selezione con tinta d'accento (stile Finder) ===== */
+.sb-item.on{background:color-mix(in srgb, var(--acc,#0A84FF) 18%, var(--surface-press))}
+.sb-item.on .ic{box-shadow:inset 0 .5px 0 rgba(255,255,255,.45),0 1px 5px color-mix(in srgb, var(--acc,#0A84FF) 45%, transparent)}
+.sb-item:not(.on):hover{transform:translateX(1px)}
+@media (prefers-color-scheme: dark){
+  .sb-item.on{background:color-mix(in srgb, var(--acc,#0A84FF) 26%, transparent)}
+}
+
+/* ===== Segmented control: più reattivo ===== */
+.fseg button{transition:background .28s var(--ease-apple),color .2s ease,transform .2s var(--spring-pop)}
+.fseg button:active{transform:scale(.93)}
+.fseg button.on{box-shadow:0 1px 4px rgba(12,16,40,.14),inset 0 0 0 .5px rgba(255,255,255,.5)}
+
+/* ===== Semafori titlebar: scala morbida ===== */
+.lights button{transition:transform .3s var(--spring-pop),filter .15s ease}
+.lights button:hover{transform:scale(1.14)}
+.lights button:active{transform:scale(.82)}
+
+/* ===== Badge e pin: pop d'ingresso ===== */
+@keyframes badgePop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+.win.open .fbadge,.win.open .apic,.win.open .pin,.win.open .favico{animation:badgePop .5s var(--spring-pop) .12s both}
+@keyframes pinDrop{from{opacity:0;transform:translate(-50%,-132%)}to{opacity:1;transform:translate(-50%,-100%)}}
+.win.open .mpin{animation:pinDrop .62s var(--spring-pop) .2s both}
+.win.open .mpin:nth-of-type(2){animation-delay:.3s}
+.win.open .mpin:nth-of-type(3){animation-delay:.4s}
+
+/* ===== Dock: ombre icone più morbide e profonde ===== */
+.dock .ai img{filter:drop-shadow(0 3px 7px rgba(0,0,0,.30))}
+.dock .ai:active img{filter:drop-shadow(0 1px 3px rgba(0,0,0,.30)) brightness(.9)}
+.dapp .dot{height:5px;width:5px;bottom:-7px;box-shadow:0 0 5px rgba(255,255,255,.7)}
+
+/* ===== Pulsanti contatto e Centro di Controllo: feedback più vivo ===== */
+.cact{transition:transform .35s var(--spring-pop),box-shadow .25s ease}
+.cact:hover{transform:translateY(-3px) scale(1.03)}
+.ccrow,.ccmini,.ccfocus{transition:transform .25s var(--spring-pop),background .2s ease,color .2s ease}
+.ccrow:active{transform:scale(.97)}
+
+/* ===== Stat calendario: micro-lift ===== */
+.cstat{transition:transform .35s var(--spring-pop),box-shadow .25s ease}
+.cstat:hover{transform:translateY(-2px);box-shadow:var(--edge),var(--shadow-pop)}
+
+/* ===== Chip e pillole: hover pulito ===== */
+.xchips span,.getb{transition:transform .25s var(--spring-pop),box-shadow .2s ease}
+.xchips span:hover,.getb:hover{transform:translateY(-1px);box-shadow:var(--edge),var(--shadow-pop)}
+
+/* ===== Focus ring d'accento (precisione e accessibilità) ===== */
+:focus-visible{outline:2px solid color-mix(in srgb, var(--acc,#0A84FF) 70%, transparent);outline-offset:2px;border-radius:8px}
+.titlebar:focus-visible,.lights button:focus-visible,.dock .ai:focus-visible{outline:none}
+
+/* ===== Scrollbar: più discreta, accentua all'hover ===== */
+.wbody::-webkit-scrollbar-thumb,.main::-webkit-scrollbar-thumb,.sidebar::-webkit-scrollbar-thumb,.mpanel::-webkit-scrollbar-thumb{transition:background .2s ease}
+.wbody:hover::-webkit-scrollbar-thumb,.main:hover::-webkit-scrollbar-thumb{background:rgba(127,127,135,.5)}
+
+/* ===== Menubar e tooltip dock: transizioni leggermente più fluide ===== */
+.dapp .tip{transition:opacity .2s ease,transform .4s var(--spring-pop)}
