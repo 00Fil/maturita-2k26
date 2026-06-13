@@ -126,21 +126,44 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-orange" id="w-io" style="left:12%;top:8%;width:680px">
+<section class="win a-orange" id="w-io" style="left:11%;top:6%;width:720px">
   <div class="titlebar"><span class="wt">Su di me — Informazioni</span></div>
   <div class="wbody cmain" style="display:flex;flex-direction:column">
     <div class="chead">
       <span class="cavatar">FC</span>
-      <div class="cid"><h2>Filippo Corsini</h2><p>18 anni · 5ª Informatica · IIS Cerebotani</p></div>
+      <div class="cid"><h2>Filippo Corsini</h2><p>Diploma Tecnico · Informatica e Telecomunicazioni — IIS «Cerebotani», Lonato</p></div>
       <div class="cacts"><a class="cact" href="mailto:ciao@denuvo.studio"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6L22 7"/></svg>mail</a><a class="cact" href="https://github.com/00Fil" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4"/><path d="m16 8 4 4-4 4"/><path d="m13 5-2 14"/></svg>GitHub</a></div>
     </div>
-    <div class="crows">
-      <div class="crow lgcard"><span class="k" style="color:#FF9500">La curiosità</span><div><b>Mi piace capire come funzionano le cose e poi costruirle.</b><p>È la curiosità che mi ha portato a scegliere informatica e a realizzare progetti miei.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#AF52DE">Dal 2018</span><div><b>Suono il violoncello.</b><p>Mi ha insegnato la costanza: per migliorare mi esercito ogni giorno, con metodo.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#34C759">Sport</span><div><b>Ho praticato nuoto, atletica, pallavolo, basket e palestra.</b><p>Lo sport mi ha insegnato a impegnarmi e a migliorare un passo alla volta.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#0A84FF">Sempre</span><div><b>Costruisco siti e piccoli programmi.</b><p>Parto da un'idea e ci lavoro finché non funziona davvero.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#FF3B30">Come sono</span><div><b>Sono determinato e attento ai dettagli.</b><p>Porto a termine quello che inizio e mi trovo bene a lavorare insieme agli altri.</p></div></div>
+    <div class="io-stats">
+      <span class="cstat lgcard"><b>29</b><span>Credito</span></span>
+      <span class="cstat lgcard"><b>240</b><span>Ore PCTO</span></span>
+      <span class="cstat lgcard"><b>B2</b><span>Inglese QCER</span></span>
+      <span class="cstat lgcard"><b>4</b><span>Livello EQF</span></span>
     </div>
+    <div class="io-hero lgcard">
+      <span class="as-kicker">In una riga</span>
+      <h3>Capisco come funzionano le cose, poi le costruisco.</h3>
+      <p>È la curiosità che mi ha portato a scegliere informatica, a realizzare progetti miei e a trasformarli in qualcosa di concreto — fino al mio primo contratto.</p>
+    </div>
+    <div class="io-sec">Il percorso ufficiale</div>
+    <div class="crows">
+      <div class="crow lgcard"><span class="k">Indirizzo</span><div><b>Informatica e Telecomunicazioni, articolazione Informatica.</b><p>Cinque anni all’IIS «Cerebotani» di Lonato tra programmazione, sistemi e reti e progettazione. Diploma di livello EQF 4.</p></div></div>
+      <div class="crow lgcard"><span class="k">Competenze</span><div><b>Configuro reti e sistemi, sviluppo applicazioni, gestisco progetti.</b><p>Le competenze del profilo tecnico, con inglese a livello B2 (QCER) per leggere la documentazione e lavorare in contesti internazionali.</p></div></div>
+      <div class="crow lgcard"><span class="k">In azienda</span><div><b>240 ore in due anni alla CS Metal Europe.</b><p>Dati di produzione, comunicazione e un e-commerce vero con un gestionale in PHP: il lavoro per cui ho firmato il mio primo contratto.</p></div></div>
+    </div>
+    <div class="io-sec">Risultati e progetti</div>
+    <div class="crows">
+      <div class="crow lgcard"><span class="k" style="color:#0A84FF">Concorso</span><div><b>«Volo tra le Righe 3.0»: vittoria nella categoria playlist.</b><p>Un romanzo raccontato con una playlist narrativa, unendo testo, musica e immagini.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#5856D6">Progetto</span><div><b>Un gestionale per l’oratorio di Bedizzole.</b><p>Dal 2024, un software costruito con le competenze di scuola e con tanti approfondimenti personali.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#34C759">Online</span><div><b>denuvo.studio e i miei progetti.</b><p>Il sito dove pubblico quello che costruisco, curando ogni dettaglio dal codice alla grafica.</p></div></div>
+    </div>
+    <div class="io-sec">Chi sono, oltre i voti</div>
+    <div class="crows">
+      <div class="crow lgcard"><span class="k" style="color:#AF52DE">Dal 2018</span><div><b>Suono il violoncello.</b><p>Mi ha insegnato la costanza: per migliorare mi esercito ogni giorno, con metodo.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#FF9500">Comunità</span><div><b>Animatore ed educatore in oratorio.</b><p>Dal 2023, tra Torneo dei Roncai e Festa del Sorriso: organizzo e mi metto a disposizione degli altri.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#FF3B30">Come sono</span><div><b>Determinato e attento ai dettagli.</b><p>Porto a termine quello che inizio e lavoro bene in squadra, come nello sport che ho praticato.</p></div></div>
+    </div>
+    <div class="cnote">Le informazioni di questa scheda vengono dal mio <b>Curriculum dello studente</b> e dal percorso reale di questi cinque anni.</div>
   </div>
 </section>
 
