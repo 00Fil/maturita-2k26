@@ -113,20 +113,20 @@ function appicon(string $file, string $remote): string {
       <button class="sb-item" data-tag="fsl"><span class="dotk" style="background:#34C759"></span>Esperienza FSL</button>
     </aside>
     <div class="main">
-      <div class="ftools"><b>I miei 10 minuti</b><span>la presentazione della persona, poi la parola alla commissione</span><span class="fseg"><button class="on" data-view="gallery">Galleria</button><button data-view="list">Elenco</button></span></div>
+      <div class="ftools"><b>I miei 10 minuti</b><span>Apro io con la mia storia, poi lascio la parola alla commissione.</span><span class="fseg"><button class="on" data-view="gallery">Galleria</button><button data-view="list">Elenco</button></span></div>
       <div class="fgrid">
-        <button class="fitem lgcard" data-open="w-io" data-tag="rifl" style="animation-delay:.05s"><span class="fbadge" style="background:#FF9500">01</span><b>Su di me</b><span>Chi sono: il filo che tiene insieme violoncello, sport e la voglia di costruire cose.</span><span class="tt">Apri · Informazioni</span></button>
-        <button class="fitem lgcard" data-open="w-skills" data-tag="fuori" style="animation-delay:.1s"><span class="fbadge" style="background:#5856D6">02</span><b>Fuori dall'aula</b><span>Quello che faccio fuori da scuola: progetti, concorsi, volontariato.</span><span class="tt">Apri · Launchpad</span></button>
-        <button class="fitem lgcard" data-open="w-fsl" data-tag="fsl" style="animation-delay:.15s"><span class="fbadge" style="background:#34C759">03</span><b>CS Metal Europe</b><span>240 ore di alternanza in due anni: cosa ho fatto e cosa mi ha insegnato.</span><span class="tt">Apri · Calendario</span></button>
-        <button class="fitem lgcard" data-open="w-fine" data-tag="rifl" style="animation-delay:.2s"><span class="fbadge" style="background:#AF52DE">04</span><b>Dove voglio andare</b><span>L'alternanza mi ha orientato: la direzione dopo il diploma.</span><span class="tt">Apri · Mappe</span></button>
-        <button class="fitem lgcard" data-spot data-tag="fsl" style="animation-delay:.25s"><span class="fbadge" style="background:#30B0C7">05</span><b>Spotlight</b><span>L'ultima parola prima delle domande della commissione.</span><span class="tt">Apri · Spotlight</span></button>
+        <button class="fitem lgcard" data-open="w-io" data-tag="rifl" style="animation-delay:.05s"><span class="fbadge" style="background:#FF9500">01</span><b>Su di me</b><span>Chi sono davvero: il filo che tiene insieme il violoncello, lo sport e la voglia di costruire cose mie.</span><span class="tt">Apri · Informazioni</span></button>
+        <button class="fitem lgcard" data-open="w-skills" data-tag="fuori" style="animation-delay:.1s"><span class="fbadge" style="background:#5856D6">02</span><b>Fuori dall'aula</b><span>Cosa faccio quando esco da scuola: i progetti, i concorsi e il volontariato che mi hanno fatto crescere.</span><span class="tt">Apri · Launchpad</span></button>
+        <button class="fitem lgcard" data-open="w-fsl" data-tag="fsl" style="animation-delay:.15s"><span class="fbadge" style="background:#34C759">03</span><b>CS Metal Europe</b><span>240 ore di alternanza in due anni: cosa ho fatto in azienda e cosa mi ha insegnato sul lavoro vero.</span><span class="tt">Apri · Calendario</span></button>
+        <button class="fitem lgcard" data-open="w-fine" data-tag="rifl" style="animation-delay:.2s"><span class="fbadge" style="background:#AF52DE">04</span><b>Dove voglio andare</b><span>L'alternanza mi ha dato una direzione chiara. Qui racconto cosa voglio fare dopo il diploma.</span><span class="tt">Apri · Mappe</span></button>
+        <button class="fitem lgcard" data-spot data-tag="fsl" style="animation-delay:.25s"><span class="fbadge" style="background:#30B0C7">05</span><b>Spotlight</b><span>Un'ultima frase che porto con me, prima delle domande della commissione.</span><span class="tt">Apri · Spotlight</span></button>
       </div>
-      <div class="pathbar">Apertura mia, poi le domande dei professori <i>·</i> 5 momenti <i>·</i> un'app per ognuno</div>
+      <div class="pathbar">Apro io · poi le domande dei professori <i>·</i> 5 momenti <i>·</i> un'app per ciascuno</div>
     </div>
   </div>
 </section>
 
-<section class="win a-orange" id="w-io" style="left:12%;top:9%;width:660px">
+<section class="win a-orange" id="w-io" style="left:12%;top:8%;width:680px">
   <div class="titlebar"><span class="wt">Su di me — Informazioni</span></div>
   <div class="wbody cmain" style="display:flex;flex-direction:column">
     <div class="chead">
@@ -135,35 +135,36 @@ function appicon(string $file, string $remote): string {
       <div class="cacts"><a class="cact" href="mailto:ciao@denuvo.studio"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6L22 7"/></svg>mail</a><a class="cact" href="https://github.com/00Fil" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4"/><path d="m16 8 4 4-4 4"/><path d="m13 5-2 14"/></svg>GitHub</a></div>
     </div>
     <div class="crows">
-      <div class="crow lgcard"><span class="k" style="color:#FF9500">Il filo</span><div><b>«Da bambino guardavo i videogiochi. Poi ho iniziato a guardare dietro i videogiochi.»</b><p>È la curiosità che mi ha portato qui: capire come funzionano le cose, e poi provare a costruirle.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#AF52DE">Dal 2018</span><div><b>Violoncello</b><p>Mi ha insegnato la costanza: i risultati veri arrivano solo se ci torni ogni giorno.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#34C759">Sport</span><div><b>Nuoto, atletica, pallavolo, basket, palestra</b><p>Ho provato tanti sport: ognuno mi ha insegnato che si migliora un po' alla volta, non tutto insieme.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#0A84FF">Sempre</span><div><b>Costruire cose</b><p>Siti, piccoli programmi, progetti: la curiosità è diventata il mestiere che voglio fare.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#FF9500">Il filo</span><div><b>«Da bambino guardavo i videogiochi. Poi ho iniziato a guardare dietro i videogiochi.»</b><p>È la curiosità che mi ha portato fin qui. Prima volevo solo capire come funzionano le cose, poi ho voluto costruirle io.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#AF52DE">Dal 2018</span><div><b>Suono il violoncello</b><p>Mi ha insegnato la costanza. I risultati veri arrivano solo se ci torni ogni giorno, anche quando non hai voglia.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#34C759">Sport</span><div><b>Nuoto, atletica, pallavolo, basket e palestra</b><p>Ho provato tanti sport diversi. Ognuno mi ha insegnato la stessa cosa: si migliora un passo alla volta, non tutto insieme.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#0A84FF">Sempre</span><div><b>Costruisco cose</b><p>Siti, piccoli programmi, progetti personali. Quella curiosità di bambino è diventata il mestiere che voglio fare.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#FF3B30">Come sono</span><div><b>Preciso e testardo, ma so ascoltare</b><p>Quando una cosa non mi torna, ci resto sopra finché non funziona. Lavorando con gli altri ho imparato anche a fermarmi e ascoltare.</p></div></div>
     </div>
-    <div class="cnote"><b>Perché parto da qui:</b> il colloquio si apre con una riflessione sul mio percorso, dentro e fuori da scuola. Non un elenco: queste sono le cose che mi hanno formato davvero.</div>
+    <div class="cnote"><b>Perché parto da qui.</b> Il colloquio si apre con una riflessione sul mio percorso, dentro e fuori da scuola. Queste non sono righe di un elenco: sono le cose che mi hanno formato davvero.</div>
   </div>
 </section>
 
-<section class="win a-indigo" id="w-skills" style="left:17%;top:7%;width:680px">
+<section class="win a-indigo" id="w-skills" style="left:17%;top:7%;width:700px">
   <div class="titlebar"><span class="wt">Fuori dall'aula — Launchpad</span></div>
   <div class="wbody as-body">
-    <div class="as-hero lgcard"><span class="as-kicker">Fuori da scuola</span><h3>Quello che faccio quando suona la campanella</h3><p>Le cose che ho costruito e vissuto fuori dall'aula contano quanto i voti: lì ho imparato a stare con gli altri e a portare a termine quello che inizio.</p></div>
+    <div class="as-hero lgcard"><span class="as-kicker">Fuori da scuola</span><h3>Quello che faccio quando suona la campanella</h3><p>Le cose che ho costruito e vissuto fuori dall'aula contano per me quanto i voti. È lì che ho imparato a stare con gli altri e a portare a termine quello che inizio.</p></div>
     <div class="as-duo">
-      <div class="as-mini lgcard" style="background:#0A84FF"><span class="as-kicker">Concorso · vinto</span><h4>Volo tra le Righe</h4><p>Una playlist narrativa su un romanzo: testo, musica e immagini per raccontarlo. Ho vinto il concorso.</p></div>
-      <div class="as-mini lgcard" style="background:#34C759"><span class="as-kicker">Dal progetto alla startup</span><h4>GPOI · Sportly</h4><p>Il project work di gestione progetto diventato qualcosa di vero: dall'idea al prototipo online.</p></div>
+      <div class="as-mini lgcard" style="background:#0A84FF"><span class="as-kicker">Concorso · vinto</span><h4>Volo tra le Righe</h4><p>Ho raccontato un romanzo con una playlist narrativa: testo, musica e immagini insieme. Il progetto ha vinto il concorso.</p></div>
+      <div class="as-mini lgcard" style="background:#34C759"><span class="as-kicker">Dal progetto alla startup</span><h4>GPOI · Sportly</h4><p>Un lavoro di gestione progetto diventato qualcosa di reale: dall'idea iniziale fino al prototipo pubblicato online.</p></div>
     </div>
     <div class="as-sec">Le altre cose che mi tengono vivo</div>
     <div class="aprows">
-      <div class="aprow lgcard"><span class="apic" style="background:#1C1C1E;color:#7AC74F">Mc</span><div><b>Network Minecraft</b><p>Il primo servizio vero che ho gestito, con persone vere dall'altra parte.</p></div><span class="getb">Fuori</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#5856D6">ds</span><div><b>denuvo.studio</b><p>Il mio spazio online: dove pubblico i progetti e curo ogni dettaglio.</p></div><span class="getb">Fuori</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#FF9500">Vo</span><div><b>Volontariato</b><p>Festa del Sorriso e Torneo dei Roncai: organizzare e servire gli altri.</p></div><span class="getb">Fuori</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#AF52DE">Ms</span><div><b>Musica &amp; sport</b><p>Il violoncello e l'allenamento: la disciplina che mi porto ovunque.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#1C1C1E;color:#7AC74F">Mc</span><div><b>Server Minecraft</b><p>Il primo servizio vero che ho gestito, con persone reali collegate dall'altra parte.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#5856D6">ds</span><div><b>denuvo.studio</b><p>Il mio spazio online. Qui pubblico i progetti e curo ogni dettaglio, dal codice alla grafica.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#FF9500">Vo</span><div><b>Volontariato</b><p>Festa del Sorriso e Torneo dei Roncai: imparo a organizzare e a mettermi al servizio degli altri.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#AF52DE">Ms</span><div><b>Musica e sport</b><p>Il violoncello e l'allenamento. Sono la disciplina che mi porto dietro in tutto quello che faccio.</p></div><span class="getb">Fuori</span></div>
     </div>
-    <div class="sf-note">Non sono attività separate: sono tutti modi diversi di fare la stessa cosa — costruire qualcosa e prendermene la responsabilità.</div>
+    <div class="sf-note">Non sono attività separate tra loro. Sono modi diversi di fare la stessa cosa: costruire qualcosa e prendermi la responsabilità di portarlo fino in fondo.</div>
   </div>
 </section>
 
-<section class="win a-green" id="w-fsl" style="left:14%;top:8%;width:720px">
+<section class="win a-green" id="w-fsl" style="left:14%;top:8%;width:740px">
   <div class="titlebar"><span class="wt">CS Metal Europe — la mia alternanza</span></div>
   <div class="wbody" style="display:flex;flex-direction:column">
     <div class="cal-tb"><h3>Formazione scuola-lavoro <span>· CS Metal Europe</span></h3>
@@ -172,38 +173,38 @@ function appicon(string $file, string $remote): string {
     <div class="agenda">
       <div class="agroup"><h4><b>L'azienda e io</b></h4>
         <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#34C759"></span><span class="tm">Bedizzole</span><div><b>Acciai speciali · gruppo giapponese Proterial</b><p>Una realtà piccola, 12 persone, dentro un gruppo enorme. 240 ore in due anni: non due esperienze slegate, un percorso che cresce.</p></div></div>
+          <div class="evt lgcard"><span class="bar" style="background:#34C759"></span><span class="tm">Bedizzole</span><div><b>Acciai speciali, dentro il gruppo giapponese Proterial</b><p>Una realtà piccola di 12 persone, che fa parte di un gruppo enorme. Ho fatto 240 ore in due anni: non due esperienze separate, ma un solo percorso che è cresciuto con me.</p></div></div>
         </div>
       </div>
       <div class="agroup"><h4><b>Due anni di crescita</b></h4>
         <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#31A8FF"></span><span class="tm">3ª</span><div><b>Dati e grafica</b><p>Excel per i dati di produzione, Photoshop e Illustrator per le immagini, il sito in WordPress con il blog.</p></div></div>
-          <div class="evt lgcard"><span class="bar" style="background:#FF9500"></span><span class="tm">4ª</span><div><b>Dal magazzino alla comunicazione</b><p>Dall'inventario e i DPI alla comunicazione digitale: Instagram, LinkedIn, Canva. Ho visto l'azienda da due lati.</p></div></div>
+          <div class="evt lgcard"><span class="bar" style="background:#31A8FF"></span><span class="tm">3ª</span><div><b>I primi compiti: dati e grafica</b><p>Ho lavorato sui dati di produzione e sulle immagini dell'azienda. Ho curato anche il sito e il suo blog. Erano compiti semplici, ma mi hanno fatto entrare nel ritmo del lavoro.</p></div></div>
+          <div class="evt lgcard"><span class="bar" style="background:#FF9500"></span><span class="tm">4ª</span><div><b>Dal magazzino alla comunicazione</b><p>Sono passato dall'inventario e dai materiali alla comunicazione digitale dell'azienda sui social. Così ho visto la stessa realtà da due lati molto diversi.</p></div></div>
         </div>
       </div>
       <div class="agroup"><h4><b>La difficoltà che mi ha cambiato</b></h4>
         <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#FF3B30"></span><span class="tm">La lezione</span><div><b>Scrivere è progettare per chi legge</b><p>Un invito a un evento da scrivere: ho capito che ogni parola ha uno scopo. E la verità onesta: all'inizio erano compiti molto operativi — l'autonomia me la sono guadagnata.</p></div></div>
+          <div class="evt lgcard"><span class="bar" style="background:#FF3B30"></span><span class="tm">La lezione</span><div><b>Scrivere vuol dire pensare a chi legge</b><p>Dovevo scrivere l'invito a un evento. Lì ho capito che ogni parola ha uno scopo preciso. E sono onesto: all'inizio i compiti erano molto operativi, l'autonomia me la sono guadagnata col tempo.</p></div></div>
         </div>
       </div>
       <div class="agroup"><h4><b>Il risultato</b></h4>
         <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#1D6F42"></span><span class="tm">Contratto</span><div><b>Un e-commerce vero — e il primo contratto</b><p>WordPress/WooCommerce, vendita su Amazon, un plugin in PHP che sincronizza il catalogo. Il mio primo contratto: lì gli artt. 1, 4, 35-36 della Costituzione e la sicurezza in azienda hanno smesso di essere teoria.</p></div></div>
+          <div class="evt lgcard"><span class="bar" style="background:#1D6F42"></span><span class="tm">Contratto</span><div><b>Un e-commerce vero e il mio primo contratto</b><p>Ho costruito un negozio online e la vendita su Amazon, con un programma in PHP che tiene allineato il catalogo. Per questo ho firmato il mio primo contratto: lì i diritti e i doveri del lavoro hanno smesso di essere teoria.</p></div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="win a-purple" id="w-fine" style="left:19%;top:10%;width:820px">
+<section class="win a-purple" id="w-fine" style="left:19%;top:9%;width:840px">
   <div class="titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
   <div class="mapwrap">
     <div class="mpanel">
-      <span class="msearch"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Da CS Metal all'Università</span>
-      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#34C759">A</span><span class="lne"></span></span><div><b>IIS Cerebotani · 2021–2026</b><p>Cinque anni di Informatica e Telecomunicazioni: le basi tecniche e il metodo di studio.</p></div></div>
-      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#0A84FF">B</span><span class="lne"></span></span><div><b>CS Metal Europe · 240 ore</b><p>La tappa che mi ha orientato: l'azienda mi ha fatto capire cosa voglio fare davvero.</p></div></div>
-      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#FF3B30">C</span></span><div><b>Università · Informatica</b><p>La direzione dopo il diploma: continuare a costruire software, con basi più solide.</p></div></div>
-      <div class="eta"><span>In sintesi</span>L'alternanza mi ha mostrato dove voglio andare. Oggi lavoro con l'AI come copilota — uno strumento, non una scorciatoia. Da qui in poi, la parola alla commissione.</div>
+      <span class="msearch"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Il mio percorso, da scuola all'università</span>
+      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#34C759">A</span><span class="lne"></span></span><div><b>IIS Cerebotani · 2021–2026</b><p>Cinque anni di Informatica. Qui ho preso le basi tecniche e, soprattutto, un metodo per studiare e risolvere i problemi.</p></div></div>
+      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#0A84FF">B</span><span class="lne"></span></span><div><b>CS Metal Europe · 240 ore</b><p>La tappa che mi ha dato la direzione. In azienda ho capito quale parte di questo lavoro mi piace davvero.</p></div></div>
+      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#FF3B30">C</span></span><div><b>Università · Informatica</b><p>Il passo dopo il diploma. Voglio continuare a costruire software, ma con basi più solide e profonde.</p></div></div>
+      <div class="eta"><span>In sintesi</span>L'alternanza mi ha mostrato dove voglio andare. Uso l'AI come un aiuto, non come una scorciatoia: resto io a decidere. Da qui in poi, la parola passa alla commissione.</div>
     </div>
     <div class="mappane">
       <svg viewBox="0 0 640 420" preserveAspectRatio="xMidYMid slice">
