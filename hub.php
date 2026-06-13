@@ -39,9 +39,9 @@ function appicon(string $file, string $remote): string {
   <button class="logo" data-open="w-pres" aria-label="Apri la presentazione"><svg><use href="#i-cap"/></svg></button>
   <span class="appname">Maturità 2026</span>
   <button class="mitem hideS" data-open="w-pres">Scaletta</button>
-  <button class="mitem hideS" data-open="w-fsl">Percorso</button>
-  <button class="mitem hideS" data-open="w-prog">Progetto</button>
-  <button class="mitem hideS" data-open="w-coll">Curriculum</button>
+  <button class="mitem hideS" data-open="w-io">Su di me</button>
+  <button class="mitem hideS" data-open="w-fsl">Azienda</button>
+  <button class="mitem hideS" data-open="w-fine">Dopo</button>
   <div class="right">
     <span class="sico hideS"><span class="bpct" id="bpct"></span><svg><use href="#i-batt"/></svg></span>
     <span class="sico hideS" id="mb-wifi"><svg><use href="#i-wifi"/></svg></span>
@@ -94,7 +94,7 @@ function appicon(string $file, string $remote): string {
 
 <div class="deskicons">
   <button class="dicon" data-open="w-fsl"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false"></span><span>Diario di bordo.pdf</span></button>
-  <button class="dicon" data-open="w-coll"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false"></span><span>Curriculum dello studente.pdf</span></button>
+  <button class="dicon" data-open="w-io"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false"></span><span>Curriculum dello studente.pdf</span></button>
 </div>
 
 <section class="win open a-blue" id="w-pres" style="left:7%;top:8%;width:760px">
@@ -102,162 +102,108 @@ function appicon(string $file, string $remote): string {
   <div class="split">
     <aside class="sidebar">
       <div class="sb-title">Preferiti</div>
-      <button class="sb-item on" data-open="w-pres"><span class="ic" style="background:#0A84FF">10′</span>Presentazione<span class="cnt">6</span></button>
-      <button class="sb-item" data-open="w-io"><span class="ic" style="background:#FF9500">Io</span>Chi sono</button>
-      <button class="sb-item" data-open="w-fsl"><span class="ic" style="background:#34C759">FS</span>Scuola-lavoro</button>
-      <button class="sb-item" data-open="w-coll"><span class="ic" style="background:#AF52DE">CV</span>Curriculum</button>
+      <button class="sb-item on" data-open="w-pres"><span class="ic" style="background:#0A84FF">10′</span>Presentazione<span class="cnt">5</span></button>
+      <button class="sb-item" data-open="w-io"><span class="ic" style="background:#FF9500">Io</span>Su di me</button>
+      <button class="sb-item" data-open="w-skills"><span class="ic" style="background:#5856D6">Fu</span>Fuori dall'aula</button>
+      <button class="sb-item" data-open="w-fsl"><span class="ic" style="background:#34C759">CS</span>CS Metal Europe</button>
+      <button class="sb-item" data-open="w-fine"><span class="ic" style="background:#AF52DE">→</span>Dove voglio andare</button>
       <div class="sb-title">Tag</div>
       <button class="sb-item" data-tag="rifl"><span class="dotk" style="background:#0A84FF"></span>Riflessione</button>
+      <button class="sb-item" data-tag="fuori"><span class="dotk" style="background:#5856D6"></span>Fuori dall'aula</button>
       <button class="sb-item" data-tag="fsl"><span class="dotk" style="background:#34C759"></span>Esperienza FSL</button>
-      <button class="sb-item" data-tag="cap"><span class="dotk" style="background:#AF52DE"></span>Capolavori</button>
     </aside>
     <div class="main">
-      <div class="ftools"><b>I miei 10 minuti</b><span>riflessione sul percorso + relazione sulla scuola-lavoro</span><span class="fseg"><button class="on" data-view="gallery">Galleria</button><button data-view="list">Elenco</button></span></div>
+      <div class="ftools"><b>I miei 10 minuti</b><span>la presentazione della persona, poi la parola alla commissione</span><span class="fseg"><button class="on" data-view="gallery">Galleria</button><button data-view="list">Elenco</button></span></div>
       <div class="fgrid">
-        <button class="fitem lgcard" data-open="w-io" data-tag="rifl" style="animation-delay:.05s"><span class="fbadge" style="background:#FF9500">01</span><b>Da dove parto</b><span>La riflessione iniziale: chi sono, il percorso all’ITIS, cosa mi ha formato dentro e fuori da scuola.</span><span class="tt">Apri · Contatti</span></button>
-        <button class="fitem lgcard" data-open="w-fsl" data-tag="fsl" style="animation-delay:.1s"><span class="fbadge" style="background:#34C759">02</span><b>Il percorso in azienda</b><span>240 ore di formazione scuola-lavoro in terza e quarta: dove, quando e con quali compiti.</span><span class="tt">Apri · Calendario</span></button>
-        <button class="fitem lgcard" data-open="w-skills" data-tag="fsl" style="animation-delay:.15s"><span class="fbadge" style="background:#5856D6">03</span><b>Cosa ho imparato</b><span>Le competenze maturate in azienda: tre lezioni e cinque strumenti che oggi so usare.</span><span class="tt">Apri · App Store</span></button>
-        <button class="fitem lgcard" data-open="w-prog" data-tag="fsl" style="animation-delay:.2s"><span class="fbadge" style="background:#1C1C1E">04</span><b>Il progetto</b><span>Questo sito: il lavoro multimediale con cui presento l’esperienza, spiegato passo per passo.</span><span class="tt">Apri · Terminale</span></button>
-        <button class="fitem lgcard" data-open="w-coll" data-tag="cap" style="animation-delay:.25s"><span class="fbadge" style="background:#30B0C7">05</span><b>Il Curriculum</b><span>I capolavori pubblicati online: il sito sul romanzo e il project work di GPOI, visitabili adesso.</span><span class="tt">Apri · Safari</span></button>
-        <button class="fitem lgcard" data-open="w-fine" data-tag="rifl" style="animation-delay:.3s"><span class="fbadge" style="background:#34C759">06</span><b>Cosa porto via</b><span>Il punto di arrivo e la direzione: dall’ITIS a Ingegneria Informatica. Poi la parola alla commissione.</span><span class="tt">Apri · Mappe</span></button>
+        <button class="fitem lgcard" data-open="w-io" data-tag="rifl" style="animation-delay:.05s"><span class="fbadge" style="background:#FF9500">01</span><b>Su di me</b><span>Chi sono: il filo che tiene insieme violoncello, sport e la voglia di costruire cose.</span><span class="tt">Apri · Informazioni</span></button>
+        <button class="fitem lgcard" data-open="w-skills" data-tag="fuori" style="animation-delay:.1s"><span class="fbadge" style="background:#5856D6">02</span><b>Fuori dall'aula</b><span>Quello che faccio fuori da scuola: progetti, concorsi, volontariato.</span><span class="tt">Apri · Launchpad</span></button>
+        <button class="fitem lgcard" data-open="w-fsl" data-tag="fsl" style="animation-delay:.15s"><span class="fbadge" style="background:#34C759">03</span><b>CS Metal Europe</b><span>240 ore di alternanza in due anni: cosa ho fatto e cosa mi ha insegnato.</span><span class="tt">Apri · Calendario</span></button>
+        <button class="fitem lgcard" data-open="w-fine" data-tag="rifl" style="animation-delay:.2s"><span class="fbadge" style="background:#AF52DE">04</span><b>Dove voglio andare</b><span>L'alternanza mi ha orientato: la direzione dopo il diploma.</span><span class="tt">Apri · Mappe</span></button>
+        <button class="fitem lgcard" data-open="w-coll" data-tag="fsl" style="animation-delay:.25s"><span class="fbadge" style="background:#30B0C7">05</span><b>Spotlight</b><span>L'ultima parola prima delle domande della commissione.</span><span class="tt">Apri · Spotlight</span></button>
       </div>
-      <div class="pathbar">Apertura mia, poi le domande dei professori <i>·</i> 6 capitoli <i>·</i> un’app per capitolo</div>
+      <div class="pathbar">Apertura mia, poi le domande dei professori <i>·</i> 5 momenti <i>·</i> un'app per ognuno</div>
     </div>
   </div>
 </section>
 
-<section class="win a-orange" id="w-io" style="left:13%;top:10%;width:660px">
-  <div class="titlebar"><span class="wt">Contatti — la mia scheda</span></div>
+<section class="win a-orange" id="w-io" style="left:12%;top:9%;width:660px">
+  <div class="titlebar"><span class="wt">Su di me — Informazioni</span></div>
   <div class="wbody cmain" style="display:flex;flex-direction:column">
     <div class="chead">
       <span class="cavatar">FC</span>
-      <div class="cid"><h2>Filippo Corsini</h2><p>Studente · ITIS · Informatica e Telecomunicazioni</p></div>
+      <div class="cid"><h2>Filippo Corsini</h2><p>18 anni · 5ª Informatica · IIS Cerebotani</p></div>
       <div class="cacts"><a class="cact" href="mailto:ciao@denuvo.studio"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6L22 7"/></svg>mail</a><a class="cact" href="https://github.com/00Fil" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4"/><path d="m16 8 4 4-4 4"/><path d="m13 5-2 14"/></svg>GitHub</a></div>
     </div>
     <div class="crows">
-      <div class="crow lgcard"><span class="k" style="color:#FF9500">2021–2026</span><div><b>Studente ITIS · Informatica e Telecomunicazioni</b><p>Cinque anni di indirizzo tecnico: dalle basi di elettronica e sistemi fino a sviluppo web, database e reti.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#0A84FF">Dal 2024</span><div><b>Gestionale per l’oratorio</b><p>Sviluppo e mantengo come volontario il gestionale delle attività: iscrizioni, presenze e turni dei gruppi.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#34C759">Dal 2023</span><div><b>Animatore</b><p>Responsabilità su gruppi di ragazzi: organizzare, spiegare, tenere insieme le persone. Palestra di soft skill.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#AF52DE">2018–2024</span><div><b>Violoncello</b><p>Sei anni di studio: disciplina, costanza e orecchio per il dettaglio. La precisione viene da lì.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#FF9500">Il filo</span><div><b>«Da bambino guardavo i videogiochi. Poi ho iniziato a guardare dietro i videogiochi.»</b><p>È la curiosità che mi ha portato qui: capire come funzionano le cose, e poi provare a costruirle.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#AF52DE">Dal 2018</span><div><b>Violoncello</b><p>Mi ha insegnato la costanza: i risultati veri arrivano solo se ci torni ogni giorno.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#34C759">Sport</span><div><b>Nuoto, atletica, pallavolo, basket, palestra</b><p>Ho provato tanti sport: ognuno mi ha insegnato che si migliora un po' alla volta, non tutto insieme.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#0A84FF">Sempre</span><div><b>Costruire cose</b><p>Siti, piccoli programmi, progetti: la curiosità è diventata il mestiere che voglio fare.</p></div></div>
     </div>
-    <div class="cnote"><b>Perché parto da qui:</b> il colloquio si apre con una riflessione sul mio percorso, dentro e fuori da scuola. Queste quattro righe sono il ritratto più onesto che ho: tecnica, servizio, persone e disciplina.</div>
+    <div class="cnote"><b>Perché parto da qui:</b> il colloquio si apre con una riflessione sul mio percorso, dentro e fuori da scuola. Non un elenco: queste sono le cose che mi hanno formato davvero.</div>
   </div>
 </section>
 
-<section class="win a-green" id="w-fsl" style="left:18%;top:9%;width:700px">
-  <div class="titlebar"><span class="wt">Calendario — formazione scuola-lavoro</span></div>
+<section class="win a-indigo" id="w-skills" style="left:17%;top:7%;width:680px">
+  <div class="titlebar"><span class="wt">Fuori dall'aula — Launchpad</span></div>
+  <div class="wbody as-body">
+    <div class="as-hero lgcard"><span class="as-kicker">Fuori da scuola</span><h3>Quello che faccio quando suona la campanella</h3><p>Le cose che ho costruito e vissuto fuori dall'aula contano quanto i voti: lì ho imparato a stare con gli altri e a portare a termine quello che inizio.</p></div>
+    <div class="as-duo">
+      <div class="as-mini lgcard" style="background:#0A84FF"><span class="as-kicker">Concorso · vinto</span><h4>Volo tra le Righe</h4><p>Una playlist narrativa su un romanzo: testo, musica e immagini per raccontarlo. Ho vinto il concorso.</p></div>
+      <div class="as-mini lgcard" style="background:#34C759"><span class="as-kicker">Dal progetto alla startup</span><h4>GPOI · Sportly</h4><p>Il project work di gestione progetto diventato qualcosa di vero: dall'idea al prototipo online.</p></div>
+    </div>
+    <div class="as-sec">Le altre cose che mi tengono vivo</div>
+    <div class="aprows">
+      <div class="aprow lgcard"><span class="apic" style="background:#1C1C1E;color:#7AC74F">Mc</span><div><b>Network Minecraft</b><p>Il primo servizio vero che ho gestito, con persone vere dall'altra parte.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#5856D6">ds</span><div><b>denuvo.studio</b><p>Il mio spazio online: dove pubblico i progetti e curo ogni dettaglio.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#FF9500">Vo</span><div><b>Volontariato</b><p>Festa del Sorriso e Torneo dei Roncai: organizzare e servire gli altri.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#AF52DE">Ms</span><div><b>Musica &amp; sport</b><p>Il violoncello e l'allenamento: la disciplina che mi porto ovunque.</p></div><span class="getb">Fuori</span></div>
+    </div>
+    <div class="sf-note">Non sono attività separate: sono tutti modi diversi di fare la stessa cosa — costruire qualcosa e prendermene la responsabilità.</div>
+  </div>
+</section>
+
+<section class="win a-green" id="w-fsl" style="left:14%;top:8%;width:720px">
+  <div class="titlebar"><span class="wt">CS Metal Europe — la mia alternanza</span></div>
   <div class="wbody" style="display:flex;flex-direction:column">
-    <div class="cal-tb"><h3>Formazione scuola-lavoro <span>· CS Metal</span></h3>
-      <div class="cal-stats"><span class="cstat lgcard"><b>240</b><span>ore</span></span><span class="cstat lgcard"><b>2</b><span>anni</span></span><span class="cstat lgcard"><b>1</b><span>azienda</span></span></div>
+    <div class="cal-tb"><h3>Formazione scuola-lavoro <span>· CS Metal Europe</span></h3>
+      <div class="cal-stats"><span class="cstat lgcard"><b>240</b><span>ore</span></span><span class="cstat lgcard"><b>2</b><span>anni</span></span><span class="cstat lgcard"><b>12</b><span>persone</span></span></div>
     </div>
     <div class="agenda">
-      <div class="agroup"><h4><b>Aprile 2024</b> · classe terza · 120 ore</h4>
+      <div class="agroup"><h4><b>L'azienda e io</b></h4>
         <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#1D6F42"></span><span class="tm">Settim. 1</span><div><b>Dati di produzione su Excel</b><p>Riordino e analisi dei dati di officina: tabelle, formule, primi report per i responsabili.</p></div></div>
-          <div class="evt lgcard"><span class="bar" style="background:#31A8FF"></span><span class="tm">Settim. 2</span><div><b>Grafica con Photoshop e Illustrator</b><p>Materiale visivo per l’azienda: loghi, schede prodotto e immagini per il web.</p></div></div>
-          <div class="evt lgcard"><span class="bar" style="background:#21759B"></span><span class="tm">Settim. 3</span><div><b>Sito aziendale con WordPress</b><p>Costruzione del sito con WordPress e il builder Embyon: struttura, pagine, contenuti.</p></div></div>
+          <div class="evt lgcard"><span class="bar" style="background:#34C759"></span><span class="tm">Bedizzole</span><div><b>Acciai speciali · gruppo giapponese Proterial</b><p>Una realtà piccola, 12 persone, dentro un gruppo enorme. 240 ore in due anni: non due esperienze slegate, un percorso che cresce.</p></div></div>
         </div>
       </div>
-      <div class="agroup"><h4><b>A.S. 2024/25</b> · classe quarta · 120 ore</h4>
+      <div class="agroup"><h4><b>Due anni di crescita</b></h4>
         <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#34C759"></span><span class="tm">Continuità</span><div><b>Stessa azienda, più autonomia</b><p>Compiti affidati senza supervisione costante: aggiornamenti al sito, nuova grafica, dati.</p></div></div>
-          <div class="evt lgcard"><span class="bar" style="background:#FF9500"></span><span class="tm">Crescita</span><div><b>Responsabilità vere</b><p>Le consegne diventano scadenze: il lavoro che consegno viene usato davvero dall’azienda.</p></div></div>
+          <div class="evt lgcard"><span class="bar" style="background:#31A8FF"></span><span class="tm">3ª</span><div><b>Dati e grafica</b><p>Excel per i dati di produzione, Photoshop e Illustrator per le immagini, il sito in WordPress con il blog.</p></div></div>
+          <div class="evt lgcard"><span class="bar" style="background:#FF9500"></span><span class="tm">4ª</span><div><b>Dal magazzino alla comunicazione</b><p>Dall'inventario e i DPI alla comunicazione digitale: Instagram, LinkedIn, Canva. Ho visto l'azienda da due lati.</p></div></div>
+        </div>
+      </div>
+      <div class="agroup"><h4><b>La difficoltà che mi ha cambiato</b></h4>
+        <div class="evts">
+          <div class="evt lgcard"><span class="bar" style="background:#FF3B30"></span><span class="tm">La lezione</span><div><b>Scrivere è progettare per chi legge</b><p>Un invito a un evento da scrivere: ho capito che ogni parola ha uno scopo. E la verità onesta: all'inizio erano compiti molto operativi — l'autonomia me la sono guadagnata.</p></div></div>
+        </div>
+      </div>
+      <div class="agroup"><h4><b>Il risultato</b></h4>
+        <div class="evts">
+          <div class="evt lgcard"><span class="bar" style="background:#1D6F42"></span><span class="tm">Contratto</span><div><b>Un e-commerce vero — e il primo contratto</b><p>WordPress/WooCommerce, vendita su Amazon, un plugin in PHP che sincronizza il catalogo. Il mio primo contratto: lì gli artt. 1, 4, 35-36 della Costituzione e la sicurezza in azienda hanno smesso di essere teoria.</p></div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="win a-indigo" id="w-skills" style="left:23%;top:7%;width:680px">
-  <div class="titlebar"><span class="wt">App Store — competenze installate</span></div>
-  <div class="wbody as-body">
-    <div class="as-hero lgcard"><span class="as-kicker">In evidenza</span><h3>Tre lezioni dall’azienda</h3><p>Le 240 ore in CS Metal non mi hanno insegnato solo strumenti: mi hanno insegnato un metodo. Tre cose su tutte.</p></div>
-    <div class="as-duo">
-      <div class="as-mini lgcard" style="background:#FF375F"><span class="as-kicker">Lezione 1 · Metodo</span><h4>Il lavoro vero ha scadenze</h4><p>In azienda una consegna non è un voto: è qualcosa che gli altri aspettano per lavorare. Ho imparato a stimare i tempi e a rispettarli.</p></div>
-      <div class="as-mini lgcard" style="background:#30B0C7"><span class="as-kicker">Lezione 2 · Persone</span><h4>Si lavora con gli altri</h4><p>Chiedere bene, spiegare bene: metà del lavoro è comunicazione. Con i responsabili, con chi userà quello che produco.</p></div>
-    </div>
-    <div class="as-sec">Strumenti installati in azienda</div>
-    <div class="aprows">
-      <div class="aprow lgcard"><span class="apic" style="background:#1D6F42">X</span><div><b>Excel</b><p>Analisi dei dati di produzione: tabelle, formule, report.</p></div><span class="getb">Appresa</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#001E36;color:#31A8FF">Ps</span><div><b>Photoshop</b><p>Fotoritocco e immagini per schede prodotto e web.</p></div><span class="getb">Appresa</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#330000;color:#FF9A00">Ai</span><div><b>Illustrator</b><p>Grafica vettoriale: loghi e materiale per l’azienda.</p></div><span class="getb">Appresa</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#21759B">W</span><div><b>WordPress</b><p>Il sito aziendale: struttura, pagine, pubblicazione.</p></div><span class="getb">Appresa</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#5856D6">Em</span><div><b>Embyon</b><p>Il page builder usato per comporre il sito CS Metal.</p></div><span class="getb">Appresa</span></div>
-    </div>
-    <div class="sf-note">Lezione 3 · Precisione: in officina un dato sbagliato è un pezzo sbagliato. La cura del dettaglio non è pignoleria, è rispetto per chi usa il tuo lavoro.</div>
-  </div>
-</section>
-
-<section class="win a-dark" id="w-prog" style="left:10%;top:12%;width:820px">
-  <div class="titlebar"><span class="wt">maturita-2k26 — zsh</span></div>
-  <div class="tsplit">
-    <div class="tml">
-      <div><span class="tstep b">1</span><span class="tprompt">filippo@mac</span> <span class="tpath">~/maturita-2k26</span> % <span class="tcmd">php login.php</span></div>
-      <p class="tout">Password verificata con hash bcrypt … <span class="tok">ok</span><br>Sessione PHP avviata per “<?= $nome ?>” … <span class="tok">ok</span><br>Accesso al desktop consentito.</p>
-      <div class="tgap"><span class="tstep g">2</span><span class="tprompt">filippo@mac</span> <span class="tpath">~/maturita-2k26</span> % <span class="tcmd">docker compose up -d</span></div>
-      <p class="tout">Container PHP 8.3 + Apache … <span class="tok">avviato</span><br>Container MySQL … <span class="tok">avviato</span><br>Pubblicato su denuvo.studio via Dokploy.</p>
-      <div class="tgap"><span class="tstep o">3</span><span class="tprompt">filippo@mac</span> <span class="tpath">~/maturita-2k26</span> % <span class="tcmd">git log --oneline</span></div>
-      <p class="tout">Ogni passo del progetto è un commit:<br>la storia del lavoro è tracciata su GitHub.</p>
-      <div class="tgap"><span class="tprompt">filippo@mac</span> <span class="tpath">~/maturita-2k26</span> % <span class="tcur"></span></div>
-    </div>
-    <div class="texp">
-      <h4>Cosa avete appena visto</h4>
-      <p class="tlead">A sinistra i comandi veri, qui la spiegazione per tutti.</p>
-      <div class="xcard lgcard"><span class="xn b">1</span><div><b>L’ingresso è protetto</b><p>Il login che avete fatto per entrare qui è reale: la password non è salvata in chiaro ma trasformata in un codice non reversibile (bcrypt), e il server si ricorda di voi con una sessione.</p></div></div>
-      <div class="xcard lgcard"><span class="xn g">2</span><div><b>Il sito gira in “scatole” separate</b><p>Docker impacchetta sito e database in contenitori indipendenti: lo stesso identico ambiente funziona sul mio computer e sul server pubblico.</p></div></div>
-      <div class="xcard lgcard"><span class="xn o">3</span><div><b>Ogni modifica è tracciata</b><p>Git è il diario del progetto: ogni modifica ha data, autore e descrizione. Questo desktop è il risultato di quella storia, commit dopo commit.</p></div></div>
-      <div class="xchips"><i>Stack</i><span>PHP</span><span>MySQL</span><span>Docker</span><span>Git</span><span>HTML · CSS · JS</span><span>Dokploy</span></div>
-    </div>
-  </div>
-</section>
-
-<section class="win a-teal" id="w-coll" style="left:16%;top:11%;width:740px">
-  <div class="titlebar"><span class="wt">Safari — il Curriculum</span></div>
-  <div class="stb">
-    <span class="snav"><button data-nav="prev" aria-label="Capitolo precedente">‹</button><button data-nav="next" aria-label="Capitolo successivo">›</button></span>
-    <span class="urlfield"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>maturita2026.local/curriculum</span>
-  </div>
-  <div class="sf-body">
-    <h3>Preferiti — pubblicati davvero, visitabili ora</h3>
-    <div class="favgrid">
-      <a class="favcard lgcard" href="https://volo.denuvo.studio" target="_blank" rel="noopener" style="--acc:#0A84FF" data-say="Premi play: il romanzo si ascolta.|Sei canzoni per sei momenti del romanzo.|Da Heathens a Wait: apri e ascolta.">
-        <span class="favtop"><span class="favico" style="background:#0A84FF">Vt</span><span><b>Volo tra le righe</b><small>volo.denuvo.studio</small></span></span>
-        <p>Capolavoro · una playlist narrativa sul <b>Gioco della salamandra</b> di Davide Longo: sei canzoni che raccontano il romanzo, con il perché di ogni scelta.</p>
-        <span class="favgo"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-        <span class="favsay"></span>
-      </a>
-      <a class="favcard lgcard" href="https://gpoi.denuvo.studio" target="_blank" rel="noopener" style="--acc:#34C759" data-say="Tre consegne, un progetto: entra e sfoglia.|Dal Gantt al prototipo, tutto documentato.|La gestione di progetto, fatta sul serio.">
-        <span class="favtop"><span class="favico" style="background:#34C759">Sp</span><span><b>Sportly — project work GPOI</b><small>gpoi.denuvo.studio</small></span></span>
-        <p>Capolavoro · il project work di Gestione progetto: analisi, pianificazione e documenti di <b>Sportly</b>, l’app per prenotare campi sportivi.</p>
-        <span class="favgo"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-        <span class="favsay"></span>
-      </a>
-      <a class="favcard lgcard" href="https://sportly.denuvo.studio" target="_blank" rel="noopener" style="--acc:#FF9500" data-say="Non è uno screenshot: funziona davvero.|La demo è online: prova a prenotare.|Dalla carta al codice: provala adesso.">
-        <span class="favtop"><span class="favico" style="background:#FF9500">Li</span><span><b>Sportly — prototipo live</b><small>sportly.denuvo.studio</small></span></span>
-        <p>La parte pratica del project work: il <b>prototipo funzionante</b> dell’app, online e utilizzabile durante il colloquio.</p>
-        <span class="favgo"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-        <span class="favsay"></span>
-      </a>
-      <a class="favcard lgcard" href="https://github.com/00Fil" target="_blank" rel="noopener" style="--acc:#AF52DE" data-say="Ogni commit racconta una scelta.|Il codice è aperto: guardateci dentro.|Anche questo desktop nasce qui.">
-        <span class="favtop"><span class="favico" style="background:#AF52DE">Gh</span><span><b>GitHub · 00Fil</b><small>github.com/00Fil</small></span></span>
-        <p>Il codice sorgente di tutto: questo sito, i capolavori, i progetti personali. <b>Aperto e consultabile.</b></p>
-        <span class="favgo"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
-        <span class="favsay"></span>
-      </a>
-    </div>
-    <p class="sf-note">I capolavori sono gli stessi caricati nel Curriculum dello studente che la commissione ha davanti: qui si possono aprire e usare, non solo leggere.</p>
-  </div>
-</section>
-
-<section class="win a-purple" id="w-fine" style="left:21%;top:12%;width:820px">
-  <div class="titlebar"><span class="wt">Mappe — il percorso</span></div>
+<section class="win a-purple" id="w-fine" style="left:19%;top:10%;width:820px">
+  <div class="titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
   <div class="mapwrap">
     <div class="mpanel">
-      <span class="msearch"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Da ITIS a Ingegneria Informatica</span>
-      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#34C759">A</span><span class="lne"></span></span><div><b>ITIS Cerebotani · 2021–2026</b><p>Cinque anni di Informatica e Telecomunicazioni: le basi tecniche e il metodo di studio.</p></div></div>
-      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#0A84FF">B</span><span class="lne"></span></span><div><b>CS Metal · 240 ore</b><p>La tappa che ha cambiato il passo: il lavoro vero, con scadenze, persone e responsabilità.</p></div></div>
-      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#FF3B30">C</span></span><div><b>Ingegneria Informatica · Milano o Brescia</b><p>La direzione dopo il diploma: continuare a costruire, con basi più solide.</p></div></div>
-      <div class="eta"><span>In sintesi</span>Porto via un metodo: capire il problema, pianificare, consegnare. La scuola-lavoro mi ha mostrato dove voglio andare. Da qui in poi, la parola alla commissione.</div>
+      <span class="msearch"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Da CS Metal all'Università</span>
+      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#34C759">A</span><span class="lne"></span></span><div><b>IIS Cerebotani · 2021–2026</b><p>Cinque anni di Informatica e Telecomunicazioni: le basi tecniche e il metodo di studio.</p></div></div>
+      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#0A84FF">B</span><span class="lne"></span></span><div><b>CS Metal Europe · 240 ore</b><p>La tappa che mi ha orientato: l'azienda mi ha fatto capire cosa voglio fare davvero.</p></div></div>
+      <div class="stop lgcard"><span class="pinz"><span class="pin" style="background:#FF3B30">C</span></span><div><b>Università · Informatica</b><p>La direzione dopo il diploma: continuare a costruire software, con basi più solide.</p></div></div>
+      <div class="eta"><span>In sintesi</span>L'alternanza mi ha mostrato dove voglio andare. Oggi lavoro con l'AI come copilota — uno strumento, non una scorciatoia. Da qui in poi, la parola alla commissione.</div>
     </div>
     <div class="mappane">
       <svg viewBox="0 0 640 420" preserveAspectRatio="xMidYMid slice">
@@ -276,21 +222,34 @@ function appicon(string $file, string $remote): string {
         <circle cx="590" cy="110" r="38" fill="#CFE3C2"/>
         <path d="M106 340 C200 300 280 220 330 172 C390 120 470 130 518 120" stroke="#0A84FF" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round" fill="none"/>
       </svg>
-      <span class="mpin" style="left:16.5%;top:81%"><span class="mtag">ITIS Cerebotani</span><span class="mdot" style="background:#34C759"></span></span>
-      <span class="mpin" style="left:51.5%;top:41%"><span class="mtag">CS Metal</span><span class="mdot" style="background:#0A84FF"></span></span>
-      <span class="mpin" style="left:81%;top:28.5%"><span class="mtag">Ingegneria</span><span class="mdot" style="background:#FF3B30"></span></span>
+      <span class="mpin" style="left:16.5%;top:81%"><span class="mtag">IIS Cerebotani</span><span class="mdot" style="background:#34C759"></span></span>
+      <span class="mpin" style="left:51.5%;top:41%"><span class="mtag">CS Metal Europe</span><span class="mdot" style="background:#0A84FF"></span></span>
+      <span class="mpin" style="left:81%;top:28.5%"><span class="mtag">Università</span><span class="mdot" style="background:#FF3B30"></span></span>
+    </div>
+  </div>
+</section>
+
+<section class="win a-teal" id="w-coll" style="left:21%;top:12%;width:640px">
+  <div class="titlebar"><span class="wt">Spotlight</span></div>
+  <div class="wbody" style="display:flex;align-items:center;justify-content:center;min-height:300px;padding:44px 30px">
+    <style>@keyframes spotcur{50%{opacity:0}}.spotcur{display:inline-block;width:2px;height:1em;margin-left:3px;background:#1d1d1f;vertical-align:-2px;animation:spotcur 1.1s steps(1) infinite}</style>
+    <div style="width:min(540px,100%)">
+      <div class="lgcard" style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.6);border-radius:18px;padding:17px 20px;box-shadow:0 14px 48px rgba(0,0,0,.14)">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8a8a8e" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+        <span style="font-size:23px;font-weight:500;color:#1d1d1f;letter-spacing:-.01em">Le parole non sono mai neutre<span class="spotcur"></span></span>
+      </div>
+      <p style="text-align:center;margin:20px 0 0;font-size:12.5px;font-weight:500;color:rgba(60,60,67,.5)">L'ultima parola prima delle domande</p>
     </div>
   </div>
 </section>
 
 <nav class="dock" id="dock">
   <span class="dapp" data-w="w-pres"><button class="ai" aria-label="Presentazione"><?= appicon('finder.webp', '/original/file-manager.svg') ?></button><span class="dot"></span><span class="tip">Presentazione · Finder</span></span>
-  <span class="dapp" data-w="w-io"><button class="ai" aria-label="Chi sono"><?= appicon('contacts.webp', '/src/apps/scalable/addressbook.svg') ?></button><span class="dot"></span><span class="tip">Chi sono · Contatti</span></span>
-  <span class="dapp" data-w="w-fsl"><button class="ai" aria-label="Scuola-lavoro"><?= appicon('calendar.webp', '/original/calendar.svg') ?></button><span class="dot"></span><span class="tip">Scuola-lavoro · Calendario</span></span>
-  <span class="dapp" data-w="w-skills"><button class="ai" aria-label="Competenze"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></button><span class="dot"></span><span class="tip">Competenze · App Store</span></span>
-  <span class="dapp" data-w="w-prog"><button class="ai" aria-label="Il progetto"><?= appicon('terminal.svg', '/src/apps/scalable/terminal.svg') ?></button><span class="dot"></span><span class="tip">Il progetto · Terminale</span></span>
-  <span class="dapp" data-w="w-coll"><button class="ai" aria-label="Curriculum"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></button><span class="dot"></span><span class="tip">Curriculum · Safari</span></span>
-  <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Cosa porto via"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Cosa porto via · Mappe</span></span>
+  <span class="dapp" data-w="w-io"><button class="ai" aria-label="Su di me"><?= appicon('contacts.webp', '/src/apps/scalable/addressbook.svg') ?></button><span class="dot"></span><span class="tip">Su di me · Informazioni</span></span>
+  <span class="dapp" data-w="w-skills"><button class="ai" aria-label="Fuori dall'aula"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></button><span class="dot"></span><span class="tip">Fuori dall'aula · Launchpad</span></span>
+  <span class="dapp" data-w="w-fsl"><button class="ai" aria-label="CS Metal Europe"><?= appicon('calendar.webp', '/original/calendar.svg') ?></button><span class="dot"></span><span class="tip">CS Metal Europe · Calendario</span></span>
+  <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Dove voglio andare"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Dove voglio andare · Mappe</span></span>
+  <span class="dapp" data-w="w-coll"><button class="ai" aria-label="Spotlight"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></button><span class="dot"></span><span class="tip">Spotlight</span></span>
   <span class="dsep"></span>
   <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
 </nav>
