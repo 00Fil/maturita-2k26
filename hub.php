@@ -126,44 +126,21 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-orange" id="w-io" style="left:11%;top:6%;width:720px">
+<section class="win a-orange" id="w-io" style="left:12%;top:8%;width:680px">
   <div class="titlebar"><span class="wt">Su di me — Informazioni</span></div>
   <div class="wbody cmain" style="display:flex;flex-direction:column">
     <div class="chead">
       <span class="cavatar">FC</span>
-      <div class="cid"><h2>Filippo Corsini</h2><p>Diploma Tecnico · Informatica e Telecomunicazioni — IIS «Cerebotani», Lonato</p></div>
+      <div class="cid"><h2>Filippo Corsini</h2><p>18 anni · 5ª Informatica · IIS Cerebotani</p></div>
       <div class="cacts"><a class="cact" href="mailto:ciao@denuvo.studio"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6L22 7"/></svg>mail</a><a class="cact" href="https://github.com/00Fil" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4"/><path d="m16 8 4 4-4 4"/><path d="m13 5-2 14"/></svg>GitHub</a></div>
     </div>
-    <div class="io-stats">
-      <span class="cstat lgcard"><b>29</b><span>Credito</span></span>
-      <span class="cstat lgcard"><b>240</b><span>Ore PCTO</span></span>
-      <span class="cstat lgcard"><b>B2</b><span>Inglese QCER</span></span>
-      <span class="cstat lgcard"><b>4</b><span>Livello EQF</span></span>
-    </div>
-    <div class="io-hero lgcard">
-      <span class="as-kicker">In una riga</span>
-      <h3>Capisco come funzionano le cose, poi le costruisco.</h3>
-      <p>È la curiosità che mi ha portato a scegliere informatica, a realizzare progetti miei e a trasformarli in qualcosa di concreto — fino al mio primo contratto.</p>
-    </div>
-    <div class="io-sec">Il percorso ufficiale</div>
     <div class="crows">
-      <div class="crow lgcard"><span class="k">Indirizzo</span><div><b>Informatica e Telecomunicazioni, articolazione Informatica.</b><p>Cinque anni all’IIS «Cerebotani» di Lonato tra programmazione, sistemi e reti e progettazione. Diploma di livello EQF 4.</p></div></div>
-      <div class="crow lgcard"><span class="k">Competenze</span><div><b>Configuro reti e sistemi, sviluppo applicazioni, gestisco progetti.</b><p>Le competenze del profilo tecnico, con inglese a livello B2 (QCER) per leggere la documentazione e lavorare in contesti internazionali.</p></div></div>
-      <div class="crow lgcard"><span class="k">In azienda</span><div><b>240 ore in due anni alla CS Metal Europe.</b><p>Dati di produzione, comunicazione e un e-commerce vero con un gestionale in PHP: il lavoro per cui ho firmato il mio primo contratto.</p></div></div>
-    </div>
-    <div class="io-sec">Risultati e progetti</div>
-    <div class="crows">
-      <div class="crow lgcard"><span class="k" style="color:#0A84FF">Concorso</span><div><b>«Volo tra le Righe 3.0»: vittoria nella categoria playlist.</b><p>Un romanzo raccontato con una playlist narrativa, unendo testo, musica e immagini.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#5856D6">Progetto</span><div><b>Un gestionale per l’oratorio di Bedizzole.</b><p>Dal 2024, un software costruito con le competenze di scuola e con tanti approfondimenti personali.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#34C759">Online</span><div><b>denuvo.studio e i miei progetti.</b><p>Il sito dove pubblico quello che costruisco, curando ogni dettaglio dal codice alla grafica.</p></div></div>
-    </div>
-    <div class="io-sec">Chi sono, oltre i voti</div>
-    <div class="crows">
+      <div class="crow lgcard"><span class="k" style="color:#FF9500">La curiosità</span><div><b>Mi piace capire come funzionano le cose e poi costruirle.</b><p>È la curiosità che mi ha portato a scegliere informatica e a realizzare progetti miei.</p></div></div>
       <div class="crow lgcard"><span class="k" style="color:#AF52DE">Dal 2018</span><div><b>Suono il violoncello.</b><p>Mi ha insegnato la costanza: per migliorare mi esercito ogni giorno, con metodo.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#FF9500">Comunità</span><div><b>Animatore ed educatore in oratorio.</b><p>Dal 2023, tra Torneo dei Roncai e Festa del Sorriso: organizzo e mi metto a disposizione degli altri.</p></div></div>
-      <div class="crow lgcard"><span class="k" style="color:#FF3B30">Come sono</span><div><b>Determinato e attento ai dettagli.</b><p>Porto a termine quello che inizio e lavoro bene in squadra, come nello sport che ho praticato.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#34C759">Sport</span><div><b>Ho praticato nuoto, atletica, pallavolo, basket e palestra.</b><p>Lo sport mi ha insegnato a impegnarmi e a migliorare un passo alla volta.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#0A84FF">Sempre</span><div><b>Costruisco siti e piccoli programmi.</b><p>Parto da un'idea e ci lavoro finché non funziona davvero.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#FF3B30">Come sono</span><div><b>Sono determinato e attento ai dettagli.</b><p>Porto a termine quello che inizio e mi trovo bene a lavorare insieme agli altri.</p></div></div>
     </div>
-    <div class="cnote">Le informazioni di questa scheda vengono dal mio <b>Curriculum dello studente</b> e dal percorso reale di questi cinque anni.</div>
   </div>
 </section>
 
@@ -218,11 +195,11 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-blue" id="w-fine" style="left:9%;top:7%;width:940px">
+<section class="win a-blue" id="w-fine" style="left:8%;top:6%;width:960px">
   <div class="titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
-  <div class="mv" id="mv">
-    <svg class="mv-map" id="mv-map" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid slice">
-      <g id="mv-cam">
+  <div class="nav" id="nav">
+    <svg class="nav-map" id="nav-map" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid slice">
+      <g id="nav-cam">
         <rect x="-320" y="-280" width="1660" height="1220" fill="#E9E6DD"/>
         <path d="M-320 120 C150 170 320 70 520 120 C720 170 880 90 1340 140 L1340 -280 L-320 -280 Z" fill="#A9D2F0"/>
         <path d="M-320 120 C150 170 320 70 520 120 C720 170 880 90 1340 140" stroke="#93C2E6" stroke-width="2" fill="none"/>
@@ -231,16 +208,16 @@ function appicon(string $file, string $remote): string {
         <circle cx="980" cy="560" r="86" fill="#C9E6B4"/>
         <circle cx="1120" cy="300" r="96" fill="#C9E6B4"/>
         <rect x="430" y="470" width="170" height="150" rx="22" fill="#C9E6B4"/>
-        <path d="M-320 360 C220 340 480 392 1340 350" stroke="#fff" stroke-width="26" fill="none" stroke-linecap="round"/>
-        <path d="M-320 520 C260 506 520 548 1340 500" stroke="#fff" stroke-width="15" fill="none" stroke-linecap="round"/>
-        <path d="M-320 210 C240 196 560 232 1340 205" stroke="#fff" stroke-width="11" fill="none"/>
-        <path d="M-320 760 C240 748 560 784 1340 756" stroke="#fff" stroke-width="13" fill="none"/>
-        <path d="M-320 60 C200 50 520 92 1340 60" stroke="#fff" stroke-width="9" fill="none"/>
-        <path d="M180 -280 C210 160 150 420 200 940" stroke="#fff" stroke-width="15" fill="none"/>
-        <path d="M520 -280 C500 180 560 420 520 940" stroke="#fff" stroke-width="18" fill="none"/>
-        <path d="M820 -280 C850 160 800 440 840 940" stroke="#fff" stroke-width="12" fill="none"/>
-        <path d="M-80 -280 C-50 160 -110 420 -60 940" stroke="#fff" stroke-width="11" fill="none"/>
-        <path d="M1120 -280 C1150 160 1090 440 1140 940" stroke="#fff" stroke-width="12" fill="none"/>
+        <path d="M-320 360 H1340" stroke="#fff" stroke-width="26" stroke-linecap="round"/>
+        <path d="M-320 520 H1340" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+        <path d="M-320 210 H1340" stroke="#fff" stroke-width="12"/>
+        <path d="M-320 760 H1340" stroke="#fff" stroke-width="13"/>
+        <path d="M-320 60 H1340" stroke="#fff" stroke-width="10"/>
+        <path d="M180 -280 V940" stroke="#fff" stroke-width="16"/>
+        <path d="M520 -280 V940" stroke="#fff" stroke-width="18"/>
+        <path d="M820 -280 V940" stroke="#fff" stroke-width="13"/>
+        <path d="M-80 -280 V940" stroke="#fff" stroke-width="11"/>
+        <path d="M1120 -280 V940" stroke="#fff" stroke-width="13"/>
         <rect x="250" y="150" width="90" height="56" rx="9" fill="#DDD6C7"/>
         <rect x="120" y="250" width="64" height="58" rx="9" fill="#DDD6C7"/>
         <rect x="600" y="150" width="78" height="52" rx="9" fill="#DDD6C7"/>
@@ -251,28 +228,52 @@ function appicon(string $file, string $remote): string {
         <rect x="1180" y="430" width="80" height="56" rx="9" fill="#DDD6C7"/>
         <rect x="1010" y="120" width="72" height="50" rx="9" fill="#DDD6C7"/>
         <rect x="40" y="680" width="80" height="56" rx="9" fill="#DDD6C7"/>
-        <path d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round"/>
-        <path d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#C2CEDB" stroke-width="6" fill="none" stroke-linecap="round"/>
-        <path id="mv-trav" pathLength="1" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#0A84FF" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>
-        <g class="mk" id="m0" transform="translate(170 520)"><circle r="9" fill="#34C759" stroke="#fff" stroke-width="3.5"/><text class="mlab" y="-20" text-anchor="middle">Maturità</text></g>
-        <g class="mk" id="m1" transform="translate(390 430)"><circle r="11" fill="#8E8E93" stroke="#fff" stroke-width="3"/><text class="mnum" y="4" text-anchor="middle">1</text><text class="mlab small" y="28" text-anchor="middle">PCTO</text></g>
-        <g class="mk" id="m2" transform="translate(610 300)"><circle r="11" fill="#8E8E93" stroke="#fff" stroke-width="3"/><text class="mnum" y="4" text-anchor="middle">2</text><text class="mlab" y="-20" text-anchor="middle">Università</text></g>
-        <g class="mk" id="m3" transform="translate(850 150)"><path d="M0 0 C-9 -13 -9 -23 0 -31 C9 -23 9 -13 0 0 Z" fill="#FF3B30" stroke="#fff" stroke-width="2.5"/><circle cx="0" cy="-20" r="5.5" fill="#fff"/><text class="mlab" y="18" text-anchor="middle">Estero</text></g>
-        <g id="mv-puck" transform="translate(170 520)"><circle r="10" fill="#0A84FF" opacity="0.28"><animate attributeName="r" values="9;17;9" dur="1.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.28;0.04;0.28" dur="1.9s" repeatCount="indefinite"/></circle><circle r="7" fill="#0A84FF" stroke="#fff" stroke-width="2.5"/></g>
+        <path id="nav-route-case" d="M180 520 L180 372 Q180 360 192 360 L808 360 Q820 360 820 348 L820 72 Q820 60 832 60 L1120 60" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="nav-route" d="M180 520 L180 372 Q180 360 192 360 L808 360 Q820 360 820 348 L820 72 Q820 60 832 60 L1120 60" stroke="#0A84FF" stroke-width="7.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="nav-route-done" d="M180 520 L180 372 Q180 360 192 360 L808 360 Q820 360 820 348 L820 72 Q820 60 832 60 L1120 60" pathLength="1" stroke="#9aa1ab" stroke-width="7.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+        <g class="mk" id="m0" transform="translate(180 520)"><circle r="9" fill="#34C759" stroke="#fff" stroke-width="3.5"/><text class="mlab" y="-20" text-anchor="middle">Maturità</text></g>
+        <g class="mk" id="m1" transform="translate(520 360)"><circle r="11" fill="#8E8E93" stroke="#fff" stroke-width="3"/><text class="mnum" y="4" text-anchor="middle">1</text><text class="mlab small" y="28" text-anchor="middle">PCTO</text></g>
+        <g class="mk" id="m2" transform="translate(820 210)"><circle r="11" fill="#8E8E93" stroke="#fff" stroke-width="3"/><text class="mnum" y="4" text-anchor="middle">2</text><text class="mlab" y="-20" text-anchor="middle">Università</text></g>
+        <g class="mk" id="m3" transform="translate(1120 60)"><path d="M0 0 C-9 -13 -9 -23 0 -31 C9 -23 9 -13 0 0 Z" fill="#FF3B30" stroke="#fff" stroke-width="2.5"/><circle cx="0" cy="-20" r="5.5" fill="#fff"/><text class="mlab" y="20" text-anchor="middle">Estero</text></g>
+        <g id="nav-puck" transform="translate(180 520)">
+          <circle r="11" fill="#0A84FF" opacity="0.26"><animate attributeName="r" values="9;18;9" dur="1.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.28;0.03;0.28" dur="1.9s" repeatCount="indefinite"/></circle>
+          <circle r="8.5" fill="#0A84FF" stroke="#fff" stroke-width="3"/>
+          <path d="M0 -16 L5.5 -7 L0 -9.5 L-5.5 -7 Z" fill="#0A84FF" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/>
+        </g>
       </g>
     </svg>
-    <div class="dir">
-      <div class="dir-hd">
-        <div class="dir-ti"><b>Indicazioni</b><small>Dal diploma a dove voglio arrivare</small></div>
-        <button class="dir-x" type="button" aria-label="Chiudi">✕</button>
+
+    <div class="nav-stack">
+      <div class="nav-bar">
+        <div class="nav-man" id="nav-man"></div>
+        <div class="nav-meta">
+          <span class="nav-kick" id="nav-kick"></span>
+          <div class="nav-dist" id="nav-dist"></div>
+          <div class="nav-instr" id="nav-instr"></div>
+          <p class="nav-expl" id="nav-expl"></p>
+        </div>
       </div>
-      <div class="dir-list" id="nv-list"></div>
-      <div class="dir-card"><span class="kk" id="nv-kk"></span><p id="nv-body"></p></div>
-      <div class="dir-foot"><div><b class="big" id="nv-step"></b><small id="nv-eta"></small></div><span class="dir-hint" id="nv-hint"></span></div>
+      <div class="nav-then" id="nav-then">
+        <span class="nav-then-l">Poi</span>
+        <span class="nav-then-ic" id="nav-then-ic"></span>
+        <b id="nav-then-d"></b>
+        <span class="nav-then-sep">·</span>
+        <span id="nav-then-n"></span>
+      </div>
     </div>
-    <div class="mv-ctrl">
-      <div class="mv-zoom"><button id="mv-zin" type="button" aria-label="Zoom avanti">+</button><span></span><button id="mv-zout" type="button" aria-label="Zoom indietro">−</button></div>
-      <button class="mv-comp" id="mv-comp" type="button" aria-label="Nord"><svg viewBox="0 0 24 24"><path d="M12 4 L15 13 L12 11 L9 13 Z" fill="#FF3B30"/><path d="M12 20 L9 11 L12 13 L15 11 Z" fill="#8E8E93"/></svg></button>
+
+    <div class="nav-ctrl">
+      <div class="nav-zoom"><button id="nav-zin" type="button" aria-label="Zoom avanti">+</button><span></span><button id="nav-zout" type="button" aria-label="Zoom indietro">−</button></div>
+      <button class="nav-comp" id="nav-comp" type="button" aria-label="Nord"><svg viewBox="0 0 24 24"><path d="M12 4 L15 13 L12 11 L9 13 Z" fill="#FF3B30"/><path d="M12 20 L9 11 L12 13 L15 11 Z" fill="#8E8E93"/></svg></button>
+    </div>
+
+    <div class="nav-sheet">
+      <div class="nav-sheet-main">
+        <b class="nav-eta" id="nav-eta"></b>
+        <small id="nav-sub"></small>
+      </div>
+      <div class="nav-dots" id="nav-dots"></div>
+      <button class="nav-end" id="nav-end" type="button">Fine</button>
     </div>
   </div>
 </section>
@@ -348,55 +349,99 @@ function appicon(string $file, string $remote): string {
 </script>
 <script>
 (function(){
-  var map=document.getElementById('mv-map');
-  var cam=document.getElementById('mv-cam');
-  var puck=document.getElementById('mv-puck');
-  var trav=document.getElementById('mv-trav');
-  if(!map||!cam||!puck)return;
-  var stops=[
-    {x:170,y:520,p:0,m:'m0',name:'Maturità al Cerebotani',kind:'Partenza',kk:'Partenza',body:'È il punto di partenza. In cinque anni al Cerebotani ho imparato a programmare e a risolvere i problemi con metodo. Da qui parte la strada che ho in mente per il dopo.'},
-    {x:390,y:430,p:0.30,m:'m1',name:'PCTO · CS Metal Europe',kind:'Sosta',kk:'Sosta lungo la strada',body:'Una sosta lungo il tragitto, come il rifornimento prima di un viaggio lungo. In azienda ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. Qui ho capito quale direzione voglio prendere.'},
-    {x:610,y:300,p:0.63,m:'m2',name:'Università · Informatica',kind:'Tappa',kk:'La prossima tappa',body:'Voglio continuare a studiare informatica. Mi serve per costruire software con basi più solide e arrivare preparato al lavoro.'},
-    {x:850,y:150,p:1,m:'m3',name:'Lavorare all\'estero',kind:'Arrivo',kk:'La meta del viaggio',body:'La meta del viaggio. Voglio portare quello che ho imparato fuori dall\'Italia e lavorare nel software in un contesto internazionale.'}
+  var wrap=document.getElementById("nav");
+  var svg=document.getElementById("nav-map");
+  var cam=document.getElementById("nav-cam");
+  var route=document.getElementById("nav-route");
+  var done=document.getElementById("nav-route-done");
+  var puck=document.getElementById("nav-puck");
+  if(!wrap||!svg||!cam||!route||!done||!puck)return;
+
+  var STOPS=[
+    {x:180,y:520,m:"m0",man:"start",dist:"Sei qui",kick:"Partenza",name:"Maturit\u00e0 al Cerebotani",
+     body:"\u00c8 il punto di partenza. In cinque anni al Cerebotani ho imparato a programmare e a risolvere i problemi con metodo. Da qui parte la strada che ho in mente per il dopo."},
+    {x:520,y:360,m:"m1",man:"right",dist:"2 anni",kick:"Sosta lungo la strada",name:"PCTO \u00b7 CS Metal Europe",
+     body:"Una sosta lungo il tragitto, come il rifornimento prima di un viaggio lungo. In azienda ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. Qui ho capito quale direzione voglio prendere."},
+    {x:820,y:210,m:"m2",man:"left",dist:"3 mesi",kick:"La prossima tappa",name:"Universit\u00e0 \u00b7 Informatica",
+     body:"Voglio continuare a studiare informatica. Mi serve per costruire software con basi pi\u00f9 solide e arrivare preparato al lavoro."},
+    {x:1120,y:60,m:"m3",man:"arrive",dist:"1.095 giorni",kick:"La meta del viaggio",name:"Lavorare all'estero",
+     body:"La meta del viaggio. Voglio portare quello che ho imparato fuori dall'Italia e lavorare nel software in un contesto internazionale."}
   ];
-  var list=document.getElementById('nv-list'),elKk=document.getElementById('nv-kk'),elBody=document.getElementById('nv-body'),elStep=document.getElementById('nv-step'),elEta=document.getElementById('nv-eta'),elHint=document.getElementById('nv-hint');
-  var i=0,n=stops.length,j;
-  for(j=0;j<n;j++){
-    var s=stops[j];
-    var col=j===0?'#34C759':(j===n-1?'#FF3B30':'#8E8E93');
-    var ct=(j===0||j===n-1)?'':String(j);
-    var b=document.createElement('button');
-    b.className='dir-row';b.setAttribute('data-i',j);
-    b.innerHTML='<span class="dir-pin" style="--c:'+col+'">'+ct+'</span><span class="dir-txt"><b>'+s.name+'</b><small>'+s.kind+'</small></span>';
-    list.appendChild(b);
+
+  var ICON={
+    start:'<svg viewBox="0 0 28 28"><path d="M14 3 L23 24 L14 18.5 L5 24 Z" fill="currentColor"/></svg>',
+    right:'<svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 24 V15 a4.5 4.5 0 0 1 4.5-4.5 H19"/><path d="M14.5 4.5 L21 11 L14.5 17.5"/></svg>',
+    left:'<svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 24 V15 a4.5 4.5 0 0 0 -4.5-4.5 H9"/><path d="M13.5 4.5 L7 11 L13.5 17.5"/></svg>',
+    arrive:'<svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="10.5" r="7" fill="currentColor"/><circle cx="14" cy="10.5" r="2.6" fill="#1a8f3c"/><path d="M14 17 V25" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>'
+  };
+  var MINI={
+    start:'<svg viewBox="0 0 24 24"><path d="M12 3 L19 20 L12 15.5 L5 20 Z" fill="currentColor"/></svg>',
+    right:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20 V13 a3.5 3.5 0 0 1 3.5-3.5 H16"/><path d="M12.5 5 L18 10.5 L12.5 16"/></svg>',
+    left:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20 V13 a3.5 3.5 0 0 0 -3.5-3.5 H8"/><path d="M11.5 5 L6 10.5 L11.5 16"/></svg>',
+    arrive:'<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9.5" r="5.5" fill="currentColor"/><path d="M12 14.5 V21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>'
+  };
+
+  var total=route.getTotalLength();
+  function lenAt(x,y){
+    var best=0,bd=1e12,N=700,k,L,p,dx,dy,d;
+    for(k=0;k<=N;k++){L=total*k/N;p=route.getPointAtLength(L);dx=p.x-x;dy=p.y-y;d=dx*dx+dy*dy;if(d<bd){bd=d;best=L;}}
+    return best;
   }
-  var sc=1.16,zoom=1,VW=1000,VH=640,TX=600,TY=320,minX=-300,maxX=1300,minY=-260,maxY=900;
-  function render(){
-    var s=stops[i],k,e=sc*zoom;
-    puck.setAttribute('transform','translate('+s.x+' '+s.y+')');
-    trav.setAttribute('stroke-dashoffset',(1-s.p).toFixed(4));
-    var dx=TX-e*s.x, dy=TY-e*s.y;
-    dx=Math.max(VW-e*maxX,Math.min(-e*minX,dx));
-    dy=Math.max(VH-e*maxY,Math.min(-e*minY,dy));
-    cam.setAttribute('transform','translate('+dx.toFixed(1)+' '+dy.toFixed(1)+') scale('+e.toFixed(3)+')');
-    elKk.textContent=s.kk;elBody.textContent=s.body;
-    elStep.textContent=(i+1)+'/'+n;
-    elEta.textContent=(i===n-1)?'sei arrivato':'prossima: '+stops[i+1].kind.toLowerCase();
-    elHint.textContent=(i===n-1)?'Tocca per ricominciare':'Tocca la mappa per proseguire';
-    var mks=cam.querySelectorAll('.mk');for(k=0;k<mks.length;k++)mks[k].classList.remove('on');
-    var cur=document.getElementById(s.m);if(cur)cur.classList.add('on');
-    var rows=list.children;for(k=0;k<rows.length;k++)rows[k].className='dir-row'+(k===i?' on':'');
+  STOPS.forEach(function(s){s.len=lenAt(s.x,s.y);});
+
+  var elMan=document.getElementById("nav-man"),elKick=document.getElementById("nav-kick"),elDist=document.getElementById("nav-dist"),elInstr=document.getElementById("nav-instr"),elExpl=document.getElementById("nav-expl");
+  var elThen=document.getElementById("nav-then"),elThenIc=document.getElementById("nav-then-ic"),elThenD=document.getElementById("nav-then-d"),elThenN=document.getElementById("nav-then-n");
+  var elEta=document.getElementById("nav-eta"),elSub=document.getElementById("nav-sub"),elDots=document.getElementById("nav-dots");
+
+  var n=STOPS.length,i=0,k,b;
+  for(k=0;k<n;k++){b=document.createElement("button");b.className="nav-dot";b.setAttribute("data-i",k);b.setAttribute("type","button");b.setAttribute("aria-label","Tappa "+(k+1));elDots.appendChild(b);}
+
+  var ZBASE=2.0,zoom=1,minX=-300,maxX=1320,minY=-260,maxY=920,AX=500,AY=400;
+
+  function update(){
+    var s=STOPS[i],e=ZBASE*zoom,
+        p=route.getPointAtLength(s.len),
+        a=route.getPointAtLength(Math.min(total,s.len+7)),
+        c=route.getPointAtLength(Math.max(0,s.len-7)),
+        ang=Math.atan2(a.y-c.y,a.x-c.x)*180/Math.PI+90,j;
+    puck.setAttribute("transform","translate("+p.x.toFixed(1)+" "+p.y.toFixed(1)+") rotate("+ang.toFixed(1)+")");
+    done.setAttribute("stroke-dashoffset",(1-s.len/total).toFixed(4));
+    var dx=AX-e*p.x,dy=AY-e*p.y;
+    dx=Math.max(1000-e*maxX,Math.min(-e*minX,dx));
+    dy=Math.max(640-e*maxY,Math.min(-e*minY,dy));
+    cam.setAttribute("transform","translate("+dx.toFixed(1)+" "+dy.toFixed(1)+") scale("+e.toFixed(3)+")");
+
+    elMan.innerHTML=ICON[s.man]||"";
+    elKick.textContent=s.kick;
+    elDist.textContent=s.dist;
+    elInstr.textContent=s.name;
+    elExpl.textContent=s.body;
+
+    if(i<n-1){var nx=STOPS[i+1];elThen.style.display="";elThenIc.innerHTML=MINI[nx.man]||"";elThenD.textContent=nx.dist;elThenN.textContent=nx.name;}
+    else{elThen.style.display="none";}
+
+    elEta.textContent=(i===n-1)?"Sei arrivato":STOPS[n-1].name;
+    elSub.textContent=(i===n-1)?"Tocca la mappa per ricominciare":("Tappa "+(i+1)+" di "+n+" \u00b7 tocca la mappa per proseguire");
+
+    var mk=cam.querySelectorAll(".mk");
+    for(j=0;j<mk.length;j++)mk[j].classList.remove("on","done");
+    for(j=0;j<n;j++){var g=document.getElementById(STOPS[j].m);if(!g)continue;if(j<i)g.classList.add("done");if(j===i)g.classList.add("on");}
+    var dts=elDots.children;
+    for(j=0;j<dts.length;j++){dts[j].className="nav-dot"+(j<i?" done":"")+(j===i?" on":"");}
   }
-  function go(ni){i=((ni%n)+n)%n;render();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
-  map.addEventListener('click',function(){go(i+1);});
-  list.addEventListener('click',function(e){var t=e.target.closest('.dir-row');if(!t)return;go(parseInt(t.getAttribute('data-i'),10));});
-  var zin=document.getElementById('mv-zin'),zout=document.getElementById('mv-zout'),comp=document.getElementById('mv-comp');
-  if(zin)zin.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.min(1.5,zoom+0.18);render();});
-  if(zout)zout.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.max(0.8,zoom-0.18);render();});
-  if(comp)comp.addEventListener('click',function(ev){ev.stopPropagation();zoom=1;render();});
-  var x=document.querySelector('#w-fine .dir-x');
-  if(x)x.addEventListener('click',function(ev){ev.stopPropagation();if(typeof closeWin==='function')closeWin('w-fine');});
-  render();
+
+  function go(t){i=((t%n)+n)%n;update();if(typeof sndOpen==="function"){try{sndOpen();}catch(e){}}}
+
+  svg.addEventListener("click",function(){go(i+1);});
+  elDots.addEventListener("click",function(ev){var t=ev.target.closest(".nav-dot");if(!t)return;ev.stopPropagation();go(parseInt(t.getAttribute("data-i"),10));});
+  var zin=document.getElementById("nav-zin"),zout=document.getElementById("nav-zout"),comp=document.getElementById("nav-comp");
+  if(zin)zin.addEventListener("click",function(ev){ev.stopPropagation();zoom=Math.min(1.5,zoom+0.18);update();});
+  if(zout)zout.addEventListener("click",function(ev){ev.stopPropagation();zoom=Math.max(0.82,zoom-0.18);update();});
+  if(comp)comp.addEventListener("click",function(ev){ev.stopPropagation();zoom=1;update();});
+  var end=document.getElementById("nav-end");
+  if(end)end.addEventListener("click",function(ev){ev.stopPropagation();var w=document.getElementById("w-fine");if(w&&typeof closeWin==="function")closeWin(w);});
+
+  update();
 })();
 </script>
 </body>
