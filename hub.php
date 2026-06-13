@@ -135,4 +135,225 @@ function appicon(string $file, string $remote): string {
       <div class="cacts"><a class="cact" href="mailto:ciao@denuvo.studio"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6L22 7"/></svg>mail</a><a class="cact" href="https://github.com/00Fil" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4"/><path d="m16 8 4 4-4 4"/><path d="m13 5-2 14"/></svg>GitHub</a></div>
     </div>
     <div class="crows">
-      <div class="crow lgcard"><span class="k" style="color:#FF9500">La curiosità</span><div><b>M
+      <div class="crow lgcard"><span class="k" style="color:#FF9500">La curiosità</span><div><b>Mi piace capire come funzionano le cose e poi costruirle.</b><p>È la curiosità che mi ha portato a scegliere informatica e a realizzare progetti miei.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#AF52DE">Dal 2018</span><div><b>Suono il violoncello.</b><p>Mi ha insegnato la costanza: per migliorare mi esercito ogni giorno, con metodo.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#34C759">Sport</span><div><b>Ho praticato nuoto, atletica, pallavolo, basket e palestra.</b><p>Lo sport mi ha insegnato a impegnarmi e a migliorare un passo alla volta.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#0A84FF">Sempre</span><div><b>Costruisco siti e piccoli programmi.</b><p>Parto da un'idea e ci lavoro finché non funziona davvero.</p></div></div>
+      <div class="crow lgcard"><span class="k" style="color:#FF3B30">Come sono</span><div><b>Sono determinato e attento ai dettagli.</b><p>Porto a termine quello che inizio e mi trovo bene a lavorare insieme agli altri.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="win a-indigo" id="w-skills" style="left:17%;top:7%;width:700px">
+  <div class="titlebar"><span class="wt">Fuori dall'aula — Launchpad</span></div>
+  <div class="wbody as-body">
+    <div class="as-hero lgcard"><span class="as-kicker">Fuori da scuola</span><h3>Quello che faccio fuori dall'aula</h3><p>Fuori dalla scuola ho seguito progetti, concorsi e attività di volontariato. Sono le esperienze in cui ho imparato a collaborare e a portare a termine quello che inizio.</p></div>
+    <div class="as-duo">
+      <div class="as-mini lgcard" style="background:#0A84FF"><span class="as-kicker">Concorso · vinto</span><h4>Volo tra le Righe</h4><p>Ho presentato un romanzo con una playlist narrativa, unendo testo, musica e immagini. Il progetto ha vinto il concorso.</p></div>
+      <div class="as-mini lgcard" style="background:#34C759"><span class="as-kicker">Dal progetto alla startup</span><h4>GPOI · Sportly</h4><p>Da un lavoro di gestione di progetto è nato Sportly, portato dall'idea iniziale fino al prototipo pubblicato online.</p></div>
+    </div>
+    <div class="as-sec">Le altre cose che mi tengono vivo</div>
+    <div class="aprows">
+      <div class="aprow lgcard"><span class="apic" style="background:#1C1C1E;color:#7AC74F">Mc</span><div><b>Server Minecraft</b><p>Il primo servizio online che ho gestito: un piccolo server con altre persone collegate a giocare insieme.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#5856D6">ds</span><div><b>denuvo.studio</b><p>Il mio sito personale, dove pubblico i progetti e curo ogni dettaglio, dal codice alla grafica.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#FF9500">Vo</span><div><b>Volontariato</b><p>Festa del Sorriso e Torneo dei Roncai: aiuto a organizzare e mi metto a disposizione degli altri.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#AF52DE">Ms</span><div><b>Musica e sport</b><p>Il violoncello e l'allenamento sono la disciplina che porto in tutto quello che faccio.</p></div><span class="getb">Fuori</span></div>
+    </div>
+    <div class="sf-note">Per me sono modi diversi di fare la stessa cosa: costruire qualcosa e portarlo fino in fondo.</div>
+  </div>
+</section>
+
+<section class="win a-green" id="w-fsl" style="left:14%;top:8%;width:740px">
+  <div class="titlebar"><span class="wt">CS Metal Europe — la mia alternanza</span></div>
+  <div class="wbody" style="display:flex;flex-direction:column">
+    <div class="cal-tb"><h3>Formazione scuola-lavoro <span>· CS Metal Europe</span></h3>
+      <div class="cal-stats"><span class="cstat lgcard"><b>240</b><span>ore</span></span><span class="cstat lgcard"><b>2</b><span>anni</span></span><span class="cstat lgcard"><b>12</b><span>persone</span></span></div>
+    </div>
+    <div class="agenda">
+      <div class="agroup"><h4><b>L'azienda e io</b></h4>
+        <div class="evts">
+          <div class="evt lgcard"><span class="bar" style="background:#34C759"></span><span class="tm">Bedizzole</span><div><b>Acciai speciali, dentro il gruppo giapponese Proterial</b><p>CS Metal Europe è un'azienda di Bedizzole con dodici persone, parte del gruppo giapponese Proterial. Ho svolto 240 ore in due anni, in un unico percorso continuo.</p></div></div>
+        </div>
+      </div>
+      <div class="agroup"><h4><b>Due anni di crescita</b></h4>
+        <div class="evts">
+          <div class="evt lgcard"><span class="bar" style="background:#31A8FF"></span><span class="tm">3ª</span><div><b>I primi compiti: dati e grafica</b><p>Ho lavorato sui dati di produzione e sulle immagini dell'azienda, e ho seguito il sito e il blog. Così sono entrato nel modo di lavorare dell'azienda.</p></div></div>
+          <div class="evt lgcard"><span class="bar" style="background:#FF9500"></span><span class="tm">4ª</span><div><b>Dal magazzino alla comunicazione</b><p>Sono passato dalla gestione del magazzino e dei materiali alla comunicazione dell'azienda sui social, vedendo la stessa realtà da due lati diversi.</p></div></div>
+        </div>
+      </div>
+      <div class="agroup"><h4><b>La difficoltà che mi ha cambiato</b></h4>
+        <div class="evts">
+          <div class="evt lgcard"><span class="bar" style="background:#FF3B30"></span><span class="tm">La lezione</span><div><b>Scrivere vuol dire pensare a chi legge</b><p>Preparando l'invito a un evento ho capito che ogni parola ha uno scopo e va scelta pensando a chi legge.</p></div></div>
+        </div>
+      </div>
+      <div class="agroup"><h4><b>Il risultato</b></h4>
+        <div class="evts">
+          <div class="evt lgcard"><span class="bar" style="background:#1D6F42"></span><span class="tm">Contratto</span><div><b>Un e-commerce vero e il mio primo contratto</b><p>Ho realizzato un negozio online e la vendita su Amazon, con un programma in PHP che mantiene allineato il catalogo. Per questo lavoro ho firmato il mio primo contratto.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="win a-purple" id="w-fine" style="left:19%;top:9%;width:860px">
+  <div class="titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
+  <div class="mapwrap">
+    <div class="mpanel">
+      <span class="msearch"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Il mio tragitto verso la meta</span>
+      <div class="navcard lgcard">
+        <span class="navstep" id="nav-step">Tappa 1 di 4</span>
+        <b class="navttl" id="nav-ttl"></b>
+        <span class="navsub" id="nav-sub"></span>
+        <p class="navbody" id="nav-body"></p>
+      </div>
+      <div class="navnext"><span class="navdots" id="nav-dots"></span><span id="nav-hinttx">Tocca la mappa per proseguire</span></div>
+    </div>
+    <div class="mappane" id="mappane">
+      <svg viewBox="0 0 640 420" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block">
+        <rect width="640" height="420" fill="#EAE6DD"/>
+        <path d="M-20 70 C120 98 188 40 300 76 C420 114 472 64 660 94 L660 -20 L-20 -20 Z" fill="#AFCDE9"/>
+        <path d="M-20 70 C120 98 188 40 300 76 C420 114 472 64 660 94" stroke="#9CBFE0" stroke-width="2" fill="none"/>
+        <circle cx="70" cy="360" r="58" fill="#C9E2BC"/>
+        <circle cx="600" cy="330" r="46" fill="#C9E2BC"/>
+        <rect x="250" y="250" width="120" height="96" rx="15" fill="#C9E2BC"/>
+        <path d="M-20 252 C160 242 322 272 660 240" stroke="#fff" stroke-width="22" fill="none" stroke-linecap="round"/>
+        <path d="M-20 365 C200 356 360 386 660 356" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round"/>
+        <path d="M-20 150 C160 140 380 176 660 150" stroke="#fff" stroke-width="9" fill="none"/>
+        <path d="M120 -20 C140 120 95 280 130 440" stroke="#fff" stroke-width="13" fill="none"/>
+        <path d="M330 -20 C312 130 360 280 330 440" stroke="#fff" stroke-width="16" fill="none"/>
+        <path d="M520 -20 C540 120 500 300 530 440" stroke="#fff" stroke-width="11" fill="none"/>
+        <rect x="150" y="118" width="64" height="42" rx="7" fill="#DCD5C6"/>
+        <rect x="60" y="150" width="44" height="40" rx="7" fill="#DCD5C6"/>
+        <rect x="392" y="150" width="54" height="38" rx="7" fill="#DCD5C6"/>
+        <rect x="470" y="300" width="58" height="40" rx="7" fill="#DCD5C6"/>
+        <path d="M232 262 L305 300" stroke="#0A84FF" stroke-width="3" fill="none" stroke-dasharray="3 6" stroke-linecap="round" opacity="0.65"/>
+        <path d="M110 330 C190 296 270 240 355 180 C440 116 498 112 545 92" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path id="route" pathLength="1" d="M110 330 C190 296 270 240 355 180 C440 116 498 112 545 92" stroke="#0A84FF" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <g class="mk" id="m0" transform="translate(110 330)"><circle r="13" fill="#34C759" stroke="#fff" stroke-width="3"/><text class="mlab" y="-22" text-anchor="middle">Maturità</text></g>
+        <g class="mk" id="m1" transform="translate(305 300)"><rect x="-10" y="-10" width="20" height="20" rx="5" transform="rotate(45)" fill="#FF9F0A" stroke="#fff" stroke-width="3"/><text class="mlab small" y="30" text-anchor="middle">PCTO</text></g>
+        <g class="mk" id="m2" transform="translate(355 180)"><circle r="13" fill="#0A84FF" stroke="#fff" stroke-width="3"/><text class="mlab" y="-22" text-anchor="middle">Università</text></g>
+        <g class="mk" id="m3" transform="translate(545 92)"><circle r="15" fill="#FF3B30" stroke="#fff" stroke-width="3"/><circle r="5" fill="#fff"/><text class="mlab" y="-24" text-anchor="middle">Estero</text></g>
+        <g id="puck" transform="translate(110 330)"><circle r="9" fill="#0A84FF" opacity="0.3"><animate attributeName="r" values="8;15;8" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.3;0.05;0.3" dur="1.8s" repeatCount="indefinite"/></circle><circle r="6.5" fill="#0A84FF" stroke="#fff" stroke-width="2.5"/></g>
+        <g transform="translate(598 54)" opacity="0.92"><circle r="17" fill="rgba(255,255,255,0.82)"/><path d="M0 -11 L4 1 L0 4 L-4 1 Z" fill="#FF3B30"/><path d="M0 11 L4 -1 L0 -4 L-4 -1 Z" fill="#8E8E93" opacity="0.55"/></g>
+      </svg>
+    </div>
+  </div>
+  <style>
+    #w-fine .mappane{cursor:pointer}
+    #w-fine .mappane svg{width:100%;height:100%;display:block}
+    #w-fine #puck{transition:transform .9s cubic-bezier(.45,.05,.2,1)}
+    #w-fine .mlab{fill:#1d1d1f;font-size:15px;font-weight:600;font-family:inherit;paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round}
+    #w-fine .mlab.small{font-size:13px}
+    #w-fine .mk{opacity:.5;transition:opacity .35s ease}
+    #w-fine .mk.on{opacity:1}
+    #w-fine .navcard{display:flex;flex-direction:column;gap:5px;padding:18px}
+    #w-fine .navstep{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#AF52DE}
+    #w-fine .navttl{font-size:19px;font-weight:600;letter-spacing:-.01em}
+    #w-fine .navsub{font-size:13px;opacity:.6;margin-bottom:5px}
+    #w-fine .navbody{font-size:14px;line-height:1.55;opacity:.85;margin:0}
+    #w-fine .navnext{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:12.5px;opacity:.6}
+    #w-fine .navdots{display:flex;gap:6px}
+    #w-fine .navdots i{width:7px;height:7px;border-radius:50%;background:rgba(150,150,160,.35);transition:background .3s,transform .3s}
+    #w-fine .navdots i.on{background:#AF52DE;transform:scale(1.25)}
+  </style>
+</section>
+
+<div id="spot" class="spot" aria-hidden="true">
+  <style>
+    .spot{position:fixed;inset:0;z-index:4700;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:20vh;background:rgba(0,0,0,.14);backdrop-filter:blur(7px) saturate(1.1);-webkit-backdrop-filter:blur(7px) saturate(1.1);opacity:0;pointer-events:none;transition:opacity .2s ease}
+    .spot.on{opacity:1;pointer-events:auto}
+    .spot-box{width:min(620px,92vw);display:flex;align-items:center;gap:18px;padding:15px 26px;border-radius:24px;background:rgba(245,245,247,.7);border:1px solid rgba(255,255,255,.65);box-shadow:0 26px 72px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.55);backdrop-filter:blur(42px) saturate(1.8);-webkit-backdrop-filter:blur(42px) saturate(1.8);transform:scale(.94) translateY(-10px);opacity:0;transition:transform .34s cubic-bezier(.2,1.35,.4,1),opacity .22s ease}
+    .spot.on .spot-box{transform:none;opacity:1}
+    .spot-ic{flex:none;color:#6e6e73}
+    .spot-q{display:flex;align-items:center;min-height:32px}
+    .spot-type{font-size:27px;font-weight:400;color:#1d1d1f;letter-spacing:-.015em;white-space:nowrap}
+    .spot-cur{display:inline-block;width:2px;height:27px;margin-left:1px;background:#0a84ff;border-radius:1px;animation:spotcur 1.05s steps(1) infinite}
+    @keyframes spotcur{50%{opacity:0}}
+    .spot-sub{margin-top:20px;font-size:13px;font-weight:500;color:rgba(255,255,255,.92);text-shadow:0 1px 16px rgba(0,0,0,.55);opacity:0;transform:translateY(6px);transition:opacity .3s ease .12s,transform .3s ease .12s}
+    .spot.on .spot-sub{opacity:1;transform:none}
+  </style>
+  <div class="spot-box">
+    <svg class="spot-ic" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+    <span class="spot-q"><span class="spot-type"></span><span class="spot-cur"></span></span>
+  </div>
+  <p class="spot-sub">L'ultima parola prima delle domande</p>
+</div>
+
+<nav class="dock" id="dock">
+  <span class="dapp" data-w="w-pres"><button class="ai" aria-label="Presentazione"><?= appicon('finder.webp', '/original/file-manager.svg') ?></button><span class="dot"></span><span class="tip">Presentazione · Finder</span></span>
+  <span class="dapp" data-w="w-io"><button class="ai" aria-label="Su di me"><?= appicon('contacts.webp', '/src/apps/scalable/addressbook.svg') ?></button><span class="dot"></span><span class="tip">Su di me · Informazioni</span></span>
+  <span class="dapp" data-w="w-skills"><button class="ai" aria-label="Fuori dall'aula"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></button><span class="dot"></span><span class="tip">Fuori dall'aula · Launchpad</span></span>
+  <span class="dapp" data-w="w-fsl"><button class="ai" aria-label="CS Metal Europe"><?= appicon('calendar.webp', '/original/calendar.svg') ?></button><span class="dot"></span><span class="tip">CS Metal Europe · Calendario</span></span>
+  <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Dove voglio andare"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Dove voglio andare · Mappe</span></span>
+  <span class="dapp" data-spot><button class="ai" aria-label="Spotlight"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></button><span class="dot"></span><span class="tip">Spotlight</span></span>
+  <span class="dsep"></span>
+  <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
+</nav>
+
+<script src="hub.js"></script>
+<script>
+(function(){
+  var spot=document.getElementById('spot');
+  if(!spot)return;
+  var box=spot.querySelector('.spot-box');
+  var type=spot.querySelector('.spot-type');
+  var TEXT='Le parole non sono mai neutre';
+  var timer=null;
+  function openSpot(){
+    if(spot.classList.contains('on'))return;
+    spot.classList.add('on');
+    spot.setAttribute('aria-hidden','false');
+    if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}
+    type.textContent='';
+    var i=0;
+    clearInterval(timer);
+    timer=setInterval(function(){
+      type.textContent=TEXT.slice(0,++i);
+      if(i>=TEXT.length)clearInterval(timer);
+    },48);
+  }
+  function closeSpot(){
+    if(!spot.classList.contains('on'))return;
+    spot.classList.remove('on');
+    spot.setAttribute('aria-hidden','true');
+    clearInterval(timer);
+    if(typeof sndClose==='function'){try{sndClose();}catch(e){}}
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-spot]');
+    if(t){e.preventDefault();openSpot();return;}
+    if(spot.classList.contains('on')&&!box.contains(e.target))closeSpot();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSpot();});
+})();
+</script>
+<script>
+(function(){
+  var pane=document.getElementById('mappane');
+  var puck=document.getElementById('puck');
+  if(!pane||!puck)return;
+  var stops=[
+    {x:110,y:330,m:'m0',step:'Tappa 1 di 4',ttl:'Maturità · IIS Cerebotani',sub:'2021 – 2026',body:'Cinque anni di superiori. Qui ho costruito le basi tecniche e un metodo per studiare e risolvere i problemi. La maturità è la prima tappa, il punto da cui parte il viaggio.'},
+    {x:305,y:300,m:'m1',step:'Sosta lungo la strada · PCTO',ttl:'CS Metal Europe',sub:'240 ore in azienda',body:'Un\'azienda di Bedizzole, nel gruppo giapponese Proterial. In due anni ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. È il rifornimento che mi ha dato la direzione per il resto del tragitto.'},
+    {x:355,y:180,m:'m2',step:'Tappa 2 di 4',ttl:'Università · Informatica',sub:'Dopo il diploma',body:'Voglio continuare a studiare per costruire software con basi più solide e prepararmi davvero al lavoro.'},
+    {x:545,y:92,m:'m3',step:'Tappa 3 di 4 · La meta',ttl:'Lavorare all\'estero',sub:'Dove voglio arrivare',body:'La meta del viaggio: portare quello che ho imparato fuori dall\'Italia e lavorare nel software in un contesto internazionale.'}
+  ];
+  var elStep=document.getElementById('nav-step'),elTtl=document.getElementById('nav-ttl'),elSub=document.getElementById('nav-sub'),elBody=document.getElementById('nav-body'),elHint=document.getElementById('nav-hinttx'),elDots=document.getElementById('nav-dots');
+  var i=0,k;
+  for(k=0;k<stops.length;k++){elDots.insertAdjacentHTML('beforeend','<i></i>');}
+  function render(){
+    var s=stops[i],j;
+    puck.setAttribute('transform','translate('+s.x+' '+s.y+')');
+    elStep.textContent=s.step;elTtl.textContent=s.ttl;elSub.textContent=s.sub;elBody.textContent=s.body;
+    var mks=pane.querySelectorAll('.mk');for(j=0;j<mks.length;j++){mks[j].classList.remove('on');}
+    var cur=document.getElementById(s.m);if(cur)cur.classList.add('on');
+    var dots=elDots.children;for(j=0;j<dots.length;j++){dots[j].className=(j<=i?'on':'');}
+    elHint.textContent=(i===stops.length-1)?'Sei arrivato · tocca per ricominciare':'Tocca la mappa per proseguire';
+  }
+  function next(){i=(i+1)%stops.length;render();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
+  pane.addEventListener('click',next);
+  render();
+})();
+</script>
+</body>
+</html>
