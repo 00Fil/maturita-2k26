@@ -195,7 +195,7 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-purple" id="w-fine" style="left:9%;top:7%;width:940px">
+<section class="win a-blue" id="w-fine" style="left:9%;top:7%;width:940px">
   <div class="titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
   <div class="mv" id="mv">
     <svg class="mv-map" id="mv-map" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid slice">
@@ -232,68 +232,75 @@ function appicon(string $file, string $remote): string {
         <path d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#C2CEDB" stroke-width="6" fill="none" stroke-linecap="round"/>
         <path id="mv-trav" pathLength="1" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#0A84FF" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>
         <g class="mk" id="m0" transform="translate(170 520)"><circle r="9" fill="#34C759" stroke="#fff" stroke-width="3.5"/><text class="mlab" y="-20" text-anchor="middle">Maturità</text></g>
-        <g class="mk" id="m1" transform="translate(390 430)"><circle r="8" fill="#FF9F0A" stroke="#fff" stroke-width="3.5"/><text class="mlab small" y="26" text-anchor="middle">PCTO</text></g>
-        <g class="mk" id="m2" transform="translate(610 300)"><circle r="9" fill="#0A84FF" stroke="#fff" stroke-width="3.5"/><text class="mlab" y="-20" text-anchor="middle">Università</text></g>
+        <g class="mk" id="m1" transform="translate(390 430)"><circle r="11" fill="#8E8E93" stroke="#fff" stroke-width="3"/><text class="mnum" y="4" text-anchor="middle">1</text><text class="mlab small" y="28" text-anchor="middle">PCTO</text></g>
+        <g class="mk" id="m2" transform="translate(610 300)"><circle r="11" fill="#8E8E93" stroke="#fff" stroke-width="3"/><text class="mnum" y="4" text-anchor="middle">2</text><text class="mlab" y="-20" text-anchor="middle">Università</text></g>
         <g class="mk" id="m3" transform="translate(850 150)"><path d="M0 0 C-9 -13 -9 -23 0 -31 C9 -23 9 -13 0 0 Z" fill="#FF3B30" stroke="#fff" stroke-width="2.5"/><circle cx="0" cy="-20" r="5.5" fill="#fff"/><text class="mlab" y="18" text-anchor="middle">Estero</text></g>
         <g id="mv-puck" transform="translate(170 520)"><circle r="10" fill="#0A84FF" opacity="0.28"><animate attributeName="r" values="9;17;9" dur="1.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.28;0.04;0.28" dur="1.9s" repeatCount="indefinite"/></circle><circle r="7" fill="#0A84FF" stroke="#fff" stroke-width="2.5"/></g>
       </g>
-      <g transform="translate(940 70)" opacity="0.9"><circle r="18" fill="rgba(255,255,255,0.85)"/><path d="M0 -12 L4.5 1 L0 4.5 L-4.5 1 Z" fill="#FF3B30"/><path d="M0 12 L4.5 -1 L0 -4.5 L-4.5 -1 Z" fill="#8E8E93" opacity="0.55"/></g>
     </svg>
-    <div class="mv-nav">
-      <div class="mvn-banner" id="nv-banner">
-        <span class="mvn-ic">
-          <svg class="ic-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12"/><path d="M13 6l6 6-6 6"/></svg>
-          <svg class="ic-end" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4"/><path d="M6 5h11l-2.5 3.5L17 12H6"/></svg>
-        </span>
-        <div class="mvn-htxt"><span class="mvn-kick" id="nv-kick"></span><b class="mvn-ttl" id="nv-ttl"></b></div>
+    <div class="dir">
+      <div class="dir-hd"><b>Indicazioni</b><button class="dir-x" type="button" aria-label="Chiudi">✕</button></div>
+      <div class="dir-seg">
+        <button class="on" type="button" aria-label="Auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l2-5h14l2 5"/><rect x="3" y="13" width="18" height="5" rx="1.5"/><circle cx="7" cy="18" r="1.3" fill="currentColor"/><circle cx="17" cy="18" r="1.3" fill="currentColor"/></svg></button>
+        <button type="button" aria-label="A piedi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4.5" r="1.8"/><path d="M13 7l-2 4 3 2 1 5M11 11l-3 1-1 4M14 9l3 1"/></svg></button>
+        <button type="button" aria-label="Mezzi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 20l-1.5 1.8M15 20l1.5 1.8"/><circle cx="9" cy="14" r="0.9" fill="currentColor"/><circle cx="15" cy="14" r="0.9" fill="currentColor"/></svg></button>
+        <button type="button" aria-label="Bici"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17l4-7h4M9 7h3l3 10"/></svg></button>
       </div>
-      <div class="mvn-detail"><span class="mvn-sub" id="nv-sub"></span><p class="mvn-body" id="nv-body"></p></div>
-      <div class="mvn-steps" id="nv-steps"></div>
-      <div class="mvn-foot"><span class="mvn-dots" id="nv-dots"></span><span class="mvn-hint" id="nv-hint">Tocca la mappa per proseguire</span></div>
+      <div class="dir-list" id="nv-list"></div>
+      <div class="dir-card"><span class="kk" id="nv-kk"></span><p id="nv-body"></p></div>
+      <div class="dir-foot"><div><b class="big" id="nv-step"></b><small id="nv-eta"></small></div><span class="dir-hint" id="nv-hint"></span></div>
+    </div>
+    <div class="mv-ctrl">
+      <div class="mv-zoom"><button id="mv-zin" type="button" aria-label="Zoom avanti">+</button><span></span><button id="mv-zout" type="button" aria-label="Zoom indietro">−</button></div>
+      <button class="mv-comp" id="mv-comp" type="button" aria-label="Nord"><svg viewBox="0 0 24 24"><path d="M12 4 L15 13 L12 11 L9 13 Z" fill="#FF3B30"/><path d="M12 20 L9 11 L12 13 L15 11 Z" fill="#8E8E93"/></svg></button>
     </div>
   </div>
   <style>
     #w-fine{display:flex;flex-direction:column}
-    #w-fine .mv{position:relative;flex:1;min-height:560px;overflow:hidden}
+    #w-fine .mv{position:relative;flex:1;min-height:560px;overflow:hidden;background:#E9E6DD}
     #w-fine .mv-map{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:url("assets/cursors/pointer.svg") 10 5,pointer}
     #w-fine #mv-cam{transition:transform 1.2s cubic-bezier(.32,.72,0,1)}
     #w-fine #mv-puck{transition:transform 1.1s cubic-bezier(.32,.72,0,1)}
     #w-fine #mv-trav{transition:stroke-dashoffset 1.1s cubic-bezier(.32,.72,0,1)}
     #w-fine .mk{transition:opacity .4s ease}
     #w-fine .mk:not(.on){opacity:.5}
-    #w-fine .mlab{fill:#1d1d1f;font-size:15px;font-weight:650;font-family:inherit;paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round}
-    #w-fine .mlab.small{font-size:13px}
-    #w-fine .mv-nav{position:absolute;left:16px;top:16px;width:308px;max-height:calc(100% - 32px);display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:20px;background:var(--glass);backdrop-filter:blur(30px) saturate(1.8);-webkit-backdrop-filter:blur(30px) saturate(1.8);box-shadow:var(--shadow-win),inset 0 1px 0 var(--hairline),inset 0 0 0 1px rgba(255,255,255,.16);overflow:hidden;animation:mvNavIn .6s var(--spring) both}
-    @keyframes mvNavIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
-    #w-fine .mvn-banner{display:flex;align-items:center;gap:13px;padding:13px 15px;border-radius:15px;background:linear-gradient(135deg,#34C759,#28A84A);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 8px 20px rgba(40,168,74,.32)}
-    #w-fine .mvn-ic{flex:none;width:34px;height:34px;color:#fff}
-    #w-fine .mvn-ic svg{width:34px;height:34px;display:block}
-    #w-fine .ic-end{display:none}
-    #w-fine .mvn-banner.arrived .ic-go{display:none}
-    #w-fine .mvn-banner.arrived .ic-end{display:block}
-    #w-fine .mvn-banner.arrived{background:linear-gradient(135deg,#FF453A,#E0352B);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 8px 20px rgba(224,53,43,.32)}
-    #w-fine .mvn-htxt{min-width:0}
-    #w-fine .mvn-kick{display:block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.92}
-    #w-fine .mvn-ttl{display:block;font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-top:1px}
-    #w-fine .mvn-detail{padding:2px 6px}
-    #w-fine .mvn-sub{display:block;font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.05em;color:var(--purple);margin-bottom:4px}
-    #w-fine .mvn-body{font-size:13px;line-height:1.55;color:var(--muted);font-weight:500;margin:0}
-    #w-fine .mvn-steps{display:flex;flex-direction:column;position:relative;overflow-y:auto;min-height:0}
-    #w-fine .mvn-step{display:flex;align-items:center;gap:11px;width:100%;padding:7px 8px;border:none;background:none;font:inherit;text-align:left;color:var(--text);border-radius:11px;transition:background .2s ease}
-    #w-fine .mvn-step:hover{background:rgba(127,127,135,.12)}
-    #w-fine .mvn-step.on{background:rgba(255,255,255,.4)}
-    @media (prefers-color-scheme:dark){#w-fine .mvn-step.on{background:rgba(255,255,255,.1)}}
-    #w-fine .mvn-node{flex:none;width:13px;height:13px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 22%,transparent);position:relative}
-    #w-fine .mvn-step:not(:last-child) .mvn-node::after{content:"";position:absolute;left:50%;top:14px;width:2px;height:20px;transform:translateX(-50%);background:var(--border)}
-    #w-fine .mvn-stxt{min-width:0}
-    #w-fine .mvn-stxt b{display:block;font-size:12.5px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    #w-fine .mvn-stxt small{font-size:10.5px;font-weight:600;color:var(--faint)}
-    #w-fine .mvn-step.on .mvn-stxt small{color:var(--purple)}
-    #w-fine .mvn-foot{display:flex;align-items:center;gap:10px;padding:8px 8px 4px;box-shadow:0 -1px 0 var(--border)}
-    #w-fine .mvn-dots{display:flex;gap:6px}
-    #w-fine .mvn-dots i{width:7px;height:7px;border-radius:50%;background:rgba(150,150,160,.35);transition:background .3s,transform .3s}
-    #w-fine .mvn-dots i.on{background:var(--purple);transform:scale(1.25)}
-    #w-fine .mvn-hint{font-size:11.5px;font-weight:600;color:var(--faint);margin-left:auto}
+    #w-fine .mlab{fill:#1d1d1f;font-size:14px;font-weight:650;font-family:inherit;paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round}
+    #w-fine .mlab.small{font-size:12px}
+    #w-fine .mnum{fill:#fff;font-size:12px;font-weight:800;font-family:inherit}
+    #w-fine .dir{position:absolute;left:14px;top:14px;width:300px;max-height:calc(100% - 28px);display:flex;flex-direction:column;border-radius:18px;background:var(--glass);backdrop-filter:blur(30px) saturate(1.8);-webkit-backdrop-filter:blur(30px) saturate(1.8);box-shadow:var(--shadow-win),inset 0 0 0 1px var(--hairline);overflow:hidden;animation:mvIn .55s var(--spring) both}
+    @keyframes mvIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+    #w-fine .dir-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 9px}
+    #w-fine .dir-hd b{font-size:19px;font-weight:800;letter-spacing:-.02em}
+    #w-fine .dir-x{width:24px;height:24px;border-radius:50%;border:none;background:rgba(120,120,128,.2);color:var(--muted);font-size:11px;line-height:1;display:flex;align-items:center;justify-content:center}
+    #w-fine .dir-x:hover{background:rgba(120,120,128,.34)}
+    #w-fine .dir-seg{display:flex;gap:2px;margin:0 12px 8px;padding:2px;border-radius:9px;background:rgba(120,120,128,.16)}
+    #w-fine .dir-seg button{flex:1;height:30px;border:none;background:none;border-radius:7px;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:background .15s}
+    #w-fine .dir-seg button svg{width:18px;height:18px}
+    #w-fine .dir-seg button.on{background:var(--surface);color:var(--blue);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+    #w-fine .dir-list{display:flex;flex-direction:column;padding:0 8px;overflow-y:auto;min-height:0}
+    #w-fine .dir-row{display:flex;align-items:center;gap:12px;width:100%;padding:8px;border:none;background:none;font:inherit;text-align:left;color:inherit;border-radius:10px;transition:background .18s}
+    #w-fine .dir-row:hover{background:rgba(120,120,128,.1)}
+    #w-fine .dir-row.on{background:rgba(10,132,255,.12)}
+    #w-fine .dir-pin{flex:none;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;background:var(--c);position:relative;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+    #w-fine .dir-row:not(:last-child) .dir-pin::after{content:"";position:absolute;left:50%;top:23px;width:2px;height:20px;transform:translateX(-50%);background:var(--border)}
+    #w-fine .dir-txt{min-width:0}
+    #w-fine .dir-txt b{display:block;font-size:14px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #w-fine .dir-txt small{font-size:11.5px;color:var(--faint);font-weight:550}
+    #w-fine .dir-row.on .dir-txt small{color:var(--blue)}
+    #w-fine .dir-card{margin:8px 12px 0;padding:12px 14px;border-radius:14px;background:rgba(120,120,128,.1)}
+    #w-fine .dir-card .kk{display:block;font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.05em;color:var(--blue);margin-bottom:5px}
+    #w-fine .dir-card p{margin:0;font-size:12.5px;line-height:1.55;color:var(--muted);font-weight:500}
+    #w-fine .dir-foot{display:flex;align-items:center;gap:12px;margin:10px 14px 13px;padding-top:11px;box-shadow:0 -1px 0 var(--border)}
+    #w-fine .dir-foot .big{font-size:18px;font-weight:800;letter-spacing:-.02em}
+    #w-fine .dir-foot small{display:block;font-size:11px;color:var(--faint);font-weight:600}
+    #w-fine .dir-hint{margin-left:auto;font-size:11px;color:var(--faint);font-weight:600;text-align:right;max-width:118px;line-height:1.3}
+    #w-fine .mv-ctrl{position:absolute;right:14px;top:14px;display:flex;flex-direction:column;gap:10px;align-items:center}
+    #w-fine .mv-zoom{display:flex;flex-direction:column;border-radius:11px;overflow:hidden;background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow-win),inset 0 0 0 1px var(--hairline)}
+    #w-fine .mv-zoom button{width:34px;height:34px;border:none;background:none;color:inherit;font-size:18px;font-weight:500;display:flex;align-items:center;justify-content:center}
+    #w-fine .mv-zoom button:hover{background:rgba(120,120,128,.16)}
+    #w-fine .mv-zoom span{height:1px;background:var(--border)}
+    #w-fine .mv-comp{width:34px;height:34px;border-radius:50%;border:none;background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow-win),inset 0 0 0 1px var(--hairline);display:flex;align-items:center;justify-content:center}
+    #w-fine .mv-comp svg{width:18px;height:18px}
   </style>
 </section>
 
@@ -306,111 +313,4 @@ function appicon(string $file, string $remote): string {
     .spot-ic{flex:none;color:#6e6e73}
     .spot-q{display:flex;align-items:center;min-height:32px}
     .spot-type{font-size:27px;font-weight:400;color:#1d1d1f;letter-spacing:-.015em;white-space:nowrap}
-    .spot-cur{display:inline-block;width:2px;height:27px;margin-left:1px;background:#0a84ff;border-radius:1px;animation:spotcur 1.05s steps(1) infinite}
-    @keyframes spotcur{50%{opacity:0}}
-    .spot-sub{margin-top:20px;font-size:13px;font-weight:500;color:rgba(255,255,255,.92);text-shadow:0 1px 16px rgba(0,0,0,.55);opacity:0;transform:translateY(6px);transition:opacity .3s ease .12s,transform .3s ease .12s}
-    .spot.on .spot-sub{opacity:1;transform:none}
-  </style>
-  <div class="spot-box">
-    <svg class="spot-ic" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
-    <span class="spot-q"><span class="spot-type"></span><span class="spot-cur"></span></span>
-  </div>
-  <p class="spot-sub">L'ultima parola prima delle domande</p>
-</div>
-
-<nav class="dock" id="dock">
-  <span class="dapp" data-w="w-pres"><button class="ai" aria-label="Presentazione"><?= appicon('finder.webp', '/original/file-manager.svg') ?></button><span class="dot"></span><span class="tip">Presentazione · Finder</span></span>
-  <span class="dapp" data-w="w-io"><button class="ai" aria-label="Su di me"><?= appicon('contacts.webp', '/src/apps/scalable/addressbook.svg') ?></button><span class="dot"></span><span class="tip">Su di me · Informazioni</span></span>
-  <span class="dapp" data-w="w-skills"><button class="ai" aria-label="Fuori dall'aula"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></button><span class="dot"></span><span class="tip">Fuori dall'aula · Launchpad</span></span>
-  <span class="dapp" data-w="w-fsl"><button class="ai" aria-label="CS Metal Europe"><?= appicon('calendar.webp', '/original/calendar.svg') ?></button><span class="dot"></span><span class="tip">CS Metal Europe · Calendario</span></span>
-  <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Dove voglio andare"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Dove voglio andare · Mappe</span></span>
-  <span class="dapp" data-spot><button class="ai" aria-label="Spotlight"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></button><span class="dot"></span><span class="tip">Spotlight</span></span>
-  <span class="dsep"></span>
-  <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
-</nav>
-
-<script src="hub.js"></script>
-<script>
-(function(){
-  var spot=document.getElementById('spot');
-  if(!spot)return;
-  var box=spot.querySelector('.spot-box');
-  var type=spot.querySelector('.spot-type');
-  var TEXT='Le parole non sono mai neutre';
-  var timer=null;
-  function openSpot(){
-    if(spot.classList.contains('on'))return;
-    spot.classList.add('on');
-    spot.setAttribute('aria-hidden','false');
-    if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}
-    type.textContent='';
-    var i=0;
-    clearInterval(timer);
-    timer=setInterval(function(){
-      type.textContent=TEXT.slice(0,++i);
-      if(i>=TEXT.length)clearInterval(timer);
-    },48);
-  }
-  function closeSpot(){
-    if(!spot.classList.contains('on'))return;
-    spot.classList.remove('on');
-    spot.setAttribute('aria-hidden','true');
-    clearInterval(timer);
-    if(typeof sndClose==='function'){try{sndClose();}catch(e){}}
-  }
-  document.addEventListener('click',function(e){
-    var t=e.target.closest('[data-spot]');
-    if(t){e.preventDefault();openSpot();return;}
-    if(spot.classList.contains('on')&&!box.contains(e.target))closeSpot();
-  });
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSpot();});
-})();
-</script>
-<script>
-(function(){
-  var map=document.getElementById('mv-map');
-  var cam=document.getElementById('mv-cam');
-  var puck=document.getElementById('mv-puck');
-  var trav=document.getElementById('mv-trav');
-  if(!map||!cam||!puck)return;
-  var stops=[
-    {x:170,y:520,p:0,m:'m0',c:'#34C759',kick:'Partenza',short:'Partenza',ttl:'Maturità al Cerebotani',sub:'Cinque anni di informatica',body:'È il punto di partenza. In cinque anni al Cerebotani ho imparato a programmare e a risolvere i problemi con metodo. Da qui parte la strada che ho in mente per il dopo.'},
-    {x:390,y:430,p:0.30,m:'m1',c:'#FF9F0A',kick:'Sosta · PCTO',short:'Sosta · PCTO',ttl:'CS Metal Europe',sub:'240 ore in azienda',body:'Una sosta lungo la strada, come il rifornimento prima di un viaggio lungo. In azienda ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. Qui ho capito quale direzione voglio prendere.'},
-    {x:610,y:300,p:0.63,m:'m2',c:'#0A84FF',kick:'Prossima tappa',short:'Tappa',ttl:'Università · Informatica',sub:'Dopo il diploma',body:'Voglio continuare a studiare informatica. Mi serve per costruire software con basi più solide e arrivare preparato al lavoro.'},
-    {x:850,y:150,p:1,m:'m3',c:'#FF3B30',kick:'Arrivo · la meta',short:'Arrivo',ttl:'Lavorare all\'estero',sub:'Dove voglio arrivare',body:'La meta del viaggio. Voglio portare quello che ho imparato fuori dall\'Italia e lavorare nel software in un contesto internazionale.'}
-  ];
-  var banner=document.getElementById('nv-banner'),elKick=document.getElementById('nv-kick'),elTtl=document.getElementById('nv-ttl'),elSub=document.getElementById('nv-sub'),elBody=document.getElementById('nv-body'),elHint=document.getElementById('nv-hint'),elDots=document.getElementById('nv-dots'),elSteps=document.getElementById('nv-steps');
-  var i=0,n=stops.length,j;
-  for(j=0;j<n;j++){
-    var s=stops[j];
-    var b=document.createElement('button');
-    b.className='mvn-step';b.setAttribute('data-i',j);
-    b.innerHTML='<span class="mvn-node" style="--c:'+s.c+'"></span><span class="mvn-stxt"><b>'+s.ttl+'</b><small>'+s.short+'</small></span>';
-    elSteps.appendChild(b);
-    elDots.insertAdjacentHTML('beforeend','<i></i>');
-  }
-  var sc=1.16,VW=1000,VH=640,TX=600,TY=320,minX=-300,maxX=1300,minY=-260,maxY=900;
-  function render(){
-    var s=stops[i],k;
-    puck.setAttribute('transform','translate('+s.x+' '+s.y+')');
-    trav.setAttribute('stroke-dashoffset',(1-s.p).toFixed(4));
-    var dx=TX-sc*s.x, dy=TY-sc*s.y;
-    dx=Math.max(VW-sc*maxX,Math.min(-sc*minX,dx));
-    dy=Math.max(VH-sc*maxY,Math.min(-sc*minY,dy));
-    cam.setAttribute('transform','translate('+dx.toFixed(1)+' '+dy.toFixed(1)+') scale('+sc+')');
-    elKick.textContent=s.kick;elTtl.textContent=s.ttl;elSub.textContent=s.sub;elBody.textContent=s.body;
-    banner.classList.toggle('arrived',i===n-1);
-    var mks=cam.querySelectorAll('.mk');for(k=0;k<mks.length;k++)mks[k].classList.remove('on');
-    var cur=document.getElementById(s.m);if(cur)cur.classList.add('on');
-    var steps=elSteps.children;for(k=0;k<steps.length;k++)steps[k].className='mvn-step'+(k===i?' on':'');
-    var dots=elDots.children;for(k=0;k<dots.length;k++)dots[k].className=(k<=i?'on':'');
-    elHint.textContent=(i===n-1)?'Sei arrivato · tocca per ricominciare':'Tocca la mappa per proseguire';
-  }
-  function go(ni){i=((ni%n)+n)%n;render();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
-  map.addEventListener('click',function(){go(i+1);});
-  elSteps.addEventListener('click',function(e){var t=e.target.closest('.mvn-step');if(!t)return;go(parseInt(t.getAttribute('data-i'),10));});
-  render();
-})();
-</script>
-</body>
-</html>
+    .spot-cur{display:inline-block;
