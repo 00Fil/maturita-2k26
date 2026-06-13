@@ -21,7 +21,6 @@ function tick() {
   const ora = d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
   clockEl.textContent = giorno.charAt(0).toUpperCase() + giorno.slice(1) + '  ' + ora;
 }
-
 /* Avvia (o riavvia) il countdown di 10 minuti. */
 function avviaTimerPresentazione() {
   presScadenza = Date.now() + PRES_DURATA_MS;
@@ -128,6 +127,7 @@ function closeWin(win) {
     win.style.removeProperty('border-radius');
     win._mxBusy = false;
     syncDock();
+    dockSync();
   }, 260);
 }
 function closeAll() {
@@ -160,6 +160,8 @@ function toggleMax(win) {
     win._restore = { left: start.left, top: start.top, width: start.width, height: start.height };
     win.classList.add('maxi');
     sndOpen();
+    dockGrace = 0;
+    dockHide();
     target = maxiBounds();
   } else {
     target = win._restore ? { left: win._restore.left, top: win._restore.top, width: win._restore.width, height: win._restore.height, radius: 24 } : { left: start.left, top: start.top, width: start.width, height: start.height, radius: 24 };
@@ -279,16 +281,21 @@ document.head.appendChild(dockCss);
 
 let dockHot = false;
 let dockGrace = 0;
+// "Schermo intero in un'applicazione" = finestra massimizzata (.maxi) oppure fullscreen del browser.
+function appFullscreen() { return !!document.fullscreenElement || !!document.querySelector('.win.maxi'); }
 function dockShow() { dock.classList.remove('autohide'); }
-function dockHide() { if (!dockHot && performance.now() >= dockGrace) dock.classList.add('autohide'); }
+function dockHide() { if (appFullscreen() && !dockHot && performance.now() >= dockGrace) dock.classList.add('autohide'); }
+function dockSync() { if (appFullscreen()) dockHide(); else dockShow(); }
 function dockWake(ms) { dockShow(); dockGrace = performance.now() + (ms || 1500); }
 document.addEventListener('pointermove', e => {
+  // Fuori da un'app a schermo intero il dock resta sempre visibile; l'auto-hide vale solo a schermo intero.
+  if (!appFullscreen()) { dockShow(); return; }
   if (e.clientY >= window.innerHeight - 80) dockShow();
   else if (e.clientY < window.innerHeight - 110) dockHide();
 });
 dock.addEventListener('pointerenter', () => { dockHot = true; dockShow(); });
 dock.addEventListener('pointerleave', () => { dockHot = false; dockHide(); });
-setTimeout(() => dock.classList.add('autohide'), 2800);
+setTimeout(() => { if (appFullscreen()) dock.classList.add('autohide'); }, 2800);
 
 dock.querySelectorAll('.dapp').forEach(d => {
   const btn = d.querySelector('.ai');
@@ -399,6 +406,9 @@ fullBtn.addEventListener('click', () => {
 });
 document.addEventListener('fullscreenchange', () => {
   fullBtn.classList.toggle('on', !!document.fullscreenElement);
+  // Aggiorna la visibilità del dock in base allo stato a schermo intero.
+  dockGrace = 0;
+  dockSync();
 });
 
 document.getElementById('cc-pres').addEventListener('click', () => {
