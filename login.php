@@ -114,5 +114,11 @@ try {
     rispondi(false, 'Database non raggiungibile. Il database è avviato? Hai eseguito setup.sql?', 503);
 }
 
-// 5. Tutto ok → HTTP 200
+// 5. Login riuscito: la sessione è già avviata, quindi marco hub.php come
+//    già "acceso" (salta il boot). Così la transizione va dritta dal login
+//    al desktop, senza un secondo caricamento di accensione.
+//    Il riavvio manuale resta possibile con hub.php?boot=1.
+$_SESSION['booted'] = true;
+
+// 6. Tutto ok → HTTP 200
 rispondi(true);
