@@ -94,17 +94,71 @@ function openWin(id) {
 function closeWin(win) {
   sndClose();
   win.classList.add('closing');
-  setTimeout(() => { win.classList.remove('open', 'closing', 'maxi'); syncDock(); }, 260);
+  setTimeout(() => {
+    win.classList.remove('open', 'closing', 'maxi');
+    win.style.transition = '';
+    win.style.removeProperty('width');
+    win.style.removeProperty('height');
+    win.style.removeProperty('max-height');
+    win._mxBusy = false;
+    syncDock();
+  }, 260);
 }
 function closeAll() {
   document.querySelectorAll('.win.open').forEach((w, i) => setTimeout(() => closeWin(w), i * 60));
 }
 
+const MAXI_EASE = 'cubic-bezier(.32,.72,0,1)';
+function maxiBounds() {
+  return { left: 8, top: 42, width: window.innerWidth - 16, height: window.innerHeight - 132 };
+}
+function setWinBox(win, r, anim) {
+  win.style.setProperty('max-height', 'none', 'important');
+  win.style.transition = anim ? ('left .5s ' + MAXI_EASE + ', top .5s ' + MAXI_EASE + ', width .5s ' + MAXI_EASE + ', height .5s ' + MAXI_EASE) : 'none';
+  win.style.setProperty('left', r.left + 'px', 'important');
+  win.style.setProperty('top', r.top + 'px', 'important');
+  win.style.setProperty('width', r.width + 'px', 'important');
+  win.style.setProperty('height', r.height + 'px', 'important');
+}
+function toggleMax(win) {
+  focusWin(win);
+  if (win._mxBusy) return;
+  const goMax = !win.classList.contains('maxi');
+  const start = win.getBoundingClientRect();
+  setWinBox(win, { left: start.left, top: start.top, width: start.width, height: start.height }, false);
+  void win.offsetWidth;
+  win._mxBusy = true;
+  let target;
+  if (goMax) {
+    win._restore = { left: start.left, top: start.top, width: start.width, height: start.height };
+    win.classList.add('maxi');
+    sndOpen();
+    target = maxiBounds();
+  } else {
+    target = win._restore || { left: start.left, top: start.top, width: start.width, height: start.height };
+    sndClose();
+  }
+  requestAnimationFrame(() => setWinBox(win, target, true));
+  setTimeout(() => {
+    win.style.transition = '';
+    if (!goMax) {
+      win.classList.remove('maxi');
+      win.style.removeProperty('width');
+      win.style.removeProperty('height');
+      win.style.removeProperty('max-height');
+    }
+    win._mxBusy = false;
+  }, 560);
+}
+window.addEventListener('resize', () => {
+  document.querySelectorAll('.win.maxi').forEach(w => setWinBox(w, maxiBounds(), false));
+});
+
 document.querySelectorAll('.win').forEach(win => {
   win.addEventListener('pointerdown', () => focusWin(win));
   win.querySelector('.c-close').addEventListener('click', e => { e.stopPropagation(); closeWin(win); });
   win.querySelector('.c-min').addEventListener('click', e => { e.stopPropagation(); closeWin(win); });
-  win.querySelector('.c-max').addEventListener('click', e => { e.stopPropagation(); win.classList.toggle('maxi'); focusWin(win); });
+  win.querySelector('.c-max').addEventListener('click', e => { e.stopPropagation(); toggleMax(win); });
 });
 
 document.addEventListener('click', e => {
@@ -236,6 +290,7 @@ document.querySelectorAll('.win').forEach(win => {
   const end = () => { drag = false; };
   tb.addEventListener('pointerup', end);
   tb.addEventListener('pointercancel', end);
+  tb.addEventListener('dblclick', e => { if (e.target.closest('.lights')) return; toggleMax(win); });
 });
 
 syncDock();
