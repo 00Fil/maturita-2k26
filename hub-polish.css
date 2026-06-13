@@ -159,3 +159,18 @@
 #w-fine .mv-comp:hover{background:rgba(255,255,255,.82)}
 #w-fine .mv-comp:active{transform:scale(.9)}
 #w-fine .mv-comp svg{width:20px;height:20px;display:block}
+
+/* ===== Su di me — scheda identità integrata col Curriculum dello studente ===== */
+#w-io .io-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:2px 0}
+#w-io .io-stats .cstat{min-width:0;padding:11px 8px 9px}
+#w-io .io-stats .cstat b{color:var(--acc);font-size:18px}
+#w-io .io-stats .cstat span{display:block;line-height:1.2;margin-top:2px}
+#w-io .io-hero{position:relative;overflow:hidden;padding:16px 18px;border-radius:16px;color:#fff;background:var(--orange);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 10px 26px color-mix(in srgb,var(--orange) 36%,transparent)}
+#w-io .io-hero::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(220px circle at 84% -30%,rgba(255,255,255,.34),transparent 60%);pointer-events:none}
+#w-io .io-hero .as-kicker{color:#fff;opacity:.9}
+#w-io .io-hero h3{font-size:18px;font-weight:800;letter-spacing:-.025em;line-height:1.22;margin:5px 0 7px}
+#w-io .io-hero p{font-size:12.5px;line-height:1.6;font-weight:500;opacity:.95;max-width:60ch}
+#w-io .io-sec{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin:8px 2px 0}
+#w-io .crow .k{width:78px}
+.win.open .io-hero,.win.open .io-stats,.win.open .io-sec{animation:riseIn .5s var(--ease-apple) both}
+@media (max-width:760px){#w-io .io-stats{grid-template-columns:repeat(2,1fr)}}
