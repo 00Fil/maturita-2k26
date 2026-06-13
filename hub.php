@@ -320,4 +320,117 @@ function appicon(string $file, string $remote): string {
 
 <nav class="dock" id="dock">
   <span class="dapp" data-w="w-pres"><button class="ai" aria-label="Presentazione"><?= appicon('finder.webp', '/original/file-manager.svg') ?></button><span class="dot"></span><span class="tip">Presentazione · Finder</span></span>
-  <span class="dapp" data-w="w-io"><button class="ai" aria-label="Su di me"><?= appicon('contacts.webp', '/src/apps/scalable/addressbook.svg') ?></button><span class="dot"></span><span class="tip">Su di me · Informazioni
+  <span class="dapp" data-w="w-io"><button class="ai" aria-label="Su di me"><?= appicon('contacts.webp', '/src/apps/scalable/addressbook.svg') ?></button><span class="dot"></span><span class="tip">Su di me · Informazioni</span></span>
+  <span class="dapp" data-w="w-skills"><button class="ai" aria-label="Fuori dall'aula"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></button><span class="dot"></span><span class="tip">Fuori dall'aula · Launchpad</span></span>
+  <span class="dapp" data-w="w-fsl"><button class="ai" aria-label="CS Metal Europe"><?= appicon('calendar.webp', '/original/calendar.svg') ?></button><span class="dot"></span><span class="tip">CS Metal Europe · Calendario</span></span>
+  <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Dove voglio andare"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Dove voglio andare · Mappe</span></span>
+  <span class="dapp" data-spot><button class="ai" aria-label="Spotlight"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></button><span class="dot"></span><span class="tip">Spotlight</span></span>
+  <span class="dsep"></span>
+  <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
+</nav>
+
+<script src="hub.js"></script>
+<script>
+(function(){
+  var spot=document.getElementById('spot');
+  if(!spot)return;
+  var box=spot.querySelector('.spot-box');
+  var type=spot.querySelector('.spot-type');
+  var TEXT='Le parole non sono mai neutre';
+  var timer=null;
+  function openSpot(){
+    if(spot.classList.contains('on'))return;
+    spot.classList.add('on');
+    spot.setAttribute('aria-hidden','false');
+    if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}
+    type.textContent='';
+    var i=0;
+    clearInterval(timer);
+    timer=setInterval(function(){
+      type.textContent=TEXT.slice(0,++i);
+      if(i>=TEXT.length)clearInterval(timer);
+    },48);
+  }
+  function closeSpot(){
+    if(!spot.classList.contains('on'))return;
+    spot.classList.remove('on');
+    spot.setAttribute('aria-hidden','true');
+    clearInterval(timer);
+    if(typeof sndClose==='function'){try{sndClose();}catch(e){}}
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-spot]');
+    if(t){e.preventDefault();openSpot();return;}
+    if(spot.classList.contains('on')&&!box.contains(e.target))closeSpot();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSpot();});
+})();
+</script>
+<script>
+(function(){
+  var map=document.getElementById('nav-map');
+  var cam=document.getElementById('nav-cam');
+  var puck=document.getElementById('nav-puck');
+  var routeDone=document.getElementById('nav-route-done');
+  if(!map||!cam||!puck||!routeDone)return;
+  var man=document.getElementById('nav-man'),kick=document.getElementById('nav-kick'),dist=document.getElementById('nav-dist'),instr=document.getElementById('nav-instr'),expl=document.getElementById('nav-expl');
+  var then=document.getElementById('nav-then'),thenIc=document.getElementById('nav-then-ic'),thenD=document.getElementById('nav-then-d'),thenN=document.getElementById('nav-then-n');
+  var eta=document.getElementById('nav-eta'),sub=document.getElementById('nav-sub'),dotsWrap=document.getElementById('nav-dots'),endBtn=document.getElementById('nav-end');
+  var stops=[
+    {x:170,y:520,p:0,m:'m0',name:'Maturità al Cerebotani',kind:'Partenza',body:'È il punto di partenza. In cinque anni al Cerebotani ho imparato a programmare e a risolvere i problemi con metodo. Da qui parte la strada che ho in mente per il dopo.'},
+    {x:390,y:430,p:0.30,m:'m1',name:'PCTO · CS Metal Europe',kind:'Sosta',man:'right',kick:'Prima sosta',dist:'Adesso',instr:'Sosta · CS Metal Europe',body:'Una sosta lungo il tragitto, come il rifornimento prima di un viaggio lungo. In azienda ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. Qui ho capito quale direzione voglio prendere.'},
+    {x:610,y:300,p:0.63,m:'m2',name:'Università · Informatica',kind:'Tappa',man:'up',kick:'Prossima tappa',dist:'Tra 1 anno',instr:'Prosegui verso l\'Università',body:'Voglio continuare a studiare informatica. Mi serve per costruire software con basi più solide e arrivare preparato al lavoro.'},
+    {x:850,y:150,p:1,m:'m3',name:'Lavorare all\'estero',kind:'Arrivo',man:'flag',kick:'Destinazione',dist:'Tra qualche anno',instr:'Arrivo · Lavorare all\'estero',body:'La meta del viaggio. Voglio portare quello che ho imparato fuori dall\'Italia e lavorare nel software in un contesto internazionale.'}
+  ];
+  var n=stops.length,i=0;
+  function manSvg(type){
+    if(type==='flag')return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 43V7"/><path d="M15 9h21l-5 8 5 8H15"/></svg>';
+    if(type==='right')return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 41V26a8 8 0 0 1 8-8h13"/><path d="M28 9l10 9-10 9"/></svg>';
+    return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M24 41V13"/><path d="M12 24l12-12 12 12"/></svg>';
+  }
+  function pinSvg(){return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 4.8 7 13 7 13s7-8.2 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';}
+  var dots=[];
+  for(var j=0;j<n;j++){
+    var b=document.createElement('button');
+    b.type='button';b.className='nav-dot';b.setAttribute('data-i',j);
+    b.setAttribute('aria-label',stops[j].name);
+    dotsWrap.appendChild(b);dots.push(b);
+  }
+  var sc=1.16,zoom=1,VW=1000,VH=640,TX=600,TY=320,minX=-300,maxX=1300,minY=-260,maxY=900;
+  function render(){
+    var s=stops[i],e=sc*zoom,k;
+    puck.setAttribute('transform','translate('+s.x+' '+s.y+')');
+    routeDone.setAttribute('stroke-dashoffset',(1-s.p).toFixed(4));
+    var dx=TX-e*s.x,dy=TY-e*s.y;
+    dx=Math.max(VW-e*maxX,Math.min(-e*minX,dx));
+    dy=Math.max(VH-e*maxY,Math.min(-e*minY,dy));
+    cam.setAttribute('transform','translate('+dx.toFixed(1)+' '+dy.toFixed(1)+') scale('+e.toFixed(3)+')');
+    var mks=cam.querySelectorAll('.mk');for(k=0;k<mks.length;k++)mks[k].classList.remove('on');
+    var cur=document.getElementById(s.m);if(cur)cur.classList.add('on');
+    var arrived=(i===n-1);
+    if(arrived){
+      man.innerHTML=manSvg('flag');kick.textContent='Arrivo';dist.textContent='Arrivato';instr.textContent=s.name;expl.textContent=s.body;
+    }else{
+      var nx=stops[i+1];
+      man.innerHTML=manSvg(nx.man);kick.textContent=nx.kick;dist.textContent=nx.dist;instr.textContent=nx.instr;expl.textContent=nx.body;
+    }
+    var after=arrived?null:stops[i+2];
+    if(after){then.style.display='';thenIc.innerHTML=pinSvg();thenD.textContent=after.name;thenN.textContent=after.kind;}
+    else{then.style.display='none';}
+    if(arrived){eta.textContent='Sei arrivato';sub.textContent='Fine del percorso · tocca Fine per chiudere';}
+    else{eta.textContent=stops[n-1].name;sub.textContent='Tappa '+(i+1)+' di '+n+' · tocca la mappa per proseguire';}
+    for(k=0;k<dots.length;k++){dots[k].className='nav-dot'+(k<i?' done':'')+(k===i?' on':'');}
+  }
+  function go(ni){i=((ni%n)+n)%n;render();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
+  map.addEventListener('click',function(){go(i+1);});
+  dotsWrap.addEventListener('click',function(e){var t=e.target.closest('.nav-dot');if(!t)return;e.stopPropagation();go(parseInt(t.getAttribute('data-i'),10));});
+  var zin=document.getElementById('nav-zin'),zout=document.getElementById('nav-zout'),comp=document.getElementById('nav-comp');
+  if(zin)zin.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.min(1.5,zoom+0.18);render();});
+  if(zout)zout.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.max(0.8,zoom-0.18);render();});
+  if(comp)comp.addEventListener('click',function(ev){ev.stopPropagation();zoom=1;render();});
+  if(endBtn)endBtn.addEventListener('click',function(ev){ev.stopPropagation();var w=document.getElementById('w-fine');if(typeof closeWin==='function'&&w){closeWin(w);}});
+  render();
+})();
+</script>
+</body>
+</html>

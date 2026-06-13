@@ -197,14 +197,14 @@ document.addEventListener('click', e => {
   if (t) openWin(t.dataset.open);
 });
 
-const ORDER = ['w-pres', 'w-io', 'w-fsl', 'w-skills', 'w-prog', 'w-coll', 'w-fine'];
+const ORDER = ['w-pres', 'w-io', 'w-skills', 'w-fsl', 'w-fine'];
 function topChapter() {
   let best = null, z = -1;
   ORDER.forEach(id => {
     const w = document.getElementById(id);
     if (w && w.classList.contains('open') && (+w.style.zIndex || 0) >= z) { z = +w.style.zIndex || 0; best = id; }
   });
-  return best || 'w-coll';
+  return best || 'w-pres';
 }
 document.querySelectorAll('[data-nav]').forEach(b => {
   b.addEventListener('click', () => {
