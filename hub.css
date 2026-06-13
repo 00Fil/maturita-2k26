@@ -159,6 +159,9 @@ body.booting .win.open, body.booting .win.open * { animation-play-state: paused;
 .menubar .who { display: flex; align-items: center; gap: 6px; font-weight: 700; padding: 4px 9px; }
 .menubar .who .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 6px var(--ok); }
 .menubar .clock { font-variant-numeric: tabular-nums; padding: 0 8px; white-space: nowrap; }
+.menubar .clock.timer-on { font-weight: 600; letter-spacing: .3px; }
+.menubar .clock.timer-quasi { color: #FF9F0A; }
+.menubar .clock.timer-finito { color: #FF453A; }
 .menubar .exit svg { width: 14px; height: 14px; }
 
 .deskicons { position: fixed; top: 52px; right: 14px; z-index: 1; display: flex; flex-direction: column; gap: 6px; }

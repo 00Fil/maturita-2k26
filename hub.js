@@ -1,12 +1,37 @@
 const clockEl = document.getElementById('clock');
+
+/* Timer presentazione: 10 minuti che partono dal Centro di Controllo.
+   Finche' e' attivo, l'orologio della barra mostra il countdown al posto della data. */
+const PRES_DURATA_MS = 10 * 60 * 1000;
+let presScadenza = null; /* timestamp (ms) di fine; null = mostra data e ora */
+
 function tick() {
+  if (presScadenza !== null) {
+    let restoSec = Math.round((presScadenza - Date.now()) / 1000);
+    if (restoSec < 0) restoSec = 0;
+    const min = Math.floor(restoSec / 60);
+    const sec = restoSec % 60;
+    clockEl.textContent = min + ':' + String(sec).padStart(2, '0');
+    clockEl.classList.toggle('timer-finito', restoSec === 0);
+    clockEl.classList.toggle('timer-quasi', restoSec > 0 && restoSec <= 60);
+    return;
+  }
   const d = new Date();
   const giorno = d.toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short' });
   const ora = d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
   clockEl.textContent = giorno.charAt(0).toUpperCase() + giorno.slice(1) + '  ' + ora;
 }
+
+/* Avvia (o riavvia) il countdown di 10 minuti. */
+function avviaTimerPresentazione() {
+  presScadenza = Date.now() + PRES_DURATA_MS;
+  clockEl.classList.add('timer-on');
+  clockEl.classList.remove('timer-finito', 'timer-quasi');
+  tick();
+}
+
 tick();
-setInterval(tick, 10000);
+setInterval(tick, 1000);
 
 const boot = document.getElementById('boot');
 if (boot) {
@@ -255,17 +280,15 @@ document.head.appendChild(dockCss);
 let dockHot = false;
 let dockGrace = 0;
 function dockShow() { dock.classList.remove('autohide'); }
-function dockHide() { if (document.fullscreenElement && !dockHot && performance.now() >= dockGrace) dock.classList.add('autohide'); }
+function dockHide() { if (!dockHot && performance.now() >= dockGrace) dock.classList.add('autohide'); }
 function dockWake(ms) { dockShow(); dockGrace = performance.now() + (ms || 1500); }
 document.addEventListener('pointermove', e => {
-  // Fuori dal fullscreen il dock resta sempre visibile; l'auto-hide vale solo a schermo intero.
-  if (!document.fullscreenElement) { dockShow(); return; }
   if (e.clientY >= window.innerHeight - 80) dockShow();
   else if (e.clientY < window.innerHeight - 110) dockHide();
 });
 dock.addEventListener('pointerenter', () => { dockHot = true; dockShow(); });
 dock.addEventListener('pointerleave', () => { dockHot = false; dockHide(); });
-setTimeout(() => { if (document.fullscreenElement) dock.classList.add('autohide'); }, 2800);
+setTimeout(() => dock.classList.add('autohide'), 2800);
 
 dock.querySelectorAll('.dapp').forEach(d => {
   const btn = d.querySelector('.ai');
@@ -376,14 +399,12 @@ fullBtn.addEventListener('click', () => {
 });
 document.addEventListener('fullscreenchange', () => {
   fullBtn.classList.toggle('on', !!document.fullscreenElement);
-  // Entrando in fullscreen il dock può nascondersi; uscendo torna sempre visibile.
-  if (document.fullscreenElement) { dockGrace = 0; dockHide(); }
-  else dockShow();
 });
 
 document.getElementById('cc-pres').addEventListener('click', () => {
   ccClose();
   closeAll();
+  avviaTimerPresentazione();
   if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
   setTimeout(() => openWin('w-pres'), 520);
 });
