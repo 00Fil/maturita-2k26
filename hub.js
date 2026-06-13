@@ -100,6 +100,7 @@ function closeWin(win) {
     win.style.removeProperty('width');
     win.style.removeProperty('height');
     win.style.removeProperty('max-height');
+    win.style.removeProperty('border-radius');
     win._mxBusy = false;
     syncDock();
   }, 260);
@@ -110,15 +111,16 @@ function closeAll() {
 
 const MAXI_EASE = 'cubic-bezier(.32,.72,0,1)';
 function maxiBounds() {
-  return { left: 8, top: 34, width: window.innerWidth - 16, height: window.innerHeight - 42 };
+  return { left: 0, top: 34, width: window.innerWidth, height: window.innerHeight - 34, radius: 0 };
 }
 function setWinBox(win, r, anim) {
   win.style.setProperty('max-height', 'none', 'important');
-  win.style.transition = anim ? ('left .5s ' + MAXI_EASE + ', top .5s ' + MAXI_EASE + ', width .5s ' + MAXI_EASE + ', height .5s ' + MAXI_EASE) : 'none';
+  win.style.transition = anim ? ('left .5s ' + MAXI_EASE + ', top .5s ' + MAXI_EASE + ', width .5s ' + MAXI_EASE + ', height .5s ' + MAXI_EASE + ', border-radius .5s ' + MAXI_EASE) : 'none';
   win.style.setProperty('left', r.left + 'px', 'important');
   win.style.setProperty('top', r.top + 'px', 'important');
   win.style.setProperty('width', r.width + 'px', 'important');
   win.style.setProperty('height', r.height + 'px', 'important');
+  if (r.radius !== undefined) win.style.setProperty('border-radius', r.radius + 'px', 'important');
 }
 function toggleMax(win) {
   focusWin(win);
@@ -135,7 +137,7 @@ function toggleMax(win) {
     sndOpen();
     target = maxiBounds();
   } else {
-    target = win._restore || { left: start.left, top: start.top, width: start.width, height: start.height };
+    target = win._restore ? { left: win._restore.left, top: win._restore.top, width: win._restore.width, height: win._restore.height, radius: 24 } : { left: start.left, top: start.top, width: start.width, height: start.height, radius: 24 };
     sndClose();
     dockWake();
   }
@@ -147,6 +149,7 @@ function toggleMax(win) {
       win.style.removeProperty('width');
       win.style.removeProperty('height');
       win.style.removeProperty('max-height');
+      win.style.removeProperty('border-radius');
     }
     win._mxBusy = false;
   }, 560);
@@ -295,18 +298,24 @@ document.querySelectorAll('.favcard[data-say]').forEach(card => {
 
 document.querySelectorAll('.win').forEach(win => {
   const tb = win.querySelector('.titlebar');
-  let drag = false, sx = 0, sy = 0, ox = 0, oy = 0;
+  let drag = false, sx = 0, sy = 0, ox = 0, oy = 0, ow = 0, oh = 0;
   tb.addEventListener('pointerdown', e => {
     if (e.target.closest('.lights') || win.classList.contains('maxi')) return;
     drag = true;
     const r = win.getBoundingClientRect();
-    sx = e.clientX; sy = e.clientY; ox = r.left; oy = r.top;
+    sx = e.clientX; sy = e.clientY; ox = r.left; oy = r.top; ow = r.width; oh = r.height;
+    win.style.width = Math.round(ow) + 'px';
     tb.setPointerCapture(e.pointerId);
   });
   tb.addEventListener('pointermove', e => {
     if (!drag) return;
-    win.style.left = Math.round(ox + e.clientX - sx) + 'px';
-    win.style.top = Math.max(36, Math.round(oy + e.clientY - sy)) + 'px';
+    const m = 8;
+    let nx = ox + e.clientX - sx;
+    let ny = oy + e.clientY - sy;
+    nx = Math.min(Math.max(nx, m), Math.max(m, window.innerWidth - ow - m));
+    ny = Math.min(Math.max(ny, 40), Math.max(40, window.innerHeight - oh - m));
+    win.style.left = Math.round(nx) + 'px';
+    win.style.top = Math.round(ny) + 'px';
   });
   const end = () => { drag = false; };
   tb.addEventListener('pointerup', end);
