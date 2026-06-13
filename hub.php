@@ -119,7 +119,7 @@ function appicon(string $file, string $remote): string {
         <button class="fitem lgcard" data-open="w-skills" data-tag="fuori" style="animation-delay:.1s"><span class="fbadge" style="background:#5856D6">02</span><b>Fuori dall'aula</b><span>Quello che faccio fuori da scuola: progetti, concorsi, volontariato.</span><span class="tt">Apri · Launchpad</span></button>
         <button class="fitem lgcard" data-open="w-fsl" data-tag="fsl" style="animation-delay:.15s"><span class="fbadge" style="background:#34C759">03</span><b>CS Metal Europe</b><span>240 ore di alternanza in due anni: cosa ho fatto e cosa mi ha insegnato.</span><span class="tt">Apri · Calendario</span></button>
         <button class="fitem lgcard" data-open="w-fine" data-tag="rifl" style="animation-delay:.2s"><span class="fbadge" style="background:#AF52DE">04</span><b>Dove voglio andare</b><span>L'alternanza mi ha orientato: la direzione dopo il diploma.</span><span class="tt">Apri · Mappe</span></button>
-        <button class="fitem lgcard" data-open="w-coll" data-tag="fsl" style="animation-delay:.25s"><span class="fbadge" style="background:#30B0C7">05</span><b>Spotlight</b><span>L'ultima parola prima delle domande della commissione.</span><span class="tt">Apri · Spotlight</span></button>
+        <button class="fitem lgcard" data-spot data-tag="fsl" style="animation-delay:.25s"><span class="fbadge" style="background:#30B0C7">05</span><b>Spotlight</b><span>L'ultima parola prima delle domande della commissione.</span><span class="tt">Apri · Spotlight</span></button>
       </div>
       <div class="pathbar">Apertura mia, poi le domande dei professori <i>·</i> 5 momenti <i>·</i> un'app per ognuno</div>
     </div>
@@ -229,19 +229,26 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-teal" id="w-coll" style="left:21%;top:12%;width:640px">
-  <div class="titlebar"><span class="wt">Spotlight</span></div>
-  <div class="wbody" style="display:flex;align-items:center;justify-content:center;min-height:300px;padding:44px 30px">
-    <style>@keyframes spotcur{50%{opacity:0}}.spotcur{display:inline-block;width:2px;height:1em;margin-left:3px;background:#1d1d1f;vertical-align:-2px;animation:spotcur 1.1s steps(1) infinite}</style>
-    <div style="width:min(540px,100%)">
-      <div class="lgcard" style="display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.6);border-radius:18px;padding:17px 20px;box-shadow:0 14px 48px rgba(0,0,0,.14)">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#8a8a8e" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
-        <span style="font-size:23px;font-weight:500;color:#1d1d1f;letter-spacing:-.01em">Le parole non sono mai neutre<span class="spotcur"></span></span>
-      </div>
-      <p style="text-align:center;margin:20px 0 0;font-size:12.5px;font-weight:500;color:rgba(60,60,67,.5)">L'ultima parola prima delle domande</p>
-    </div>
+<div id="spot" class="spot" aria-hidden="true">
+  <style>
+    .spot{position:fixed;inset:0;z-index:4700;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:20vh;background:rgba(0,0,0,.14);backdrop-filter:blur(7px) saturate(1.1);-webkit-backdrop-filter:blur(7px) saturate(1.1);opacity:0;pointer-events:none;transition:opacity .2s ease}
+    .spot.on{opacity:1;pointer-events:auto}
+    .spot-box{width:min(620px,92vw);display:flex;align-items:center;gap:18px;padding:15px 26px;border-radius:24px;background:rgba(245,245,247,.7);border:1px solid rgba(255,255,255,.65);box-shadow:0 26px 72px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.55);backdrop-filter:blur(42px) saturate(1.8);-webkit-backdrop-filter:blur(42px) saturate(1.8);transform:scale(.94) translateY(-10px);opacity:0;transition:transform .34s cubic-bezier(.2,1.35,.4,1),opacity .22s ease}
+    .spot.on .spot-box{transform:none;opacity:1}
+    .spot-ic{flex:none;color:#6e6e73}
+    .spot-q{display:flex;align-items:center;min-height:32px}
+    .spot-type{font-size:27px;font-weight:400;color:#1d1d1f;letter-spacing:-.015em;white-space:nowrap}
+    .spot-cur{display:inline-block;width:2px;height:27px;margin-left:1px;background:#0a84ff;border-radius:1px;animation:spotcur 1.05s steps(1) infinite}
+    @keyframes spotcur{50%{opacity:0}}
+    .spot-sub{margin-top:20px;font-size:13px;font-weight:500;color:rgba(255,255,255,.92);text-shadow:0 1px 16px rgba(0,0,0,.55);opacity:0;transform:translateY(6px);transition:opacity .3s ease .12s,transform .3s ease .12s}
+    .spot.on .spot-sub{opacity:1;transform:none}
+  </style>
+  <div class="spot-box">
+    <svg class="spot-ic" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+    <span class="spot-q"><span class="spot-type"></span><span class="spot-cur"></span></span>
   </div>
-</section>
+  <p class="spot-sub">L'ultima parola prima delle domande</p>
+</div>
 
 <nav class="dock" id="dock">
   <span class="dapp" data-w="w-pres"><button class="ai" aria-label="Presentazione"><?= appicon('finder.webp', '/original/file-manager.svg') ?></button><span class="dot"></span><span class="tip">Presentazione · Finder</span></span>
@@ -249,11 +256,47 @@ function appicon(string $file, string $remote): string {
   <span class="dapp" data-w="w-skills"><button class="ai" aria-label="Fuori dall'aula"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></button><span class="dot"></span><span class="tip">Fuori dall'aula · Launchpad</span></span>
   <span class="dapp" data-w="w-fsl"><button class="ai" aria-label="CS Metal Europe"><?= appicon('calendar.webp', '/original/calendar.svg') ?></button><span class="dot"></span><span class="tip">CS Metal Europe · Calendario</span></span>
   <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Dove voglio andare"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Dove voglio andare · Mappe</span></span>
-  <span class="dapp" data-w="w-coll"><button class="ai" aria-label="Spotlight"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></button><span class="dot"></span><span class="tip">Spotlight</span></span>
+  <span class="dapp" data-spot><button class="ai" aria-label="Spotlight"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></button><span class="dot"></span><span class="tip">Spotlight</span></span>
   <span class="dsep"></span>
   <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
 </nav>
 
 <script src="hub.js"></script>
+<script>
+(function(){
+  var spot=document.getElementById('spot');
+  if(!spot)return;
+  var box=spot.querySelector('.spot-box');
+  var type=spot.querySelector('.spot-type');
+  var TEXT='Le parole non sono mai neutre';
+  var timer=null;
+  function openSpot(){
+    if(spot.classList.contains('on'))return;
+    spot.classList.add('on');
+    spot.setAttribute('aria-hidden','false');
+    if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}
+    type.textContent='';
+    var i=0;
+    clearInterval(timer);
+    timer=setInterval(function(){
+      type.textContent=TEXT.slice(0,++i);
+      if(i>=TEXT.length)clearInterval(timer);
+    },48);
+  }
+  function closeSpot(){
+    if(!spot.classList.contains('on'))return;
+    spot.classList.remove('on');
+    spot.setAttribute('aria-hidden','true');
+    clearInterval(timer);
+    if(typeof sndClose==='function'){try{sndClose();}catch(e){}}
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-spot]');
+    if(t){e.preventDefault();openSpot();return;}
+    if(spot.classList.contains('on')&&!box.contains(e.target))closeSpot();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSpot();});
+})();
+</script>
 </body>
 </html>
