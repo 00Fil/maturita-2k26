@@ -767,20 +767,22 @@ demoEnter.addEventListener('click', () => {
 });
 
 /* ============================================================
-   PRELOADER — il caricamento NON avanza finché tutti gli asset
-   (video, font, immagini) non sono completamente caricati.
+   PRELOADER — la barra si completa sugli asset locali (font +
+   immagini). Il video è best-effort: ha un tetto massimo e NON
+   può mai bloccare il caricamento. Sblocco garantito entro 5s.
    ============================================================ */
 (function preload() {
   const boot  = document.getElementById('boot');
   const fill  = document.getElementById('bbarFill');
   const video = document.getElementById('bgVideo');
 
+  // asset che bloccano davvero: font + immagini locali (rapidi)
   const tasks = [];
-
-  // 1) font SF Pro
-  tasks.push(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve());
-
-  // 2) immagini (logo, foto profilo, poster) — si risolvono anche in errore
+  tasks.push(
+    document.fonts && document.fonts.ready
+      ? document.fonts.ready.catch(() => {})
+      : Promise.resolve()
+  );
   ['assets/iisc-logo.png', 'assets/profile.jpg', 'assets/bg.png'].forEach((src) => {
     tasks.push(new Promise((res) => {
       const im = new Image();
@@ -789,42 +791,50 @@ demoEnter.addEventListener('click', () => {
     }));
   });
 
-  // 3) video di sfondo — attende che sia pronto a riprodurre senza interruzioni
+  // video di sfondo: best-effort con tetto massimo (max 3s).
+  // NB: con un <source> che fallisce, l'evento 'error' arriva sul <source>,
+  // non sul <video> — per questo ascolto entrambi + timeout di sicurezza.
   tasks.push(new Promise((res) => {
     if (!video) return res();
-    if (video.readyState >= 4) return res();
     let done = false;
     const fine = () => { if (!done) { done = true; res(); } };
-    video.addEventListener('canplaythrough', fine, { once: true });
-    video.addEventListener('loadeddata', () => { if (video.readyState >= 3) fine(); }, { once: true });
+    if (video.readyState >= 3) return fine();
+    video.addEventListener('canplay', fine, { once: true });
+    video.addEventListener('loadeddata', fine, { once: true });
     video.addEventListener('error', fine, { once: true });
+    const source = video.querySelector('source');
+    if (source) source.addEventListener('error', fine, { once: true });
+    setTimeout(fine, 3000);
     try { video.load(); } catch (e) {}
   }));
 
+  // avanzamento barra a ogni asset pronto
   const totale = tasks.length;
   let fatti = 0;
-  const avanza = () => {
+  tasks.forEach((t) => t.then(() => {
     fatti++;
     fill.style.width = Math.round((fatti / totale) * 100) + '%';
-  };
-  tasks.forEach((t) => t.then(avanza));
+  }));
 
-  // tempo minimo per un'animazione elegante + rete di sicurezza anti-blocco
-  const minimo   = new Promise((res) => setTimeout(res, 800));
-  const sicurezza = new Promise((res) => setTimeout(res, 15000));
-
-  Promise.race([
-    Promise.all([Promise.all(tasks), minimo]),
-    sicurezza,
-  ]).then(() => {
+  // completamento (eseguito una sola volta)
+  let finito = false;
+  function completa() {
+    if (finito) return;
+    finito = true;
     fill.style.width = '100%';
     setTimeout(() => {
       boot.classList.add('done');
       document.body.classList.add('ready');
       try { video && video.play(); } catch (e) {}
       setTimeout(() => { try { codeInput.focus({ preventScroll: true }); } catch (e) {} }, 350);
-    }, 280);
-  });
+    }, 260);
+  }
+
+  // tempo minimo per un'animazione elegante, poi completa appena pronti
+  const minimo = new Promise((res) => setTimeout(res, 650));
+  Promise.all([Promise.all(tasks), minimo]).then(completa).catch(completa);
+  // rete di sicurezza dura: il sito si sblocca comunque entro 5s
+  setTimeout(completa, 5000);
 })();
 
 /* ============================================================
