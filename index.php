@@ -4,12 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PCTO — Maturità 2026</title>
+<!-- precarica il logo della scuola: serve subito al loader -->
+<link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high">
 <style>
 /* ============================================================
    index.php — SCHERMATA DI BLOCCO IN STILE macOS
-   Replica fedele del lock screen: wallpaper, orologio, utente,
-   campo password vetroso. Il backend resta invariato
-   (POST nome + codice → login.php → hub.php).
+   - sfondo video (assets/lock.mp4, poster bg.png)
+   - orologio live, utente "Filippo Corsini" con foto
+   - preloader col logo della scuola: blocca finché gli asset
+     non sono caricati completamente
+   Backend invariato (POST nome + codice → login.php → hub.php).
    ============================================================ */
 
 /* --- Font di sistema Apple (SF Pro Display) --- */
@@ -49,7 +53,7 @@ html, body { height: 100%; }
 body {
   font-family: var(--font);
   color: #fff;
-  background: #0a1626;
+  background: #000;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -57,16 +61,42 @@ body {
 body.demo { overflow-y: auto; }
 
 /* ------------------------------------------------------------
-   WALLPAPER + velature per la leggibilità
+   PRELOADER — logo della scuola + barra (stile boot di hub.php)
+   Visibile subito all'arrivo sul sito; sfuma solo a fine caricamento.
+   ------------------------------------------------------------ */
+#boot {
+  position: fixed; inset: 0; z-index: 5000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 46px;
+  background: #000;
+  transition: opacity 0.7s ease;
+}
+#boot.done { opacity: 0; pointer-events: none; }
+#boot img { height: 96px; border-radius: 18px; animation: bootIn 0.9s var(--spring) both; }
+#boot .bbar {
+  width: 230px; height: 6px; border-radius: 999px; overflow: hidden;
+  background: rgba(255,255,255,0.22);
+  animation: bootIn 0.9s var(--spring) 0.3s both;
+}
+#boot .bbar span {
+  display: block; width: 0; height: 100%; border-radius: inherit; background: #fff;
+  transition: width 0.35s var(--ease);
+}
+@keyframes bootIn { from { opacity: 0; transform: scale(0.94); } to { opacity: 1; transform: scale(1); } }
+
+/* ------------------------------------------------------------
+   SFONDO VIDEO + velature per la leggibilità
    ------------------------------------------------------------ */
 .wallpaper {
   position: fixed;
   inset: 0;
-  background: url("assets/bg.png") center center / cover no-repeat;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   transform: scale(1.04);
   transition: transform 1.1s var(--ease), filter 0.9s var(--ease);
   z-index: 0;
   will-change: transform, filter;
+  background: #0a1626;
 }
 /* leggera vignettatura + dim in alto e in basso, come su macOS */
 .scrim {
@@ -124,19 +154,19 @@ body.demo { overflow-y: auto; }
 }
 .clock .date {
   font-size: clamp(15px, 1.5vw, 19px);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.005em;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.28);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
   margin-bottom: 2px;
   opacity: 0.98;
 }
 .clock .time {
-  font-size: clamp(74px, 11.5vw, 132px);
-  font-weight: 500;
+  font-size: clamp(76px, 12vw, 138px);
+  font-weight: 700;
   line-height: 1.02;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   font-variant-numeric: tabular-nums;
-  text-shadow: 0 2px 16px rgba(0,0,0,0.22);
+  text-shadow: 0 2px 18px rgba(0,0,0,0.28);
 }
 
 /* Cluster utente — ancorato in basso, centrato */
@@ -155,35 +185,39 @@ body.demo { overflow-y: auto; }
   border-radius: 50%;
   background: linear-gradient(180deg, #dcdce1 0%, #a6a6ad 100%);
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   overflow: hidden;
   box-shadow:
-    0 4px 14px rgba(0,0,0,0.28),
+    0 4px 14px rgba(0,0,0,0.3),
     inset 0 0 0 0.5px rgba(255,255,255,0.55);
   margin-bottom: 12px;
 }
-.avatar svg { width: 78px; height: 78px; color: #fbfbfd; margin-bottom: -4px; }
+.avatar-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.avatar-mono {
+  display: none;
+  align-items: center; justify-content: center;
+  width: 100%; height: 100%;
+  font-size: 27px; font-weight: 600; letter-spacing: 0.01em;
+  color: #fff;
+}
+.avatar.no-photo { background: linear-gradient(180deg, #8a8a92 0%, #5f5f66 100%); }
+.avatar.no-photo .avatar-img { display: none; }
+.avatar.no-photo .avatar-mono { display: flex; }
 
 #form { display: flex; flex-direction: column; align-items: center; }
 
 .name {
-  border: none;
-  outline: none;
-  background: transparent;
   text-align: center;
   font-family: var(--font);
   font-size: 19px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.005em;
   color: #fff;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.32);
-  width: 260px;
-  height: 26px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.34);
   margin-bottom: 14px;
-  caret-color: #fff;
+  user-select: none;
 }
-.name::placeholder { color: rgba(255,255,255,0.62); font-weight: 500; }
 
 /* riga del campo password: pillola centrata + “?” a destra */
 .pwd-wrap {
@@ -331,13 +365,13 @@ body.demo { overflow-y: auto; }
 }
 .pwd.shake { animation: shake 0.5s var(--ease); }
 
-/* entrata morbida del cluster all’avvio */
-.user, .clock { animation: fadeUp 0.9s var(--ease) both; }
-.clock { animation-delay: 0.05s; }
-.user { animation-delay: 0.12s; }
+/* entrata morbida del cluster (dopo il preloader) */
+body.ready .user, body.ready .clock { animation: fadeUp 0.9s var(--ease) both; }
+body.ready .clock { animation-delay: 0.05s; }
+body.ready .user { animation-delay: 0.12s; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* sblocco: dissolvenza del lock + leggero zoom del wallpaper */
+/* sblocco: dissolvenza del lock + leggero zoom dello sfondo */
 body.unlock .lock { opacity: 0; transform: scale(1.04); filter: blur(8px); pointer-events: none; }
 body.unlock .wallpaper { transform: scale(1.1); filter: brightness(1.05); }
 
@@ -497,7 +531,16 @@ input, textarea { cursor: url("assets/cursors/text.svg") 14 14, text; }
 </head>
 <body>
 
-<div class="wallpaper"></div>
+<!-- PRELOADER (logo scuola) — primo elemento: appare subito -->
+<div id="boot" aria-hidden="true">
+  <img src="assets/iisc-logo.png" alt="" fetchpriority="high" decoding="async">
+  <div class="bbar"><span id="bbarFill"></span></div>
+</div>
+
+<!-- SFONDO VIDEO (poster di fallback: bg.png) -->
+<video class="wallpaper" id="bgVideo" autoplay muted loop playsinline preload="auto" poster="assets/bg.png">
+  <source src="assets/lock.mp4" type="video/mp4">
+</video>
 <div class="scrim"></div>
 
 <!-- MENU BAR -->
@@ -523,12 +566,13 @@ input, textarea { cursor: url("assets/cursors/text.svg") 14 14, text; }
   </div>
 
   <div class="user">
-    <div class="avatar">
-      <svg viewBox="0 0 100 100" fill="currentColor" aria-hidden="true"><circle cx="50" cy="37" r="19"/><path d="M50 60c-17.5 0-31.5 11.4-34.4 26.6C20.9 92.5 34.6 96 50 96s29.1-3.5 34.4-9.4C81.5 71.4 67.5 60 50 60z"/></svg>
+    <div class="avatar" id="avatar">
+      <img class="avatar-img" id="avatarImg" src="assets/profile.jpg" alt="Filippo Corsini" decoding="async">
+      <span class="avatar-mono" id="avatarMono">FC</span>
     </div>
 
     <form id="form" novalidate>
-      <input id="nameInput" class="name" type="text" name="nome" placeholder="Nome" autocomplete="name" spellcheck="false">
+      <div class="name">Filippo Corsini</div>
 
       <div class="pwd-wrap">
         <div class="pwd" id="pwd">
@@ -621,9 +665,9 @@ setInterval(tickClock, 5000);
 /* ============================================================
    RIFERIMENTI
    ============================================================ */
+const NOME_UTENTE = 'Filippo Corsini';
 const lock      = document.getElementById('lock');
 const form      = document.getElementById('form');
-const nameInput = document.getElementById('nameInput');
 const codeInput = document.getElementById('codeInput');
 const pwd       = document.getElementById('pwd');
 const goBtn     = document.getElementById('goBtn');
@@ -634,6 +678,11 @@ const demoEnter = document.getElementById('demoEnter');
 const CAPTION_DEFAULT = 'Inserisci la password per accedere';
 let submitted = false;
 
+/* foto profilo: se manca, mostra le iniziali “FC” */
+const avatar    = document.getElementById('avatar');
+const avatarImg = document.getElementById('avatarImg');
+avatarImg.addEventListener('error', () => { avatar.classList.add('no-photo'); });
+
 function setCaption(text, isError) {
   caption.textContent = text;
   caption.classList.toggle('error', !!isError);
@@ -643,11 +692,6 @@ function setCaption(text, isError) {
 codeInput.addEventListener('input', () => {
   pwd.classList.toggle('has-text', codeInput.value.length > 0);
   if (caption.classList.contains('error')) setCaption(CAPTION_DEFAULT, false);
-});
-
-/* Invio nel nome → passa alla password */
-nameInput.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') { e.preventDefault(); codeInput.focus(); }
 });
 
 /* “?” → suggerimento gentile (mai il codice in chiaro) */
@@ -671,18 +715,13 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   if (submitted) return;
 
-  if (!nameInput.value.trim()) {
-    setCaption('Inserisci il tuo nome per continuare.', true);
-    nameInput.focus();
-    return;
-  }
   if (!codeInput.value) { shakeError(); codeInput.focus(); return; }
 
   goBtn.disabled = true;
 
   try {
     const dati = new URLSearchParams();
-    dati.append('nome', nameInput.value.trim());
+    dati.append('nome', NOME_UTENTE);
     dati.append('codice', codeInput.value);
     if (demoMode) dati.append('demo', '1');
 
@@ -700,8 +739,7 @@ form.addEventListener('submit', async (e) => {
     /* accesso riuscito */
     submitted = true;
     sndGo();
-    const raw = nameInput.value.trim().split(/\s+/)[0];
-    const pretty = raw.charAt(0).toUpperCase() + raw.slice(1);
+    const pretty = NOME_UTENTE.split(/\s+/)[0];
 
     if (demoMode) {
       /* in demo si resta sulla pagina per spiegare i passaggi col controllerino */
@@ -728,10 +766,66 @@ demoEnter.addEventListener('click', () => {
   setTimeout(() => window.location.replace('hub.php'), 720);
 });
 
-/* focus iniziale sul nome */
-window.addEventListener('load', () => {
-  setTimeout(() => nameInput.focus({ preventScroll: true }), 500);
-});
+/* ============================================================
+   PRELOADER — il caricamento NON avanza finché tutti gli asset
+   (video, font, immagini) non sono completamente caricati.
+   ============================================================ */
+(function preload() {
+  const boot  = document.getElementById('boot');
+  const fill  = document.getElementById('bbarFill');
+  const video = document.getElementById('bgVideo');
+
+  const tasks = [];
+
+  // 1) font SF Pro
+  tasks.push(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve());
+
+  // 2) immagini (logo, foto profilo, poster) — si risolvono anche in errore
+  ['assets/iisc-logo.png', 'assets/profile.jpg', 'assets/bg.png'].forEach((src) => {
+    tasks.push(new Promise((res) => {
+      const im = new Image();
+      im.onload = im.onerror = () => res();
+      im.src = src;
+    }));
+  });
+
+  // 3) video di sfondo — attende che sia pronto a riprodurre senza interruzioni
+  tasks.push(new Promise((res) => {
+    if (!video) return res();
+    if (video.readyState >= 4) return res();
+    let done = false;
+    const fine = () => { if (!done) { done = true; res(); } };
+    video.addEventListener('canplaythrough', fine, { once: true });
+    video.addEventListener('loadeddata', () => { if (video.readyState >= 3) fine(); }, { once: true });
+    video.addEventListener('error', fine, { once: true });
+    try { video.load(); } catch (e) {}
+  }));
+
+  const totale = tasks.length;
+  let fatti = 0;
+  const avanza = () => {
+    fatti++;
+    fill.style.width = Math.round((fatti / totale) * 100) + '%';
+  };
+  tasks.forEach((t) => t.then(avanza));
+
+  // tempo minimo per un'animazione elegante + rete di sicurezza anti-blocco
+  const minimo   = new Promise((res) => setTimeout(res, 800));
+  const sicurezza = new Promise((res) => setTimeout(res, 15000));
+
+  Promise.race([
+    Promise.all([Promise.all(tasks), minimo]),
+    sicurezza,
+  ]).then(() => {
+    fill.style.width = '100%';
+    setTimeout(() => {
+      boot.classList.add('done');
+      document.body.classList.add('ready');
+      try { video && video.play(); } catch (e) {}
+      setTimeout(() => { try { codeInput.focus({ preventScroll: true }); } catch (e) {} }, 350);
+    }, 280);
+  });
+})();
 
 /* ============================================================
    DEMO — visualizzazione schematica dei passaggi del backend
