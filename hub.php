@@ -209,20 +209,34 @@ function appicon(string $file, string $remote): string {
     </div>
     <div class="mappane">
       <svg viewBox="0 0 640 420" preserveAspectRatio="xMidYMid slice">
-        <rect width="640" height="420" fill="#E9E4DA"/>
-        <path d="M-20 90 C140 70 240 130 400 110 S620 60 660 80" stroke="#fff" stroke-width="14" fill="none"/>
-        <path d="M-20 230 C120 250 300 200 460 240 S640 280 660 260" stroke="#fff" stroke-width="20" fill="none"/>
-        <path d="M-20 350 C180 330 340 380 660 340" stroke="#fff" stroke-width="12" fill="none"/>
-        <path d="M120 -20 C140 120 90 260 130 440" stroke="#fff" stroke-width="12" fill="none"/>
-        <path d="M330 -20 C310 140 360 280 330 440" stroke="#fff" stroke-width="16" fill="none"/>
-        <path d="M520 -20 C540 120 500 300 530 440" stroke="#fff" stroke-width="10" fill="none"/>
-        <rect x="150" y="120" width="70" height="46" rx="7" fill="#DDD6C8"/>
-        <rect x="380" y="150" width="58" height="40" rx="7" fill="#DDD6C8"/>
-        <rect x="230" y="280" width="80" height="50" rx="7" fill="#DDD6C8"/>
-        <rect x="470" y="300" width="60" height="42" rx="7" fill="#DDD6C8"/>
-        <circle cx="90" cy="330" r="46" fill="#CFE3C2"/>
-        <circle cx="590" cy="110" r="38" fill="#CFE3C2"/>
-        <path d="M106 340 C200 300 280 220 330 172 C390 120 470 130 518 120" stroke="#0A84FF" stroke-width="4" stroke-dasharray="2 9" stroke-linecap="round" fill="none"/>
+        <rect width="640" height="420" fill="#EAE6DD"/>
+        <path d="M-20 64 C120 92 188 34 300 70 C420 108 472 58 660 88 L660 -20 L-20 -20 Z" fill="#AFCDE9"/>
+        <path d="M-20 64 C120 92 188 34 300 70 C420 108 472 58 660 88" stroke="#9CBFE0" stroke-width="2" fill="none"/>
+        <circle cx="78" cy="332" r="54" fill="#C9E2BC"/>
+        <circle cx="590" cy="302" r="42" fill="#C9E2BC"/>
+        <rect x="250" y="248" width="122" height="92" rx="15" fill="#C9E2BC"/>
+        <path d="M-20 252 C160 242 322 272 660 240" stroke="#fff" stroke-width="22" fill="none" stroke-linecap="round"/>
+        <path d="M-20 360 C200 350 360 382 660 350" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round"/>
+        <path d="M-20 150 C160 140 380 176 660 150" stroke="#fff" stroke-width="9" fill="none"/>
+        <path d="M120 -20 C140 120 95 280 130 440" stroke="#fff" stroke-width="13" fill="none"/>
+        <path d="M330 -20 C312 130 360 280 330 440" stroke="#fff" stroke-width="16" fill="none"/>
+        <path d="M520 -20 C540 120 500 300 530 440" stroke="#fff" stroke-width="11" fill="none"/>
+        <rect x="150" y="118" width="64" height="42" rx="7" fill="#DCD5C6"/>
+        <rect x="60" y="150" width="44" height="40" rx="7" fill="#DCD5C6"/>
+        <rect x="392" y="150" width="54" height="38" rx="7" fill="#DCD5C6"/>
+        <rect x="470" y="300" width="58" height="40" rx="7" fill="#DCD5C6"/>
+        <path d="M106 340 C200 300 280 220 330 172 C390 120 470 130 518 120" stroke="#fff" stroke-width="9.5" fill="none" stroke-linecap="round"/>
+        <path id="route" pathLength="1" d="M106 340 C200 300 280 220 330 172 C390 120 470 130 518 120" stroke="#0A84FF" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <g>
+          <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear"><mpath href="#route"/></animateMotion>
+          <circle r="9" fill="#0A84FF" opacity="0.3"><animate attributeName="r" values="8;14;8" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.32;0.07;0.32" dur="1.8s" repeatCount="indefinite"/></circle>
+          <circle r="6" fill="#0A84FF" stroke="#fff" stroke-width="2.5"/>
+        </g>
+        <g transform="translate(598 54)" opacity="0.92">
+          <circle r="17" fill="rgba(255,255,255,0.82)"/>
+          <path d="M0 -11 L4 1 L0 4 L-4 1 Z" fill="#FF3B30"/>
+          <path d="M0 11 L4 -1 L0 -4 L-4 -1 Z" fill="#8E8E93" opacity="0.55"/>
+        </g>
       </svg>
       <span class="mpin" style="left:16.5%;top:81%"><span class="mtag">IIS Cerebotani</span><span class="mdot" style="background:#34C759"></span></span>
       <span class="mpin" style="left:51.5%;top:41%"><span class="mtag">CS Metal Europe</span><span class="mdot" style="background:#0A84FF"></span></span>
