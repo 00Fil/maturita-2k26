@@ -72,8 +72,8 @@
 .win.open .fbadge,.win.open .apic,.win.open .pin,.win.open .favico{animation:badgePop .5s var(--spring-pop) .12s both}
 @keyframes pinDrop{from{opacity:0;transform:translate(-50%,-132%)}to{opacity:1;transform:translate(-50%,-100%)}}
 .win.open .mpin{animation:pinDrop .62s var(--spring-pop) .2s both}
-.win.open .mpin:nth-of-type(2){animation-delay:.3s}
-.win.open .mpin:nth-of-type(3){animation-delay:.4s}
+.win.open .mpin:nth-of-type(2){animation-delay:.42s}
+.win.open .mpin:nth-of-type(3){animation-delay:.62s}
 
 /* ===== Dock: ombre icone più morbide e profonde ===== */
 .dock .ai img{filter:drop-shadow(0 3px 7px rgba(0,0,0,.30))}
@@ -104,3 +104,11 @@
 
 /* ===== Menubar e tooltip dock: transizioni leggermente più fluide ===== */
 .dapp .tip{transition:opacity .2s ease,transform .4s var(--spring-pop)}
+
+/* ===== Navigatore (Mappe): mappa viva e rotta animata ===== */
+.mappane svg{animation:mapIntro .8s var(--ease-apple) both;transform-origin:50% 62%}
+@keyframes mapIntro{from{opacity:0;transform:scale(1.07)}to{opacity:1;transform:none}}
+#route{stroke-dasharray:1;stroke-dashoffset:1;animation:routeDraw 1.5s var(--ease-apple) .35s both}
+@keyframes routeDraw{to{stroke-dashoffset:0}}
+.mtag{transition:transform .35s var(--spring-pop),box-shadow .25s ease}
+.mpin:hover .mtag{transform:translateY(-2px) scale(1.04)}
