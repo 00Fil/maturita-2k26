@@ -239,12 +239,9 @@ function appicon(string $file, string $remote): string {
       </g>
     </svg>
     <div class="dir">
-      <div class="dir-hd"><b>Indicazioni</b><button class="dir-x" type="button" aria-label="Chiudi">✕</button></div>
-      <div class="dir-seg">
-        <button class="on" type="button" aria-label="Auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l2-5h14l2 5"/><rect x="3" y="13" width="18" height="5" rx="1.5"/><circle cx="7" cy="18" r="1.3" fill="currentColor"/><circle cx="17" cy="18" r="1.3" fill="currentColor"/></svg></button>
-        <button type="button" aria-label="A piedi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4.5" r="1.8"/><path d="M13 7l-2 4 3 2 1 5M11 11l-3 1-1 4M14 9l3 1"/></svg></button>
-        <button type="button" aria-label="Mezzi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 11h12M9 20l-1.5 1.8M15 20l1.5 1.8"/><circle cx="9" cy="14" r="0.9" fill="currentColor"/><circle cx="15" cy="14" r="0.9" fill="currentColor"/></svg></button>
-        <button type="button" aria-label="Bici"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="17" r="3.2"/><circle cx="18" cy="17" r="3.2"/><path d="M6 17l4-7h4M9 7h3l3 10"/></svg></button>
+      <div class="dir-hd">
+        <div class="dir-ti"><b>Indicazioni</b><small>Dal diploma a dove voglio arrivare</small></div>
+        <button class="dir-x" type="button" aria-label="Chiudi">✕</button>
       </div>
       <div class="dir-list" id="nv-list"></div>
       <div class="dir-card"><span class="kk" id="nv-kk"></span><p id="nv-body"></p></div>
@@ -267,40 +264,37 @@ function appicon(string $file, string $remote): string {
     #w-fine .mlab{fill:#1d1d1f;font-size:14px;font-weight:650;font-family:inherit;paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round}
     #w-fine .mlab.small{font-size:12px}
     #w-fine .mnum{fill:#fff;font-size:12px;font-weight:800;font-family:inherit}
-    #w-fine .dir{position:absolute;left:14px;top:14px;width:300px;max-height:calc(100% - 28px);display:flex;flex-direction:column;border-radius:18px;background:var(--glass);backdrop-filter:blur(30px) saturate(1.8);-webkit-backdrop-filter:blur(30px) saturate(1.8);box-shadow:var(--shadow-win),inset 0 0 0 1px var(--hairline);overflow:hidden;animation:mvIn .55s var(--spring) both}
+    #w-fine .dir{position:absolute;left:14px;top:14px;width:306px;max-height:calc(100% - 28px);display:flex;flex-direction:column;border-radius:18px;background:rgba(252,252,253,.82);backdrop-filter:blur(30px) saturate(1.8);-webkit-backdrop-filter:blur(30px) saturate(1.8);box-shadow:var(--shadow-win),inset 0 0 0 1px var(--hairline);overflow:hidden;animation:mvIn .55s var(--spring) both}
     @keyframes mvIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
-    #w-fine .dir-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 9px}
-    #w-fine .dir-hd b{font-size:19px;font-weight:800;letter-spacing:-.02em}
-    #w-fine .dir-x{width:24px;height:24px;border-radius:50%;border:none;background:rgba(120,120,128,.2);color:var(--muted);font-size:11px;line-height:1;display:flex;align-items:center;justify-content:center}
-    #w-fine .dir-x:hover{background:rgba(120,120,128,.34)}
-    #w-fine .dir-seg{display:flex;gap:2px;margin:0 12px 8px;padding:2px;border-radius:9px;background:rgba(120,120,128,.16)}
-    #w-fine .dir-seg button{flex:1;height:30px;border:none;background:none;border-radius:7px;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:background .15s}
-    #w-fine .dir-seg button svg{width:18px;height:18px}
-    #w-fine .dir-seg button.on{background:var(--surface);color:var(--blue);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-    #w-fine .dir-list{display:flex;flex-direction:column;padding:0 8px;overflow-y:auto;min-height:0}
-    #w-fine .dir-row{display:flex;align-items:center;gap:12px;width:100%;padding:8px;border:none;background:none;font:inherit;text-align:left;color:inherit;border-radius:10px;transition:background .18s}
-    #w-fine .dir-row:hover{background:rgba(120,120,128,.1)}
+    #w-fine .dir-hd{display:flex;align-items:flex-start;justify-content:space-between;padding:15px 16px 12px;box-shadow:0 1px 0 var(--border)}
+    #w-fine .dir-ti b{display:block;font-size:20px;font-weight:800;letter-spacing:-.022em;color:#1d1d1f}
+    #w-fine .dir-ti small{display:block;margin-top:1px;font-size:12px;color:#6e6e73;font-weight:550}
+    #w-fine .dir-x{flex:none;width:26px;height:26px;border-radius:50%;border:none;background:rgba(118,118,128,.2);color:#3a3a3c;font-size:12px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
+    #w-fine .dir-x:hover{background:rgba(118,118,128,.34)}
+    #w-fine .dir-list{display:flex;flex-direction:column;padding:10px 8px 4px;overflow-y:auto;min-height:0}
+    #w-fine .dir-row{display:flex;align-items:center;gap:13px;width:100%;padding:9px 8px;border:none;background:none;font:inherit;text-align:left;color:inherit;border-radius:11px;transition:background .18s}
+    #w-fine .dir-row:hover{background:rgba(118,118,128,.1)}
     #w-fine .dir-row.on{background:rgba(10,132,255,.12)}
-    #w-fine .dir-pin{flex:none;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;background:var(--c);position:relative;box-shadow:0 1px 2px rgba(0,0,0,.2)}
-    #w-fine .dir-row:not(:last-child) .dir-pin::after{content:"";position:absolute;left:50%;top:23px;width:2px;height:20px;transform:translateX(-50%);background:var(--border)}
+    #w-fine .dir-pin{flex:none;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:800;background:var(--c);position:relative;box-shadow:0 1px 2px rgba(0,0,0,.22)}
+    #w-fine .dir-row:not(:last-child) .dir-pin::after{content:"";position:absolute;left:50%;top:25px;width:2px;height:22px;transform:translateX(-50%);background:var(--border)}
     #w-fine .dir-txt{min-width:0}
-    #w-fine .dir-txt b{display:block;font-size:14px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    #w-fine .dir-txt small{font-size:11.5px;color:var(--faint);font-weight:550}
+    #w-fine .dir-txt b{display:block;font-size:14.5px;font-weight:600;letter-spacing:-.01em;color:#1d1d1f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #w-fine .dir-txt small{font-size:12px;color:#6e6e73;font-weight:550}
     #w-fine .dir-row.on .dir-txt small{color:var(--blue)}
-    #w-fine .dir-card{margin:8px 12px 0;padding:12px 14px;border-radius:14px;background:rgba(120,120,128,.1)}
-    #w-fine .dir-card .kk{display:block;font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.05em;color:var(--blue);margin-bottom:5px}
-    #w-fine .dir-card p{margin:0;font-size:12.5px;line-height:1.55;color:var(--muted);font-weight:500}
-    #w-fine .dir-foot{display:flex;align-items:center;gap:12px;margin:10px 14px 13px;padding-top:11px;box-shadow:0 -1px 0 var(--border)}
-    #w-fine .dir-foot .big{font-size:18px;font-weight:800;letter-spacing:-.02em}
-    #w-fine .dir-foot small{display:block;font-size:11px;color:var(--faint);font-weight:600}
-    #w-fine .dir-hint{margin-left:auto;font-size:11px;color:var(--faint);font-weight:600;text-align:right;max-width:118px;line-height:1.3}
+    #w-fine .dir-card{margin:8px 12px 0;padding:13px 15px;border-radius:14px;background:rgba(118,118,128,.1)}
+    #w-fine .dir-card .kk{display:block;font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.05em;color:var(--blue);margin-bottom:6px}
+    #w-fine .dir-card p{margin:0;font-size:13.5px;line-height:1.6;color:#2c2c2e;font-weight:500}
+    #w-fine .dir-foot{display:flex;align-items:center;gap:12px;margin:11px 15px 14px;padding-top:12px;box-shadow:0 -1px 0 var(--border)}
+    #w-fine .dir-foot .big{font-size:18px;font-weight:800;letter-spacing:-.02em;color:#1d1d1f}
+    #w-fine .dir-foot small{display:block;font-size:11.5px;color:#6e6e73;font-weight:600}
+    #w-fine .dir-hint{margin-left:auto;font-size:11.5px;color:#6e6e73;font-weight:600;text-align:right;max-width:120px;line-height:1.35}
     #w-fine .mv-ctrl{position:absolute;right:14px;top:14px;display:flex;flex-direction:column;gap:10px;align-items:center}
-    #w-fine .mv-zoom{display:flex;flex-direction:column;border-radius:11px;overflow:hidden;background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow-win),inset 0 0 0 1px var(--hairline)}
-    #w-fine .mv-zoom button{width:34px;height:34px;border:none;background:none;color:inherit;font-size:18px;font-weight:500;display:flex;align-items:center;justify-content:center}
-    #w-fine .mv-zoom button:hover{background:rgba(120,120,128,.16)}
+    #w-fine .mv-zoom{display:flex;flex-direction:column;border-radius:11px;overflow:hidden;background:rgba(252,252,253,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow-win),inset 0 0 0 1px var(--hairline)}
+    #w-fine .mv-zoom button{width:36px;height:36px;border:none;background:none;color:#1d1d1f;font-size:19px;font-weight:500;display:flex;align-items:center;justify-content:center}
+    #w-fine .mv-zoom button:hover{background:rgba(118,118,128,.16)}
     #w-fine .mv-zoom span{height:1px;background:var(--border)}
-    #w-fine .mv-comp{width:34px;height:34px;border-radius:50%;border:none;background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow-win),inset 0 0 0 1px var(--hairline);display:flex;align-items:center;justify-content:center}
-    #w-fine .mv-comp svg{width:18px;height:18px}
+    #w-fine .mv-comp{width:36px;height:36px;border-radius:50%;border:none;background:rgba(252,252,253,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:var(--shadow-win),inset 0 0 0 1px var(--hairline);display:flex;align-items:center;justify-content:center}
+    #w-fine .mv-comp svg{width:19px;height:19px}
   </style>
 </section>
 
@@ -421,8 +415,6 @@ function appicon(string $file, string $remote): string {
   if(zin)zin.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.min(1.5,zoom+0.18);render();});
   if(zout)zout.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.max(0.8,zoom-0.18);render();});
   if(comp)comp.addEventListener('click',function(ev){ev.stopPropagation();zoom=1;render();});
-  var segs=document.querySelectorAll('#w-fine .dir-seg button');
-  for(var q=0;q<segs.length;q++){segs[q].addEventListener('click',function(ev){ev.stopPropagation();for(var r=0;r<segs.length;r++)segs[r].classList.remove('on');this.classList.add('on');});}
   var x=document.querySelector('#w-fine .dir-x');
   if(x)x.addEventListener('click',function(ev){ev.stopPropagation();if(typeof closeWin==='function')closeWin('w-fine');});
   render();
