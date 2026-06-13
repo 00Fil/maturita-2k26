@@ -137,6 +137,7 @@ function toggleMax(win) {
   } else {
     target = win._restore || { left: start.left, top: start.top, width: start.width, height: start.height };
     sndClose();
+    dockWake();
   }
   requestAnimationFrame(() => setWinBox(win, target, true));
   setTimeout(() => {
@@ -249,8 +250,10 @@ dockCss.textContent =
 document.head.appendChild(dockCss);
 
 let dockHot = false;
+let dockGrace = 0;
 function dockShow() { dock.classList.remove('autohide'); }
-function dockHide() { if (!dockHot) dock.classList.add('autohide'); }
+function dockHide() { if (!dockHot && performance.now() >= dockGrace) dock.classList.add('autohide'); }
+function dockWake(ms) { dockShow(); dockGrace = performance.now() + (ms || 1500); }
 document.addEventListener('pointermove', e => {
   if (e.clientY >= window.innerHeight - 80) dockShow();
   else if (e.clientY < window.innerHeight - 110) dockHide();
