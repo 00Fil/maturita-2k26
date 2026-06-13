@@ -255,15 +255,17 @@ document.head.appendChild(dockCss);
 let dockHot = false;
 let dockGrace = 0;
 function dockShow() { dock.classList.remove('autohide'); }
-function dockHide() { if (!dockHot && performance.now() >= dockGrace) dock.classList.add('autohide'); }
+function dockHide() { if (document.fullscreenElement && !dockHot && performance.now() >= dockGrace) dock.classList.add('autohide'); }
 function dockWake(ms) { dockShow(); dockGrace = performance.now() + (ms || 1500); }
 document.addEventListener('pointermove', e => {
+  // Fuori dal fullscreen il dock resta sempre visibile; l'auto-hide vale solo a schermo intero.
+  if (!document.fullscreenElement) { dockShow(); return; }
   if (e.clientY >= window.innerHeight - 80) dockShow();
   else if (e.clientY < window.innerHeight - 110) dockHide();
 });
 dock.addEventListener('pointerenter', () => { dockHot = true; dockShow(); });
 dock.addEventListener('pointerleave', () => { dockHot = false; dockHide(); });
-setTimeout(() => dock.classList.add('autohide'), 2800);
+setTimeout(() => { if (document.fullscreenElement) dock.classList.add('autohide'); }, 2800);
 
 dock.querySelectorAll('.dapp').forEach(d => {
   const btn = d.querySelector('.ai');
@@ -374,6 +376,9 @@ fullBtn.addEventListener('click', () => {
 });
 document.addEventListener('fullscreenchange', () => {
   fullBtn.classList.toggle('on', !!document.fullscreenElement);
+  // Entrando in fullscreen il dock può nascondersi; uscendo torna sempre visibile.
+  if (document.fullscreenElement) { dockGrace = 0; dockHide(); }
+  else dockShow();
 });
 
 document.getElementById('cc-pres').addEventListener('click', () => {
