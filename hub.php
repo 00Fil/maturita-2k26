@@ -195,66 +195,105 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-purple" id="w-fine" style="left:19%;top:9%;width:860px">
+<section class="win a-purple" id="w-fine" style="left:9%;top:7%;width:940px">
   <div class="titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
-  <div class="mapwrap">
-    <div class="mpanel">
-      <span class="msearch"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Il mio tragitto verso la meta</span>
-      <div class="navcard lgcard">
-        <span class="navstep" id="nav-step">Tappa 1 di 4</span>
-        <b class="navttl" id="nav-ttl"></b>
-        <span class="navsub" id="nav-sub"></span>
-        <p class="navbody" id="nav-body"></p>
+  <div class="mv" id="mv">
+    <svg class="mv-map" id="mv-map" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid slice">
+      <g id="mv-cam">
+        <rect x="-320" y="-280" width="1660" height="1220" fill="#E9E6DD"/>
+        <path d="M-320 120 C150 170 320 70 520 120 C720 170 880 90 1340 140 L1340 -280 L-320 -280 Z" fill="#A9D2F0"/>
+        <path d="M-320 120 C150 170 320 70 520 120 C720 170 880 90 1340 140" stroke="#93C2E6" stroke-width="2" fill="none"/>
+        <circle cx="120" cy="560" r="92" fill="#C9E6B4"/>
+        <circle cx="-130" cy="700" r="120" fill="#C9E6B4"/>
+        <circle cx="980" cy="560" r="86" fill="#C9E6B4"/>
+        <circle cx="1120" cy="300" r="96" fill="#C9E6B4"/>
+        <rect x="430" y="470" width="170" height="150" rx="22" fill="#C9E6B4"/>
+        <path d="M-320 360 C220 340 480 392 1340 350" stroke="#fff" stroke-width="26" fill="none" stroke-linecap="round"/>
+        <path d="M-320 520 C260 506 520 548 1340 500" stroke="#fff" stroke-width="15" fill="none" stroke-linecap="round"/>
+        <path d="M-320 210 C240 196 560 232 1340 205" stroke="#fff" stroke-width="11" fill="none"/>
+        <path d="M-320 760 C240 748 560 784 1340 756" stroke="#fff" stroke-width="13" fill="none"/>
+        <path d="M-320 60 C200 50 520 92 1340 60" stroke="#fff" stroke-width="9" fill="none"/>
+        <path d="M180 -280 C210 160 150 420 200 940" stroke="#fff" stroke-width="15" fill="none"/>
+        <path d="M520 -280 C500 180 560 420 520 940" stroke="#fff" stroke-width="18" fill="none"/>
+        <path d="M820 -280 C850 160 800 440 840 940" stroke="#fff" stroke-width="12" fill="none"/>
+        <path d="M-80 -280 C-50 160 -110 420 -60 940" stroke="#fff" stroke-width="11" fill="none"/>
+        <path d="M1120 -280 C1150 160 1090 440 1140 940" stroke="#fff" stroke-width="12" fill="none"/>
+        <rect x="250" y="150" width="90" height="56" rx="9" fill="#DDD6C7"/>
+        <rect x="120" y="250" width="64" height="58" rx="9" fill="#DDD6C7"/>
+        <rect x="600" y="150" width="78" height="52" rx="9" fill="#DDD6C7"/>
+        <rect x="700" y="430" width="80" height="56" rx="9" fill="#DDD6C7"/>
+        <rect x="330" y="600" width="66" height="46" rx="9" fill="#DDD6C7"/>
+        <rect x="900" y="250" width="70" height="50" rx="9" fill="#DDD6C7"/>
+        <rect x="-180" y="320" width="76" height="58" rx="9" fill="#DDD6C7"/>
+        <rect x="1180" y="430" width="80" height="56" rx="9" fill="#DDD6C7"/>
+        <rect x="1010" y="120" width="72" height="50" rx="9" fill="#DDD6C7"/>
+        <rect x="40" y="680" width="80" height="56" rx="9" fill="#DDD6C7"/>
+        <path d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round"/>
+        <path d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#C2CEDB" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path id="mv-trav" pathLength="1" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#0A84FF" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+        <g class="mk" id="m0" transform="translate(170 520)"><circle r="9" fill="#34C759" stroke="#fff" stroke-width="3.5"/><text class="mlab" y="-20" text-anchor="middle">Maturità</text></g>
+        <g class="mk" id="m1" transform="translate(390 430)"><circle r="8" fill="#FF9F0A" stroke="#fff" stroke-width="3.5"/><text class="mlab small" y="26" text-anchor="middle">PCTO</text></g>
+        <g class="mk" id="m2" transform="translate(610 300)"><circle r="9" fill="#0A84FF" stroke="#fff" stroke-width="3.5"/><text class="mlab" y="-20" text-anchor="middle">Università</text></g>
+        <g class="mk" id="m3" transform="translate(850 150)"><path d="M0 0 C-9 -13 -9 -23 0 -31 C9 -23 9 -13 0 0 Z" fill="#FF3B30" stroke="#fff" stroke-width="2.5"/><circle cx="0" cy="-20" r="5.5" fill="#fff"/><text class="mlab" y="18" text-anchor="middle">Estero</text></g>
+        <g id="mv-puck" transform="translate(170 520)"><circle r="10" fill="#0A84FF" opacity="0.28"><animate attributeName="r" values="9;17;9" dur="1.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.28;0.04;0.28" dur="1.9s" repeatCount="indefinite"/></circle><circle r="7" fill="#0A84FF" stroke="#fff" stroke-width="2.5"/></g>
+      </g>
+      <g transform="translate(940 70)" opacity="0.9"><circle r="18" fill="rgba(255,255,255,0.85)"/><path d="M0 -12 L4.5 1 L0 4.5 L-4.5 1 Z" fill="#FF3B30"/><path d="M0 12 L4.5 -1 L0 -4.5 L-4.5 -1 Z" fill="#8E8E93" opacity="0.55"/></g>
+    </svg>
+    <div class="mv-nav">
+      <div class="mvn-banner" id="nv-banner">
+        <span class="mvn-ic">
+          <svg class="ic-go" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h12"/><path d="M13 6l6 6-6 6"/></svg>
+          <svg class="ic-end" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4"/><path d="M6 5h11l-2.5 3.5L17 12H6"/></svg>
+        </span>
+        <div class="mvn-htxt"><span class="mvn-kick" id="nv-kick"></span><b class="mvn-ttl" id="nv-ttl"></b></div>
       </div>
-      <div class="navnext"><span class="navdots" id="nav-dots"></span><span id="nav-hinttx">Tocca la mappa per proseguire</span></div>
-    </div>
-    <div class="mappane" id="mappane">
-      <svg viewBox="0 0 640 420" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;display:block">
-        <rect width="640" height="420" fill="#EAE6DD"/>
-        <path d="M-20 70 C120 98 188 40 300 76 C420 114 472 64 660 94 L660 -20 L-20 -20 Z" fill="#AFCDE9"/>
-        <path d="M-20 70 C120 98 188 40 300 76 C420 114 472 64 660 94" stroke="#9CBFE0" stroke-width="2" fill="none"/>
-        <circle cx="70" cy="360" r="58" fill="#C9E2BC"/>
-        <circle cx="600" cy="330" r="46" fill="#C9E2BC"/>
-        <rect x="250" y="250" width="120" height="96" rx="15" fill="#C9E2BC"/>
-        <path d="M-20 252 C160 242 322 272 660 240" stroke="#fff" stroke-width="22" fill="none" stroke-linecap="round"/>
-        <path d="M-20 365 C200 356 360 386 660 356" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round"/>
-        <path d="M-20 150 C160 140 380 176 660 150" stroke="#fff" stroke-width="9" fill="none"/>
-        <path d="M120 -20 C140 120 95 280 130 440" stroke="#fff" stroke-width="13" fill="none"/>
-        <path d="M330 -20 C312 130 360 280 330 440" stroke="#fff" stroke-width="16" fill="none"/>
-        <path d="M520 -20 C540 120 500 300 530 440" stroke="#fff" stroke-width="11" fill="none"/>
-        <rect x="150" y="118" width="64" height="42" rx="7" fill="#DCD5C6"/>
-        <rect x="60" y="150" width="44" height="40" rx="7" fill="#DCD5C6"/>
-        <rect x="392" y="150" width="54" height="38" rx="7" fill="#DCD5C6"/>
-        <rect x="470" y="300" width="58" height="40" rx="7" fill="#DCD5C6"/>
-        <path d="M232 262 L305 300" stroke="#0A84FF" stroke-width="3" fill="none" stroke-dasharray="3 6" stroke-linecap="round" opacity="0.65"/>
-        <path d="M110 330 C190 296 270 240 355 180 C440 116 498 112 545 92" stroke="#fff" stroke-width="10" fill="none" stroke-linecap="round"/>
-        <path id="route" pathLength="1" d="M110 330 C190 296 270 240 355 180 C440 116 498 112 545 92" stroke="#0A84FF" stroke-width="4.5" fill="none" stroke-linecap="round"/>
-        <g class="mk" id="m0" transform="translate(110 330)"><circle r="13" fill="#34C759" stroke="#fff" stroke-width="3"/><text class="mlab" y="-22" text-anchor="middle">Maturità</text></g>
-        <g class="mk" id="m1" transform="translate(305 300)"><rect x="-10" y="-10" width="20" height="20" rx="5" transform="rotate(45)" fill="#FF9F0A" stroke="#fff" stroke-width="3"/><text class="mlab small" y="30" text-anchor="middle">PCTO</text></g>
-        <g class="mk" id="m2" transform="translate(355 180)"><circle r="13" fill="#0A84FF" stroke="#fff" stroke-width="3"/><text class="mlab" y="-22" text-anchor="middle">Università</text></g>
-        <g class="mk" id="m3" transform="translate(545 92)"><circle r="15" fill="#FF3B30" stroke="#fff" stroke-width="3"/><circle r="5" fill="#fff"/><text class="mlab" y="-24" text-anchor="middle">Estero</text></g>
-        <g id="puck" transform="translate(110 330)"><circle r="9" fill="#0A84FF" opacity="0.3"><animate attributeName="r" values="8;15;8" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.3;0.05;0.3" dur="1.8s" repeatCount="indefinite"/></circle><circle r="6.5" fill="#0A84FF" stroke="#fff" stroke-width="2.5"/></g>
-        <g transform="translate(598 54)" opacity="0.92"><circle r="17" fill="rgba(255,255,255,0.82)"/><path d="M0 -11 L4 1 L0 4 L-4 1 Z" fill="#FF3B30"/><path d="M0 11 L4 -1 L0 -4 L-4 -1 Z" fill="#8E8E93" opacity="0.55"/></g>
-      </svg>
+      <div class="mvn-detail"><span class="mvn-sub" id="nv-sub"></span><p class="mvn-body" id="nv-body"></p></div>
+      <div class="mvn-steps" id="nv-steps"></div>
+      <div class="mvn-foot"><span class="mvn-dots" id="nv-dots"></span><span class="mvn-hint" id="nv-hint">Tocca la mappa per proseguire</span></div>
     </div>
   </div>
   <style>
-    #w-fine .mappane{cursor:pointer}
-    #w-fine .mappane svg{width:100%;height:100%;display:block}
-    #w-fine #puck{transition:transform .9s cubic-bezier(.45,.05,.2,1)}
-    #w-fine .mlab{fill:#1d1d1f;font-size:15px;font-weight:600;font-family:inherit;paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round}
+    #w-fine{display:flex;flex-direction:column}
+    #w-fine .mv{position:relative;flex:1;min-height:560px;overflow:hidden}
+    #w-fine .mv-map{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:url("assets/cursors/pointer.svg") 10 5,pointer}
+    #w-fine #mv-cam{transition:transform 1.2s cubic-bezier(.32,.72,0,1)}
+    #w-fine #mv-puck{transition:transform 1.1s cubic-bezier(.32,.72,0,1)}
+    #w-fine #mv-trav{transition:stroke-dashoffset 1.1s cubic-bezier(.32,.72,0,1)}
+    #w-fine .mk{transition:opacity .4s ease}
+    #w-fine .mk:not(.on){opacity:.5}
+    #w-fine .mlab{fill:#1d1d1f;font-size:15px;font-weight:650;font-family:inherit;paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round}
     #w-fine .mlab.small{font-size:13px}
-    #w-fine .mk{opacity:.5;transition:opacity .35s ease}
-    #w-fine .mk.on{opacity:1}
-    #w-fine .navcard{display:flex;flex-direction:column;gap:5px;padding:18px}
-    #w-fine .navstep{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#AF52DE}
-    #w-fine .navttl{font-size:19px;font-weight:600;letter-spacing:-.01em}
-    #w-fine .navsub{font-size:13px;opacity:.6;margin-bottom:5px}
-    #w-fine .navbody{font-size:14px;line-height:1.55;opacity:.85;margin:0}
-    #w-fine .navnext{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:12.5px;opacity:.6}
-    #w-fine .navdots{display:flex;gap:6px}
-    #w-fine .navdots i{width:7px;height:7px;border-radius:50%;background:rgba(150,150,160,.35);transition:background .3s,transform .3s}
-    #w-fine .navdots i.on{background:#AF52DE;transform:scale(1.25)}
+    #w-fine .mv-nav{position:absolute;left:16px;top:16px;width:308px;max-height:calc(100% - 32px);display:flex;flex-direction:column;gap:10px;padding:12px;border-radius:20px;background:var(--glass);backdrop-filter:blur(30px) saturate(1.8);-webkit-backdrop-filter:blur(30px) saturate(1.8);box-shadow:var(--shadow-win),inset 0 1px 0 var(--hairline),inset 0 0 0 1px rgba(255,255,255,.16);overflow:hidden;animation:mvNavIn .6s var(--spring) both}
+    @keyframes mvNavIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+    #w-fine .mvn-banner{display:flex;align-items:center;gap:13px;padding:13px 15px;border-radius:15px;background:linear-gradient(135deg,#34C759,#28A84A);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 8px 20px rgba(40,168,74,.32)}
+    #w-fine .mvn-ic{flex:none;width:34px;height:34px;color:#fff}
+    #w-fine .mvn-ic svg{width:34px;height:34px;display:block}
+    #w-fine .ic-end{display:none}
+    #w-fine .mvn-banner.arrived .ic-go{display:none}
+    #w-fine .mvn-banner.arrived .ic-end{display:block}
+    #w-fine .mvn-banner.arrived{background:linear-gradient(135deg,#FF453A,#E0352B);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 8px 20px rgba(224,53,43,.32)}
+    #w-fine .mvn-htxt{min-width:0}
+    #w-fine .mvn-kick{display:block;font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;opacity:.92}
+    #w-fine .mvn-ttl{display:block;font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-top:1px}
+    #w-fine .mvn-detail{padding:2px 6px}
+    #w-fine .mvn-sub{display:block;font-size:11px;font-weight:750;text-transform:uppercase;letter-spacing:.05em;color:var(--purple);margin-bottom:4px}
+    #w-fine .mvn-body{font-size:13px;line-height:1.55;color:var(--muted);font-weight:500;margin:0}
+    #w-fine .mvn-steps{display:flex;flex-direction:column;position:relative;overflow-y:auto;min-height:0}
+    #w-fine .mvn-step{display:flex;align-items:center;gap:11px;width:100%;padding:7px 8px;border:none;background:none;font:inherit;text-align:left;color:var(--text);border-radius:11px;transition:background .2s ease}
+    #w-fine .mvn-step:hover{background:rgba(127,127,135,.12)}
+    #w-fine .mvn-step.on{background:rgba(255,255,255,.4)}
+    @media (prefers-color-scheme:dark){#w-fine .mvn-step.on{background:rgba(255,255,255,.1)}}
+    #w-fine .mvn-node{flex:none;width:13px;height:13px;border-radius:50%;background:var(--c);box-shadow:0 0 0 3px color-mix(in srgb,var(--c) 22%,transparent);position:relative}
+    #w-fine .mvn-step:not(:last-child) .mvn-node::after{content:"";position:absolute;left:50%;top:14px;width:2px;height:20px;transform:translateX(-50%);background:var(--border)}
+    #w-fine .mvn-stxt{min-width:0}
+    #w-fine .mvn-stxt b{display:block;font-size:12.5px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    #w-fine .mvn-stxt small{font-size:10.5px;font-weight:600;color:var(--faint)}
+    #w-fine .mvn-step.on .mvn-stxt small{color:var(--purple)}
+    #w-fine .mvn-foot{display:flex;align-items:center;gap:10px;padding:8px 8px 4px;box-shadow:0 -1px 0 var(--border)}
+    #w-fine .mvn-dots{display:flex;gap:6px}
+    #w-fine .mvn-dots i{width:7px;height:7px;border-radius:50%;background:rgba(150,150,160,.35);transition:background .3s,transform .3s}
+    #w-fine .mvn-dots i.on{background:var(--purple);transform:scale(1.25)}
+    #w-fine .mvn-hint{font-size:11.5px;font-weight:600;color:var(--faint);margin-left:auto}
   </style>
 </section>
 
@@ -329,29 +368,47 @@ function appicon(string $file, string $remote): string {
 </script>
 <script>
 (function(){
-  var pane=document.getElementById('mappane');
-  var puck=document.getElementById('puck');
-  if(!pane||!puck)return;
+  var map=document.getElementById('mv-map');
+  var cam=document.getElementById('mv-cam');
+  var puck=document.getElementById('mv-puck');
+  var trav=document.getElementById('mv-trav');
+  if(!map||!cam||!puck)return;
   var stops=[
-    {x:110,y:330,m:'m0',step:'Tappa 1 di 4',ttl:'Maturità · IIS Cerebotani',sub:'2021 – 2026',body:'Cinque anni di superiori. Qui ho costruito le basi tecniche e un metodo per studiare e risolvere i problemi. La maturità è la prima tappa, il punto da cui parte il viaggio.'},
-    {x:305,y:300,m:'m1',step:'Sosta lungo la strada · PCTO',ttl:'CS Metal Europe',sub:'240 ore in azienda',body:'Un\'azienda di Bedizzole, nel gruppo giapponese Proterial. In due anni ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. È il rifornimento che mi ha dato la direzione per il resto del tragitto.'},
-    {x:355,y:180,m:'m2',step:'Tappa 2 di 4',ttl:'Università · Informatica',sub:'Dopo il diploma',body:'Voglio continuare a studiare per costruire software con basi più solide e prepararmi davvero al lavoro.'},
-    {x:545,y:92,m:'m3',step:'Tappa 3 di 4 · La meta',ttl:'Lavorare all\'estero',sub:'Dove voglio arrivare',body:'La meta del viaggio: portare quello che ho imparato fuori dall\'Italia e lavorare nel software in un contesto internazionale.'}
+    {x:170,y:520,p:0,m:'m0',c:'#34C759',kick:'Partenza',short:'Partenza',ttl:'Maturità al Cerebotani',sub:'Cinque anni di informatica',body:'È il punto di partenza. In cinque anni al Cerebotani ho imparato a programmare e a risolvere i problemi con metodo. Da qui parte la strada che ho in mente per il dopo.'},
+    {x:390,y:430,p:0.30,m:'m1',c:'#FF9F0A',kick:'Sosta · PCTO',short:'Sosta · PCTO',ttl:'CS Metal Europe',sub:'240 ore in azienda',body:'Una sosta lungo la strada, come il rifornimento prima di un viaggio lungo. In azienda ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. Qui ho capito quale direzione voglio prendere.'},
+    {x:610,y:300,p:0.63,m:'m2',c:'#0A84FF',kick:'Prossima tappa',short:'Tappa',ttl:'Università · Informatica',sub:'Dopo il diploma',body:'Voglio continuare a studiare informatica. Mi serve per costruire software con basi più solide e arrivare preparato al lavoro.'},
+    {x:850,y:150,p:1,m:'m3',c:'#FF3B30',kick:'Arrivo · la meta',short:'Arrivo',ttl:'Lavorare all\'estero',sub:'Dove voglio arrivare',body:'La meta del viaggio. Voglio portare quello che ho imparato fuori dall\'Italia e lavorare nel software in un contesto internazionale.'}
   ];
-  var elStep=document.getElementById('nav-step'),elTtl=document.getElementById('nav-ttl'),elSub=document.getElementById('nav-sub'),elBody=document.getElementById('nav-body'),elHint=document.getElementById('nav-hinttx'),elDots=document.getElementById('nav-dots');
-  var i=0,k;
-  for(k=0;k<stops.length;k++){elDots.insertAdjacentHTML('beforeend','<i></i>');}
-  function render(){
-    var s=stops[i],j;
-    puck.setAttribute('transform','translate('+s.x+' '+s.y+')');
-    elStep.textContent=s.step;elTtl.textContent=s.ttl;elSub.textContent=s.sub;elBody.textContent=s.body;
-    var mks=pane.querySelectorAll('.mk');for(j=0;j<mks.length;j++){mks[j].classList.remove('on');}
-    var cur=document.getElementById(s.m);if(cur)cur.classList.add('on');
-    var dots=elDots.children;for(j=0;j<dots.length;j++){dots[j].className=(j<=i?'on':'');}
-    elHint.textContent=(i===stops.length-1)?'Sei arrivato · tocca per ricominciare':'Tocca la mappa per proseguire';
+  var banner=document.getElementById('nv-banner'),elKick=document.getElementById('nv-kick'),elTtl=document.getElementById('nv-ttl'),elSub=document.getElementById('nv-sub'),elBody=document.getElementById('nv-body'),elHint=document.getElementById('nv-hint'),elDots=document.getElementById('nv-dots'),elSteps=document.getElementById('nv-steps');
+  var i=0,n=stops.length,j;
+  for(j=0;j<n;j++){
+    var s=stops[j];
+    var b=document.createElement('button');
+    b.className='mvn-step';b.setAttribute('data-i',j);
+    b.innerHTML='<span class="mvn-node" style="--c:'+s.c+'"></span><span class="mvn-stxt"><b>'+s.ttl+'</b><small>'+s.short+'</small></span>';
+    elSteps.appendChild(b);
+    elDots.insertAdjacentHTML('beforeend','<i></i>');
   }
-  function next(){i=(i+1)%stops.length;render();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
-  pane.addEventListener('click',next);
+  var sc=1.16,VW=1000,VH=640,TX=600,TY=320,minX=-300,maxX=1300,minY=-260,maxY=900;
+  function render(){
+    var s=stops[i],k;
+    puck.setAttribute('transform','translate('+s.x+' '+s.y+')');
+    trav.setAttribute('stroke-dashoffset',(1-s.p).toFixed(4));
+    var dx=TX-sc*s.x, dy=TY-sc*s.y;
+    dx=Math.max(VW-sc*maxX,Math.min(-sc*minX,dx));
+    dy=Math.max(VH-sc*maxY,Math.min(-sc*minY,dy));
+    cam.setAttribute('transform','translate('+dx.toFixed(1)+' '+dy.toFixed(1)+') scale('+sc+')');
+    elKick.textContent=s.kick;elTtl.textContent=s.ttl;elSub.textContent=s.sub;elBody.textContent=s.body;
+    banner.classList.toggle('arrived',i===n-1);
+    var mks=cam.querySelectorAll('.mk');for(k=0;k<mks.length;k++)mks[k].classList.remove('on');
+    var cur=document.getElementById(s.m);if(cur)cur.classList.add('on');
+    var steps=elSteps.children;for(k=0;k<steps.length;k++)steps[k].className='mvn-step'+(k===i?' on':'');
+    var dots=elDots.children;for(k=0;k<dots.length;k++)dots[k].className=(k<=i?'on':'');
+    elHint.textContent=(i===n-1)?'Sei arrivato · tocca per ricominciare':'Tocca la mappa per proseguire';
+  }
+  function go(ni){i=((ni%n)+n)%n;render();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
+  map.addEventListener('click',function(){go(i+1);});
+  elSteps.addEventListener('click',function(e){var t=e.target.closest('.mvn-step');if(!t)return;go(parseInt(t.getAttribute('data-i'),10));});
   render();
 })();
 </script>
