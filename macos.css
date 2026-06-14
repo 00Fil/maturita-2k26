@@ -1567,3 +1567,86 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 .nr-visual.gpoi img { object-position:center; }
 .nr-visual.volontariato img { object-position:center; }
 
+/* ============================================================
+   FINDER DARK — Applications grid ispirato alla reference macOS
+   ============================================================ */
+.finder-window {
+  border-radius: 26px !important;
+  background: rgba(30,30,34,.72) !important;
+  box-shadow: var(--shadow-win), inset 0 1px 0 rgba(255,255,255,.12), inset 0 0 0 1px rgba(255,255,255,.08) !important;
+}
+.finder-titlebar {
+  position:relative; height:48px; padding:0 14px;
+  background:rgba(34,34,38,.72); border-bottom:1px solid rgba(255,255,255,.075); box-shadow:none;
+}
+.finder-titlebar .wt { text-align:left; margin:0 0 0 226px; color:rgba(245,245,247,.88); font-size:14px; font-weight:790; }
+.finder-nav { position:absolute; left:154px; top:8px; display:flex; gap:2px; }
+.finder-nav button, .finder-viewbar button, .finder-actions button {
+  width:32px; height:32px; border:0; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  color:rgba(245,245,247,.72); background:transparent; transition:background .16s ease, color .16s ease, transform .22s var(--spring-pop);
+}
+.finder-nav button:hover, .finder-viewbar button:hover, .finder-actions button:hover { background:rgba(255,255,255,.08); color:#fff; }
+.finder-nav button:active, .finder-viewbar button:active, .finder-actions button:active { transform:scale(.92); }
+.finder-titlebar svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+.finder-viewbar {
+  position:absolute; left:52%; top:7px; transform:translateX(-50%); display:flex; gap:2px; padding:2px;
+  border-radius:14px; background:rgba(255,255,255,.06); box-shadow:inset 0 0 0 1px rgba(255,255,255,.06), 0 12px 28px rgba(0,0,0,.22);
+}
+.finder-viewbar button.on { background:rgba(255,255,255,.14); color:#fff; }
+.finder-actions { position:absolute; right:12px; top:7px; display:flex; gap:6px; }
+.finder-actions .more { font-size:13px; font-weight:850; letter-spacing:-.06em; }
+.finder-app {
+  height:min(610px, calc(100vh - 120px)); display:grid; grid-template-columns:170px minmax(0,1fr); overflow:hidden;
+  background:#141417; color:#f5f5f7; font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+}
+.finder-sidebar {
+  padding:12px 10px; background:rgba(255,255,255,.035); border-right:1px solid rgba(255,255,255,.075);
+  backdrop-filter:blur(28px) saturate(1.4); -webkit-backdrop-filter:blur(28px) saturate(1.4);
+}
+.finder-side-top { margin-bottom:12px; }
+.finder-side-label { margin:14px 10px 6px; color:rgba(245,245,247,.40); font-size:11px; font-weight:760; letter-spacing:-.01em; }
+.finder-side-row {
+  width:100%; height:30px; border:0; border-radius:8px; background:transparent; color:rgba(245,245,247,.84);
+  display:flex; align-items:center; gap:8px; padding:0 9px; font:inherit; font-size:13px; font-weight:640; text-align:left;
+}
+.finder-side-row:hover { background:rgba(255,255,255,.065); }
+.finder-side-row.selected { color:#fff; background:rgba(10,132,255,.22); box-shadow:inset 0 0 0 1px rgba(10,132,255,.20); }
+.finder-side-row span { width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:currentColor; }
+.finder-side-row svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.75; stroke-linecap:round; stroke-linejoin:round; }
+.finder-main { position:relative; overflow:hidden; padding:14px 22px 24px; background:rgba(18,18,21,.96); }
+.finder-path { height:34px; display:flex; align-items:flex-start; justify-content:space-between; margin:0 4px 12px; }
+.finder-path b { color:#f5f5f7; font-size:13px; font-weight:760; opacity:.72; }
+.finder-path span { color:rgba(245,245,247,.35); font-size:12px; font-weight:650; }
+.finder-grid { display:grid; grid-template-columns:repeat(5, minmax(96px,1fr)); gap:28px 24px; padding:8px 4px 120px; }
+.finder-app-icon {
+  position:relative; min-height:126px; border:0; border-radius:18px; background:transparent; color:#f5f5f7; font:inherit; text-align:center;
+  display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:10px 6px 8px;
+  transition:background .18s ease, transform .28s var(--spring-pop);
+}
+.finder-app-icon:hover { background:rgba(255,255,255,.065); transform:translateY(-2px); }
+.finder-app-icon:active { transform:scale(.96); }
+.finder-img { width:58px; height:58px; display:flex; align-items:center; justify-content:center; margin-bottom:10px; }
+.finder-img img { width:58px; height:58px; object-fit:contain; display:block; filter:drop-shadow(0 8px 12px rgba(0,0,0,.34)); }
+.finder-app-icon b { max-width:112px; color:#f5f5f7; font-size:13px; line-height:1.14; font-weight:660; letter-spacing:-.025em; }
+.finder-app-icon small { display:block; margin-top:3px; color:rgba(245,245,247,.45); font-size:11px; line-height:1.1; font-weight:580; }
+.finder-hover-card {
+  position:absolute; left:26px; right:26px; bottom:22px; min-height:66px; padding:14px 17px; border-radius:18px;
+  background:rgba(42,42,48,.82); box-shadow:0 20px 48px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.08);
+  backdrop-filter:blur(26px) saturate(1.5); -webkit-backdrop-filter:blur(26px) saturate(1.5);
+  opacity:.72; transform:translateY(0); transition:opacity .18s ease, transform .25s var(--spring-pop);
+}
+.finder-hover-card b { display:block; color:#fff; font-size:14px; font-weight:820; letter-spacing:-.02em; margin-bottom:3px; }
+.finder-hover-card span { color:rgba(245,245,247,.62); font-size:12.5px; line-height:1.35; font-weight:560; }
+.finder-main:has(.finder-app-icon:hover) .finder-hover-card { opacity:1; transform:translateY(-2px); }
+.finder-app-icon:hover ~ .finder-hover-card { opacity:1; }
+.finder-app-icon::after {
+  content:attr(data-desc); position:absolute; left:50%; top:100%; width:220px; transform:translate(-50%, 8px) scale(.98);
+  padding:10px 12px; border-radius:12px; background:rgba(36,36,40,.94); color:rgba(245,245,247,.82);
+  box-shadow:0 18px 36px rgba(0,0,0,.38), inset 0 0 0 1px rgba(255,255,255,.08);
+  font-size:11.5px; line-height:1.35; font-weight:560; text-align:left; pointer-events:none; opacity:0; z-index:4;
+  transition:opacity .18s ease, transform .22s var(--spring-pop);
+}
+.finder-app-icon:hover::after { opacity:1; transform:translate(-50%, 2px) scale(1); }
+@media (max-width:900px){ .finder-grid{grid-template-columns:repeat(4,minmax(92px,1fr));gap:22px 18px}.finder-titlebar .wt{margin-left:190px}.finder-nav{left:124px}.finder-viewbar{display:none} }
+@media (max-width:720px){ .finder-app{grid-template-columns:1fr}.finder-sidebar{display:none}.finder-grid{grid-template-columns:repeat(3,minmax(86px,1fr))}.finder-titlebar .wt{margin-left:64px}.finder-nav{display:none}.finder-actions{right:8px} }
+

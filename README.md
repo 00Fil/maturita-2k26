@@ -120,3 +120,7 @@ Gli accessi registrati sono nella tabella `accessi` del database `pcto`.
 
 ### Immagini app Note
 Gli slot immagini dell’app Note sono documentati in `assets/notes/README-IMMAGINI.md`.
+
+
+### Finder dark mode
+La finestra principale è stata ricostruita come Finder in dark mode: sidebar, toolbar, griglia Applications e descrizioni rapide al passaggio sulle app.

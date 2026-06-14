@@ -97,31 +97,68 @@ function appicon(string $file, string $remote): string {
   <button class="dicon" data-open="w-io"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false"></span><span>Curriculum dello studente.pdf</span></button>
 </div>
 
-<section class="win open a-blue" id="w-pres" style="left:7%;top:8%;width:760px">
-  <div class="titlebar"><span class="wt">Presentazione</span></div>
-  <div class="split">
-    <aside class="sidebar">
-      <div class="sb-title">Preferiti</div>
-      <button class="sb-item on" data-open="w-pres"><span class="ic" style="background:#0A84FF">10′</span>Presentazione<span class="cnt">5</span></button>
-      <button class="sb-item" data-open="w-io"><span class="ic" style="background:#FF9500">Io</span>Su di me</button>
-      <button class="sb-item" data-open="w-skills"><span class="ic" style="background:#5856D6">Fu</span>Fuori dall'aula</button>
-      <button class="sb-item" data-open="w-fsl"><span class="ic" style="background:#34C759">CS</span>CS Metal Europe</button>
-      <button class="sb-item" data-open="w-fine"><span class="ic" style="background:#AF52DE">→</span>Dove voglio andare</button>
-      <div class="sb-title">Tag</div>
-      <button class="sb-item" data-tag="rifl"><span class="dotk" style="background:#0A84FF"></span>Riflessione</button>
-      <button class="sb-item" data-tag="fuori"><span class="dotk" style="background:#5856D6"></span>Fuori dall'aula</button>
-      <button class="sb-item" data-tag="fsl"><span class="dotk" style="background:#34C759"></span>Esperienza FSL</button>
-    </aside>
-    <div class="main">
-      <div class="ftools"><b>I miei 10 minuti</b><span>Apro io raccontando la mia storia, poi rispondo alle domande della commissione.</span><span class="fseg"><button class="on" data-view="gallery">Galleria</button><button data-view="list">Elenco</button></span></div>
-      <div class="fgrid">
-        <button class="fitem lgcard" data-open="w-io" data-tag="rifl" style="animation-delay:.05s"><span class="fbadge" style="background:#FF9500">01</span><b>Su di me</b><span>Chi sono, cosa mi appassiona e da dove nasce la mia voglia di costruire.</span><span class="tt">Apri · Note</span></button>
-        <button class="fitem lgcard" data-open="w-skills" data-tag="fuori" style="animation-delay:.1s"><span class="fbadge" style="background:#5856D6">02</span><b>Fuori dall'aula</b><span>I progetti, i concorsi e il volontariato che ho seguito fuori dalla scuola.</span><span class="tt">Apri · Launchpad</span></button>
-        <button class="fitem lgcard" data-open="w-fsl" data-tag="fsl" style="animation-delay:.15s"><span class="fbadge" style="background:#34C759">03</span><b>CS Metal Europe</b><span>Le 240 ore di alternanza in azienda e cosa mi hanno insegnato.</span><span class="tt">Apri · Calendario</span></button>
-        <button class="fitem lgcard" data-open="w-fine" data-tag="rifl" style="animation-delay:.2s"><span class="fbadge" style="background:#AF52DE">04</span><b>Dove voglio andare</b><span>Il percorso che voglio seguire dopo il diploma.</span><span class="tt">Apri · Mappe</span></button>
-        <button class="fitem lgcard" data-spot data-tag="fsl" style="animation-delay:.25s"><span class="fbadge" style="background:#30B0C7">05</span><b>Spotlight</b><span>La frase con cui voglio chiudere, prima delle domande.</span><span class="tt">Apri · Spotlight</span></button>
-      </div>
+<section class="win open a-blue finder-window" id="w-pres" style="left:5.5%;top:6%;width:980px">
+  <div class="titlebar finder-titlebar"><span class="wt">Applications</span>
+    <div class="finder-nav" aria-hidden="true">
+      <button type="button"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button>
+      <button type="button"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
     </div>
+    <div class="finder-viewbar" aria-hidden="true">
+      <button class="on" type="button"><svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg></button>
+      <button type="button"><svg viewBox="0 0 24 24"><path d="M8 6h12M8 12h12M8 18h12"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg></button>
+      <button type="button"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M10 5v14M16 5v14"/></svg></button>
+      <button type="button"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M4 15h16"/></svg></button>
+    </div>
+    <div class="finder-actions" aria-hidden="true">
+      <button type="button"><svg viewBox="0 0 24 24"><path d="M12 5v10"/><path d="m8 9 4-4 4 4"/><path d="M5 15v4h14v-4"/></svg></button>
+      <button type="button"><svg viewBox="0 0 24 24"><path d="M20 12.5 12.5 20a2.1 2.1 0 0 1-3 0L4 14.5a2.1 2.1 0 0 1 0-3L11.5 4H20z"/><path d="M16 8h.01"/></svg></button>
+      <button type="button" class="more">•••</button>
+      <button type="button"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg></button>
+    </div>
+  </div>
+  <div class="wbody finder-app" aria-label="Finder Applications">
+    <aside class="finder-sidebar">
+      <div class="finder-side-top">
+        <button class="finder-side-row"><span><svg viewBox="0 0 24 24"><path d="M4 7h6l1.6 2H20v9H4z"/></svg></span>Shared</button>
+        <button class="finder-side-row"><span><svg viewBox="0 0 24 24"><path d="M12 8v5l3 2"/><circle cx="12" cy="12" r="8"/></svg></span>Recents</button>
+      </div>
+      <div class="finder-side-label">Favorites</div>
+      <button class="finder-side-row selected"><span><svg viewBox="0 0 24 24"><path d="M12 3 4 20h16z"/><path d="M8.7 14h6.6"/></svg></span>Applications</button>
+      <button class="finder-side-row"><span><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 15h16"/></svg></span>Desktop</button>
+      <button class="finder-side-row"><span><svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5"/></svg></span>Documents</button>
+      <button class="finder-side-row"><span><svg viewBox="0 0 24 24"><path d="M12 4v10"/><path d="m8 10 4 4 4-4"/><path d="M5 20h14"/></svg></span>Downloads</button>
+      <div class="finder-side-label">Locations</div>
+      <button class="finder-side-row"><span><svg viewBox="0 0 24 24"><path d="M6 18h12a4 4 0 0 0 0-8 6 6 0 0 0-11.3-2A4.8 4.8 0 0 0 6 18z"/></svg></span>iCloud Drive</button>
+      <button class="finder-side-row"><span><svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7"/><path d="M6 10v10h12V10"/></svg></span><?= $nome ?></button>
+      <button class="finder-side-row"><span><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M8 18v2h8v-2"/></svg></span>On My Mac</button>
+    </aside>
+    <main class="finder-main">
+      <div class="finder-path"><b>Applications</b><span>7 applicazioni</span></div>
+      <div class="finder-grid">
+        <button class="finder-app-icon" data-open="w-pres" data-desc="Indice della presentazione: da qui apri tutte le sezioni del percorso.">
+          <span class="finder-img"><?= appicon('finder.webp', '/original/file-manager.svg') ?></span><b>Finder</b><small>Presentazione</small>
+        </button>
+        <button class="finder-app-icon" data-open="w-io" data-desc="App Note in dark mode: curriculum, attività e progetti raccontati in modo sintetico.">
+          <span class="finder-img"><?= appicon('notes.png', '/src/apps/scalable/accessories-text-editor.svg') ?></span><b>Notes</b><small>Su di me</small>
+        </button>
+        <button class="finder-app-icon" data-open="w-skills" data-desc="Raccoglie esperienze fuori dall'aula: Sportly, concorsi, volontariato e musica.">
+          <span class="finder-img"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></span><b>Launchpad</b><small>Fuori dall'aula</small>
+        </button>
+        <button class="finder-app-icon" data-open="w-fsl" data-desc="La sezione dedicata al PCTO presso CS Metal Europe e al lavoro svolto in azienda.">
+          <span class="finder-img"><?= appicon('calendar.webp', '/original/calendar.svg') ?></span><b>Calendar</b><small>CS Metal Europe</small>
+        </button>
+        <button class="finder-app-icon" data-open="w-fine" data-desc="Una mappa interattiva del percorso dopo il diploma e degli obiettivi futuri.">
+          <span class="finder-img"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></span><b>Maps</b><small>Dove voglio andare</small>
+        </button>
+        <button class="finder-app-icon" data-spot data-desc="Apre Spotlight con la frase conclusiva della presentazione.">
+          <span class="finder-img"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></span><b>Spotlight</b><small>Chiusura</small>
+        </button>
+        <button class="finder-app-icon" data-act="trash" data-desc="Chiude tutte le finestre aperte e ripulisce il desktop.">
+          <span class="finder-img"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></span><b>Trash</b><small>Chiudi tutto</small>
+        </button>
+      </div>
+      <div class="finder-hover-card" aria-hidden="true"><b>Passa su un'app</b><span>Mostro qui una descrizione rapida.</span></div>
+    </main>
   </div>
 </section>
 

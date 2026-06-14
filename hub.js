@@ -839,3 +839,25 @@ if (rebBtn) {
   render();
 })();
 
+/* Finder dark: hover descrizione dinamica e azioni reali */
+(function(){
+  const finder=document.querySelector('.finder-window');
+  if(!finder) return;
+  const card=finder.querySelector('.finder-hover-card');
+  finder.querySelectorAll('.finder-app-icon').forEach(btn=>{
+    btn.addEventListener('mouseenter',()=>{
+      if(card){
+        const name=btn.querySelector('b')?.textContent || 'Applicazione';
+        card.querySelector('b').textContent=name;
+        card.querySelector('span').textContent=btn.dataset.desc || '';
+      }
+    });
+    btn.addEventListener('click',e=>{
+      if(btn.dataset.act==='trash'){
+        e.preventDefault();
+        if(typeof closeAll==='function') closeAll();
+      }
+    });
+  });
+})();
+
