@@ -163,3 +163,40 @@
   #w-fine .nav-stack{width:280px;max-width:calc(100% - 92px)}
   #w-fine .nav-dist{font-size:21px}
 }
+
+/* ===== Scheda "Su di me" / "Chi sono" (#w-io) — classi iox-* ===== */
+/* Layout introdotto col redesign della scheda ma mai definito in CSS:
+   senza queste regole i contenitori restavano blocchi grezzi impilati. */
+#w-io .wbody.iox{display:flex;flex-direction:column;gap:14px;padding:18px 20px 20px}
+#w-io .iox-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+#w-io .iox-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+#w-io .iox-stat{display:flex;flex-direction:column;gap:2px;padding:11px 14px;border-radius:14px;background:var(--surface);box-shadow:var(--edge),0 2px 8px rgba(12,16,40,.06)}
+#w-io .iox-stat b{font-size:21px;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--text)}
+#w-io .iox-stat small{font-size:9.5px;font-weight:750;text-transform:uppercase;letter-spacing:.06em;color:var(--faint)}
+#w-io .iox-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+#w-io .iox-col{display:flex;flex-direction:column;gap:14px;min-width:0}
+#w-io .iox-hero{position:relative;overflow:hidden;padding:18px 20px;border-radius:18px;color:#fff;background:var(--acc,var(--orange));box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 12px 28px color-mix(in srgb, var(--acc,var(--orange)) 40%, transparent)}
+#w-io .iox-hero .as-kicker{color:#fff;opacity:.85}
+#w-io .iox-hero h3{margin:6px 0 7px;font-size:18px;font-weight:800;letter-spacing:-.025em;line-height:1.18}
+#w-io .iox-hero p{font-size:12.5px;line-height:1.55;font-weight:500;opacity:.95}
+#w-io .iox-block{display:flex;flex-direction:column;gap:8px}
+#w-io .iox-lbl{padding:2px 2px 0;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--faint)}
+#w-io .iox-row{display:flex;gap:12px;padding:12px 14px;border-radius:14px;background:var(--surface);box-shadow:var(--edge),0 2px 8px rgba(12,16,40,.06)}
+#w-io .iox-k{flex:none;width:84px;padding-top:1px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--kc,var(--acc,var(--blue)))}
+#w-io .iox-tx{min-width:0}
+#w-io .iox-tx b{display:block;font-size:13px;font-weight:750;letter-spacing:-.01em}
+#w-io .iox-tx p{margin-top:2px;font-size:12px;font-weight:500;line-height:1.5;color:var(--muted)}
+#w-io .iox-card{position:relative;overflow:hidden;padding:12px 15px 12px 16px;border-radius:14px;background:var(--surface);box-shadow:var(--edge),0 2px 8px rgba(12,16,40,.06);border-left:3px solid var(--kc,var(--acc,var(--blue)))}
+#w-io .iox-card .iox-tag{display:inline-block;margin-bottom:4px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--kc,var(--acc,var(--blue)))}
+#w-io .iox-card b{display:block;font-size:13.5px;font-weight:750;letter-spacing:-.01em}
+#w-io .iox-card p{margin-top:2px;font-size:12px;font-weight:500;line-height:1.5;color:var(--muted)}
+
+/* ingresso a cascata coerente con le altre schede */
+.win.open .iox-stat,.win.open .iox-hero,.win.open .iox-row,.win.open .iox-card{animation:riseIn .5s var(--ease-apple) both}
+.win.open .iox-col:nth-child(2) .iox-card:nth-child(2){animation-delay:.06s}
+.win.open .iox-col:nth-child(2) .iox-card:nth-child(3){animation-delay:.12s}
+
+@media (max-width:760px){
+  #w-io .iox-stats{grid-template-columns:repeat(2,1fr)}
+  #w-io .iox-cols{grid-template-columns:1fr}
+}
