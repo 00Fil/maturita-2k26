@@ -128,3 +128,7 @@ La finestra principale è stata ricostruita come Finder in dark mode: sidebar, t
 
 ### Calendario PCTO interattivo
 La sezione CS Metal Europe è stata ricostruita come calendario mensile dark mode: Aprile 2024 e Novembre 2024 sono intercambiabili, con eventi colorati e pannello descrittivo laterale.
+
+
+### Calendario PCTO — linea continua Apple-like
+Gli eventi PCTO sono stati trasformati da card ripetute a barre continue nel mese, con pannello dettaglio più leggero e colori meno saturi.

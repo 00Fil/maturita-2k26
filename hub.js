@@ -904,11 +904,26 @@ if (rebBtn) {
   function monthDays(period){ const first=firstMonday(period.year,period.month); const days=[]; for(let i=0;i<42;i++){ const d=new Date(first); d.setDate(first.getDate()+i); days.push(d); } return days; }
   function renderGrid(period){
     const days=monthDays(period);
-    grid.innerHTML=weekdays.map(w=>`<div class="pcto-weekday">${w}</div>`).join('') + days.map(d=>{
+    const dayCells=days.map(d=>{
       const day=iso(d); const faded=d.getMonth()!==period.month; const today=day===period.end;
-      const evs=period.events.filter(ev=>inRange(day,ev));
-      return `<button class="pcto-day ${faded?'muted':''} ${today?'end':''}" data-day="${day}" type="button"><b>${d.getDate()}</b>${evs.map(ev=>`<span class="pcto-pill" style="--ev:${ev.color}" data-event="${ev.id}">${ev.label}</span>`).join('')}</button>`;
+      return `<button class="pcto-day ${faded?'muted':''} ${today?'end':''}" data-day="${day}" type="button"><b>${d.getDate()}</b></button>`;
     }).join('');
+    const bars=[];
+    period.events.forEach(ev=>{
+      let a=days.findIndex(d=>iso(d)===ev.range[0]);
+      let b=days.findIndex(d=>iso(d)===ev.range[1]);
+      if(a<0) a=0; if(b<0) b=days.length-1;
+      for(let i=a;i<=b;){
+        const week=Math.floor(i/7);
+        const row=week+2;
+        const weekEnd=Math.min(b, week*7+6);
+        const colStart=(i%7)+1;
+        const colEnd=(weekEnd%7)+2;
+        bars.push(`<button class="pcto-range-event ${ev.id===activeEvent?'active':''}" data-event="${ev.id}" style="--ev:${ev.color};grid-column:${colStart}/${colEnd};grid-row:${row};"><span>${ev.label}</span></button>`);
+        i=weekEnd+1;
+      }
+    });
+    grid.innerHTML=weekdays.map(w=>`<div class="pcto-weekday">${w}</div>`).join('') + dayCells + bars.join('');
   }
   function renderDetail(period, ev){
     detail.innerHTML=`<div class="pcto-detail-top"><span>${period.yearLabel}</span><h3>${period.className} · ${period.hours}</h3><p>${period.subtitle}</p></div><div class="pcto-tutors"><div><b>Tutor scuola</b><span>${period.tutorSchool}</span></div><div><b>Tutor azienda</b><span>${period.tutorCompany}</span></div></div><article class="pcto-event-card" style="--ev:${ev.color}"><span class="pcto-event-range">${ev.range[0].split('-').reverse().join('/')} — ${ev.range[1].split('-').reverse().join('/')}</span><h2>${ev.title}</h2><p>${ev.body}</p><ul>${ev.bullets.map(b=>`<li>${b}</li>`).join('')}</ul></article>`;
