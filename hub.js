@@ -880,25 +880,53 @@ if (rebBtn) {
   render();
 })();
 
-/* Finder dark: hover descrizione dinamica e azioni reali */
+
+/* Finder dark: tooltip flottante sopra a tutto e azioni reali */
 (function(){
   const finder=document.querySelector('.finder-window');
   if(!finder) return;
-  const card=finder.querySelector('.finder-hover-card');
+  let tip=document.querySelector('.finder-floating-desc');
+  if(!tip){
+    tip=document.createElement('div');
+    tip.className='finder-floating-desc';
+    tip.setAttribute('aria-hidden','true');
+    tip.innerHTML='<b></b><span></span>';
+    document.body.appendChild(tip);
+  }
+  function place(btn){
+    const r=btn.getBoundingClientRect();
+    const tr=tip.getBoundingClientRect();
+    let left=r.left + r.width/2 - tr.width/2;
+    let top=r.bottom + 10;
+    left=Math.max(14, Math.min(left, window.innerWidth - tr.width - 14));
+    if(top + tr.height > window.innerHeight - 18) top = r.top - tr.height - 10;
+    tip.style.left=Math.round(left)+'px';
+    tip.style.top=Math.round(top)+'px';
+  }
   finder.querySelectorAll('.finder-app-icon').forEach(btn=>{
     btn.addEventListener('mouseenter',()=>{
-      if(card){
-        const name=btn.querySelector('b')?.textContent || 'Applicazione';
-        card.querySelector('b').textContent=name;
-        card.querySelector('span').textContent=btn.dataset.desc || '';
-      }
+      const name=btn.querySelector('b')?.textContent || 'Applicazione';
+      tip.querySelector('b').textContent=name;
+      tip.querySelector('span').textContent=btn.dataset.desc || '';
+      tip.classList.add('show');
+      tip.setAttribute('aria-hidden','false');
+      requestAnimationFrame(()=>place(btn));
+    });
+    btn.addEventListener('mousemove',()=>place(btn));
+    btn.addEventListener('mouseleave',()=>{
+      tip.classList.remove('show');
+      tip.setAttribute('aria-hidden','true');
     });
     btn.addEventListener('click',e=>{
       if(btn.dataset.act==='trash'){
         e.preventDefault();
         if(typeof closeAll==='function') closeAll();
       }
+      tip.classList.remove('show');
+      tip.setAttribute('aria-hidden','true');
     });
   });
+  window.addEventListener('scroll',()=>tip.classList.remove('show'),true);
+  window.addEventListener('resize',()=>tip.classList.remove('show'));
 })();
 

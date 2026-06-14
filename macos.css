@@ -1650,3 +1650,24 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 @media (max-width:900px){ .finder-grid{grid-template-columns:repeat(4,minmax(92px,1fr));gap:22px 18px}.finder-titlebar .wt{margin-left:190px}.finder-nav{left:124px}.finder-viewbar{display:none} }
 @media (max-width:720px){ .finder-app{grid-template-columns:1fr}.finder-sidebar{display:none}.finder-grid{grid-template-columns:repeat(3,minmax(86px,1fr))}.finder-titlebar .wt{margin-left:64px}.finder-nav{display:none}.finder-actions{right:8px} }
 
+/* Finder tooltip dinamico globale: non viene tagliato dalla finestra */
+.finder-hover-card { display:none !important; }
+.finder-app-icon::after { display:none !important; }
+.finder-floating-desc {
+  position:fixed; z-index:10000; width:236px; max-width:calc(100vw - 28px);
+  padding:12px 13px; border-radius:14px;
+  background:rgba(34,34,38,.96); color:#f5f5f7;
+  box-shadow:0 22px 55px rgba(0,0,0,.48), inset 0 0 0 1px rgba(255,255,255,.10), inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter:blur(28px) saturate(1.55); -webkit-backdrop-filter:blur(28px) saturate(1.55);
+  pointer-events:none; opacity:0; transform:translateY(5px) scale(.985);
+  transition:opacity .16s ease, transform .22s var(--spring-pop);
+}
+.finder-floating-desc.show { opacity:1; transform:translateY(0) scale(1); }
+.finder-floating-desc b { display:block; margin-bottom:4px; color:#fff; font-size:13.5px; font-weight:820; letter-spacing:-.02em; }
+.finder-floating-desc span { display:block; color:rgba(245,245,247,.70); font-size:12px; line-height:1.38; font-weight:560; letter-spacing:-.01em; }
+.finder-floating-desc::before {
+  content:""; position:absolute; left:50%; top:-5px; width:10px; height:10px;
+  background:rgba(34,34,38,.96); transform:translateX(-50%) rotate(45deg);
+  box-shadow:inset 1px 1px 0 rgba(255,255,255,.08);
+}
+

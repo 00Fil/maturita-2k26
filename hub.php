@@ -157,7 +157,6 @@ function appicon(string $file, string $remote): string {
           <span class="finder-img"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></span><b>Trash</b><small>Chiudi tutto</small>
         </button>
       </div>
-      <div class="finder-hover-card" aria-hidden="true"><b>Passa su un'app</b><span>Mostro qui una descrizione rapida.</span></div>
     </main>
   </div>
 </section>
