@@ -224,75 +224,155 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-blue" id="w-fine" style="left:9%;top:7%;width:940px">
+<section class="win a-blue" id="w-fine" style="left:9%;top:7%;width:980px">
   <div class="titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
   <div class="nav" id="nav">
-    <svg class="nav-map" id="nav-map" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid slice">
-      <g id="nav-cam">
-        <rect x="-320" y="-280" width="1660" height="1220" fill="#E9E6DD"/>
-        <path d="M-320 120 C150 170 320 70 520 120 C720 170 880 90 1340 140 L1340 -280 L-320 -280 Z" fill="#A9D2F0"/>
-        <path d="M-320 120 C150 170 320 70 520 120 C720 170 880 90 1340 140" stroke="#93C2E6" stroke-width="2" fill="none"/>
-        <circle cx="120" cy="560" r="92" fill="#C9E6B4"/>
-        <circle cx="-130" cy="700" r="120" fill="#C9E6B4"/>
-        <circle cx="980" cy="560" r="86" fill="#C9E6B4"/>
-        <circle cx="1120" cy="300" r="96" fill="#C9E6B4"/>
-        <rect x="430" y="470" width="170" height="150" rx="22" fill="#C9E6B4"/>
-        <path d="M-320 360 C220 340 480 392 1340 350" stroke="#fff" stroke-width="26" fill="none" stroke-linecap="round"/>
-        <path d="M-320 520 C260 506 520 548 1340 500" stroke="#fff" stroke-width="15" fill="none" stroke-linecap="round"/>
-        <path d="M-320 210 C240 196 560 232 1340 205" stroke="#fff" stroke-width="11" fill="none"/>
-        <path d="M-320 760 C240 748 560 784 1340 756" stroke="#fff" stroke-width="13" fill="none"/>
-        <path d="M-320 60 C200 50 520 92 1340 60" stroke="#fff" stroke-width="9" fill="none"/>
-        <path d="M180 -280 C210 160 150 420 200 940" stroke="#fff" stroke-width="15" fill="none"/>
-        <path d="M520 -280 C500 180 560 420 520 940" stroke="#fff" stroke-width="18" fill="none"/>
-        <path d="M820 -280 C850 160 800 440 840 940" stroke="#fff" stroke-width="12" fill="none"/>
-        <path d="M-80 -280 C-50 160 -110 420 -60 940" stroke="#fff" stroke-width="11" fill="none"/>
-        <path d="M1120 -280 C1150 160 1090 440 1140 940" stroke="#fff" stroke-width="12" fill="none"/>
-        <rect x="250" y="150" width="90" height="56" rx="9" fill="#DDD6C7"/>
-        <rect x="120" y="250" width="64" height="58" rx="9" fill="#DDD6C7"/>
-        <rect x="600" y="150" width="78" height="52" rx="9" fill="#DDD6C7"/>
-        <rect x="700" y="430" width="80" height="56" rx="9" fill="#DDD6C7"/>
-        <rect x="330" y="600" width="66" height="46" rx="9" fill="#DDD6C7"/>
-        <rect x="900" y="250" width="70" height="50" rx="9" fill="#DDD6C7"/>
-        <rect x="-180" y="320" width="76" height="58" rx="9" fill="#DDD6C7"/>
-        <rect x="1180" y="430" width="80" height="56" rx="9" fill="#DDD6C7"/>
-        <rect x="1010" y="120" width="72" height="50" rx="9" fill="#DDD6C7"/>
-        <rect x="40" y="680" width="80" height="56" rx="9" fill="#DDD6C7"/>
-        <!-- percorso: casing bianco + tracciato + parte percorsa -->
-        <path id="nav-route-base" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-        <path id="nav-route" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" fill="none" stroke="#A7BED6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path id="nav-route-done" pathLength="1" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" fill="none" stroke="#0A84FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>
-        <!-- segnaposto (senza didascalie) -->
-        <g class="mk" id="m0" transform="translate(170 520)"><circle r="7" fill="#34C759" stroke="#fff" stroke-width="3"/></g>
-        <g class="mk" id="m1" transform="translate(390 430)"><circle r="6" fill="#fff" stroke="#0A84FF" stroke-width="3"/></g>
-        <g class="mk" id="m2" transform="translate(610 300)"><circle r="6" fill="#fff" stroke="#0A84FF" stroke-width="3"/></g>
-        <g class="mk" id="m3" transform="translate(850 150)"><path d="M0 0 C-10 -14 -10 -25 0 -34 C10 -25 10 -14 0 0 Z" fill="#FF3B30" stroke="#fff" stroke-width="2.5"/><circle cx="0" cy="-22" r="5.5" fill="#fff"/></g>
-        <!-- puck GPS -->
-        <g id="nav-puck" transform="translate(170 520)">
-          <circle r="13" fill="#0A84FF" opacity="0.18"><animate attributeName="r" values="11;22;11" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.20;0.03;0.20" dur="2s" repeatCount="indefinite"/></circle>
-          <circle r="10" fill="#fff"/>
-          <circle r="8" fill="#0A84FF"/>
-          <path d="M0 -5 L4 4 L0 2 L-4 4 Z" fill="#fff"/>
-        </g>
-      </g>
-    </svg>
-    <div class="nav-stack">
-      <div class="nav-bar">
-        <span class="nav-man" id="nav-man"></span>
-        <div class="nav-meta">
-          <span class="nav-kick" id="nav-kick"></span>
-          <div class="nav-dist" id="nav-dist"></div>
-          <div class="nav-instr" id="nav-instr"></div>
-        </div>
+    <!-- ── Pannello Directions (sinistra) ── -->
+    <div class="nav-panel" id="nav-panel">
+      <div class="nav-panel-head">
+        <h3 class="nav-panel-title">Indicazioni</h3>
+        <button class="nav-panel-close" id="nav-panel-x" type="button" aria-label="Chiudi indicazioni">✕</button>
+      </div>
+      <div class="nav-panel-transport">
+        <button class="nav-tmode on" data-mode="car" type="button" aria-label="Auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="7" rx="2"/><path d="M5 11V7a2 2 0 012-2h10a2 2 0 012 2v4"/><circle cx="7.5" cy="15.5" r="1.5"/><circle cx="16.5" cy="15.5" r="1.5"/></svg></button>
+        <button class="nav-tmode" data-mode="walk" type="button" aria-label="A piedi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M14 22l-2-8-4 4"/><path d="M10 14l4-4 2 4"/><path d="M10 10l-2 8"/></svg></button>
+      </div>
+      <div class="nav-panel-route">
+        <div class="nav-route-from"><span class="nav-rdot start"></span><span>Maturità 2026</span></div>
+        <div class="nav-route-to"><span class="nav-rdot end"></span><span>La mia carriera</span></div>
+      </div>
+      <div class="nav-panel-info">
+        <div class="nav-panel-eta"><span class="nav-eta-val" id="nav-eta-val">5 anni</span><span class="nav-eta-sub">Tempo stimato</span></div>
+        <div class="nav-panel-eta"><span class="nav-eta-val nav-eta-fastest">Percorso più diretto</span><span class="nav-eta-sub">Il mio piano</span></div>
+      </div>
+      <div class="nav-panel-steps" id="nav-panel-steps">
+        <button class="nav-step" data-idx="0" type="button">
+          <span class="nav-step-num">1</span>
+          <div class="nav-step-info"><b>Maturità</b><span>Diploma tecnico · IT & Telecomunicazioni</span></div>
+          <span class="nav-step-arrow">›</span>
+        </button>
+        <button class="nav-step" data-idx="1" type="button">
+          <span class="nav-step-num">2</span>
+          <div class="nav-step-info"><b>Università</b><span>Ingegneria Informatica · Laurea triennale</span></div>
+          <span class="nav-step-arrow">›</span>
+        </button>
+        <button class="nav-step" data-idx="2" type="button">
+          <span class="nav-step-num">3</span>
+          <div class="nav-step-info"><b>Specializzazione</b><span>Magistrale o Master · AI & Software</span></div>
+          <span class="nav-step-arrow">›</span>
+        </button>
+        <button class="nav-step" data-idx="3" type="button">
+          <span class="nav-step-num">4</span>
+          <div class="nav-step-info"><b>Esperienza all'estero</b><span>Stage o primo lavoro internazionale</span></div>
+          <span class="nav-step-arrow">›</span>
+        </button>
+        <button class="nav-step" data-idx="4" type="button">
+          <span class="nav-step-num">5</span>
+          <div class="nav-step-info"><b>Carriera</b><span>Costruire qualcosa di mio</span></div>
+          <span class="nav-step-arrow">›</span>
+        </button>
+      </div>
+      <div class="nav-panel-foot">
+        <button class="nav-go-btn" id="nav-go" type="button">Parti</button>
       </div>
     </div>
-    <div class="nav-ctrl">
-      <div class="nav-zoom"><button id="nav-zin" type="button" aria-label="Zoom avanti">+</button><span></span><button id="nav-zout" type="button" aria-label="Zoom indietro">−</button></div>
-      <button class="nav-comp" id="nav-comp" type="button" aria-label="Nord"><svg viewBox="0 0 24 24"><path d="M12 4 L15 13 L12 11 L9 13 Z" fill="#FF3B30"/><path d="M12 20 L9 11 L12 13 L15 11 Z" fill="#8E8E93"/></svg></button>
-    </div>
-    <div class="nav-sheet">
-      <div class="nav-sheet-main"><span class="nav-eta" id="nav-eta"></span><small id="nav-sub"></small></div>
-      <div class="nav-dots" id="nav-dots"></div>
-      <button class="nav-end" id="nav-end" type="button">Fine</button>
+
+    <!-- ── Mappa SVG (destra, grande) ── -->
+    <div class="nav-map-wrap" id="nav-map-wrap">
+      <svg class="nav-map" id="nav-map" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+        <g id="nav-cam">
+          <!-- sfondo terreno -->
+          <rect x="-400" y="-300" width="2000" height="1400" fill="#E9E6DD"/>
+          <!-- cielo / acqua in alto -->
+          <path d="M-400 100 C100 150 300 50 550 100 C800 150 1000 60 1600 110 L1600 -300 L-400 -300 Z" fill="#B0D8F0"/>
+          <path d="M-400 100 C100 150 300 50 550 100 C800 150 1000 60 1600 110" stroke="#93C2E6" stroke-width="2" fill="none"/>
+          <!-- parchi -->
+          <circle cx="90" cy="600" r="100" fill="#C9E6B4"/>
+          <circle cx="-160" cy="750" r="130" fill="#C9E6B4"/>
+          <circle cx="1100" cy="580" r="90" fill="#C9E6B4"/>
+          <circle cx="1300" cy="280" r="100" fill="#C9E6B4"/>
+          <rect x="480" y="500" width="180" height="160" rx="24" fill="#C9E6B4"/>
+          <circle cx="700" cy="150" r="70" fill="#C9E6B4"/>
+          <!-- strade principali -->
+          <path d="M-400 340 C200 320 520 380 1600 330" stroke="#fff" stroke-width="28" fill="none" stroke-linecap="round"/>
+          <path d="M-400 530 C280 510 560 560 1600 510" stroke="#fff" stroke-width="16" fill="none" stroke-linecap="round"/>
+          <path d="M-400 190 C260 176 600 212 1600 185" stroke="#fff" stroke-width="12" fill="none"/>
+          <path d="M-400 780 C260 768 600 804 1600 776" stroke="#fff" stroke-width="14" fill="none"/>
+          <path d="M-400 50 C220 40 560 82 1600 50" stroke="#fff" stroke-width="10" fill="none"/>
+          <!-- strade verticali -->
+          <path d="M150 -300 C180 160 120 420 170 1100" stroke="#fff" stroke-width="16" fill="none"/>
+          <path d="M480 -300 C460 180 520 420 480 1100" stroke="#fff" stroke-width="20" fill="none"/>
+          <path d="M820 -300 C850 160 800 440 840 1100" stroke="#fff" stroke-width="14" fill="none"/>
+          <path d="M-120 -300 C-90 160 -150 420 -100 1100" stroke="#fff" stroke-width="12" fill="none"/>
+          <path d="M1150 -300 C1180 160 1120 440 1170 1100" stroke="#fff" stroke-width="13" fill="none"/>
+          <!-- edifici -->
+          <rect x="220" y="140" width="95" height="60" rx="10" fill="#DDD6C7"/>
+          <rect x="90" y="240" width="70" height="62" rx="10" fill="#DDD6C7"/>
+          <rect x="620" y="140" width="82" height="56" rx="10" fill="#DDD6C7"/>
+          <rect x="760" y="440" width="85" height="60" rx="10" fill="#DDD6C7"/>
+          <rect x="320" y="620" width="70" height="50" rx="10" fill="#DDD6C7"/>
+          <rect x="950" y="240" width="75" height="54" rx="10" fill="#DDD6C7"/>
+          <rect x="-220" y="310" width="80" height="62" rx="10" fill="#DDD6C7"/>
+          <rect x="1250" y="440" width="85" height="60" rx="10" fill="#DDD6C7"/>
+          <rect x="1050" y="110" width="76" height="54" rx="10" fill="#DDD6C7"/>
+          <rect x="10" y="720" width="85" height="60" rx="10" fill="#DDD6C7"/>
+          <rect x="380" y="250" width="65" height="50" rx="10" fill="#DDD6C7"/>
+          <rect x="900" y="620" width="72" height="48" rx="10" fill="#DDD6C7"/>
+          <!-- percorso: casing bianco + tracciato grigio + parte percorsa (blu) -->
+          <path id="nav-route-base" d="M120 590 C230 540 300 500 400 440 C520 370 580 340 680 280 C780 220 840 200 920 170 C1020 136 1060 120 1120 100" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          <path id="nav-route" d="M120 590 C230 540 300 500 400 440 C520 370 580 340 680 280 C780 220 840 200 920 170 C1020 136 1060 120 1120 100" fill="none" stroke="#B8CBE0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path id="nav-route-done" pathLength="1" d="M120 590 C230 540 300 500 400 440 C520 370 580 340 680 280 C780 220 840 200 920 170 C1020 136 1060 120 1120 100" fill="none" stroke="#007AFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+          <!-- segnaposto: 5 tappe -->
+          <g class="mk" id="m0" transform="translate(120 590)"><circle r="8" fill="#34C759" stroke="#fff" stroke-width="3"/></g>
+          <g class="mk" id="m1" transform="translate(400 440)"><circle r="7" fill="#fff" stroke="#007AFF" stroke-width="3"/></g>
+          <g class="mk" id="m2" transform="translate(680 280)"><circle r="7" fill="#fff" stroke="#007AFF" stroke-width="3"/></g>
+          <g class="mk" id="m3" transform="translate(920 170)"><circle r="7" fill="#fff" stroke="#007AFF" stroke-width="3"/></g>
+          <g class="mk" id="m4" transform="translate(1120 100)"><path d="M0 0 C-11 -15 -11 -27 0 -36 C11 -27 11 -15 0 0 Z" fill="#FF3B30" stroke="#fff" stroke-width="2.5"/><circle cx="0" cy="-23" r="6" fill="#fff"/></g>
+          <!-- etichette tappe sulla mappa -->
+          <g class="mk-label" id="ml0" transform="translate(120 590)"><rect x="-38" y="14" width="76" height="22" rx="11" fill="rgba(52,199,89,.92)"/><text x="0" y="29" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="'SF Pro Text','Inter',system-ui,sans-serif">Maturità</text></g>
+          <g class="mk-label" id="ml1" transform="translate(400 440)"><rect x="-40" y="14" width="80" height="22" rx="11" fill="rgba(0,122,255,.88)"/><text x="0" y="29" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="'SF Pro Text','Inter',system-ui,sans-serif">Università</text></g>
+          <g class="mk-label" id="ml2" transform="translate(680 280)"><rect x="-52" y="14" width="104" height="22" rx="11" fill="rgba(0,122,255,.88)"/><text x="0" y="29" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="'SF Pro Text','Inter',system-ui,sans-serif">Specializzazione</text></g>
+          <g class="mk-label" id="ml3" transform="translate(920 170)"><rect x="-30" y="14" width="60" height="22" rx="11" fill="rgba(0,122,255,.88)"/><text x="0" y="29" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="'SF Pro Text','Inter',system-ui,sans-serif">Estero</text></g>
+          <g class="mk-label" id="ml4" transform="translate(1120 100)"><rect x="-32" y="-56" width="64" height="22" rx="11" fill="rgba(255,59,48,.9)"/><text x="0" y="-41" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="'SF Pro Text','Inter',system-ui,sans-serif">Carriera</text></g>
+          <!-- ETA bubble sulla mappa (stile Apple Maps) -->
+          <g id="nav-eta-bubble" transform="translate(620 420)" class="nav-bubble">
+            <rect x="-52" y="-16" width="104" height="32" rx="16" fill="#007AFF"/>
+            <text x="0" y="-4" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="'SF Pro Text','Inter',system-ui,sans-serif">5 anni</text>
+            <text x="0" y="9" text-anchor="middle" fill="rgba(255,255,255,.82)" font-size="9" font-weight="600" font-family="'SF Pro Text','Inter',system-ui,sans-serif">Più diretto</text>
+          </g>
+          <!-- puck GPS -->
+          <g id="nav-puck" transform="translate(120 590)">
+            <circle r="14" fill="#007AFF" opacity="0.18"><animate attributeName="r" values="12;24;12" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.20;0.03;0.20" dur="2s" repeatCount="indefinite"/></circle>
+            <circle r="11" fill="#fff"/>
+            <circle r="9" fill="#007AFF"/>
+            <path d="M0 -5.5 L4.5 4.5 L0 2.2 L-4.5 4.5 Z" fill="#fff"/>
+          </g>
+        </g>
+      </svg>
+
+      <!-- Controlli mappa -->
+      <div class="nav-ctrl">
+        <div class="nav-zoom"><button id="nav-zin" type="button" aria-label="Zoom avanti">+</button><span></span><button id="nav-zout" type="button" aria-label="Zoom indietro">−</button></div>
+        <button class="nav-comp" id="nav-comp" type="button" aria-label="Panoramica"><svg viewBox="0 0 24 24"><path d="M12 4 L15 13 L12 11 L9 13 Z" fill="#FF3B30"/><path d="M12 20 L9 11 L12 13 L15 11 Z" fill="#8E8E93"/></svg></button>
+      </div>
+
+      <!-- Scheda dettaglio tappa (appare allo zoom, stile Apple) -->
+      <div class="nav-detail" id="nav-detail">
+        <div class="nav-detail-inner">
+          <div class="nav-detail-head">
+            <span class="nav-detail-badge" id="nav-detail-badge"></span>
+            <div>
+              <div class="nav-detail-title" id="nav-detail-title"></div>
+              <div class="nav-detail-sub" id="nav-detail-sub"></div>
+            </div>
+          </div>
+          <p class="nav-detail-body" id="nav-detail-body"></p>
+          <div class="nav-detail-foot">
+            <button class="nav-detail-back" id="nav-detail-back" type="button">← Panoramica</button>
+            <button class="nav-detail-next" id="nav-detail-next" type="button">Prossima tappa →</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -368,130 +448,275 @@ function appicon(string $file, string $remote): string {
 </script>
 <script>
 (function(){
-  var svg=document.getElementById('nav-map');
-  var cam=document.getElementById('nav-cam');
-  var route=document.getElementById('nav-route');
-  var done=document.getElementById('nav-route-done');
-  var puck=document.getElementById('nav-puck');
-  if(!svg||!cam||!route||!done||!puck)return;
-  var man=document.getElementById('nav-man');
-  var kick=document.getElementById('nav-kick');
-  var distEl=document.getElementById('nav-dist');
-  var instr=document.getElementById('nav-instr');
-  var etaEl=document.getElementById('nav-eta');
-  var subEl=document.getElementById('nav-sub');
-  var dotsWrap=document.getElementById('nav-dots');
-  var endBtn=document.getElementById('nav-end');
+  /* ── DOM refs ── */
+  var svg = document.getElementById('nav-map');
+  var cam = document.getElementById('nav-cam');
+  var route = document.getElementById('nav-route');
+  var routeDone = document.getElementById('nav-route-done');
+  var puck = document.getElementById('nav-puck');
+  var bubble = document.getElementById('nav-eta-bubble');
+  if(!svg||!cam||!route||!routeDone||!puck) return;
 
-  var L=route.getTotalLength();
-  if(!isFinite(L)||L<=0)L=900;
+  var detail    = document.getElementById('nav-detail');
+  var detBadge  = document.getElementById('nav-detail-badge');
+  var detTitle  = document.getElementById('nav-detail-title');
+  var detSub    = document.getElementById('nav-detail-sub');
+  var detBody   = document.getElementById('nav-detail-body');
+  var detBack   = document.getElementById('nav-detail-back');
+  var detNext   = document.getElementById('nav-detail-next');
+  var panelX    = document.getElementById('nav-panel-x');
+  var goBtn     = document.getElementById('nav-go');
+  var stepsWrap = document.getElementById('nav-panel-steps');
 
-  // tappe: coordinate reali, agganciate al tracciato (nessuna didascalia sulla mappa)
-  var stops=[
-    {id:'m0',x:170,y:520,name:'Maturità',stage:'Partenza',man:'straight'},
-    {id:'m1',x:390,y:430,name:'PCTO',stage:'Prossima tappa',man:'straight'},
-    {id:'m2',x:610,y:300,name:'Università',stage:'Prossima tappa',man:'straight'},
-    {id:'m3',x:850,y:150,name:'Estero',stage:'Arrivo',man:'flag'}
+  var L = route.getTotalLength();
+  if(!isFinite(L)||L<=0) L=1000;
+
+  /* ── Tappe: 5 stops lungo il percorso ── */
+  var stops = [
+    { id:'m0', lid:'ml0', x:120, y:590, name:'Maturità',
+      sub:'Diploma tecnico · IT & Telecomunicazioni',
+      desc:'Il punto di partenza: cinque anni di superiori che mi hanno dato le basi di programmazione, reti e sistemi. L\'esame di Stato è la prima tappa vera del percorso.',
+      color:'#34C759' },
+    { id:'m1', lid:'ml1', x:400, y:440, name:'Università',
+      sub:'Ingegneria Informatica · Laurea triennale',
+      desc:'Tre anni per costruire fondamenta solide: algoritmi, architetture, intelligenza artificiale. L\'obiettivo è capire la teoria dietro agli strumenti che già uso.',
+      color:'#007AFF' },
+    { id:'m2', lid:'ml2', x:680, y:280, name:'Specializzazione',
+      sub:'Magistrale o Master · AI & Software Engineering',
+      desc:'Approfondire quello che mi appassiona di più: machine learning, sistemi distribuiti e progettazione software a livello professionale.',
+      color:'#5856D6' },
+    { id:'m3', lid:'ml3', x:920, y:170, name:'Esperienza all\'estero',
+      sub:'Stage o primo lavoro internazionale',
+      desc:'Lavorare in un contesto internazionale, confrontarmi con culture e metodi diversi. Crescere come professionista e come persona.',
+      color:'#FF9500' },
+    { id:'m4', lid:'ml4', x:1120, y:100, name:'Carriera',
+      sub:'Costruire qualcosa di mio',
+      desc:'L\'arrivo non è un punto fisso: è la direzione. Voglio contribuire a progetti che contano, o costruire qualcosa di mio partendo da tutto quello che avrò imparato.',
+      color:'#FF3B30' }
   ];
-  var n=stops.length;
+  var n = stops.length;
 
-  // trova la lunghezza lungo il path piu' vicina a (tx,ty): aggancio preciso al tracciato
+  /* ── Aggancio al tracciato SVG ── */
   function lenAt(tx,ty){
-    var best=0,bd=1e18,steps=1000,s,l,p,dx,dy,d;
-    for(s=0;s<=steps;s++){
-      l=L*s/steps;p=route.getPointAtLength(l);dx=p.x-tx;dy=p.y-ty;d=dx*dx+dy*dy;
-      if(d<bd){bd=d;best=l;}
-    }
-    var span=L/steps,r,a,b,m1l,m2l,pa,pb,da,db;
-    for(r=0;r<30;r++){
-      a=Math.max(0,best-span);b=Math.min(L,best+span);
-      m1l=a+(b-a)/3;m2l=b-(b-a)/3;
-      pa=route.getPointAtLength(m1l);pb=route.getPointAtLength(m2l);
-      da=(pa.x-tx)*(pa.x-tx)+(pa.y-ty)*(pa.y-ty);
-      db=(pb.x-tx)*(pb.x-tx)+(pb.y-ty)*(pb.y-ty);
-      if(da<db){best=m1l;}else{best=m2l;}
-      span=(b-a)/3;
-    }
+    var best=0,bd=1e18,st=800,s,l,p,dx,dy,d;
+    for(s=0;s<=st;s++){l=L*s/st;p=route.getPointAtLength(l);dx=p.x-tx;dy=p.y-ty;d=dx*dx+dy*dy;if(d<bd){bd=d;best=l;}}
+    var span=L/st,r,a,b,m1l,m2l,pa,pb,da,db;
+    for(r=0;r<25;r++){a=Math.max(0,best-span);b=Math.min(L,best+span);m1l=a+(b-a)/3;m2l=b-(b-a)/3;pa=route.getPointAtLength(m1l);pb=route.getPointAtLength(m2l);da=(pa.x-tx)*(pa.x-tx)+(pa.y-ty)*(pa.y-ty);db=(pb.x-tx)*(pb.x-tx)+(pb.y-ty)*(pb.y-ty);if(da<db)best=m1l;else best=m2l;span=(b-a)/3;}
     return best;
   }
-  stops.forEach(function(st){st.len=lenAt(st.x,st.y);});
-  // snap dei marker esattamente sul tracciato
-  stops.forEach(function(st){var p=route.getPointAtLength(st.len);st.x=p.x;st.y=p.y;});
+  stops.forEach(function(st){ st.len=lenAt(st.x,st.y); });
+  stops.forEach(function(st){ var p=route.getPointAtLength(st.len); st.x=p.x; st.y=p.y; });
 
-  // pallini di avanzamento (bottom sheet)
-  var dots=[],j,bb;
-  for(j=0;j<n;j++){
-    bb=document.createElement('button');
-    bb.type='button';bb.className='nav-dot';bb.setAttribute('data-i',j);bb.setAttribute('aria-label',stops[j].name);
-    dotsWrap.appendChild(bb);dots.push(bb);
-  }
+  /* ── Stato camera ── */
+  // Overview: mostra tutta la mappa, zoom basso, centrato sul percorso
+  // Detail:   zoom alto centrato su una tappa
+  var OVERVIEW = { x:600, y:350, zoom:1 };
+  var DETAIL_ZOOM = 2.4;
+  var mode = 'overview'; // 'overview' | 'detail'
+  var idx = -1; // -1 = overview, 0..n-1 = detail
 
-  function manSvg(t){
-    if(t==='flag')return '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 29V4"/><path d="M9 5h15l-4 6 4 6H9"/></svg>';
-    return '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 27V8"/><path d="M8 16l8-8 8 8"/></svg>';
-  }
+  var cur = { x:OVERVIEW.x, y:OVERVIEW.y, zoom:OVERVIEW.zoom, len:0 };
+  var tgt = { x:OVERVIEW.x, y:OVERVIEW.y, zoom:OVERVIEW.zoom, len:0 };
 
-  // parametri camera
-  var FX=500,FY=400,BASE=1.5;
-  var idx=0;
-  var cur={len:stops[0].len,zoom:1};
-  var tgt={len:stops[0].len,zoom:1};
+  /* ── Helpers percorso ── */
+  function pointAt(l){ return route.getPointAtLength(Math.max(0,Math.min(L,l))); }
+  function angleAt(l){ var a=pointAt(Math.max(0,l-3)),b=pointAt(Math.min(L,l+3)); return Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI; }
 
-  function pointAt(l){return route.getPointAtLength(Math.max(0,Math.min(L,l)));}
-  function angleAt(l){var a=pointAt(Math.max(0,l-3)),b=pointAt(Math.min(L,l+3));return Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI;}
-
-  function paintUI(){
-    var arrived=(idx===n-1),k,g,s,nx;
-    if(arrived){
-      man.innerHTML=manSvg('flag');
-      kick.textContent='Arrivo';
-      distEl.textContent=stops[n-1].name;
-      instr.textContent='Sei arrivato a destinazione';
-      etaEl.textContent='Arrivato';
-      subEl.textContent='Percorso completato';
-    }else{
-      nx=stops[idx+1];
-      man.innerHTML=manSvg(nx.man);
-      kick.textContent=nx.stage;
-      distEl.textContent=nx.name;
-      instr.textContent='Prosegui lungo il percorso';
-      etaEl.textContent=stops[n-1].name;
-      subEl.textContent='Tappa '+(idx+1)+' di '+n;
-    }
-    for(k=0;k<dots.length;k++){dots[k].className='nav-dot'+(k<idx?' done':'')+(k===idx?' on':'');}
-    for(s=0;s<stops.length;s++){g=document.getElementById(stops[s].id);if(g){g.classList.toggle('on',s===idx);g.classList.toggle('done',s<idx);}}
-  }
-
+  /* ── Render frame ── */
+  var VW=1200, VH=700; // viewBox del SVG
   function applyFrame(){
-    var S=BASE*cur.zoom,inv=1/S,p=pointAt(cur.len),s,g;
-    cam.setAttribute('transform','translate('+(FX-S*p.x).toFixed(2)+' '+(FY-S*p.y).toFixed(2)+') scale('+S.toFixed(4)+')');
+    var S = cur.zoom;
+    var inv = 1/S;
+    // Camera: centra (cur.x, cur.y) nel mezzo del viewport
+    var tx = VW/2 - S*cur.x;
+    var ty = VH/2 - S*cur.y;
+    cam.setAttribute('transform','translate('+tx.toFixed(2)+' '+ty.toFixed(2)+') scale('+S.toFixed(4)+')');
+
+    // Puck
+    var p = pointAt(cur.len);
     puck.setAttribute('transform','translate('+p.x.toFixed(2)+' '+p.y.toFixed(2)+') rotate('+(angleAt(cur.len)+90).toFixed(2)+') scale('+inv.toFixed(4)+')');
-    for(s=0;s<stops.length;s++){g=document.getElementById(stops[s].id);if(g)g.setAttribute('transform','translate('+stops[s].x.toFixed(2)+' '+stops[s].y.toFixed(2)+') scale('+inv.toFixed(4)+')');}
-    done.setAttribute('stroke-dashoffset',(1-cur.len/L).toFixed(5));
+
+    // Marker + labels: contro-scala per dimensione costante
+    var s,g,gl;
+    for(s=0;s<n;s++){
+      g=document.getElementById(stops[s].id);
+      if(g) g.setAttribute('transform','translate('+stops[s].x.toFixed(2)+' '+stops[s].y.toFixed(2)+') scale('+inv.toFixed(4)+')');
+      gl=document.getElementById(stops[s].lid);
+      if(gl) gl.setAttribute('transform','translate('+stops[s].x.toFixed(2)+' '+stops[s].y.toFixed(2)+') scale('+inv.toFixed(4)+')');
+    }
+
+    // ETA bubble: contro-scala
+    if(bubble){
+      var bc = mode==='overview' ? 1 : 0;
+      bubble.style.opacity = bc;
+      bubble.setAttribute('transform','translate(620 420) scale('+inv.toFixed(4)+')');
+    }
+
+    // Percorso fatto (stroke-dashoffset)
+    routeDone.setAttribute('stroke-dashoffset',(1-cur.len/L).toFixed(5));
   }
 
-  var raf=null;
+  /* ── Animazione ── */
+  var raf = null;
+  var LERP = 0.08; // fattore di interpolazione (lento = smooth)
   function frame(){
-    cur.len+=(tgt.len-cur.len)*0.12;
-    cur.zoom+=(tgt.zoom-cur.zoom)*0.12;
-    if(Math.abs(tgt.len-cur.len)<0.35&&Math.abs(tgt.zoom-cur.zoom)<0.0015){cur.len=tgt.len;cur.zoom=tgt.zoom;}
+    cur.x += (tgt.x-cur.x)*LERP;
+    cur.y += (tgt.y-cur.y)*LERP;
+    cur.zoom += (tgt.zoom-cur.zoom)*LERP;
+    cur.len += (tgt.len-cur.len)*LERP;
+
+    var done = Math.abs(tgt.x-cur.x)<0.3 && Math.abs(tgt.y-cur.y)<0.3
+            && Math.abs(tgt.zoom-cur.zoom)<0.001 && Math.abs(tgt.len-cur.len)<0.3;
+    if(done){ cur.x=tgt.x; cur.y=tgt.y; cur.zoom=tgt.zoom; cur.len=tgt.len; }
     applyFrame();
-    if(cur.len!==tgt.len||cur.zoom!==tgt.zoom){raf=requestAnimationFrame(frame);}else{raf=null;}
+    if(!done){ raf=requestAnimationFrame(frame); } else { raf=null; }
   }
-  function animate(){if(!raf)raf=requestAnimationFrame(frame);}
+  function animate(){ if(!raf) raf=requestAnimationFrame(frame); }
 
-  function goTo(i){idx=((i%n)+n)%n;tgt.len=stops[idx].len;paintUI();animate();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
+  /* ── UI: pannello step ── */
+  function paintSteps(){
+    var btns = stepsWrap.querySelectorAll('.nav-step');
+    for(var i=0;i<btns.length;i++){
+      btns[i].classList.toggle('active', i===idx);
+    }
+  }
 
-  svg.addEventListener('click',function(){goTo(idx+1);});
-  dotsWrap.addEventListener('click',function(e){var t=e.target.closest('.nav-dot');if(!t)return;e.stopPropagation();goTo(parseInt(t.getAttribute('data-i'),10));});
-  var zin=document.getElementById('nav-zin'),zout=document.getElementById('nav-zout'),comp=document.getElementById('nav-comp');
-  if(zin)zin.addEventListener('click',function(e){e.stopPropagation();tgt.zoom=Math.min(2.6,tgt.zoom+0.3);animate();});
-  if(zout)zout.addEventListener('click',function(e){e.stopPropagation();tgt.zoom=Math.max(0.8,tgt.zoom-0.3);animate();});
-  if(comp)comp.addEventListener('click',function(e){e.stopPropagation();tgt.zoom=1;animate();});
-  if(endBtn)endBtn.addEventListener('click',function(e){e.stopPropagation();var w=document.getElementById('w-fine');if(typeof closeWin==='function'&&w)closeWin(w);});
+  /* ── UI: markers ── */
+  function paintMarkers(){
+    for(var s=0;s<n;s++){
+      var g=document.getElementById(stops[s].id);
+      if(g){
+        g.classList.toggle('on', s===idx);
+        g.classList.toggle('done', idx>=0 && s<idx);
+      }
+    }
+  }
 
-  // stato iniziale immediato (nessun salto all'apertura)
-  paintUI();
+  /* ── Dettaglio tappa ── */
+  function showDetail(i){
+    if(i<0||i>=n) return;
+    idx = i;
+    mode = 'detail';
+    var st = stops[i];
+
+    // Camera: zoom sul punto
+    tgt.x = st.x;
+    tgt.y = st.y;
+    tgt.zoom = DETAIL_ZOOM;
+    tgt.len = st.len;
+
+    // Card
+    detBadge.textContent = (i+1);
+    detBadge.style.background = st.color;
+    detTitle.textContent = st.name;
+    detSub.textContent = st.sub;
+    detBody.textContent = st.desc;
+
+    // Mostra/nascondi pulsante "Prossima"
+    if(i>=n-1){
+      detNext.textContent = 'Fine ✓';
+      detNext.style.background = '#34C759';
+    } else {
+      detNext.textContent = 'Prossima tappa →';
+      detNext.style.background = '#007AFF';
+    }
+
+    paintSteps();
+    paintMarkers();
+    animate();
+
+    // Delay per far partire lo zoom, poi mostra la card
+    setTimeout(function(){ detail.classList.add('show'); }, 250);
+
+    if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}
+  }
+
+  function showOverview(){
+    idx = -1;
+    mode = 'overview';
+    tgt.x = OVERVIEW.x;
+    tgt.y = OVERVIEW.y;
+    tgt.zoom = OVERVIEW.zoom;
+    tgt.len = 0;
+
+    detail.classList.remove('show');
+    paintSteps();
+    paintMarkers();
+    animate();
+  }
+
+  /* ── Event listeners: pannello step ── */
+  stepsWrap.addEventListener('click', function(e){
+    var btn = e.target.closest('.nav-step');
+    if(!btn) return;
+    e.stopPropagation();
+    var i = parseInt(btn.getAttribute('data-idx'),10);
+    showDetail(i);
+  });
+
+  /* ── "Parti" button ── */
+  if(goBtn) goBtn.addEventListener('click', function(e){
+    e.stopPropagation();
+    showDetail(0);
+  });
+
+  /* ── Detail card buttons ── */
+  if(detBack) detBack.addEventListener('click', function(e){
+    e.stopPropagation();
+    showOverview();
+  });
+  if(detNext) detNext.addEventListener('click', function(e){
+    e.stopPropagation();
+    if(idx>=n-1){
+      // Fine: chiudi la finestra
+      var w=document.getElementById('w-fine');
+      if(typeof closeWin==='function'&&w) closeWin(w);
+      showOverview();
+    } else {
+      detail.classList.remove('show');
+      setTimeout(function(){ showDetail(idx+1); }, 120);
+    }
+  });
+
+  /* ── Chiudi pannello → chiudi la finestra ── */
+  if(panelX) panelX.addEventListener('click', function(e){
+    e.stopPropagation();
+    var w=document.getElementById('w-fine');
+    if(typeof closeWin==='function'&&w) closeWin(w);
+  });
+
+  /* ── Mappa: click su SVG ── */
+  svg.addEventListener('click', function(){
+    if(mode==='overview'){
+      showDetail(0);
+    } else {
+      if(idx<n-1){
+        detail.classList.remove('show');
+        setTimeout(function(){ showDetail(idx+1); }, 120);
+      } else {
+        showOverview();
+      }
+    }
+  });
+
+  /* ── Zoom + Bussola ── */
+  var zin=document.getElementById('nav-zin'), zout=document.getElementById('nav-zout'), comp=document.getElementById('nav-comp');
+  if(zin) zin.addEventListener('click', function(e){ e.stopPropagation(); tgt.zoom=Math.min(3.5, tgt.zoom+0.35); animate(); });
+  if(zout) zout.addEventListener('click', function(e){ e.stopPropagation(); tgt.zoom=Math.max(0.7, tgt.zoom-0.35); animate(); });
+  if(comp) comp.addEventListener('click', function(e){ e.stopPropagation(); showOverview(); });
+
+  /* ── Trasporto mode toggle (decorativo) ── */
+  var tmodes = document.querySelectorAll('#w-fine .nav-tmode');
+  tmodes.forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      tmodes.forEach(function(b){ b.classList.remove('on'); });
+      btn.classList.add('on');
+    });
+  });
+
+  /* ── Stato iniziale: overview ── */
+  showOverview();
   applyFrame();
 })();
 </script>
