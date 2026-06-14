@@ -1,6 +1,13 @@
-/* Suoni di interfaccia della pagina di accesso (Web Audio, in stile macOS). */
+/* ============================================================================
+   audio.js — Motore sonoro condiviso (Web Audio, in stile macOS)
+   ----------------------------------------------------------------------------
+   Usato dalla schermata di blocco (index.php). Genera click leggeri e
+   l'accordo di accesso senza file audio esterni. Il volume è lo stesso
+   regolato dal Centro di Controllo del desktop (localStorage 'cc-vol').
+   ============================================================================ */
 let sndCtx = null, sndBus = null;
 
+/* Crea (una sola volta) il contesto audio con un filtro passa-basso morbido. */
 function sndAudio() {
   if (!sndCtx) {
     sndCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -16,6 +23,7 @@ function sndAudio() {
   return sndCtx;
 }
 
+/* Una nota sinusoidale con inviluppo esponenziale (attacco + rilascio). */
 function sndNote(freq, at, dur, peak) {
   const o = sndCtx.createOscillator();
   const g = sndCtx.createGain();
@@ -29,7 +37,7 @@ function sndNote(freq, at, dur, peak) {
   o.stop(at + dur + 0.04);
 }
 
-/* Stesso volume regolato dal centro di controllo del desktop. */
+/* Volume condiviso col Centro di Controllo del desktop (default 25%). */
 function sndVol() {
   const v = parseFloat(localStorage.getItem('cc-vol') ?? 25);
   return isNaN(v) ? 0.25 : v / 100;
@@ -59,6 +67,7 @@ function sndGo() {
   } catch (e) {}
 }
 
+/* Qualsiasi click su un controllo produce il suono leggero. */
 document.addEventListener('click', e => {
   if (e.target.closest('button, .dots i')) sndClick();
 }, true);

@@ -17,7 +17,8 @@ function appicon(string $file, string $remote): string {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desktop · Maturità 2026</title>
-<link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
+<!-- Design system unico: tutta l'estetica del sito vive qui. -->
+<link rel="stylesheet" href="assets/css/macos.css?v=<?= @filemtime(__DIR__ . '/assets/css/macos.css') ?>">
 <?php if ($boot): ?><link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high"><?php endif; ?>
 </head>
 <body<?= $boot ? ' class="booting"' : '' ?>>
@@ -301,6 +302,10 @@ function appicon(string $file, string $remote): string {
   <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
 </nav>
 
-<script src="hub.js"></script>
+<!-- Logica del desktop, divisa in moduli: window manager + dock + centro di
+     controllo, app Mappe, overlay Spotlight. -->
+<script src="assets/js/desktop.js?v=<?= @filemtime(__DIR__ . '/assets/js/desktop.js') ?>"></script>
+<script src="assets/js/maps.js?v=<?= @filemtime(__DIR__ . '/assets/js/maps.js') ?>"></script>
+<script src="assets/js/spotlight.js?v=<?= @filemtime(__DIR__ . '/assets/js/spotlight.js') ?>"></script>
 </body>
 </html>

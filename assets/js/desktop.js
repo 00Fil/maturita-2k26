@@ -1,3 +1,17 @@
+/* ============================================================================
+   desktop.js — Window manager del desktop (hub.php)
+   ----------------------------------------------------------------------------
+   Gestisce: orologio + timer presentazione, boot loader, finestre (apertura,
+   chiusura, focus, ingrandimento, trascinamento), navigazione, dock con
+   magnificazione e auto-hide, Centro di Controllo (Wi-Fi, AirDrop, copia link,
+   schermo intero, luminosità, volume), motore sonoro, batteria e gestione
+   alimentazione (conferma spegnimento + schermata di commiato).
+
+   Tutto lo stile è dichiarato in assets/css/macos.css: questo file NON inietta
+   più CSS (in passato lo faceva per dock-autohide, dialog e schermata di
+   spegnimento). Crea solo il DOM dinamico e ne gestisce il comportamento.
+   ============================================================================ */
+
 const clockEl = document.getElementById('clock');
 
 /* Timer presentazione: 10 minuti che partono dal Centro di Controllo.
@@ -33,6 +47,10 @@ function avviaTimerPresentazione() {
 tick();
 setInterval(tick, 1000);
 
+/* ----------------------------------------------------------------------------
+   Boot loader: la barra avanza con easing; il logo della scuola ha un fallback
+   vettoriale se l'immagine non si carica.
+   ---------------------------------------------------------------------------- */
 const boot = document.getElementById('boot');
 if (boot) {
   const fill = boot.querySelector('.bbar span');
@@ -76,6 +94,9 @@ if (boot) {
   requestAnimationFrame(frame);
 }
 
+/* ----------------------------------------------------------------------------
+   Finestre: semaforo (chiudi/riduci/ingrandisci), focus, z-index, fit.
+   ---------------------------------------------------------------------------- */
 const SVG_X    = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 2.5l5 5M7.5 2.5l-5 5"/></svg>';
 const SVG_MIN  = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 5h6"/></svg>';
 const SVG_MAX  = '<svg viewBox="0 0 10 10" fill="currentColor"><path d="M2.6 6.6L6.6 2.6H2.6zM7.4 3.4L3.4 7.4h4z"/></svg>';
@@ -140,7 +161,7 @@ function maxiBounds() {
 }
 function setWinBox(win, r, anim) {
   win.style.setProperty('max-height', 'none', 'important');
-  win.style.transition = anim ? ('left .38s ' + MAXI_EASE + ', top .38s ' + MAXI_EASE + ', width .38s ' + MAXI_EASE + ', height .38s ' + MAXI_EASE + ', border-radius .38s ' + MAXI_EASE) : 'none';
+  win.style.transition = anim ? ('left .5s ' + MAXI_EASE + ', top .5s ' + MAXI_EASE + ', width .5s ' + MAXI_EASE + ', height .5s ' + MAXI_EASE + ', border-radius .5s ' + MAXI_EASE) : 'none';
   win.style.setProperty('left', r.left + 'px', 'important');
   win.style.setProperty('top', r.top + 'px', 'important');
   win.style.setProperty('width', r.width + 'px', 'important');
@@ -177,7 +198,7 @@ function toggleMax(win) {
       win.style.removeProperty('border-radius');
     }
     win._mxBusy = false;
-  }, 430);
+  }, 560);
 }
 window.addEventListener('resize', () => {
   document.querySelectorAll('.win.maxi').forEach(w => setWinBox(w, maxiBounds(), false));
@@ -195,14 +216,14 @@ document.addEventListener('click', e => {
   if (t) openWin(t.dataset.open);
 });
 
-const ORDER = ['w-pres', 'w-io', 'w-skills', 'w-fsl', 'w-fine'];
+const ORDER = ['w-pres', 'w-io', 'w-fsl', 'w-skills', 'w-fine'];
 function topChapter() {
   let best = null, z = -1;
   ORDER.forEach(id => {
     const w = document.getElementById(id);
     if (w && w.classList.contains('open') && (+w.style.zIndex || 0) >= z) { z = +w.style.zIndex || 0; best = id; }
   });
-  return best || 'w-pres';
+  return best || ORDER[0];
 }
 document.querySelectorAll('[data-nav]').forEach(b => {
   b.addEventListener('click', () => {
@@ -212,6 +233,7 @@ document.querySelectorAll('[data-nav]').forEach(b => {
   });
 });
 
+/* Finder: segmented control galleria/elenco. */
 const fgrid = document.querySelector('.fgrid');
 document.querySelectorAll('.fseg button').forEach(b => {
   b.addEventListener('click', () => {
@@ -220,6 +242,7 @@ document.querySelectorAll('.fseg button').forEach(b => {
   });
 });
 
+/* Finder: i tag della sidebar evidenziano momentaneamente i capitoli. */
 let hlTimer = null;
 document.querySelectorAll('.sidebar [data-tag]').forEach(b => {
   b.addEventListener('click', () => {
@@ -233,6 +256,9 @@ document.querySelectorAll('.sidebar [data-tag]').forEach(b => {
   });
 });
 
+/* ----------------------------------------------------------------------------
+   Dock: magnificazione che segue il puntatore (molla con interpolazione).
+   ---------------------------------------------------------------------------- */
 const dock = document.getElementById('dock');
 const dockIcons = Array.from(dock.querySelectorAll('.dapp .ai'));
 const DOCK_GROW = 0.8;
@@ -270,13 +296,7 @@ dock.addEventListener('pointerleave', () => {
   wakeDock();
 });
 
-// Auto-hide del dock in stile macOS: resta nascosto e riappare avvicinandosi al bordo inferiore.
-const dockCss = document.createElement('style');
-dockCss.textContent =
-  '.dock{transition:bottom .42s cubic-bezier(.32,.72,0,1),opacity .42s ease}' +
-  '.dock.autohide{bottom:-82px;opacity:0;pointer-events:none}';
-document.head.appendChild(dockCss);
-
+/* Auto-hide del dock (lo stile .dock/.dock.autohide vive in macos.css). */
 let dockHot = false;
 let dockGrace = 0;
 function dockShow() { dock.classList.remove('autohide'); }
@@ -301,6 +321,7 @@ dock.querySelectorAll('.dapp').forEach(d => {
   });
 });
 
+/* Riflesso "liquid glass" che segue il puntatore sulle card. */
 document.addEventListener('pointermove', e => {
   const card = e.target.closest('.lgcard');
   if (!card) return;
@@ -309,18 +330,9 @@ document.addEventListener('pointermove', e => {
   card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
 });
 
-document.querySelectorAll('.favcard[data-say]').forEach(card => {
-  const frasi = card.dataset.say.split('|').filter(Boolean);
-  const bubble = card.querySelector('.favsay');
-  if (!bubble || frasi.length === 0) return;
-  let i = Math.floor(Math.random() * frasi.length);
-  bubble.textContent = frasi[i];
-  card.addEventListener('mouseenter', () => {
-    bubble.textContent = frasi[i % frasi.length];
-    i += 1;
-  });
-});
-
+/* ----------------------------------------------------------------------------
+   Trascinamento delle finestre dalla titlebar.
+   ---------------------------------------------------------------------------- */
 document.querySelectorAll('.win').forEach(win => {
   const tb = win.querySelector('.titlebar');
   let drag = false, sx = 0, sy = 0, ox = 0, oy = 0, ow = 0, oh = 0;
@@ -352,6 +364,9 @@ syncDock();
 const first = document.querySelector('.win.open');
 if (first) { focusWin(first); fitWin(first); }
 
+/* ----------------------------------------------------------------------------
+   Centro di Controllo.
+   ---------------------------------------------------------------------------- */
 const ccBtn = document.getElementById('ccbtn');
 const ccPanel = document.getElementById('ccpanel');
 function ccClose() { ccPanel.classList.remove('show'); ccBtn.classList.remove('on'); }
@@ -432,6 +447,9 @@ rangeFill(volInput);
 volInput.addEventListener('input', () => { rangeFill(volInput); localStorage.setItem('cc-vol', volInput.value); sndTick(); });
 volInput.addEventListener('change', () => { tickAt = 0; sndTick(); });
 
+/* ----------------------------------------------------------------------------
+   Motore sonoro (Web Audio): apertura, chiusura, tick, click, avvio, uscita.
+   ---------------------------------------------------------------------------- */
 let actx = null, sndBus = null, tickAt = 0;
 function audio() {
   if (!actx) {
@@ -527,6 +545,7 @@ function sndExit() {
   } catch (e) {}
 }
 
+/* Batteria reale del dispositivo, se disponibile. */
 const bpct = document.getElementById('bpct');
 if (navigator.getBattery) {
   navigator.getBattery().then(b => {
@@ -539,53 +558,18 @@ if (navigator.getBattery) {
   bpct.remove();
 }
 
+/* Suono leggero a ogni click su un controllo. */
 document.addEventListener('click', e => {
   const el = e.target.closest('button, a');
   if (!el || el.closest('.lights')) return;
   sndClick();
 }, true);
 
-/* Gestione alimentazione in stile macOS: conferma di spegnimento,
-   dissolvenza dello schermo e schermata di commiato scritta a mano. */
-const pwrCss = document.createElement('style');
-pwrCss.textContent =
-  '#pwrdlg{position:fixed;inset:0;z-index:7000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .22s ease}' +
-  '#pwrdlg.show{opacity:1;pointer-events:auto}' +
-  '#pwrdlg .box{width:264px;background:rgba(244,244,247,.86);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border-radius:14px;border:1px solid rgba(255,255,255,.55);box-shadow:0 24px 64px rgba(0,0,0,.4);padding:20px 18px 16px;text-align:center;transform:scale(.9);transition:transform .26s cubic-bezier(.2,1.45,.45,1)}' +
-  '#pwrdlg.show .box{transform:scale(1)}' +
-  '#pwrdlg .pico{width:42px;height:42px;margin:0 auto 10px;color:#48484e}' +
-  '#pwrdlg .pico svg{width:100%;height:100%}' +
-  '#pwrdlg h3{font-size:13px;font-weight:700;color:#1d1d1f;margin:0 0 5px;letter-spacing:-.01em}' +
-  '#pwrdlg p{font-size:11px;font-weight:500;color:rgba(60,60,67,.72);line-height:1.45;margin:0 0 14px}' +
-  '#pwrdlg .row{display:flex;gap:8px}' +
-  '#pwrdlg .row button{flex:1;height:30px;border:none;border-radius:8px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:transform .15s ease,filter .15s ease}' +
-  '#pwrdlg .row button:hover{filter:brightness(1.04)}' +
-  '#pwrdlg .row button:active{transform:scale(.96)}' +
-  '#pwr-no{background:rgba(255,255,255,.92);color:#1d1d1f;box-shadow:0 1px 2px rgba(0,0,0,.12)}' +
-  '#pwr-si{background:#0a84ff;color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.18)}' +
-  '#shut{position:fixed;inset:0;z-index:8000;background:#000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 1.2s cubic-bezier(.4,0,.2,1)}' +
-  '#shut.on{opacity:1;pointer-events:auto}' +
-  '#shut .gwrap{display:flex;flex-direction:column;align-items:center;gap:28px;transition:opacity 1.1s cubic-bezier(.4,0,.2,1),filter 1.1s cubic-bezier(.4,0,.2,1)}' +
-  '#shut .gtx{font-size:clamp(56px,11vw,116px);font-weight:600;letter-spacing:-.015em;line-height:1;background:linear-gradient(100deg,#fff 0%,#fff 38%,#a8c4ff 46%,#e0bbff 50%,#ffb8d6 54%,#fff 62%,#fff 100%);background-size:240% 100%;background-position:120% 0;-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;transform:scale(.96);filter:blur(14px);transition:opacity 1.8s cubic-bezier(.25,.1,.25,1),transform 2.8s cubic-bezier(.25,.1,.25,1),filter 1.8s cubic-bezier(.25,.1,.25,1)}' +
-  '#shut.draw .gtx{opacity:1;transform:scale(1);filter:blur(0);animation:gsheen 5.5s cubic-bezier(.4,0,.2,1) 1.8s infinite}' +
-  '#shut .gsub{font-size:15px;font-weight:500;letter-spacing:.01em;color:#86868b;opacity:0;transform:translateY(10px);transition:opacity 1.3s cubic-bezier(.16,1,.3,1),transform 1.3s cubic-bezier(.16,1,.3,1)}' +
-  '#shut.draw .gsub{opacity:1;transform:none;transition-delay:1.4s}' +
-  '#shut .gspin{position:relative;width:30px;height:30px;opacity:0;transition:opacity 1s cubic-bezier(.4,0,.2,1)}' +
-  '#shut.draw .gspin{opacity:1;transition-delay:2.4s}' +
-  '#shut .gspin i{position:absolute;left:50%;top:50%;width:3px;height:9px;margin:-15px 0 0 -1.5px;border-radius:1.5px;background:#fff;transform-origin:1.5px 15px;animation:gspin .9s linear infinite}' +
-  '#shut .gspin i:nth-child(1){transform:rotate(0deg);animation-delay:-.7875s}' +
-  '#shut .gspin i:nth-child(2){transform:rotate(45deg);animation-delay:-.675s}' +
-  '#shut .gspin i:nth-child(3){transform:rotate(90deg);animation-delay:-.5625s}' +
-  '#shut .gspin i:nth-child(4){transform:rotate(135deg);animation-delay:-.45s}' +
-  '#shut .gspin i:nth-child(5){transform:rotate(180deg);animation-delay:-.3375s}' +
-  '#shut .gspin i:nth-child(6){transform:rotate(225deg);animation-delay:-.225s}' +
-  '#shut .gspin i:nth-child(7){transform:rotate(270deg);animation-delay:-.1125s}' +
-  '#shut .gspin i:nth-child(8){transform:rotate(315deg);animation-delay:0s}' +
-  '#shut.end .gwrap{opacity:0;filter:blur(10px)}' +
-  '@keyframes gspin{0%{opacity:1}100%{opacity:.12}}' +
-  '@keyframes gsheen{0%{background-position:120% 0}60%{background-position:-80% 0}100%{background-position:-80% 0}}';
-document.head.appendChild(pwrCss);
-
+/* ----------------------------------------------------------------------------
+   Gestione alimentazione: conferma di spegnimento, dissolvenza dello schermo
+   e schermata di commiato. Gli stili di #pwrdlg e #shut vivono in macos.css;
+   qui creiamo solo il DOM e il comportamento.
+   ---------------------------------------------------------------------------- */
 const pwrDlg = document.createElement('div');
 pwrDlg.id = 'pwrdlg';
 pwrDlg.innerHTML =
@@ -661,95 +645,3 @@ if (rebBtn) {
     pwrAsk('Vuoi riavviare il computer adesso?', 'Il desktop ripartir\u00e0 dalla schermata di avvio.', 'Riavvia', riavvia);
   });
 }
-
-/* ============================================================
-   Moduli UI specifici del desktop: Spotlight + Mappe
-   Spostati qui per mantenere hub.php pulito e lasciare un solo punto
-   JavaScript per il comportamento delle applicazioni.
-   ============================================================ */
-(function(){
-  var spot=document.getElementById('spot');
-  if(!spot)return;
-  var box=spot.querySelector('.spot-box');
-  var type=spot.querySelector('.spot-type');
-  var TEXT='Le parole non sono mai neutre';
-  var timer=null;
-  function openSpot(){
-    if(spot.classList.contains('on'))return;
-    spot.classList.add('on');
-    spot.setAttribute('aria-hidden','false');
-    if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}
-    type.textContent='';
-    var i=0;
-    clearInterval(timer);
-    timer=setInterval(function(){
-      type.textContent=TEXT.slice(0,++i);
-      if(i>=TEXT.length)clearInterval(timer);
-    },48);
-  }
-  function closeSpot(){
-    if(!spot.classList.contains('on'))return;
-    spot.classList.remove('on');
-    spot.setAttribute('aria-hidden','true');
-    clearInterval(timer);
-    if(typeof sndClose==='function'){try{sndClose();}catch(e){}}
-  }
-  document.addEventListener('click',function(e){
-    var t=e.target.closest('[data-spot]');
-    if(t){e.preventDefault();openSpot();return;}
-    if(spot.classList.contains('on')&&!box.contains(e.target))closeSpot();
-  });
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSpot();});
-})();
-
-(function(){
-  var map=document.getElementById('mv-map');
-  var cam=document.getElementById('mv-cam');
-  var puck=document.getElementById('mv-puck');
-  var trav=document.getElementById('mv-trav');
-  if(!map||!cam||!puck)return;
-  var stops=[
-    {x:170,y:520,p:0,m:'m0',name:'Maturità al Cerebotani',kind:'Partenza',kk:'Partenza',body:'È il punto di partenza. In cinque anni al Cerebotani ho imparato a programmare e a risolvere i problemi con metodo. Da qui parte la strada che ho in mente per il dopo.'},
-    {x:390,y:430,p:0.30,m:'m1',name:'PCTO · CS Metal Europe',kind:'Sosta',kk:'Sosta lungo la strada',body:'Una sosta lungo il tragitto, come il rifornimento prima di un viaggio lungo. In azienda ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. Qui ho capito quale direzione voglio prendere.'},
-    {x:610,y:300,p:0.63,m:'m2',name:'Università · Informatica',kind:'Tappa',kk:'La prossima tappa',body:'Voglio continuare a studiare informatica. Mi serve per costruire software con basi più solide e arrivare preparato al lavoro.'},
-    {x:850,y:150,p:1,m:'m3',name:'Lavorare all\'estero',kind:'Arrivo',kk:'La meta del viaggio',body:'La meta del viaggio. Voglio portare quello che ho imparato fuori dall\'Italia e lavorare nel software in un contesto internazionale.'}
-  ];
-  var list=document.getElementById('nv-list'),elKk=document.getElementById('nv-kk'),elBody=document.getElementById('nv-body'),elStep=document.getElementById('nv-step'),elEta=document.getElementById('nv-eta'),elHint=document.getElementById('nv-hint');
-  var i=0,n=stops.length,j;
-  for(j=0;j<n;j++){
-    var s=stops[j];
-    var col=j===0?'#34C759':(j===n-1?'#FF3B30':'#8E8E93');
-    var ct=(j===0||j===n-1)?'':String(j);
-    var b=document.createElement('button');
-    b.className='dir-row';b.setAttribute('data-i',j);
-    b.innerHTML='<span class="dir-pin" style="--c:'+col+'">'+ct+'</span><span class="dir-txt"><b>'+s.name+'</b><small>'+s.kind+'</small></span>';
-    list.appendChild(b);
-  }
-  var sc=1.16,zoom=1,VW=1000,VH=640,TX=600,TY=320,minX=-300,maxX=1300,minY=-260,maxY=900;
-  function render(){
-    var s=stops[i],k,e=sc*zoom;
-    puck.setAttribute('transform','translate('+s.x+' '+s.y+')');
-    trav.setAttribute('stroke-dashoffset',(1-s.p).toFixed(4));
-    var dx=TX-e*s.x, dy=TY-e*s.y;
-    dx=Math.max(VW-e*maxX,Math.min(-e*minX,dx));
-    dy=Math.max(VH-e*maxY,Math.min(-e*minY,dy));
-    cam.setAttribute('transform','translate('+dx.toFixed(1)+' '+dy.toFixed(1)+') scale('+e.toFixed(3)+')');
-    elKk.textContent=s.kk;elBody.textContent=s.body;
-    elStep.textContent=(i+1)+'/'+n;
-    elEta.textContent=(i===n-1)?'sei arrivato':'prossima: '+stops[i+1].kind.toLowerCase();
-    elHint.textContent=(i===n-1)?'Tocca per ricominciare':'Tocca la mappa per proseguire';
-    var mks=cam.querySelectorAll('.mk');for(k=0;k<mks.length;k++)mks[k].classList.remove('on');
-    var cur=document.getElementById(s.m);if(cur)cur.classList.add('on');
-    var rows=list.children;for(k=0;k<rows.length;k++)rows[k].className='dir-row'+(k===i?' on':'');
-  }
-  function go(ni){i=((ni%n)+n)%n;render();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
-  map.addEventListener('click',function(){go(i+1);});
-  list.addEventListener('click',function(e){var t=e.target.closest('.dir-row');if(!t)return;go(parseInt(t.getAttribute('data-i'),10));});
-  var zin=document.getElementById('mv-zin'),zout=document.getElementById('mv-zout'),comp=document.getElementById('mv-comp');
-  if(zin)zin.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.min(1.5,zoom+0.18);render();});
-  if(zout)zout.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.max(0.8,zoom-0.18);render();});
-  if(comp)comp.addEventListener('click',function(ev){ev.stopPropagation();zoom=1;render();});
-  var x=document.querySelector('#w-fine .dir-x');
-  if(x)x.addEventListener('click',function(ev){ev.stopPropagation();if(typeof closeWin==='function')closeWin(document.getElementById('w-fine'));});
-  render();
-})();

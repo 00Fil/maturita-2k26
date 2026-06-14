@@ -1,13 +1,19 @@
-/* ============================================================
-   login.js — comportamento della lock screen macOS
-   - orologio live
-   - input password / feedback
-   - chiamata fetch a login.php
-   - demo tecnica opzionale con ?demo=1
-   ============================================================ */
-/* ============================================================
-   OROLOGIO LIVE (stile macOS, locale italiano)
-   ============================================================ */
+/* ============================================================================
+   lock.js — Logica della schermata di blocco (index.php)
+   ----------------------------------------------------------------------------
+   Orologio live, gestione del campo password, invio al backend (login.php),
+   transizione di sblocco verso il desktop e il pannello "Dietro le quinte"
+   (modalità ?demo=1). Lo stile vive interamente in assets/css/macos.css.
+   Contratto backend invariato: POST nome + codice → login.php → hub.php.
+   ============================================================================ */
+
+/* Durata della dissolvenza di sblocco: deve combaciare con le transizioni CSS
+   di .scene/.wp-video/.lock. Breve e pulita (niente effetto "lento"). */
+const UNLOCK_MS = 430;
+
+/* ----------------------------------------------------------------------------
+   1. Orologio live (stile macOS, locale italiano)
+   ---------------------------------------------------------------------------- */
 const dateEl = document.getElementById('date');
 const timeEl = document.getElementById('time');
 function tickClock() {
@@ -19,9 +25,9 @@ function tickClock() {
 tickClock();
 setInterval(tickClock, 5000);
 
-/* ============================================================
-   RIFERIMENTI
-   ============================================================ */
+/* ----------------------------------------------------------------------------
+   2. Riferimenti agli elementi
+   ---------------------------------------------------------------------------- */
 const NOME_UTENTE = 'Filippo Corsini';
 const lock      = document.getElementById('lock');
 const form      = document.getElementById('form');
@@ -35,7 +41,7 @@ const demoEnter = document.getElementById('demoEnter');
 const CAPTION_DEFAULT = 'Inserisci la password per accedere';
 let submitted = false;
 
-/* foto profilo: se manca, mostra le iniziali “FC” */
+/* Foto profilo: se manca, mostra le iniziali “FC”. */
 const avatar    = document.getElementById('avatar');
 const avatarImg = document.getElementById('avatarImg');
 avatarImg.addEventListener('error', () => { avatar.classList.add('no-photo'); });
@@ -45,17 +51,18 @@ function setCaption(text, isError) {
   caption.classList.toggle('error', !!isError);
 }
 
-/* la freccia compare solo con del testo */
+/* La freccia di invio compare solo quando c'è del testo. */
 codeInput.addEventListener('input', () => {
   pwd.classList.toggle('has-text', codeInput.value.length > 0);
   if (caption.classList.contains('error')) setCaption(CAPTION_DEFAULT, false);
 });
 
-/* “?” → suggerimento gentile (mai il codice in chiaro) */
+/* “?” → suggerimento gentile (mai il codice in chiaro). */
 hintBtn.addEventListener('click', () => {
   setCaption("Usa il codice d'accesso del PCTO.", false);
 });
 
+/* Errore: shake del campo + svuotamento. */
 function shakeError(messaggio) {
   pwd.classList.remove('shake');
   void pwd.offsetWidth;
@@ -65,9 +72,15 @@ function shakeError(messaggio) {
   pwd.classList.remove('has-text');
 }
 
-/* ============================================================
-   INVIO — chiama il backend PHP (login.php). Contratto invariato.
-   ============================================================ */
+/* Avvia la transizione di sblocco e naviga al desktop. */
+function apriDesktop() {
+  document.body.classList.add('unlock');
+  setTimeout(() => window.location.replace('hub.php'), UNLOCK_MS);
+}
+
+/* ----------------------------------------------------------------------------
+   3. Invio — chiama il backend PHP (login.php). Contratto invariato.
+   ---------------------------------------------------------------------------- */
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   if (submitted) return;
@@ -93,20 +106,19 @@ form.addEventListener('submit', async (e) => {
       return;
     }
 
-    /* accesso riuscito */
+    /* Accesso riuscito */
     submitted = true;
     sndGo();
     const pretty = NOME_UTENTE.split(/\s+/)[0];
 
     if (demoMode) {
-      /* in demo si resta sulla pagina per spiegare i passaggi col controllerino */
+      /* In demo si resta sulla pagina per spiegare i passaggi col controllerino. */
       setCaption('Accesso riuscito, ' + pretty + ' · i passaggi sono qui sotto.', false);
       goBtn.disabled = false;
       demoEnter.hidden = false;
     } else {
       setCaption('Accesso riuscito · apro il desktop…', false);
-      document.body.classList.add('unlock');
-      setTimeout(() => window.location.replace('hub.php'), 430);
+      apriDesktop();
     }
   } catch (err) {
     if (demoMode) avviaDemo([
@@ -118,22 +130,19 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-demoEnter.addEventListener('click', () => {
-  document.body.classList.add('unlock');
-  setTimeout(() => window.location.replace('hub.php'), 430);
-});
+demoEnter.addEventListener('click', apriDesktop);
 
-/* ============================================================
-   PRELOADER — la barra si completa sugli asset locali (font +
-   immagini). Il video è best-effort: ha un tetto massimo e NON
-   può mai bloccare il caricamento. Sblocco garantito entro 5s.
-   ============================================================ */
+/* ----------------------------------------------------------------------------
+   4. Preloader — la barra si completa sugli asset locali (font + immagini).
+   Il video è best-effort: ha un tetto massimo e NON può mai bloccare il
+   caricamento. Sblocco garantito entro 5s.
+   ---------------------------------------------------------------------------- */
 (function preload() {
   const boot  = document.getElementById('boot');
   const fill  = document.getElementById('bbarFill');
   const video = document.getElementById('bgVideo');
 
-  // asset che bloccano davvero: font + immagini locali (rapidi)
+  /* Asset che bloccano davvero: font + immagini locali (rapidi). */
   const tasks = [];
   tasks.push(
     document.fonts && document.fonts.ready
@@ -148,9 +157,7 @@ demoEnter.addEventListener('click', () => {
     }));
   });
 
-  // video di sfondo: best-effort con tetto massimo (max 3s).
-  // NB: con un <source> che fallisce, l'evento 'error' arriva sul <source>,
-  // non sul <video> — per questo ascolto entrambi + timeout di sicurezza.
+  /* Video di sfondo: best-effort con tetto massimo (max 3s). */
   tasks.push(new Promise((res) => {
     if (!video) return res();
     let done = false;
@@ -165,7 +172,7 @@ demoEnter.addEventListener('click', () => {
     try { video.load(); } catch (e) {}
   }));
 
-  // avanzamento barra a ogni asset pronto
+  /* Avanzamento barra a ogni asset pronto. */
   const totale = tasks.length;
   let fatti = 0;
   tasks.forEach((t) => t.then(() => {
@@ -173,7 +180,7 @@ demoEnter.addEventListener('click', () => {
     fill.style.width = Math.round((fatti / totale) * 100) + '%';
   }));
 
-  // completamento (eseguito una sola volta)
+  /* Completamento (eseguito una sola volta). */
   let finito = false;
   function completa() {
     if (finito) return;
@@ -187,17 +194,16 @@ demoEnter.addEventListener('click', () => {
     }, 260);
   }
 
-  // tempo minimo per un'animazione elegante, poi completa appena pronti
+  /* Tempo minimo per un'animazione elegante, poi completa appena pronti. */
   const minimo = new Promise((res) => setTimeout(res, 650));
   Promise.all([Promise.all(tasks), minimo]).then(completa).catch(completa);
-  // rete di sicurezza dura: il sito si sblocca comunque entro 5s
+  /* Rete di sicurezza dura: il sito si sblocca comunque entro 5s. */
   setTimeout(completa, 5000);
 })();
 
-/* ============================================================
-   DEMO — visualizzazione schematica dei passaggi del backend
-   Attivazione SOLO con ?demo=1 nell'URL (nessun tasto visibile)
-   ============================================================ */
+/* ----------------------------------------------------------------------------
+   5. Demo (?demo=1) — visualizzazione schematica dei passaggi del backend.
+   ---------------------------------------------------------------------------- */
 const demoMode = new URLSearchParams(location.search).get('demo') === '1';
 if (demoMode) document.body.classList.add('demo');
 
@@ -224,6 +230,7 @@ let passi = [];
 let idx = -1;
 let timer = null;
 
+/* Determina quale tratto del diagramma evidenziare per ogni passo. */
 function zonaDi(p) {
   const t = (p.titolo || '').toLowerCase();
   if (t.includes('browser invia')) return 'cs';

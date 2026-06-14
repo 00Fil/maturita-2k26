@@ -1,33 +1,47 @@
 # PCTO · Maturità 2026
 
 Sito di presentazione del percorso PCTO per l'esame di Maturità.
-Login animato (morph button) → backend PHP minimale → MySQL → desktop in stile macOS con la presentazione.
+Login in stile macOS → backend PHP minimale → MySQL → desktop in stile macOS con la presentazione.
 
 ## Struttura
 
-| File | Cosa fa |
-|---|---|
-| `index.php` | La pagina con il tasto morph e il form di accesso |
-| `login.php` | Backend: verifica il codice e registra l'accesso su MySQL |
-| `hub.php` | Il desktop in stile macOS: la presentazione in 6 capitoli, protetta dalla sessione |
-| `macos.css` | Design system unico: token, vetro, finestre, dock, login, app e responsive |
-| `hub.js` / `login.js` / `sound.js` | Interazioni desktop, lock screen e micro-suoni |
-| `logout.php` | Chiude la sessione e torna al login |
-| `setup.sql` | Crea il database `pcto` e la tabella `accessi` |
-| `Dockerfile` | Immagine PHP 8.3 + Apache con `pdo_mysql` |
-| `docker-compose.yml` | Stack completo: app + MySQL 8.4 (con init automatico) |
+La repo è organizzata per separare nettamente **backend** (i `.php` nella root),
+**design system** (un unico file CSS) e **logica** (moduli JS), così da essere
+modulare e facile da mantenere.
 
-## Design system macOS
+```
+.
+├── index.php            # Schermata di blocco (lock screen)
+├── login.php            # Backend di accesso: verifica codice + log su MySQL
+├── hub.php              # Desktop in stile macOS (protetto dalla sessione)
+├── logout.php           # Chiude la sessione e torna al lock
+├── setup.sql            # Crea il database `pcto` e la tabella `accessi`
+├── Dockerfile           # Immagine PHP 8.3 + Apache con pdo_mysql
+├── docker-compose.yml   # Stack completo: app + MySQL 8.4
+└── assets/
+    ├── css/
+    │   └── macos.css     # ⭐ DESIGN SYSTEM UNICO — l'unico file di stile
+    ├── js/
+    │   ├── audio.js      # Motore sonoro della lock screen (Web Audio)
+    │   ├── lock.js       # Logica della lock screen (orologio, password, sblocco, demo)
+    │   ├── desktop.js    # Window manager: finestre, dock, centro di controllo, audio, power
+    │   ├── maps.js       # App "Mappe" (finestra Dove voglio andare)
+    │   └── spotlight.js  # Overlay Spotlight (frase di chiusura)
+    ├── bg.png · lock.mp4 · profile.jpg · iisc-logo.png
+    ├── fonts/            # SF Pro Display (.otf)
+    ├── icons/ · icons-b64/
+    └── cursors/
+```
 
-Il progetto ora usa **un solo file CSS**, `macos.css`. Dentro ci sono:
+### Design system (`assets/css/macos.css`)
 
-- token globali: font SF Pro, colori, accenti, ombre, hairline, raggi e curve di easing;
-- componenti base: menubar, dock, finestre, semafori, Centro di Controllo, card glass;
-- lock screen: input password meno bianco/trasparente, blur più materico e transizione più rapida verso il desktop;
-- contenuti delle app: scheda personale, agenda PCTO, Launchpad e Mappe hanno layout e identità coerenti;
-- responsive e accessibilità: focus ring, reduced motion e fallback dark mode.
-
-I vecchi fogli `hub.css` e `hub-polish.css` sono stati consolidati in `macos.css` e non vengono più caricati.
+Un **unico file CSS** racchiude tutta l'estetica: token (colori d'accento,
+tipografia SF Pro, raggi, sfocature, curve di animazione), barra dei menu,
+finestre con semaforo e angoli, dock con magnificazione e auto-hide, Centro di
+Controllo, lock screen e lo stile dedicato di ogni app. Le applicazioni si
+differenziano solo per la classe d'accento (`.a-blue`, `.a-orange`, `.a-green`,
+`.a-indigo`, …) applicata alla finestra. Include modalità scura, layout
+responsive e rispetto di `prefers-reduced-motion`.
 
 ## Variabili d'ambiente
 
@@ -69,8 +83,7 @@ Se la modalità demo è spenta, il backend non calcola né invia nessun passaggi
 ## Il desktop (hub.php)
 
 Dopo il login si arriva su un desktop in stile macOS — stessa estetica della pagina di
-accesso, governata da `macos.css`: superfici glass, bordi hairline, raggi coerenti,
-motion Apple-like e un colore accento per ogni app.
+accesso (superfici neutre, bordi hairline) con un colore accento per ogni app.
 La finestra "Scaletta" si apre da sola e guida i 10 minuti di esposizione in 6 capitoli:
 
 1. **Da dove parto** — il filo conduttore personale (1')
