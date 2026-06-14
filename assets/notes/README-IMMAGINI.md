@@ -5,9 +5,7 @@ Usa esattamente questi nomi file:
 
 - `curriculum-cover.png` — copertina/immagine del Curriculum dello studente
 - `pcto-cs-metal.png` — foto sede o riferimento CS Metal Europe
-- `gpoi-gestionale.png` — immagine/screenshot del gestionale oratorio / GPOI
-- `sportly.png` — immagine progetto Sportly
-- `musa-ultimo-inverno.png` — locandina/foto mostra “L’ultimo inverno” al MuSa
+- `sportly.png` — immagine progetto Sportly / GPOI
 - `violoncello.png` — foto del corso di violoncello
 - `animatore-educatore.png` — foto ragazzi / attività animatore ed educatore
 - `volontariato-festa-sorriso.png` — foto Festa del Sorriso / Tornei dei Roncai

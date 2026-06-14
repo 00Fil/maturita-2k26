@@ -144,7 +144,7 @@ function appicon(string $file, string $remote): string {
       </button>
       <button class="nr-folder" data-filter="projects" type="button">
         <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M8 8h8v8H8z"/><path d="M4 4h5v5H4zM15 4h5v5h-5zM4 15h5v5H4zM15 15h5v5h-5z"/></svg></span>
-        <b>Progetti</b>
+        <b>Sportly</b>
       </button>
       <button class="nr-folder" data-filter="extra" type="button">
         <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M12 4v16M5 9h14M7 15h10"/><path d="M6 20h12"/></svg></span>

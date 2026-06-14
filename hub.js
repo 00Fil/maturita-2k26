@@ -775,22 +775,10 @@ if (rebBtn) {
       chips:['CS METAL EUROPE S.R.L.','Ambiente lavorativo','Scuola-lavoro']
     },
     {
-      id:'gestionale', filter:'projects', tags:['oratorio'], title:'Gestionale oratorio', meta:'Progetto informatico', label:'Attività professionale',
-      image:'assets/notes/gpoi-gestionale.png', kind:'polaroid gpoi', caption:'Gestionale oratorio', link:'https://gpoi.denuvo.studio', linkLabel:'Apri progetto GPOI',
-      body:['Realizzazione di uno pseudo-gestionale per l’Oratorio di Bedizzole e Calvagese.', 'L’attività consiste nell’applicare competenze informatiche scolastiche a un bisogno concreto dell’oratorio, integrandole con approfondimenti individuali.'],
-      chips:['Bedizzole','Oratorio','Progetto informatico']
-    },
-    {
       id:'sportly', filter:'projects', tags:['oratorio'], title:'Sportly', meta:'Book. Play. Connect.', label:'Concept digitale',
-      image:'assets/notes/sportly.png', kind:'polaroid wide', caption:'Identità progetto',
+      image:'assets/notes/sportly.png', kind:'polaroid wide', caption:'Identità progetto', link:'https://gpoi.denuvo.studio', linkLabel:'Apri progetto GPOI',
       body:['Concept visivo e digitale collegato al mondo dello sport e della prenotazione.', 'La nota resta breve: un supporto creativo per mostrare attenzione a identità, interfaccia e presentazione del progetto.'],
       chips:['Book','Play','Connect']
-    },
-    {
-      id:'musa', filter:'culture', tags:['arte'], title:'MuSa di Salò', meta:'Mostra', label:'Attività culturale',
-      image:'assets/notes/musa-ultimo-inverno.png', kind:'polaroid musa', caption:'“L’ultimo inverno”',
-      body:['Visita della mostra temporanea presso il MuSa di Salò, accompagnata dalla professoressa Alessia Bosio.', 'L’attività è culturale e artistica: osservazione diretta di una mostra, fuori dall’orario scolastico, come esperienza di contatto con linguaggi visivi e memoria storica.'],
-      chips:['MuSa di Salò','Mostra temporanea','L’ultimo inverno']
     },
     {
       id:'cello', filter:'extra', tags:['arte'], title:'Violoncello', meta:'Musica', label:'Attività musicale',
