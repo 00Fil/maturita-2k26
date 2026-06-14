@@ -764,19 +764,19 @@ if (rebBtn) {
   const notes=[
     {
       id:'curriculum', filter:'curriculum', tags:['scuola'], title:'Curriculum', meta:'Documento', label:'Percorso personale',
-      image:'assets/notes/curriculum-page-1.png', kind:'polaroid', caption:'Curriculum dello studente',
+      image:'assets/notes/curriculum-cover.png', kind:'polaroid', caption:'Curriculum dello studente',
       body:['Documento sintetico del percorso scolastico e delle attività svolte fuori dall’aula.', 'Raccoglie formazione, PCTO, competenze di indirizzo e attività extrascolastiche senza trasformarle in racconto celebrativo.'],
       chips:['Tecnico - Informatica','ITIS “Cerebotani” - Lonato','In lavorazione']
     },
     {
       id:'pcto', filter:'pcto', tags:['scuola'], title:'CS Metal Europe', meta:'PCTO', label:'Formazione scuola-lavoro',
-      kind:'postit', caption:'Ambiente lavorativo',
+      image:'assets/notes/pcto-cs-metal.png', kind:'polaroid pcto', caption:'CS Metal Europe',
       body:['Esperienza svolta presso CS METAL EUROPE S.R.L. come attività realizzata in ambiente lavorativo.', 'Il valore della nota è preciso: scuola e azienda entrano in contatto, e le competenze tecniche vengono osservate nel contesto reale di una struttura produttiva.'],
       chips:['CS METAL EUROPE S.R.L.','Ambiente lavorativo','Scuola-lavoro']
     },
     {
       id:'gestionale', filter:'projects', tags:['oratorio'], title:'Gestionale oratorio', meta:'Progetto informatico', label:'Attività professionale',
-      kind:'postit-code', caption:'Progetto per l’oratorio',
+      image:'assets/notes/gpoi-gestionale.png', kind:'polaroid gpoi', caption:'Gestionale oratorio', link:'https://gpoi.denuvo.studio', linkLabel:'Apri progetto GPOI',
       body:['Realizzazione di uno pseudo-gestionale per l’Oratorio di Bedizzole e Calvagese.', 'L’attività consiste nell’applicare competenze informatiche scolastiche a un bisogno concreto dell’oratorio, integrandole con approfondimenti individuali.'],
       chips:['Bedizzole','Oratorio','Progetto informatico']
     },
@@ -788,31 +788,31 @@ if (rebBtn) {
     },
     {
       id:'musa', filter:'culture', tags:['arte'], title:'MuSa di Salò', meta:'Mostra', label:'Attività culturale',
-      kind:'ticket', caption:'“L’ultimo inverno”',
+      image:'assets/notes/musa-ultimo-inverno.png', kind:'polaroid musa', caption:'“L’ultimo inverno”',
       body:['Visita della mostra temporanea presso il MuSa di Salò, accompagnata dalla professoressa Alessia Bosio.', 'L’attività è culturale e artistica: osservazione diretta di una mostra, fuori dall’orario scolastico, come esperienza di contatto con linguaggi visivi e memoria storica.'],
       chips:['MuSa di Salò','Mostra temporanea','L’ultimo inverno']
     },
     {
       id:'cello', filter:'extra', tags:['arte'], title:'Violoncello', meta:'Musica', label:'Attività musicale',
-      kind:'photo-note cello', caption:'Scuola di Musica “Elia Marini”',
+      image:'assets/notes/violoncello.png', kind:'photo-note cello', caption:'Scuola di Musica “Elia Marini”',
       body:['Corso di Violoncello presso la Banda Musicale - Scuola di Musica “Elia Marini” di Calcinato.', 'Nel curriculum questa attività descrive un percorso musicale continuativo, legato a studio, ascolto, esercizio e disciplina dello strumento.'],
       chips:['Violoncello','Calcinato','Scuola di musica']
     },
     {
       id:'educatore', filter:'extra', tags:['oratorio'], title:'Animatore ed educatore', meta:'Oratorio', label:'Cittadinanza attiva',
-      kind:'photo-note group', caption:'Attività con i ragazzi',
+      image:'assets/notes/animatore-educatore.png', kind:'photo-note group', caption:'Attività con i ragazzi',
       body:['Attività di animatore ed educatore presso l’Oratorio di Bedizzole.', 'Consiste nel partecipare alla vita dell’oratorio con responsabilità educative, organizzative e relazionali verso bambini e ragazzi.'],
       chips:['Oratorio di Bedizzole','Educazione','Gruppo']
     },
     {
       id:'volontariato', filter:'extra', tags:['oratorio'], title:'Festa del Sorriso', meta:'Volontariato', label:'Tornei dei Roncai',
-      kind:'postit-orange', caption:'Volontariato',
+      image:'assets/notes/volontariato-festa-sorriso.png', kind:'polaroid volontariato', caption:'Volontariato',
       body:['Volontariato presso la Festa del Sorriso e i Tornei dei Roncai, collegato alle attività dell’Oratorio di Bedizzole.', 'L’esperienza riguarda il supporto pratico e organizzativo durante iniziative locali, con presenza nei periodi indicati dal curriculum.'],
       chips:['Festa del Sorriso','Tornei dei Roncai','Volontariato']
     },
     {
       id:'concorso', filter:'culture', tags:['arte'], title:'Volo tra le Righe', meta:'Contest', label:'Concorso letterario',
-      kind:'poster', caption:'Giovani lettori',
+      image:'assets/notes/volo-tra-le-righe.png', kind:'polaroid poster', caption:'Giovani lettori', link:'https://volo.denuvo.studio', linkLabel:'Apri Volo tra le Righe',
       body:['Partecipazione al contest letterario “Volo tra le Righe 3.0”.', 'Il curriculum riporta l’acquisizione dell’attestato di partecipazione: una nota culturale, legata a lettura, scrittura e confronto creativo.'],
       chips:['Letterario','Attestato','Biblioteca']
     }
@@ -826,7 +826,7 @@ if (rebBtn) {
   function visible(){return notes.filter(n=>filter==='all'||n.filter===filter||n.tags.includes(filter));}
   function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
   function visual(n){
-    if(n.image) return `<figure class="nr-visual ${esc(n.kind)}"><img src="${esc(n.image)}" alt="${esc(n.caption)}"><figcaption>${esc(n.caption)}</figcaption></figure>`;
+    if(n.image) return `<figure class="nr-visual ${esc(n.kind)}" data-missing="Immagine da inserire"><img src="${esc(n.image)}" alt="${esc(n.caption)}" onerror="this.closest('figure').classList.add('image-missing');this.remove();"><div class="nr-visual-art nr-fallback"><span>${esc(n.caption)}</span></div><figcaption>${esc(n.caption)}</figcaption></figure>`;
     return `<figure class="nr-visual ${esc(n.kind)}"><div class="nr-visual-art"><span>${esc(n.caption)}</span></div><figcaption>${esc(n.caption)}</figcaption></figure>`;
   }
   function renderList(){
@@ -838,7 +838,7 @@ if (rebBtn) {
     const n=notes.find(x=>x.id===current)||notes[0];
     screen.classList.remove('switching'); void screen.offsetWidth; screen.classList.add('switching');
     screen.classList.toggle('large', large);
-    screen.innerHTML=`<div class="nr-note-date">${esc(n.meta)}</div><div class="nr-note-layout">${visual(n)}<section class="nr-note-copy"><span class="nr-note-label">${esc(n.label)}</span><h2>${esc(n.title)}</h2><div class="nr-note-body">${n.body.map(p=>`<p>${esc(p)}</p>`).join('')}</div><div class="nr-points ${showPoints?'show':''}">${n.chips.map(p=>`<div><span></span>${esc(p)}</div>`).join('')}</div></section></div>`;
+    screen.innerHTML=`<div class="nr-note-date">${esc(n.meta)}</div><div class="nr-note-layout">${visual(n)}<section class="nr-note-copy"><span class="nr-note-label">${esc(n.label)}</span><h2>${esc(n.title)}</h2><div class="nr-note-body">${n.body.map(p=>`<p>${esc(p)}</p>`).join('')}</div>${n.link?`<a class="nr-project-link" href="${esc(n.link)}" target="_blank" rel="noopener">${esc(n.linkLabel||'Apri progetto')}</a>`:''}<div class="nr-points ${showPoints?'show':''}">${n.chips.map(p=>`<div><span></span>${esc(p)}</div>`).join('')}</div></section></div>`;
   }
   function sync(){app.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('selected',b.dataset.filter===filter)); app.querySelector('[data-note-action="font"]')?.classList.toggle('active',large); app.querySelector('[data-note-action="check"]')?.classList.toggle('active',showPoints); app.querySelector('[data-note-action="focus"]')?.classList.toggle('active',app.classList.contains('focus'));}
   function render(){renderList(); renderNote(); sync();}

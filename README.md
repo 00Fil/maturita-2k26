@@ -116,3 +116,7 @@ Poi apri http://localhost:8080 — al primo avvio MySQL esegue `setup.sql` da so
 5. Deploy — fine.
 
 Gli accessi registrati sono nella tabella `accessi` del database `pcto`.
+
+
+### Immagini app Note
+Gli slot immagini dell’app Note sono documentati in `assets/notes/README-IMMAGINI.md`.
