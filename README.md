@@ -124,3 +124,11 @@ Gli slot immagini dell’app Note sono documentati in `assets/notes/README-IMMAG
 
 ### Finder dark mode
 La finestra principale è stata ricostruita come Finder in dark mode: sidebar, toolbar, griglia Applications e descrizioni rapide al passaggio sulle app.
+
+
+### App Store/Launchpad rimosso
+La sezione App Store/Launchpad è stata rimossa da Finder e Dock perché i contenuti sono ora raccolti nell’app Note.
+
+
+### Launchpad completamente rimosso
+Apple Store/Launchpad è stato rimosso da Finder, Dock e finestre: i contenuti sono raccolti nell’app Note.
