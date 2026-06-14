@@ -17,8 +17,7 @@ function appicon(string $file, string $remote): string {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desktop · Maturità 2026</title>
-<link rel="stylesheet" href="hub.css?v=<?= @filemtime(__DIR__ . '/hub.css') ?>">
-<link rel="stylesheet" href="hub-polish.css?v=<?= @filemtime(__DIR__ . '/hub-polish.css') ?>">
+<link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
 <?php if ($boot): ?><link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high"><?php endif; ?>
 </head>
 <body<?= $boot ? ' class="booting"' : '' ?>>
@@ -284,19 +283,6 @@ function appicon(string $file, string $remote): string {
 </section>
 
 <div id="spot" class="spot" aria-hidden="true">
-  <style>
-    .spot{position:fixed;inset:0;z-index:4700;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:20vh;background:rgba(0,0,0,.14);backdrop-filter:blur(7px) saturate(1.1);-webkit-backdrop-filter:blur(7px) saturate(1.1);opacity:0;pointer-events:none;transition:opacity .2s ease}
-    .spot.on{opacity:1;pointer-events:auto}
-    .spot-box{width:min(620px,92vw);display:flex;align-items:center;gap:18px;padding:15px 26px;border-radius:24px;background:rgba(245,245,247,.7);border:1px solid rgba(255,255,255,.65);box-shadow:0 26px 72px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.55);backdrop-filter:blur(42px) saturate(1.8);-webkit-backdrop-filter:blur(42px) saturate(1.8);transform:scale(.94) translateY(-10px);opacity:0;transition:transform .34s cubic-bezier(.2,1.35,.4,1),opacity .22s ease}
-    .spot.on .spot-box{transform:none;opacity:1}
-    .spot-ic{flex:none;color:#6e6e73}
-    .spot-q{display:flex;align-items:center;min-height:32px}
-    .spot-type{font-size:27px;font-weight:400;color:#1d1d1f;letter-spacing:-.015em;white-space:nowrap}
-    .spot-cur{display:inline-block;width:2px;height:27px;margin-left:1px;background:#0a84ff;border-radius:1px;animation:spotcur 1.05s steps(1) infinite}
-    @keyframes spotcur{50%{opacity:0}}
-    .spot-sub{margin-top:20px;font-size:13px;font-weight:500;color:rgba(255,255,255,.92);text-shadow:0 1px 16px rgba(0,0,0,.55);opacity:0;transform:translateY(6px);transition:opacity .3s ease .12s,transform .3s ease .12s}
-    .spot.on .spot-sub{opacity:1;transform:none}
-  </style>
   <div class="spot-box">
     <svg class="spot-ic" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
     <span class="spot-q"><span class="spot-type"></span><span class="spot-cur"></span></span>
@@ -316,94 +302,5 @@ function appicon(string $file, string $remote): string {
 </nav>
 
 <script src="hub.js"></script>
-<script>
-(function(){
-  var spot=document.getElementById('spot');
-  if(!spot)return;
-  var box=spot.querySelector('.spot-box');
-  var type=spot.querySelector('.spot-type');
-  var TEXT='Le parole non sono mai neutre';
-  var timer=null;
-  function openSpot(){
-    if(spot.classList.contains('on'))return;
-    spot.classList.add('on');
-    spot.setAttribute('aria-hidden','false');
-    if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}
-    type.textContent='';
-    var i=0;
-    clearInterval(timer);
-    timer=setInterval(function(){
-      type.textContent=TEXT.slice(0,++i);
-      if(i>=TEXT.length)clearInterval(timer);
-    },48);
-  }
-  function closeSpot(){
-    if(!spot.classList.contains('on'))return;
-    spot.classList.remove('on');
-    spot.setAttribute('aria-hidden','true');
-    clearInterval(timer);
-    if(typeof sndClose==='function'){try{sndClose();}catch(e){}}
-  }
-  document.addEventListener('click',function(e){
-    var t=e.target.closest('[data-spot]');
-    if(t){e.preventDefault();openSpot();return;}
-    if(spot.classList.contains('on')&&!box.contains(e.target))closeSpot();
-  });
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSpot();});
-})();
-</script>
-<script>
-(function(){
-  var map=document.getElementById('mv-map');
-  var cam=document.getElementById('mv-cam');
-  var puck=document.getElementById('mv-puck');
-  var trav=document.getElementById('mv-trav');
-  if(!map||!cam||!puck)return;
-  var stops=[
-    {x:170,y:520,p:0,m:'m0',name:'Maturità al Cerebotani',kind:'Partenza',kk:'Partenza',body:'È il punto di partenza. In cinque anni al Cerebotani ho imparato a programmare e a risolvere i problemi con metodo. Da qui parte la strada che ho in mente per il dopo.'},
-    {x:390,y:430,p:0.30,m:'m1',name:'PCTO · CS Metal Europe',kind:'Sosta',kk:'Sosta lungo la strada',body:'Una sosta lungo il tragitto, come il rifornimento prima di un viaggio lungo. In azienda ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. Qui ho capito quale direzione voglio prendere.'},
-    {x:610,y:300,p:0.63,m:'m2',name:'Università · Informatica',kind:'Tappa',kk:'La prossima tappa',body:'Voglio continuare a studiare informatica. Mi serve per costruire software con basi più solide e arrivare preparato al lavoro.'},
-    {x:850,y:150,p:1,m:'m3',name:'Lavorare all\'estero',kind:'Arrivo',kk:'La meta del viaggio',body:'La meta del viaggio. Voglio portare quello che ho imparato fuori dall\'Italia e lavorare nel software in un contesto internazionale.'}
-  ];
-  var list=document.getElementById('nv-list'),elKk=document.getElementById('nv-kk'),elBody=document.getElementById('nv-body'),elStep=document.getElementById('nv-step'),elEta=document.getElementById('nv-eta'),elHint=document.getElementById('nv-hint');
-  var i=0,n=stops.length,j;
-  for(j=0;j<n;j++){
-    var s=stops[j];
-    var col=j===0?'#34C759':(j===n-1?'#FF3B30':'#8E8E93');
-    var ct=(j===0||j===n-1)?'':String(j);
-    var b=document.createElement('button');
-    b.className='dir-row';b.setAttribute('data-i',j);
-    b.innerHTML='<span class="dir-pin" style="--c:'+col+'">'+ct+'</span><span class="dir-txt"><b>'+s.name+'</b><small>'+s.kind+'</small></span>';
-    list.appendChild(b);
-  }
-  var sc=1.16,zoom=1,VW=1000,VH=640,TX=600,TY=320,minX=-300,maxX=1300,minY=-260,maxY=900;
-  function render(){
-    var s=stops[i],k,e=sc*zoom;
-    puck.setAttribute('transform','translate('+s.x+' '+s.y+')');
-    trav.setAttribute('stroke-dashoffset',(1-s.p).toFixed(4));
-    var dx=TX-e*s.x, dy=TY-e*s.y;
-    dx=Math.max(VW-e*maxX,Math.min(-e*minX,dx));
-    dy=Math.max(VH-e*maxY,Math.min(-e*minY,dy));
-    cam.setAttribute('transform','translate('+dx.toFixed(1)+' '+dy.toFixed(1)+') scale('+e.toFixed(3)+')');
-    elKk.textContent=s.kk;elBody.textContent=s.body;
-    elStep.textContent=(i+1)+'/'+n;
-    elEta.textContent=(i===n-1)?'sei arrivato':'prossima: '+stops[i+1].kind.toLowerCase();
-    elHint.textContent=(i===n-1)?'Tocca per ricominciare':'Tocca la mappa per proseguire';
-    var mks=cam.querySelectorAll('.mk');for(k=0;k<mks.length;k++)mks[k].classList.remove('on');
-    var cur=document.getElementById(s.m);if(cur)cur.classList.add('on');
-    var rows=list.children;for(k=0;k<rows.length;k++)rows[k].className='dir-row'+(k===i?' on':'');
-  }
-  function go(ni){i=((ni%n)+n)%n;render();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
-  map.addEventListener('click',function(){go(i+1);});
-  list.addEventListener('click',function(e){var t=e.target.closest('.dir-row');if(!t)return;go(parseInt(t.getAttribute('data-i'),10));});
-  var zin=document.getElementById('mv-zin'),zout=document.getElementById('mv-zout'),comp=document.getElementById('mv-comp');
-  if(zin)zin.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.min(1.5,zoom+0.18);render();});
-  if(zout)zout.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.max(0.8,zoom-0.18);render();});
-  if(comp)comp.addEventListener('click',function(ev){ev.stopPropagation();zoom=1;render();});
-  var x=document.querySelector('#w-fine .dir-x');
-  if(x)x.addEventListener('click',function(ev){ev.stopPropagation();if(typeof closeWin==='function')closeWin('w-fine');});
-  render();
-})();
-</script>
 </body>
 </html>

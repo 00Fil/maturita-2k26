@@ -10,11 +10,24 @@ Login animato (morph button) → backend PHP minimale → MySQL → desktop in s
 | `index.php` | La pagina con il tasto morph e il form di accesso |
 | `login.php` | Backend: verifica il codice e registra l'accesso su MySQL |
 | `hub.php` | Il desktop in stile macOS: la presentazione in 6 capitoli, protetta dalla sessione |
-| `hub.css` / `hub.js` | Stile e interazioni del desktop (finestre, dock, menu bar) |
+| `macos.css` | Design system unico: token, vetro, finestre, dock, login, app e responsive |
+| `hub.js` / `login.js` / `sound.js` | Interazioni desktop, lock screen e micro-suoni |
 | `logout.php` | Chiude la sessione e torna al login |
 | `setup.sql` | Crea il database `pcto` e la tabella `accessi` |
 | `Dockerfile` | Immagine PHP 8.3 + Apache con `pdo_mysql` |
 | `docker-compose.yml` | Stack completo: app + MySQL 8.4 (con init automatico) |
+
+## Design system macOS
+
+Il progetto ora usa **un solo file CSS**, `macos.css`. Dentro ci sono:
+
+- token globali: font SF Pro, colori, accenti, ombre, hairline, raggi e curve di easing;
+- componenti base: menubar, dock, finestre, semafori, Centro di Controllo, card glass;
+- lock screen: input password meno bianco/trasparente, blur più materico e transizione più rapida verso il desktop;
+- contenuti delle app: scheda personale, agenda PCTO, Launchpad e Mappe hanno layout e identità coerenti;
+- responsive e accessibilità: focus ring, reduced motion e fallback dark mode.
+
+I vecchi fogli `hub.css` e `hub-polish.css` sono stati consolidati in `macos.css` e non vengono più caricati.
 
 ## Variabili d'ambiente
 
@@ -56,7 +69,8 @@ Se la modalità demo è spenta, il backend non calcola né invia nessun passaggi
 ## Il desktop (hub.php)
 
 Dopo il login si arriva su un desktop in stile macOS — stessa estetica della pagina di
-accesso (superfici neutre, bordi hairline) con un colore accento per ogni app.
+accesso, governata da `macos.css`: superfici glass, bordi hairline, raggi coerenti,
+motion Apple-like e un colore accento per ogni app.
 La finestra "Scaletta" si apre da sola e guida i 10 minuti di esposizione in 6 capitoli:
 
 1. **Da dove parto** — il filo conduttore personale (1')
