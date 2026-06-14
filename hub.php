@@ -257,14 +257,22 @@ function appicon(string $file, string $remote): string {
         <rect x="1180" y="430" width="80" height="56" rx="9" fill="#DDD6C7"/>
         <rect x="1010" y="120" width="72" height="50" rx="9" fill="#DDD6C7"/>
         <rect x="40" y="680" width="80" height="56" rx="9" fill="#DDD6C7"/>
-        <path d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round"/>
-        <path id="nav-route" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#C2CEDB" stroke-width="6" fill="none" stroke-linecap="round"/>
-        <path id="nav-route-done" pathLength="1" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#0A84FF" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>
-        <g class="mk" id="m0" transform="translate(170 520)"><circle r="9" fill="#34C759" stroke="#fff" stroke-width="3.5"/><text class="mlab" y="-20" text-anchor="middle">Maturità</text></g>
-        <g class="mk" id="m1" transform="translate(390 430)"><circle r="11" fill="#8E8E93" stroke="#fff" stroke-width="3"/><text class="mnum" y="4" text-anchor="middle">1</text><text class="mlab small" y="28" text-anchor="middle">PCTO</text></g>
-        <g class="mk" id="m2" transform="translate(610 300)"><circle r="11" fill="#8E8E93" stroke="#fff" stroke-width="3"/><text class="mnum" y="4" text-anchor="middle">2</text><text class="mlab" y="-20" text-anchor="middle">Università</text></g>
-        <g class="mk" id="m3" transform="translate(850 150)"><path d="M0 0 C-9 -13 -9 -23 0 -31 C9 -23 9 -13 0 0 Z" fill="#FF3B30" stroke="#fff" stroke-width="2.5"/><circle cx="0" cy="-20" r="5.5" fill="#fff"/><text class="mlab" y="18" text-anchor="middle">Estero</text></g>
-        <g id="nav-puck" transform="translate(170 520)"><circle r="10" fill="#0A84FF" opacity="0.28"><animate attributeName="r" values="9;17;9" dur="1.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.28;0.04;0.28" dur="1.9s" repeatCount="indefinite"/></circle><circle r="7" fill="#0A84FF" stroke="#fff" stroke-width="2.5"/></g>
+        <!-- percorso: casing bianco + tracciato + parte percorsa -->
+        <path id="nav-route-base" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="nav-route" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" fill="none" stroke="#A7BED6" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path id="nav-route-done" pathLength="1" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" fill="none" stroke="#0A84FF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+        <!-- segnaposto (senza didascalie) -->
+        <g class="mk" id="m0" transform="translate(170 520)"><circle r="7" fill="#34C759" stroke="#fff" stroke-width="3"/></g>
+        <g class="mk" id="m1" transform="translate(390 430)"><circle r="6" fill="#fff" stroke="#0A84FF" stroke-width="3"/></g>
+        <g class="mk" id="m2" transform="translate(610 300)"><circle r="6" fill="#fff" stroke="#0A84FF" stroke-width="3"/></g>
+        <g class="mk" id="m3" transform="translate(850 150)"><path d="M0 0 C-10 -14 -10 -25 0 -34 C10 -25 10 -14 0 0 Z" fill="#FF3B30" stroke="#fff" stroke-width="2.5"/><circle cx="0" cy="-22" r="5.5" fill="#fff"/></g>
+        <!-- puck GPS -->
+        <g id="nav-puck" transform="translate(170 520)">
+          <circle r="13" fill="#0A84FF" opacity="0.18"><animate attributeName="r" values="11;22;11" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.20;0.03;0.20" dur="2s" repeatCount="indefinite"/></circle>
+          <circle r="10" fill="#fff"/>
+          <circle r="8" fill="#0A84FF"/>
+          <path d="M0 -5 L4 4 L0 2 L-4 4 Z" fill="#fff"/>
+        </g>
       </g>
     </svg>
     <div class="nav-stack">
@@ -274,15 +282,7 @@ function appicon(string $file, string $remote): string {
           <span class="nav-kick" id="nav-kick"></span>
           <div class="nav-dist" id="nav-dist"></div>
           <div class="nav-instr" id="nav-instr"></div>
-          <p class="nav-expl" id="nav-expl"></p>
         </div>
-      </div>
-      <div class="nav-then" id="nav-then">
-        <span class="nav-then-l">Poi</span>
-        <span class="nav-then-ic" id="nav-then-ic"></span>
-        <b id="nav-then-d"></b>
-        <span class="nav-then-sep">·</span>
-        <span id="nav-then-n"></span>
       </div>
     </div>
     <div class="nav-ctrl">
@@ -368,68 +368,131 @@ function appicon(string $file, string $remote): string {
 </script>
 <script>
 (function(){
-  var map=document.getElementById('nav-map');
+  var svg=document.getElementById('nav-map');
   var cam=document.getElementById('nav-cam');
+  var route=document.getElementById('nav-route');
+  var done=document.getElementById('nav-route-done');
   var puck=document.getElementById('nav-puck');
-  var routeDone=document.getElementById('nav-route-done');
-  if(!map||!cam||!puck||!routeDone)return;
-  var man=document.getElementById('nav-man'),kick=document.getElementById('nav-kick'),dist=document.getElementById('nav-dist'),instr=document.getElementById('nav-instr'),expl=document.getElementById('nav-expl');
-  var then=document.getElementById('nav-then'),thenIc=document.getElementById('nav-then-ic'),thenD=document.getElementById('nav-then-d'),thenN=document.getElementById('nav-then-n');
-  var eta=document.getElementById('nav-eta'),sub=document.getElementById('nav-sub'),dotsWrap=document.getElementById('nav-dots'),endBtn=document.getElementById('nav-end');
+  if(!svg||!cam||!route||!done||!puck)return;
+  var man=document.getElementById('nav-man');
+  var kick=document.getElementById('nav-kick');
+  var distEl=document.getElementById('nav-dist');
+  var instr=document.getElementById('nav-instr');
+  var etaEl=document.getElementById('nav-eta');
+  var subEl=document.getElementById('nav-sub');
+  var dotsWrap=document.getElementById('nav-dots');
+  var endBtn=document.getElementById('nav-end');
+
+  var L=route.getTotalLength();
+  if(!isFinite(L)||L<=0)L=900;
+
+  // tappe: coordinate reali, agganciate al tracciato (nessuna didascalia sulla mappa)
   var stops=[
-    {x:170,y:520,p:0,m:'m0',name:'Maturità al Cerebotani',kind:'Partenza',body:'È il punto di partenza. In cinque anni al Cerebotani ho imparato a programmare e a risolvere i problemi con metodo. Da qui parte la strada che ho in mente per il dopo.'},
-    {x:390,y:430,p:0.30,m:'m1',name:'PCTO · CS Metal Europe',kind:'Sosta',man:'right',kick:'Prima sosta',dist:'Adesso',instr:'Sosta · CS Metal Europe',body:'Una sosta lungo il tragitto, come il rifornimento prima di un viaggio lungo. In azienda ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. Qui ho capito quale direzione voglio prendere.'},
-    {x:610,y:300,p:0.63,m:'m2',name:'Università · Informatica',kind:'Tappa',man:'up',kick:'Prossima tappa',dist:'Tra 1 anno',instr:'Prosegui verso l\'Università',body:'Voglio continuare a studiare informatica. Mi serve per costruire software con basi più solide e arrivare preparato al lavoro.'},
-    {x:850,y:150,p:1,m:'m3',name:'Lavorare all\'estero',kind:'Arrivo',man:'flag',kick:'Destinazione',dist:'Tra qualche anno',instr:'Arrivo · Lavorare all\'estero',body:'La meta del viaggio. Voglio portare quello che ho imparato fuori dall\'Italia e lavorare nel software in un contesto internazionale.'}
+    {id:'m0',x:170,y:520,name:'Maturità',stage:'Partenza',man:'straight'},
+    {id:'m1',x:390,y:430,name:'PCTO',stage:'Prossima tappa',man:'straight'},
+    {id:'m2',x:610,y:300,name:'Università',stage:'Prossima tappa',man:'straight'},
+    {id:'m3',x:850,y:150,name:'Estero',stage:'Arrivo',man:'flag'}
   ];
-  var n=stops.length,i=0;
-  function manSvg(type){
-    if(type==='flag')return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 43V7"/><path d="M15 9h21l-5 8 5 8H15"/></svg>';
-    if(type==='right')return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 41V26a8 8 0 0 1 8-8h13"/><path d="M28 9l10 9-10 9"/></svg>';
-    return '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M24 41V13"/><path d="M12 24l12-12 12 12"/></svg>';
-  }
-  function pinSvg(){return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 4.8 7 13 7 13s7-8.2 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';}
-  var dots=[];
-  for(var j=0;j<n;j++){
-    var b=document.createElement('button');
-    b.type='button';b.className='nav-dot';b.setAttribute('data-i',j);
-    b.setAttribute('aria-label',stops[j].name);
-    dotsWrap.appendChild(b);dots.push(b);
-  }
-  var sc=1.16,zoom=1,VW=1000,VH=640,TX=600,TY=320,minX=-300,maxX=1300,minY=-260,maxY=900;
-  function render(){
-    var s=stops[i],e=sc*zoom,k;
-    puck.setAttribute('transform','translate('+s.x+' '+s.y+')');
-    routeDone.setAttribute('stroke-dashoffset',(1-s.p).toFixed(4));
-    var dx=TX-e*s.x,dy=TY-e*s.y;
-    dx=Math.max(VW-e*maxX,Math.min(-e*minX,dx));
-    dy=Math.max(VH-e*maxY,Math.min(-e*minY,dy));
-    cam.setAttribute('transform','translate('+dx.toFixed(1)+' '+dy.toFixed(1)+') scale('+e.toFixed(3)+')');
-    var mks=cam.querySelectorAll('.mk');for(k=0;k<mks.length;k++)mks[k].classList.remove('on');
-    var cur=document.getElementById(s.m);if(cur)cur.classList.add('on');
-    var arrived=(i===n-1);
-    if(arrived){
-      man.innerHTML=manSvg('flag');kick.textContent='Arrivo';dist.textContent='Arrivato';instr.textContent=s.name;expl.textContent=s.body;
-    }else{
-      var nx=stops[i+1];
-      man.innerHTML=manSvg(nx.man);kick.textContent=nx.kick;dist.textContent=nx.dist;instr.textContent=nx.instr;expl.textContent=nx.body;
+  var n=stops.length;
+
+  // trova la lunghezza lungo il path piu' vicina a (tx,ty): aggancio preciso al tracciato
+  function lenAt(tx,ty){
+    var best=0,bd=1e18,steps=1000,s,l,p,dx,dy,d;
+    for(s=0;s<=steps;s++){
+      l=L*s/steps;p=route.getPointAtLength(l);dx=p.x-tx;dy=p.y-ty;d=dx*dx+dy*dy;
+      if(d<bd){bd=d;best=l;}
     }
-    var after=arrived?null:stops[i+2];
-    if(after){then.style.display='';thenIc.innerHTML=pinSvg();thenD.textContent=after.name;thenN.textContent=after.kind;}
-    else{then.style.display='none';}
-    if(arrived){eta.textContent='Sei arrivato';sub.textContent='Fine del percorso · tocca Fine per chiudere';}
-    else{eta.textContent=stops[n-1].name;sub.textContent='Tappa '+(i+1)+' di '+n+' · tocca la mappa per proseguire';}
-    for(k=0;k<dots.length;k++){dots[k].className='nav-dot'+(k<i?' done':'')+(k===i?' on':'');}
+    var span=L/steps,r,a,b,m1l,m2l,pa,pb,da,db;
+    for(r=0;r<30;r++){
+      a=Math.max(0,best-span);b=Math.min(L,best+span);
+      m1l=a+(b-a)/3;m2l=b-(b-a)/3;
+      pa=route.getPointAtLength(m1l);pb=route.getPointAtLength(m2l);
+      da=(pa.x-tx)*(pa.x-tx)+(pa.y-ty)*(pa.y-ty);
+      db=(pb.x-tx)*(pb.x-tx)+(pb.y-ty)*(pb.y-ty);
+      if(da<db){best=m1l;}else{best=m2l;}
+      span=(b-a)/3;
+    }
+    return best;
   }
-  function go(ni){i=((ni%n)+n)%n;render();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
-  map.addEventListener('click',function(){go(i+1);});
-  dotsWrap.addEventListener('click',function(e){var t=e.target.closest('.nav-dot');if(!t)return;e.stopPropagation();go(parseInt(t.getAttribute('data-i'),10));});
+  stops.forEach(function(st){st.len=lenAt(st.x,st.y);});
+  // snap dei marker esattamente sul tracciato
+  stops.forEach(function(st){var p=route.getPointAtLength(st.len);st.x=p.x;st.y=p.y;});
+
+  // pallini di avanzamento (bottom sheet)
+  var dots=[],j,bb;
+  for(j=0;j<n;j++){
+    bb=document.createElement('button');
+    bb.type='button';bb.className='nav-dot';bb.setAttribute('data-i',j);bb.setAttribute('aria-label',stops[j].name);
+    dotsWrap.appendChild(bb);dots.push(bb);
+  }
+
+  function manSvg(t){
+    if(t==='flag')return '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 29V4"/><path d="M9 5h15l-4 6 4 6H9"/></svg>';
+    return '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 27V8"/><path d="M8 16l8-8 8 8"/></svg>';
+  }
+
+  // parametri camera
+  var FX=500,FY=400,BASE=1.5;
+  var idx=0;
+  var cur={len:stops[0].len,zoom:1};
+  var tgt={len:stops[0].len,zoom:1};
+
+  function pointAt(l){return route.getPointAtLength(Math.max(0,Math.min(L,l)));}
+  function angleAt(l){var a=pointAt(Math.max(0,l-3)),b=pointAt(Math.min(L,l+3));return Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI;}
+
+  function paintUI(){
+    var arrived=(idx===n-1),k,g,s,nx;
+    if(arrived){
+      man.innerHTML=manSvg('flag');
+      kick.textContent='Arrivo';
+      distEl.textContent=stops[n-1].name;
+      instr.textContent='Sei arrivato a destinazione';
+      etaEl.textContent='Arrivato';
+      subEl.textContent='Percorso completato';
+    }else{
+      nx=stops[idx+1];
+      man.innerHTML=manSvg(nx.man);
+      kick.textContent=nx.stage;
+      distEl.textContent=nx.name;
+      instr.textContent='Prosegui lungo il percorso';
+      etaEl.textContent=stops[n-1].name;
+      subEl.textContent='Tappa '+(idx+1)+' di '+n;
+    }
+    for(k=0;k<dots.length;k++){dots[k].className='nav-dot'+(k<idx?' done':'')+(k===idx?' on':'');}
+    for(s=0;s<stops.length;s++){g=document.getElementById(stops[s].id);if(g){g.classList.toggle('on',s===idx);g.classList.toggle('done',s<idx);}}
+  }
+
+  function applyFrame(){
+    var S=BASE*cur.zoom,inv=1/S,p=pointAt(cur.len),s,g;
+    cam.setAttribute('transform','translate('+(FX-S*p.x).toFixed(2)+' '+(FY-S*p.y).toFixed(2)+') scale('+S.toFixed(4)+')');
+    puck.setAttribute('transform','translate('+p.x.toFixed(2)+' '+p.y.toFixed(2)+') rotate('+(angleAt(cur.len)+90).toFixed(2)+') scale('+inv.toFixed(4)+')');
+    for(s=0;s<stops.length;s++){g=document.getElementById(stops[s].id);if(g)g.setAttribute('transform','translate('+stops[s].x.toFixed(2)+' '+stops[s].y.toFixed(2)+') scale('+inv.toFixed(4)+')');}
+    done.setAttribute('stroke-dashoffset',(1-cur.len/L).toFixed(5));
+  }
+
+  var raf=null;
+  function frame(){
+    cur.len+=(tgt.len-cur.len)*0.12;
+    cur.zoom+=(tgt.zoom-cur.zoom)*0.12;
+    if(Math.abs(tgt.len-cur.len)<0.35&&Math.abs(tgt.zoom-cur.zoom)<0.0015){cur.len=tgt.len;cur.zoom=tgt.zoom;}
+    applyFrame();
+    if(cur.len!==tgt.len||cur.zoom!==tgt.zoom){raf=requestAnimationFrame(frame);}else{raf=null;}
+  }
+  function animate(){if(!raf)raf=requestAnimationFrame(frame);}
+
+  function goTo(i){idx=((i%n)+n)%n;tgt.len=stops[idx].len;paintUI();animate();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
+
+  svg.addEventListener('click',function(){goTo(idx+1);});
+  dotsWrap.addEventListener('click',function(e){var t=e.target.closest('.nav-dot');if(!t)return;e.stopPropagation();goTo(parseInt(t.getAttribute('data-i'),10));});
   var zin=document.getElementById('nav-zin'),zout=document.getElementById('nav-zout'),comp=document.getElementById('nav-comp');
-  if(zin)zin.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.min(1.5,zoom+0.18);render();});
-  if(zout)zout.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.max(0.8,zoom-0.18);render();});
-  if(comp)comp.addEventListener('click',function(ev){ev.stopPropagation();zoom=1;render();});
-  if(endBtn)endBtn.addEventListener('click',function(ev){ev.stopPropagation();var w=document.getElementById('w-fine');if(typeof closeWin==='function'&&w){closeWin(w);}});
-  render();
+  if(zin)zin.addEventListener('click',function(e){e.stopPropagation();tgt.zoom=Math.min(2.6,tgt.zoom+0.3);animate();});
+  if(zout)zout.addEventListener('click',function(e){e.stopPropagation();tgt.zoom=Math.max(0.8,tgt.zoom-0.3);animate();});
+  if(comp)comp.addEventListener('click',function(e){e.stopPropagation();tgt.zoom=1;animate();});
+  if(endBtn)endBtn.addEventListener('click',function(e){e.stopPropagation();var w=document.getElementById('w-fine');if(typeof closeWin==='function'&&w)closeWin(w);});
+
+  // stato iniziale immediato (nessun salto all'apertura)
+  paintUI();
+  applyFrame();
 })();
 </script>
 </body>
