@@ -282,46 +282,46 @@ function appicon(string $file, string $remote): string {
       <svg class="nav-map" id="nav-map" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
         <g id="nav-cam">
           <!-- sfondo terreno -->
-          <rect x="-400" y="-300" width="2000" height="1400" fill="#E9E6DD"/>
+          <rect class="map-bg" x="-400" y="-300" width="2000" height="1400" fill="#E9E6DD"/>
           <!-- cielo / acqua in alto -->
-          <path d="M-400 100 C100 150 300 50 550 100 C800 150 1000 60 1600 110 L1600 -300 L-400 -300 Z" fill="#B0D8F0"/>
-          <path d="M-400 100 C100 150 300 50 550 100 C800 150 1000 60 1600 110" stroke="#93C2E6" stroke-width="2" fill="none"/>
+          <path class="map-water" d="M-400 100 C100 150 300 50 550 100 C800 150 1000 60 1600 110 L1600 -300 L-400 -300 Z" fill="#B0D8F0"/>
+          <path class="map-water-border" d="M-400 100 C100 150 300 50 550 100 C800 150 1000 60 1600 110" stroke="#93C2E6" stroke-width="2" fill="none"/>
           <!-- parchi -->
-          <circle cx="90" cy="600" r="100" fill="#C9E6B4"/>
-          <circle cx="-160" cy="750" r="130" fill="#C9E6B4"/>
-          <circle cx="1100" cy="580" r="90" fill="#C9E6B4"/>
-          <circle cx="1300" cy="280" r="100" fill="#C9E6B4"/>
-          <rect x="480" y="500" width="180" height="160" rx="24" fill="#C9E6B4"/>
-          <circle cx="700" cy="150" r="70" fill="#C9E6B4"/>
+          <circle class="map-park" cx="90" cy="600" r="100" fill="#C9E6B4"/>
+          <circle class="map-park" cx="-160" cy="750" r="130" fill="#C9E6B4"/>
+          <circle class="map-park" cx="1100" cy="580" r="90" fill="#C9E6B4"/>
+          <circle class="map-park" cx="1300" cy="280" r="100" fill="#C9E6B4"/>
+          <rect class="map-park" x="480" y="500" width="180" height="160" rx="24" fill="#C9E6B4"/>
+          <circle class="map-park" cx="700" cy="150" r="70" fill="#C9E6B4"/>
           <!-- strade principali -->
-          <path d="M-400 340 C200 320 520 380 1600 330" stroke="#fff" stroke-width="28" fill="none" stroke-linecap="round"/>
-          <path d="M-400 530 C280 510 560 560 1600 510" stroke="#fff" stroke-width="16" fill="none" stroke-linecap="round"/>
-          <path d="M-400 190 C260 176 600 212 1600 185" stroke="#fff" stroke-width="12" fill="none"/>
-          <path d="M-400 780 C260 768 600 804 1600 776" stroke="#fff" stroke-width="14" fill="none"/>
-          <path d="M-400 50 C220 40 560 82 1600 50" stroke="#fff" stroke-width="10" fill="none"/>
+          <path class="map-road" d="M-400 340 C200 320 520 380 1600 330" stroke="#fff" stroke-width="28" fill="none" stroke-linecap="round"/>
+          <path class="map-road" d="M-400 530 C280 510 560 560 1600 510" stroke="#fff" stroke-width="16" fill="none" stroke-linecap="round"/>
+          <path class="map-road" d="M-400 190 C260 176 600 212 1600 185" stroke="#fff" stroke-width="12" fill="none"/>
+          <path class="map-road" d="M-400 780 C260 768 600 804 1600 776" stroke="#fff" stroke-width="14" fill="none"/>
+          <path class="map-road" d="M-400 50 C220 40 560 82 1600 50" stroke="#fff" stroke-width="10" fill="none"/>
           <!-- strade verticali -->
-          <path d="M150 -300 C180 160 120 420 170 1100" stroke="#fff" stroke-width="16" fill="none"/>
-          <path d="M480 -300 C460 180 520 420 480 1100" stroke="#fff" stroke-width="20" fill="none"/>
-          <path d="M820 -300 C850 160 800 440 840 1100" stroke="#fff" stroke-width="14" fill="none"/>
-          <path d="M-120 -300 C-90 160 -150 420 -100 1100" stroke="#fff" stroke-width="12" fill="none"/>
-          <path d="M1150 -300 C1180 160 1120 440 1170 1100" stroke="#fff" stroke-width="13" fill="none"/>
+          <path class="map-road" d="M150 -300 C180 160 120 420 170 1100" stroke="#fff" stroke-width="16" fill="none"/>
+          <path class="map-road" d="M480 -300 C460 180 520 420 480 1100" stroke="#fff" stroke-width="20" fill="none"/>
+          <path class="map-road" d="M820 -300 C850 160 800 440 840 1100" stroke="#fff" stroke-width="14" fill="none"/>
+          <path class="map-road" d="M-120 -300 C-90 160 -150 420 -100 1100" stroke="#fff" stroke-width="12" fill="none"/>
+          <path class="map-road" d="M1150 -300 C1180 160 1120 440 1170 1100" stroke="#fff" stroke-width="13" fill="none"/>
           <!-- edifici -->
-          <rect x="220" y="140" width="95" height="60" rx="10" fill="#DDD6C7"/>
-          <rect x="90" y="240" width="70" height="62" rx="10" fill="#DDD6C7"/>
-          <rect x="620" y="140" width="82" height="56" rx="10" fill="#DDD6C7"/>
-          <rect x="760" y="440" width="85" height="60" rx="10" fill="#DDD6C7"/>
-          <rect x="320" y="620" width="70" height="50" rx="10" fill="#DDD6C7"/>
-          <rect x="950" y="240" width="75" height="54" rx="10" fill="#DDD6C7"/>
-          <rect x="-220" y="310" width="80" height="62" rx="10" fill="#DDD6C7"/>
-          <rect x="1250" y="440" width="85" height="60" rx="10" fill="#DDD6C7"/>
-          <rect x="1050" y="110" width="76" height="54" rx="10" fill="#DDD6C7"/>
-          <rect x="10" y="720" width="85" height="60" rx="10" fill="#DDD6C7"/>
-          <rect x="380" y="250" width="65" height="50" rx="10" fill="#DDD6C7"/>
-          <rect x="900" y="620" width="72" height="48" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="220" y="140" width="95" height="60" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="90" y="240" width="70" height="62" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="620" y="140" width="82" height="56" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="760" y="440" width="85" height="60" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="320" y="620" width="70" height="50" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="950" y="240" width="75" height="54" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="-220" y="310" width="80" height="62" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="1250" y="440" width="85" height="60" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="1050" y="110" width="76" height="54" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="10" y="720" width="85" height="60" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="380" y="250" width="65" height="50" rx="10" fill="#DDD6C7"/>
+          <rect class="map-building" x="900" y="620" width="72" height="48" rx="10" fill="#DDD6C7"/>
           <!-- percorso: casing bianco + tracciato grigio + parte percorsa (blu) -->
-          <path id="nav-route-base" d="M120 590 C230 540 300 500 400 440 C520 370 580 340 680 280 C780 220 840 200 920 170 C1020 136 1060 120 1120 100" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-          <path id="nav-route" d="M120 590 C230 540 300 500 400 440 C520 370 580 340 680 280 C780 220 840 200 920 170 C1020 136 1060 120 1120 100" fill="none" stroke="#B8CBE0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-          <path id="nav-route-done" pathLength="1" d="M120 590 C230 540 300 500 400 440 C520 370 580 340 680 280 C780 220 840 200 920 170 C1020 136 1060 120 1120 100" fill="none" stroke="#007AFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>
+          <path id="nav-route-base" class="map-route-base" d="M120 590 C230 540 300 500 400 440 C520 370 580 340 680 280 C780 220 840 200 920 170 C1020 136 1060 120 1120 100" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          <path id="nav-route" class="map-route-bg" d="M120 590 C230 540 300 500 400 440 C520 370 580 340 680 280 C780 220 840 200 920 170 C1020 136 1060 120 1120 100" fill="none" stroke="#B8CBE0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path id="nav-route-done" class="map-route-done" pathLength="1" d="M120 590 C230 540 300 500 400 440 C520 370 580 340 680 280 C780 220 840 200 920 170 C1020 136 1060 120 1120 100" fill="none" stroke="#007AFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>
           <!-- segnaposto: 5 tappe -->
           <g class="mk" id="m0" transform="translate(120 590)"><circle r="8" fill="#34C759" stroke="#fff" stroke-width="3"/></g>
           <g class="mk" id="m1" transform="translate(400 440)"><circle r="7" fill="#fff" stroke="#007AFF" stroke-width="3"/></g>
@@ -515,8 +515,8 @@ function appicon(string $file, string $remote): string {
   var mode = 'overview'; // 'overview' | 'detail'
   var idx = -1; // -1 = overview, 0..n-1 = detail
 
-  var cur = { x:OVERVIEW.x, y:OVERVIEW.y, zoom:OVERVIEW.zoom, len:0 };
-  var tgt = { x:OVERVIEW.x, y:OVERVIEW.y, zoom:OVERVIEW.zoom, len:0 };
+  var cur = { x:OVERVIEW.x, y:OVERVIEW.y, zoom:OVERVIEW.zoom, len:0, rot:0 };
+  var tgt = { x:OVERVIEW.x, y:OVERVIEW.y, zoom:OVERVIEW.zoom, len:0, rot:0 };
 
   /* ── Helpers percorso ── */
   function pointAt(l){ return route.getPointAtLength(Math.max(0,Math.min(L,l))); }
@@ -527,22 +527,23 @@ function appicon(string $file, string $remote): string {
   function applyFrame(){
     var S = cur.zoom;
     var inv = 1/S;
-    // Camera: centra (cur.x, cur.y) nel mezzo del viewport
-    var tx = VW/2 - S*cur.x;
-    var ty = VH/2 - S*cur.y;
-    cam.setAttribute('transform','translate('+tx.toFixed(2)+' '+ty.toFixed(2)+') scale('+S.toFixed(4)+')');
+    
+    // Camera: centra (cur.x, cur.y) nel mezzo del viewport e ruota di -cur.rot
+    var tx = VW/2;
+    var ty = VH/2;
+    cam.setAttribute('transform','translate('+tx+' '+ty+') rotate('+(-cur.rot).toFixed(2)+') scale('+S.toFixed(4)+') translate('+(-cur.x).toFixed(2)+' '+(-cur.y).toFixed(2)+')');
 
     // Puck
     var p = pointAt(cur.len);
     puck.setAttribute('transform','translate('+p.x.toFixed(2)+' '+p.y.toFixed(2)+') rotate('+(angleAt(cur.len)+90).toFixed(2)+') scale('+inv.toFixed(4)+')');
 
-    // Marker + labels: contro-scala per dimensione costante
+    // Marker + labels: contro-scala + contro-rotazione per rimanere dritti
     var s,g,gl;
     for(s=0;s<n;s++){
       g=document.getElementById(stops[s].id);
-      if(g) g.setAttribute('transform','translate('+stops[s].x.toFixed(2)+' '+stops[s].y.toFixed(2)+') scale('+inv.toFixed(4)+')');
+      if(g) g.setAttribute('transform','translate('+stops[s].x.toFixed(2)+' '+stops[s].y.toFixed(2)+') rotate('+cur.rot.toFixed(2)+') scale('+inv.toFixed(4)+')');
       gl=document.getElementById(stops[s].lid);
-      if(gl) gl.setAttribute('transform','translate('+stops[s].x.toFixed(2)+' '+stops[s].y.toFixed(2)+') scale('+inv.toFixed(4)+')');
+      if(gl) gl.setAttribute('transform','translate('+stops[s].x.toFixed(2)+' '+stops[s].y.toFixed(2)+') rotate('+cur.rot.toFixed(2)+') scale('+inv.toFixed(4)+')');
     }
 
     // ETA bubble: contro-scala
@@ -564,10 +565,12 @@ function appicon(string $file, string $remote): string {
     cur.y += (tgt.y-cur.y)*LERP;
     cur.zoom += (tgt.zoom-cur.zoom)*LERP;
     cur.len += (tgt.len-cur.len)*LERP;
+    cur.rot += (tgt.rot-cur.rot)*LERP;
 
     var done = Math.abs(tgt.x-cur.x)<0.3 && Math.abs(tgt.y-cur.y)<0.3
-            && Math.abs(tgt.zoom-cur.zoom)<0.001 && Math.abs(tgt.len-cur.len)<0.3;
-    if(done){ cur.x=tgt.x; cur.y=tgt.y; cur.zoom=tgt.zoom; cur.len=tgt.len; }
+            && Math.abs(tgt.zoom-cur.zoom)<0.001 && Math.abs(tgt.len-cur.len)<0.3
+            && Math.abs(tgt.rot-cur.rot)<0.1;
+    if(done){ cur.x=tgt.x; cur.y=tgt.y; cur.zoom=tgt.zoom; cur.len=tgt.len; cur.rot=tgt.rot; }
     applyFrame();
     if(!done){ raf=requestAnimationFrame(frame); } else { raf=null; }
   }
@@ -604,6 +607,7 @@ function appicon(string $file, string $remote): string {
     tgt.y = st.y;
     tgt.zoom = DETAIL_ZOOM;
     tgt.len = st.len;
+    tgt.rot = angleAt(st.len) + 90;
 
     // Card
     detBadge.textContent = (i+1);
@@ -638,6 +642,7 @@ function appicon(string $file, string $remote): string {
     tgt.y = OVERVIEW.y;
     tgt.zoom = OVERVIEW.zoom;
     tgt.len = 0;
+    tgt.rot = 0;
 
     detail.classList.remove('show');
     paintSteps();
