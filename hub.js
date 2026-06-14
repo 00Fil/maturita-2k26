@@ -756,116 +756,46 @@ if (rebBtn) {
 
 
 /* ============================================================
-   App Note v3: icone Lucide-style, sidebar ad alto contrasto,
-   note con layout diversi e transizioni Apple-like.
+   App Note reale dark: contenuti fattuali dal curriculum, UI allineata.
    ============================================================ */
 (function(){
-  const app = document.querySelector('[data-notes-app]');
-  if (!app) return;
-  const notes = [
-    { id:'identity', layout:'hero', title:'Chi sono', filter:'featured', tags:['method'], meta:'Oggi', state:'Nota fissata', kicker:'Identità',
-      summary:'Mi piace capire le cose a fondo e poi trasformarle in qualcosa di concreto.',
-      quote:'Capisco come funzionano le cose, poi le costruisco.',
-      body:['Sono curioso, ma non in modo astratto. Quando qualcosa mi interessa provo a smontarla, a capirne la logica e a ricostruirla meglio.', 'Nel tempo ho capito che il dettaglio non è decorazione: è il punto in cui un progetto inizia a sembrare serio.'],
-      chips:['curiosità','metodo','cura','responsabilità'], checks:['Rendere chiaro ciò che è complesso','Costruire cose utili','Curare identità e dettagli'] },
-    { id:'school', layout:'notebook', title:'Il mio percorso', filter:'school', tags:['method'], meta:'Scuola', state:'Formazione', kicker:'Cerebotani · Informatica',
-      summary:'La scuola mi ha dato un linguaggio tecnico: codice, reti, sistemi e progetto.',
-      body:['Ho scelto Informatica e Telecomunicazioni perché volevo lavorare su cose concrete. Non solo teoria, ma strumenti, problemi e soluzioni.', 'Le materie tecniche mi hanno insegnato a ragionare per collegamenti: una funzione, una rete, un’interfaccia e una decisione organizzativa non sono mai davvero separate.'],
-      points:[['Programmare','Scrivere software pensando a chi lo userà.'],['Sistemi e reti','Capire cosa succede sotto la superficie.'],['Documentare','Spiegare il lavoro in modo ordinato.']], checks:['Sviluppo applicazioni','Sistemi e reti','Gestione progetto'] },
-    { id:'pcto', layout:'story', title:'CS Metal Europe', filter:'work', tags:['pcto','method'], meta:'PCTO', state:'Esperienza reale', kicker:'Scuola-lavoro',
-      summary:'In azienda ho visto cosa succede quando un lavoro tecnico deve servire davvero.',
-      body:['Il PCTO alla CS Metal Europe è stato un percorso continuo. Ho lavorato con dati di produzione, immagini, sito, blog, magazzino e comunicazione.', 'La lezione più importante non è stata solo tecnica: ogni informazione va pensata per chi la leggerà o la userà.'],
-      timeline:[['Dati','ordine e produzione'],['Comunicazione','immagini, sito, testi'],['Risultato','un progetto concreto']], callout:'Scrivere vuol dire pensare a chi legge. Costruire software vuol dire pensare a chi lo userà.', checks:['Dati produzione','Comunicazione','Magazzino','E-commerce'] },
-    { id:'projects', layout:'mosaic', title:'Progetti personali', filter:'work', tags:['method','community'], meta:'Dal 2024', state:'In costruzione', kicker:'Fuori dal programma',
-      summary:'I progetti personali sono il posto in cui provo a unire bisogno reale, codice e identità visiva.',
-      cards:[['Gestionale oratorio','Un progetto nato da una necessità concreta: organizzare meglio attività e persone.'],['denuvo.studio','Il mio spazio personale, dove il codice incontra grafica, motion e cura del prodotto.'],['Metodo','Prima capisco il problema, poi disegno la struttura. Solo dopo scrivo codice.'],['Qualità','Voglio che ciò che costruisco sembri intenzionale, non improvvisato.']], checks:['Analisi del bisogno','Interfaccia pulita','Struttura solida','Deploy'] },
-    { id:'outside', layout:'letter', title:'Fuori dall’aula', filter:'life', tags:['community'], meta:'Esperienze', state:'Comunità', kicker:'Persone',
-      summary:'Fuori da scuola ho imparato responsabilità, collaborazione e presenza.',
-      body:['Volontariato, Torneo dei Roncai, Festa del Sorriso e animazione in oratorio mi hanno insegnato a lavorare con gli altri e per gli altri.', 'Il concorso Volo tra le Righe mi ha fatto scoprire un modo diverso di progettare: raccontare un libro attraverso una playlist, scegliendo ritmo, immagini e senso.'],
-      quote:'Le esperienze migliori sono quelle in cui non costruisci solo per te.', checks:['Collaborare','Organizzare','Comunicare','Aiutare'] },
-    { id:'music', layout:'practice', title:'Musica e disciplina', filter:'life', tags:['method'], meta:'Violoncello', state:'Costanza', kicker:'Dal 2018',
-      summary:'Il violoncello mi ha insegnato che la qualità nasce dalla ripetizione fatta bene.',
-      body:['Studiare uno strumento significa accettare il lavoro lento: ascoltare, correggere, riprovare.', 'È una disciplina che porto anche nei progetti. Se qualcosa non funziona, non basta aggiungere: bisogna togliere rumore e migliorare il gesto.'],
-      steps:['ripeti','ascolta','correggi','ripeti meglio'], checks:['Esercizio','Ascolto','Correzione','Costanza'] },
-    { id:'future', layout:'direction', title:'Dove voglio andare', filter:'featured', tags:['method'], meta:'Dopo il diploma', state:'Direzione', kicker:'Prossima tappa',
-      summary:'Voglio crescere nel software, costruendo prodotti solidi, chiari e riconoscibili.',
-      body:['La direzione è continuare con l’informatica, rafforzare le basi e lavorare su progetti sempre più reali.', 'Mi interessa il punto in cui tecnologia, design e utilità si incontrano: quando un prodotto non solo funziona, ma trasmette qualità.'],
-      callout:'Belle fuori, solide dentro, utili per qualcuno.', checks:['Studiare informatica','Crescere nel design','Lavorare su prodotti reali','Pensare internazionale'] }
+  const app=document.querySelector('[data-notes-app]');
+  if(!app) return;
+  const notes=[
+    {id:'profile', filter:'all', tags:['curriculum'], title:'Profilo', meta:'Curriculum', label:'Curriculum dello studente', body:['Filippo Corsini.', 'Percorso di studi: Tecnico - Informatica.', 'Istituto: ITIS “Cerebotani” - Lonato.', 'Data di nascita: 8 gennaio 2007.'], points:['Tecnico - Informatica','ITIS “Cerebotani” - Lonato','Curriculum in lavorazione']},
+    {id:'studies', filter:'school', tags:['curriculum','scuola'], title:'Percorso di studi', meta:'Formazione', label:'Parte I — Istruzione e formazione', body:['Indirizzo di studi: Tecnico - Informatica.', 'Il piano di studi comprende discipline comuni e discipline di indirizzo: Informatica, Sistemi e Reti, TPSIT, Telecomunicazioni, GPOI.', 'Totale ore del piano di studi: 5313.'], points:['Informatica e Telecomunicazioni','Discipline tecniche di indirizzo','Totale piano di studi: 5313 ore']},
+    {id:'credits', filter:'school', tags:['curriculum','scuola'], title:'Credito scolastico', meta:'Scuola', label:'Credito', body:['Credito scolastico riportato nel curriculum:', 'III anno: 9 punti.', 'IV anno: 9 punti.', 'V anno: 11 punti.', 'Totale: 29 punti.'], points:['III: 9','IV: 9','V: 11','Totale: 29']},
+    {id:'pcto', filter:'pcto', tags:['curriculum','scuola'], title:'CS Metal Europe', meta:'PCTO', label:'Formazione scuola-lavoro', body:['Attività realizzate in ambiente lavorativo presso CS METAL EUROPE S.R.L.', 'Anno scolastico 2023/24: 120 ore presso la struttura.', 'Anno scolastico 2024/25: 120 ore presso la struttura.', 'Ore totali riportate: 240.'], points:['CS METAL EUROPE S.R.L.','2023/24: 120 ore','2024/25: 120 ore','Totale: 240 ore']},
+    {id:'skills', filter:'all', tags:['curriculum','scuola'], title:'Profilo di indirizzo', meta:'Competenze', label:'Competenze previste', body:['Il curriculum riporta competenze comuni dell’istruzione tecnica e competenze specifiche dell’indirizzo Informatica.', 'Tra le competenze specifiche: configurare e gestire sistemi e reti, sviluppare applicazioni informatiche per reti locali o servizi a distanza, gestire progetti e processi produttivi.'], points:['Sistemi e reti','Applicazioni informatiche','Gestione progetti','Documentazione tecnica']},
+    {id:'project', filter:'projects', tags:['curriculum','extra'], title:'Gestionale oratorio', meta:'Attività professionale', label:'Attività extrascolastica', body:['Tipo di esperienza: realizzazione di uno pseudo-gestionale per l’oratorio di Bedizzole.', 'Svolta presso: Oratorio di Bedizzole e Calvagese.', 'Luogo: Bedizzole (BS).', 'Durata: 01/01/2024 - 05/05/2026.'], points:['Oratorio di Bedizzole e Calvagese','Bedizzole (BS)','01/01/2024 - 05/05/2026']},
+    {id:'extra', filter:'activities', tags:['curriculum','extra'], title:'Attività extrascolastiche', meta:'Parte III', label:'Musica, volontariato, concorsi', body:['Attività musicali: corso di Violoncello presso Banda Musicale - Scuola di Musica “Elia Marini” di Calcinato.', 'Volontariato presso Festa del Sorriso / Tornei dei Roncai.', 'Attività di Animatore ed Educatore presso Oratorio di Bedizzole.', 'Partecipazione a gare o concorsi: Volo tra le Righe 3.0, ambito letterario, anno scolastico 2025.'], points:['Violoncello','Volontariato','Animatore ed Educatore','Volo tra le Righe 3.0']}
   ];
-  const list = app.querySelector('[data-notes-list]');
-  const screen = app.querySelector('[data-note-screen]');
-  const title = app.querySelector('[data-notes-title]');
-  const count = app.querySelector('[data-notes-count]');
-  const state = app.querySelector('[data-note-state]');
-  let filter = 'all', current = 'identity', textSize = 'normal', grid = false, checklist = false;
-  const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const strip = s => String(s).replace(/<[^>]+>/g,'');
-  function visible(){ return notes.filter(n => filter === 'all' || n.filter === filter || n.tags.includes(filter) || (filter === 'featured' && ['identity','future','pcto'].includes(n.id))); }
-  function folderTitle(){ return filter === 'all' ? 'Tutte iCloud' : (app.querySelector(`[data-filter="${filter}"] b`)?.textContent || app.querySelector(`[data-filter="${filter}"]`)?.textContent || 'Note'); }
-  function renderList(animate){
-    const rows = visible();
-    if (!rows.some(n => n.id === current)) current = rows[0]?.id || notes[0].id;
-    title.textContent = folderTitle();
-    count.textContent = rows.length + (rows.length === 1 ? ' nota' : ' note');
-    list.classList.toggle('notes-list-refresh', !!animate);
-    list.innerHTML = rows.map(n => `<button class="note-preview ${n.id===current?'on':''}" data-note="${n.id}" type="button"><b>${esc(n.title)}</b><small>${esc(n.meta)}</small><p>${esc(strip(n.summary))}</p></button>`).join('');
-    if (animate) setTimeout(()=>list.classList.remove('notes-list-refresh'), 260);
-  }
-  function checks(n){ return `<div class="note-check-panel ${checklist?'on':''}"><ul class="note-check-list">${n.checks.map((c,i)=>`<li><button type="button" data-check="${i}" aria-label="Completa ${esc(c)}"></button>${esc(c)}</li>`).join('')}</ul></div>`; }
-  function bodyParas(n){ return (n.body||[]).map(p=>`<p>${esc(p)}</p>`).join(''); }
-  function layout(n){
-    if (n.layout === 'hero') return `<div class="note-composition note-hero-layout"><div class="note-hero-quote">${esc(n.quote)}</div><div class="note-prose">${bodyParas(n)}</div><div class="note-chip-row">${n.chips.map(c=>`<span>${esc(c)}</span>`).join('')}</div>${checks(n)}</div>`;
-    if (n.layout === 'notebook') return `<div class="note-composition note-notebook-layout"><div class="note-prose ruled">${bodyParas(n)}</div><div class="note-point-grid">${n.points.map(p=>`<div><b>${esc(p[0])}</b><span>${esc(p[1])}</span></div>`).join('')}</div>${checks(n)}</div>`;
-    if (n.layout === 'story') return `<div class="note-composition note-story-layout"><div class="note-prose">${bodyParas(n)}</div><div class="note-timeline">${n.timeline.map(t=>`<div><b>${esc(t[0])}</b><span>${esc(t[1])}</span></div>`).join('')}</div><blockquote>${esc(n.callout)}</blockquote>${checks(n)}</div>`;
-    if (n.layout === 'mosaic') return `<div class="note-composition note-mosaic-layout">${n.cards.map((c,i)=>`<div class="mosaic-card m${i+1}"><b>${esc(c[0])}</b><p>${esc(c[1])}</p></div>`).join('')}${checks(n)}</div>`;
-    if (n.layout === 'letter') return `<div class="note-composition note-letter-layout"><div class="note-prose letter">${bodyParas(n)}</div><blockquote>${esc(n.quote)}</blockquote>${checks(n)}</div>`;
-    if (n.layout === 'practice') return `<div class="note-composition note-practice-layout"><div class="practice-steps">${n.steps.map(s=>`<span>${esc(s)}</span>`).join('')}</div><div class="note-prose">${bodyParas(n)}</div>${checks(n)}</div>`;
-    return `<div class="note-composition note-direction-layout"><div class="note-prose">${bodyParas(n)}</div><div class="direction-card">${esc(n.callout)}</div>${checks(n)}</div>`;
+  const list=app.querySelector('[data-notes-list]');
+  const screen=app.querySelector('[data-note-screen]');
+  const title=app.querySelector('[data-notes-title]');
+  const count=app.querySelector('[data-notes-count]');
+  let filter='all', current='profile', large=false, showPoints=true;
+  const folderNames={all:'Tutte le note', school:'Formazione', pcto:'PCTO', projects:'Progetti', activities:'Attività', curriculum:'#curriculum', scuola:'#scuola', extra:'#extra'};
+  function visible(){return notes.filter(n=>filter==='all'||n.filter===filter||n.tags.includes(filter));}
+  function renderList(){
+    const rows=visible(); if(!rows.some(n=>n.id===current)) current=rows[0]?.id||notes[0].id;
+    title.textContent=folderNames[filter]||'Note'; count.textContent=rows.length+(rows.length===1?' nota':' note');
+    list.innerHTML=rows.map(n=>`<button class="nr-row ${n.id===current?'active':''}" data-note="${n.id}" type="button"><b>${n.title}</b><span>${n.meta}</span><p>${n.body[0]}</p></button>`).join('');
   }
   function renderNote(){
-    const n = notes.find(x => x.id === current) || notes[0];
-    state.textContent = n.state;
-    screen.dataset.size = textSize;
-    screen.dataset.view = grid ? 'grid' : 'page';
-    screen.classList.remove('note-changing');
-    void screen.offsetWidth;
-    screen.classList.add('note-changing');
-    screen.innerHTML = `<div class="note-topline"><span>14 giugno 2026 · ${esc(n.meta)}</span><span class="copy-status" data-copy-status>Copiato</span></div><span class="note-kicker">${esc(n.kicker)}</span><h2>${esc(n.title)}</h2><p class="note-summary">${n.summary}</p>${layout(n)}`;
+    const n=notes.find(x=>x.id===current)||notes[0];
+    screen.classList.remove('switching'); void screen.offsetWidth; screen.classList.add('switching');
+    screen.classList.toggle('large', large);
+    screen.innerHTML=`<div class="nr-note-date">Curriculum dello studente</div><span class="nr-note-label">${n.label}</span><h2>${n.title}</h2><div class="nr-note-body">${n.body.map(p=>`<p>${p}</p>`).join('')}</div><div class="nr-points ${showPoints?'show':''}"><h3>Punti chiave</h3>${n.points.map(p=>`<div><span></span>${p}</div>`).join('')}</div>`;
   }
-  function render(opts={}){ renderList(!!opts.animateList); renderNote(); syncButtons(); }
-  function syncButtons(){
-    app.querySelectorAll('[data-filter]').forEach(b => b.classList.toggle('on', b.dataset.filter === filter));
-    app.querySelector('[data-note-action="font"]')?.classList.toggle('on', textSize === 'large');
-    app.querySelector('[data-note-action="grid"]')?.classList.toggle('on', grid);
-    app.querySelector('[data-note-action="check"]')?.classList.toggle('on', checklist);
-    app.querySelector('[data-note-action="focus"]')?.classList.toggle('on', app.classList.contains('focus'));
-  }
-  app.addEventListener('click', e => {
-    const f = e.target.closest('[data-filter]');
-    if (f) { filter = f.dataset.filter; render({animateList:true}); sndClick?.(); return; }
-    const row = e.target.closest('[data-note]');
-    if (row) { current = row.dataset.note; render({animateList:false}); sndOpen?.(); return; }
-    const chk = e.target.closest('[data-check]');
-    if (chk) { chk.closest('li').classList.toggle('done'); sndClick?.(); return; }
-    const act = e.target.closest('[data-note-action]');
-    if (act) {
-      const a = act.dataset.noteAction;
-      if (a === 'font') textSize = textSize === 'large' ? 'normal' : 'large';
-      if (a === 'grid') grid = !grid;
-      if (a === 'check') checklist = !checklist;
-      if (a === 'focus') app.classList.toggle('focus');
-      if (a === 'share') {
-        const n = notes.find(x => x.id === current);
-        navigator.clipboard?.writeText(strip(n.summary)).catch(()=>{});
-        const st = app.querySelector('[data-copy-status]');
-        if (st) { st.classList.add('show'); setTimeout(()=>st.classList.remove('show'), 950); }
-        sndClick?.(); return;
-      }
-      render({animateList:false}); sndClick?.(); return;
-    }
-    const prev = e.target.closest('[data-note-prev]');
-    if (prev) { const rows = visible(); const i = rows.findIndex(n => n.id === current); current = rows[(i - 1 + rows.length) % rows.length]?.id || current; render({animateList:false}); sndClick?.(); }
+  function sync(){app.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('selected',b.dataset.filter===filter)); app.querySelector('[data-note-action="font"]')?.classList.toggle('active',large); app.querySelector('[data-note-action="check"]')?.classList.toggle('active',showPoints); app.querySelector('[data-note-action="focus"]')?.classList.toggle('active',app.classList.contains('focus'));}
+  function render(){renderList(); renderNote(); sync();}
+  app.addEventListener('click',e=>{
+    const f=e.target.closest('[data-filter]'); if(f){filter=f.dataset.filter; render(); sndClick?.(); return;}
+    const row=e.target.closest('[data-note]'); if(row){current=row.dataset.note; render(); sndOpen?.(); return;}
+    const act=e.target.closest('[data-note-action]'); if(act){const a=act.dataset.noteAction; if(a==='font') large=!large; if(a==='check') showPoints=!showPoints; if(a==='focus') app.classList.toggle('focus'); render(); sndClick?.(); return;}
+    const prev=e.target.closest('[data-note-prev]'); if(prev){const rows=visible(); const i=rows.findIndex(n=>n.id===current); current=rows[(i-1+rows.length)%rows.length]?.id||current; render(); sndClick?.();}
   });
-  render({animateList:true});
+  render();
 })();
 

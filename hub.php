@@ -125,54 +125,57 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-orange notes-window" id="w-io" style="left:5%;top:5%;width:1080px">
-  <div class="titlebar notes-titlebar"><span class="wt"></span>
-    <div class="notes-chrome-left" aria-hidden="true">
-      <button class="ntool"><svg viewBox="0 0 24 24"><path d="M3.5 6.8h6.2l1.8 2h9v8.4a2.3 2.3 0 0 1-2.3 2.3H5.8a2.3 2.3 0 0 1-2.3-2.3z"/><path d="M3.5 9h17"/></svg></button>
-      <button class="ntool"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M9 5v14"/></svg></button>
-    </div>
-    <div class="notes-chrome-mid" aria-hidden="true">
-      <button class="ntool ntool-more">•••</button>
-      <button class="ntool"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/></svg></button>
-    </div>
-  </div>
-  <div class="wbody notes-mock" aria-label="Mock grafico app Note macOS">
-    <aside class="nm-sidebar">
-      <nav class="nm-side-list nm-primary">
-        <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/><path d="M8 9h8M8 13h6"/></svg></span><b>Quick Notes</b><em>6</em></button>
-        <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9.5 12h5M12 9.5v5"/></svg></span><b>Shared</b><em>550</em></button>
-      </nav>
-
-      <div class="nm-section-label">iCloud</div>
-      <nav class="nm-side-list">
-        <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>All iCloud</b><em>638</em></button>
-        <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>Notes</b><em>14</em></button>
-        <button class="nm-side-item selected"><span class="nm-chev">⌄</span><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>Imported Notes</b><span class="nm-dots">•••</span><em>1</em></button>
-        <button class="nm-side-item"><span class="nm-chev">›</span><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>ETS</b><em>2</em></button>
-        <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>Prompts</b><em>2</em></button>
-        <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>Research IT</b><em>15</em></button>
-        <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M6 7h12M9 7V5h6v2M8 10v8M12 10v8M16 10v8M7 7l1 13h8l1-13"/></svg></span><b>Recently Deleted</b><em>27</em></button>
-      </nav>
-
-      <div class="nm-section-label">Tags</div>
-      <div class="nm-tags"><button>All Tags</button><button>#s</button></div>
-    </aside>
-
-    <aside class="nm-list-pane">
-      <div class="nm-list-title"><h2>Imported Notes</h2><span>1 note</span></div>
-      <div class="nm-day">Today</div>
-      <button class="nm-note-row active">
-        <b>Export From Stickies Summary</b>
-        <p><span>15:04</span> · Date exported: 22/1/26, 15:04</p>
+<section class="win a-orange notes-real-window" id="w-io" style="left:6%;top:6%;width:1060px">
+  <div class="titlebar notes-real-titlebar"><span class="wt">Su di me — Note</span></div>
+  <div class="wbody notes-real-app" data-notes-app>
+    <aside class="nr-sidebar" aria-label="Cartelle Note">
+      <div class="nr-toolbar-space"></div>
+      <button class="nr-folder selected" data-filter="all" type="button">
+        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M4 7h6l1.7 2H20v9H4z"/></svg></span>
+        <b>Tutte le note</b><em>7</em>
       </button>
+      <button class="nr-folder" data-filter="school" type="button">
+        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="m3.5 8.5 8.5-4.2 8.5 4.2-8.5 4.2z"/><path d="M7 11v4.4c0 1.5 2.2 2.7 5 2.7s5-1.2 5-2.7V11"/></svg></span>
+        <b>Formazione</b><em>2</em>
+      </button>
+      <button class="nr-folder" data-filter="pcto" type="button">
+        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M9 7V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V7"/><rect x="4" y="7" width="16" height="12" rx="2.4"/><path d="M4 12h16"/></svg></span>
+        <b>PCTO</b><em>1</em>
+      </button>
+      <button class="nr-folder" data-filter="projects" type="button">
+        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M8 8h8v8H8z"/><path d="M4 4h5v5H4zM15 4h5v5h-5zM4 15h5v5H4zM15 15h5v5h-5z"/></svg></span>
+        <b>Progetti</b><em>1</em>
+      </button>
+      <button class="nr-folder" data-filter="activities" type="button">
+        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M12 4v16M5 9h14M7 15h10"/><path d="M6 20h12"/></svg></span>
+        <b>Attività</b><em>3</em>
+      </button>
+      <div class="nr-label">Tag</div>
+      <div class="nr-tags">
+        <button data-filter="curriculum" type="button">#curriculum</button>
+        <button data-filter="scuola" type="button">#scuola</button>
+        <button data-filter="extra" type="button">#extra</button>
+      </div>
     </aside>
 
-    <main class="nm-editor-pane">
-      <div class="nm-editor-content">
-        <h3>Export From Stickies Summary</h3>
-        <p>• Date exported: 22/1/26, 15:04<br>• Total notes exported: 1</p>
-        <p>Notes are organized into separate folders based on color. Click on the folder with the color name to see all notes of that color.</p>
+    <aside class="nr-list" aria-label="Elenco note">
+      <div class="nr-list-head">
+        <h2 data-notes-title>Tutte le note</h2>
+        <span data-notes-count>7 note</span>
       </div>
+      <div class="nr-items" data-notes-list></div>
+    </aside>
+
+    <main class="nr-editor" aria-live="polite">
+      <div class="nr-editor-toolbar">
+        <button data-note-prev type="button" aria-label="Nota precedente"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button>
+        <div class="nr-toolbar-actions">
+          <button data-note-action="font" type="button" aria-label="Dimensione testo">Aa</button>
+          <button data-note-action="check" type="button" aria-label="Punti chiave"><svg viewBox="0 0 24 24"><path d="M5 7h.01M9 7h10M5 12h.01M9 12h10M5 17h.01M9 17h10"/></svg></button>
+          <button data-note-action="focus" type="button" aria-label="Focus"><svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
+        </div>
+      </div>
+      <article class="nr-note" data-note-screen></article>
     </main>
   </div>
 </section>
