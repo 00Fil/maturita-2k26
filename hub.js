@@ -756,37 +756,89 @@ if (rebBtn) {
 
 
 /* ============================================================
-   App Note reale dark: contenuti fattuali dal curriculum, UI allineata.
+   App Note reale dark: attività dal curriculum + polaroid/post-it.
    ============================================================ */
 (function(){
   const app=document.querySelector('[data-notes-app]');
   if(!app) return;
   const notes=[
-    {id:'profile', filter:'all', tags:['curriculum'], title:'Profilo', meta:'Curriculum', label:'Curriculum dello studente', body:['Filippo Corsini.', 'Percorso di studi: Tecnico - Informatica.', 'Istituto: ITIS “Cerebotani” - Lonato.', 'Data di nascita: 8 gennaio 2007.'], points:['Tecnico - Informatica','ITIS “Cerebotani” - Lonato','Curriculum in lavorazione']},
-    {id:'studies', filter:'school', tags:['curriculum','scuola'], title:'Percorso di studi', meta:'Formazione', label:'Parte I — Istruzione e formazione', body:['Indirizzo di studi: Tecnico - Informatica.', 'Il piano di studi comprende discipline comuni e discipline di indirizzo: Informatica, Sistemi e Reti, TPSIT, Telecomunicazioni, GPOI.', 'Totale ore del piano di studi: 5313.'], points:['Informatica e Telecomunicazioni','Discipline tecniche di indirizzo','Totale piano di studi: 5313 ore']},
-    {id:'credits', filter:'school', tags:['curriculum','scuola'], title:'Credito scolastico', meta:'Scuola', label:'Credito', body:['Credito scolastico riportato nel curriculum:', 'III anno: 9 punti.', 'IV anno: 9 punti.', 'V anno: 11 punti.', 'Totale: 29 punti.'], points:['III: 9','IV: 9','V: 11','Totale: 29']},
-    {id:'pcto', filter:'pcto', tags:['curriculum','scuola'], title:'CS Metal Europe', meta:'PCTO', label:'Formazione scuola-lavoro', body:['Attività realizzate in ambiente lavorativo presso CS METAL EUROPE S.R.L.', 'Anno scolastico 2023/24: 120 ore presso la struttura.', 'Anno scolastico 2024/25: 120 ore presso la struttura.', 'Ore totali riportate: 240.'], points:['CS METAL EUROPE S.R.L.','2023/24: 120 ore','2024/25: 120 ore','Totale: 240 ore']},
-    {id:'skills', filter:'all', tags:['curriculum','scuola'], title:'Profilo di indirizzo', meta:'Competenze', label:'Competenze previste', body:['Il curriculum riporta competenze comuni dell’istruzione tecnica e competenze specifiche dell’indirizzo Informatica.', 'Tra le competenze specifiche: configurare e gestire sistemi e reti, sviluppare applicazioni informatiche per reti locali o servizi a distanza, gestire progetti e processi produttivi.'], points:['Sistemi e reti','Applicazioni informatiche','Gestione progetti','Documentazione tecnica']},
-    {id:'project', filter:'projects', tags:['curriculum','extra'], title:'Gestionale oratorio', meta:'Attività professionale', label:'Attività extrascolastica', body:['Tipo di esperienza: realizzazione di uno pseudo-gestionale per l’oratorio di Bedizzole.', 'Svolta presso: Oratorio di Bedizzole e Calvagese.', 'Luogo: Bedizzole (BS).', 'Durata: 01/01/2024 - 05/05/2026.'], points:['Oratorio di Bedizzole e Calvagese','Bedizzole (BS)','01/01/2024 - 05/05/2026']},
-    {id:'extra', filter:'activities', tags:['curriculum','extra'], title:'Attività extrascolastiche', meta:'Parte III', label:'Musica, volontariato, concorsi', body:['Attività musicali: corso di Violoncello presso Banda Musicale - Scuola di Musica “Elia Marini” di Calcinato.', 'Volontariato presso Festa del Sorriso / Tornei dei Roncai.', 'Attività di Animatore ed Educatore presso Oratorio di Bedizzole.', 'Partecipazione a gare o concorsi: Volo tra le Righe 3.0, ambito letterario, anno scolastico 2025.'], points:['Violoncello','Volontariato','Animatore ed Educatore','Volo tra le Righe 3.0']}
+    {
+      id:'curriculum', filter:'curriculum', tags:['scuola'], title:'Curriculum', meta:'Documento', label:'Percorso personale',
+      image:'assets/notes/curriculum-page-1.png', kind:'polaroid', caption:'Curriculum dello studente',
+      body:['Documento sintetico del percorso scolastico e delle attività svolte fuori dall’aula.', 'Raccoglie formazione, PCTO, competenze di indirizzo e attività extrascolastiche senza trasformarle in racconto celebrativo.'],
+      chips:['Tecnico - Informatica','ITIS “Cerebotani” - Lonato','In lavorazione']
+    },
+    {
+      id:'pcto', filter:'pcto', tags:['scuola'], title:'CS Metal Europe', meta:'PCTO', label:'Formazione scuola-lavoro',
+      kind:'postit', caption:'Ambiente lavorativo',
+      body:['Esperienza svolta presso CS METAL EUROPE S.R.L. come attività realizzata in ambiente lavorativo.', 'Il valore della nota è preciso: scuola e azienda entrano in contatto, e le competenze tecniche vengono osservate nel contesto reale di una struttura produttiva.'],
+      chips:['CS METAL EUROPE S.R.L.','Ambiente lavorativo','Scuola-lavoro']
+    },
+    {
+      id:'gestionale', filter:'projects', tags:['oratorio'], title:'Gestionale oratorio', meta:'Progetto informatico', label:'Attività professionale',
+      kind:'postit-code', caption:'Progetto per l’oratorio',
+      body:['Realizzazione di uno pseudo-gestionale per l’Oratorio di Bedizzole e Calvagese.', 'L’attività consiste nell’applicare competenze informatiche scolastiche a un bisogno concreto dell’oratorio, integrandole con approfondimenti individuali.'],
+      chips:['Bedizzole','Oratorio','Progetto informatico']
+    },
+    {
+      id:'sportly', filter:'projects', tags:['oratorio'], title:'Sportly', meta:'Book. Play. Connect.', label:'Concept digitale',
+      image:'assets/notes/sportly.png', kind:'polaroid wide', caption:'Identità progetto',
+      body:['Concept visivo e digitale collegato al mondo dello sport e della prenotazione.', 'La nota resta breve: un supporto creativo per mostrare attenzione a identità, interfaccia e presentazione del progetto.'],
+      chips:['Book','Play','Connect']
+    },
+    {
+      id:'musa', filter:'culture', tags:['arte'], title:'MuSa di Salò', meta:'Mostra', label:'Attività culturale',
+      kind:'ticket', caption:'“L’ultimo inverno”',
+      body:['Visita della mostra temporanea presso il MuSa di Salò, accompagnata dalla professoressa Alessia Bosio.', 'L’attività è culturale e artistica: osservazione diretta di una mostra, fuori dall’orario scolastico, come esperienza di contatto con linguaggi visivi e memoria storica.'],
+      chips:['MuSa di Salò','Mostra temporanea','L’ultimo inverno']
+    },
+    {
+      id:'cello', filter:'extra', tags:['arte'], title:'Violoncello', meta:'Musica', label:'Attività musicale',
+      kind:'photo-note cello', caption:'Scuola di Musica “Elia Marini”',
+      body:['Corso di Violoncello presso la Banda Musicale - Scuola di Musica “Elia Marini” di Calcinato.', 'Nel curriculum questa attività descrive un percorso musicale continuativo, legato a studio, ascolto, esercizio e disciplina dello strumento.'],
+      chips:['Violoncello','Calcinato','Scuola di musica']
+    },
+    {
+      id:'educatore', filter:'extra', tags:['oratorio'], title:'Animatore ed educatore', meta:'Oratorio', label:'Cittadinanza attiva',
+      kind:'photo-note group', caption:'Attività con i ragazzi',
+      body:['Attività di animatore ed educatore presso l’Oratorio di Bedizzole.', 'Consiste nel partecipare alla vita dell’oratorio con responsabilità educative, organizzative e relazionali verso bambini e ragazzi.'],
+      chips:['Oratorio di Bedizzole','Educazione','Gruppo']
+    },
+    {
+      id:'volontariato', filter:'extra', tags:['oratorio'], title:'Festa del Sorriso', meta:'Volontariato', label:'Tornei dei Roncai',
+      kind:'postit-orange', caption:'Volontariato',
+      body:['Volontariato presso la Festa del Sorriso e i Tornei dei Roncai, collegato alle attività dell’Oratorio di Bedizzole.', 'L’esperienza riguarda il supporto pratico e organizzativo durante iniziative locali, con presenza nei periodi indicati dal curriculum.'],
+      chips:['Festa del Sorriso','Tornei dei Roncai','Volontariato']
+    },
+    {
+      id:'concorso', filter:'culture', tags:['arte'], title:'Volo tra le Righe', meta:'Contest', label:'Concorso letterario',
+      kind:'poster', caption:'Giovani lettori',
+      body:['Partecipazione al contest letterario “Volo tra le Righe 3.0”.', 'Il curriculum riporta l’acquisizione dell’attestato di partecipazione: una nota culturale, legata a lettura, scrittura e confronto creativo.'],
+      chips:['Letterario','Attestato','Biblioteca']
+    }
   ];
   const list=app.querySelector('[data-notes-list]');
   const screen=app.querySelector('[data-note-screen]');
   const title=app.querySelector('[data-notes-title]');
   const count=app.querySelector('[data-notes-count]');
-  let filter='all', current='profile', large=false, showPoints=true;
-  const folderNames={all:'Tutte le note', school:'Formazione', pcto:'PCTO', projects:'Progetti', activities:'Attività', curriculum:'#curriculum', scuola:'#scuola', extra:'#extra'};
+  let filter='all', current='curriculum', large=false, showPoints=true;
+  const folderNames={all:'Tutte le note', curriculum:'Curriculum', pcto:'PCTO', projects:'Progetti', extra:'Attività extra', culture:'Cultura', scuola:'#scuola', oratorio:'#oratorio', arte:'#arte'};
   function visible(){return notes.filter(n=>filter==='all'||n.filter===filter||n.tags.includes(filter));}
+  function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+  function visual(n){
+    if(n.image) return `<figure class="nr-visual ${esc(n.kind)}"><img src="${esc(n.image)}" alt="${esc(n.caption)}"><figcaption>${esc(n.caption)}</figcaption></figure>`;
+    return `<figure class="nr-visual ${esc(n.kind)}"><div class="nr-visual-art"><span>${esc(n.caption)}</span></div><figcaption>${esc(n.caption)}</figcaption></figure>`;
+  }
   function renderList(){
     const rows=visible(); if(!rows.some(n=>n.id===current)) current=rows[0]?.id||notes[0].id;
     title.textContent=folderNames[filter]||'Note'; count.textContent=rows.length+(rows.length===1?' nota':' note');
-    list.innerHTML=rows.map(n=>`<button class="nr-row ${n.id===current?'active':''}" data-note="${n.id}" type="button"><b>${n.title}</b><span>${n.meta}</span><p>${n.body[0]}</p></button>`).join('');
+    list.innerHTML=rows.map(n=>`<button class="nr-row ${n.id===current?'active':''}" data-note="${esc(n.id)}" type="button"><b>${esc(n.title)}</b><span>${esc(n.meta)}</span><p>${esc(n.body[0])}</p></button>`).join('');
   }
   function renderNote(){
     const n=notes.find(x=>x.id===current)||notes[0];
     screen.classList.remove('switching'); void screen.offsetWidth; screen.classList.add('switching');
     screen.classList.toggle('large', large);
-    screen.innerHTML=`<div class="nr-note-date">Curriculum dello studente</div><span class="nr-note-label">${n.label}</span><h2>${n.title}</h2><div class="nr-note-body">${n.body.map(p=>`<p>${p}</p>`).join('')}</div><div class="nr-points ${showPoints?'show':''}"><h3>Punti chiave</h3>${n.points.map(p=>`<div><span></span>${p}</div>`).join('')}</div>`;
+    screen.innerHTML=`<div class="nr-note-date">${esc(n.meta)}</div><div class="nr-note-layout">${visual(n)}<section class="nr-note-copy"><span class="nr-note-label">${esc(n.label)}</span><h2>${esc(n.title)}</h2><div class="nr-note-body">${n.body.map(p=>`<p>${esc(p)}</p>`).join('')}</div><div class="nr-points ${showPoints?'show':''}">${n.chips.map(p=>`<div><span></span>${esc(p)}</div>`).join('')}</div></section></div>`;
   }
   function sync(){app.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('selected',b.dataset.filter===filter)); app.querySelector('[data-note-action="font"]')?.classList.toggle('active',large); app.querySelector('[data-note-action="check"]')?.classList.toggle('active',showPoints); app.querySelector('[data-note-action="focus"]')?.classList.toggle('active',app.classList.contains('focus'));}
   function render(){renderList(); renderNote(); sync();}

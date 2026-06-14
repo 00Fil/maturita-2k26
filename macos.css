@@ -1507,3 +1507,43 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 @media (max-width:900px){ .notes-real-app{grid-template-columns:230px minmax(0,1fr)} .nr-sidebar{display:none} }
 @media (max-width:760px){ .notes-real-app{grid-template-columns:1fr}.nr-list{display:none}.nr-note{padding:26px 24px} }
 
+/* ============================================================
+   NOTES CREATIVE — polaroid e post-it in dark mode
+   ============================================================ */
+.nr-folder { grid-template-columns:24px minmax(0,1fr); }
+.nr-folder em { display:none; }
+.nr-note { padding:24px 34px 32px; overflow:hidden; }
+.nr-note-date { text-align:left; margin:0 0 12px; }
+.nr-note-layout { display:grid; grid-template-columns: minmax(210px, 300px) minmax(0, 1fr); gap:30px; align-items:start; max-width:860px; }
+.nr-note-copy { min-width:0; }
+.nr-note h2 { font-size:30px; }
+.nr-note-body { gap:12px; }
+.nr-note-body p { font-size:14.5px; line-height:1.58; }
+.nr-points { display:flex; flex-wrap:wrap; gap:8px; margin-top:18px; padding:0; background:transparent; box-shadow:none; }
+.nr-points.show { display:flex; }
+.nr-points div { border-radius:999px; padding:7px 10px; background:rgba(242,178,0,.12); color:rgba(255,226,147,.92); box-shadow:inset 0 0 0 1px rgba(242,178,0,.18); font-size:12px; }
+.nr-points div span { display:none; }
+.nr-visual { position:relative; margin:2px 0 0; width:100%; border-radius:18px; transform:rotate(-1.4deg); filter:drop-shadow(0 22px 34px rgba(0,0,0,.34)); }
+.nr-visual img { display:block; width:100%; height:260px; object-fit:cover; border-radius:12px 12px 8px 8px; }
+.nr-visual figcaption { min-height:42px; display:flex; align-items:center; justify-content:center; padding:10px 12px 13px; color:#252525; font-family:"Comic Sans MS", "Bradley Hand", cursive; font-size:13px; font-weight:700; letter-spacing:-.02em; text-align:center; background:#f4eee0; border-radius:0 0 14px 14px; }
+.nr-visual.polaroid, .nr-visual.photo-note { padding:10px 10px 0; background:#f4eee0; }
+.nr-visual.polaroid.wide { transform:rotate(1.1deg); }
+.nr-visual.polaroid.wide img { height:205px; }
+.nr-visual.polaroid:not(.wide) img { object-fit:cover; object-position:top center; height:300px; }
+.nr-visual-art { height:246px; border-radius:16px; display:flex; align-items:center; justify-content:center; padding:24px; text-align:center; overflow:hidden; }
+.nr-visual-art span { position:relative; z-index:1; color:#23210f; font-size:28px; line-height:1.05; font-weight:900; letter-spacing:-.045em; }
+.nr-visual.postit { transform:rotate(1.5deg); }
+.nr-visual.postit .nr-visual-art { background:linear-gradient(145deg,#ffe78a,#ffd866); box-shadow:inset 0 -18px 40px rgba(141,94,0,.14); }
+.nr-visual.postit-code .nr-visual-art { background:linear-gradient(145deg,#d9f7ff,#8ee4ff); }
+.nr-visual.postit-code .nr-visual-art::before { content:"{ }"; position:absolute; font-size:92px; font-weight:900; color:rgba(0,90,120,.14); }
+.nr-visual.ticket .nr-visual-art { background:linear-gradient(135deg,#f4d3ff,#bde5ff); }
+.nr-visual.ticket .nr-visual-art::before { content:""; position:absolute; inset:18px; border:2px dashed rgba(45,43,70,.28); border-radius:14px; }
+.nr-visual.postit-orange .nr-visual-art { background:linear-gradient(145deg,#ffc079,#ff8f55); }
+.nr-visual.poster .nr-visual-art { background:radial-gradient(circle at 50% 58%,#ead96e 0 30%,transparent 31%), linear-gradient(140deg,#eaf7ff,#fff); }
+.nr-visual.poster .nr-visual-art::before { content:""; position:absolute; width:150px; height:190px; right:-34px; top:-8px; background:linear-gradient(90deg,#2d67b1 0 35%,#f1a300 36% 58%,#f8f8f8 59% 72%,#1f4779 73%); border-radius:50% 50% 46% 46%; transform:rotate(-15deg); opacity:.86; }
+.nr-visual.cello .nr-visual-art { background:linear-gradient(145deg,#f0d0a4,#c97939); }
+.nr-visual.cello .nr-visual-art::before { content:"♪"; position:absolute; font-size:120px; color:rgba(72,31,8,.16); }
+.nr-visual.group .nr-visual-art { background:linear-gradient(145deg,#b8e8ff,#88d69a); }
+.nr-visual.group .nr-visual-art::before { content:""; position:absolute; width:190px; height:190px; border-radius:50%; background:rgba(255,255,255,.18); }
+@media (max-width:980px){ .nr-note-layout{grid-template-columns:1fr}.nr-visual{max-width:330px}.nr-note{overflow:auto} }
+

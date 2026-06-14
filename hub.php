@@ -132,29 +132,33 @@ function appicon(string $file, string $remote): string {
       <div class="nr-toolbar-space"></div>
       <button class="nr-folder selected" data-filter="all" type="button">
         <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M4 7h6l1.7 2H20v9H4z"/></svg></span>
-        <b>Tutte le note</b><em>7</em>
+        <b>Tutte le note</b>
       </button>
-      <button class="nr-folder" data-filter="school" type="button">
-        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="m3.5 8.5 8.5-4.2 8.5 4.2-8.5 4.2z"/><path d="M7 11v4.4c0 1.5 2.2 2.7 5 2.7s5-1.2 5-2.7V11"/></svg></span>
-        <b>Formazione</b><em>2</em>
+      <button class="nr-folder" data-filter="curriculum" type="button">
+        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M8 9h8M8 13h6"/></svg></span>
+        <b>Curriculum</b>
       </button>
       <button class="nr-folder" data-filter="pcto" type="button">
         <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M9 7V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V7"/><rect x="4" y="7" width="16" height="12" rx="2.4"/><path d="M4 12h16"/></svg></span>
-        <b>PCTO</b><em>1</em>
+        <b>PCTO</b>
       </button>
       <button class="nr-folder" data-filter="projects" type="button">
         <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M8 8h8v8H8z"/><path d="M4 4h5v5H4zM15 4h5v5h-5zM4 15h5v5H4zM15 15h5v5h-5z"/></svg></span>
-        <b>Progetti</b><em>1</em>
+        <b>Progetti</b>
       </button>
-      <button class="nr-folder" data-filter="activities" type="button">
+      <button class="nr-folder" data-filter="extra" type="button">
         <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M12 4v16M5 9h14M7 15h10"/><path d="M6 20h12"/></svg></span>
-        <b>Attività</b><em>3</em>
+        <b>Attività extra</b>
+      </button>
+      <button class="nr-folder" data-filter="culture" type="button">
+        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M4 19V5l8-2 8 2v14"/><path d="M8 9h8M8 13h8"/></svg></span>
+        <b>Cultura</b>
       </button>
       <div class="nr-label">Tag</div>
       <div class="nr-tags">
-        <button data-filter="curriculum" type="button">#curriculum</button>
         <button data-filter="scuola" type="button">#scuola</button>
-        <button data-filter="extra" type="button">#extra</button>
+        <button data-filter="oratorio" type="button">#oratorio</button>
+        <button data-filter="arte" type="button">#arte</button>
       </div>
     </aside>
 
