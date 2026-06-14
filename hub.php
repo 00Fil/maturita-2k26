@@ -336,24 +336,22 @@ function appicon(string $file, string $remote): string {
           <g class="mk-label" id="ml2" transform="translate(680 280)"><rect x="-52" y="14" width="104" height="22" rx="11" fill="rgba(0,122,255,.88)"/><text x="0" y="29" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="'SF Pro Text','Inter',system-ui,sans-serif">Specializzazione</text></g>
           <g class="mk-label" id="ml3" transform="translate(920 170)"><rect x="-30" y="14" width="60" height="22" rx="11" fill="rgba(0,122,255,.88)"/><text x="0" y="29" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="'SF Pro Text','Inter',system-ui,sans-serif">Estero</text></g>
           <g class="mk-label" id="ml4" transform="translate(1120 100)"><rect x="-32" y="-56" width="64" height="22" rx="11" fill="rgba(255,59,48,.9)"/><text x="0" y="-41" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="'SF Pro Text','Inter',system-ui,sans-serif">Carriera</text></g>
-          <!-- ETA bubble sulla mappa (stile Apple Maps) -->
-          <g id="nav-eta-bubble" transform="translate(620 420)" class="nav-bubble">
-            <path d="M -65 -34 A 8 8 0 0 1 -57 -42 L 57 -42 A 8 8 0 0 1 65 -34 L 65 -14 A 8 8 0 0 1 57 -6 L 6 -6 L 0 0 L -6 -6 L -57 -6 A 8 8 0 0 1 -65 -14 Z" fill="#007AFF" stroke="#ffffff" stroke-width="1.5" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.3))"/>
-            <!-- piccolo dollaro verde -->
-            <circle cx="-38" cy="-25" r="5.5" fill="#34C759"/>
-            <text x="-38" y="-23" text-anchor="middle" fill="#fff" font-size="6.5" font-weight="900" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">$</text>
-            <!-- testo tempo -->
-            <text x="-26" y="-21" fill="#fff" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" text-anchor="start">5 anni</text>
-            <!-- subtesto -->
-            <text x="0" y="-10" fill="rgba(255,255,255,0.85)" font-size="9" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" text-anchor="middle">Percorso più rapido</text>
+          <!-- ETA bubble principale (stile Apple Maps, blu, con callout) -->
+          <g id="nav-eta-bubble" transform="translate(540 390)" class="nav-bubble">
+            <!-- Bubble shape con callout in basso al centro -->
+            <rect x="-68" y="-46" width="136" height="38" rx="10" fill="#0A84FF" filter="drop-shadow(0 4px 14px rgba(0,0,0,0.35))"/>
+            <!-- Triangolo callout -->
+            <polygon points="-7,-8 7,-8 0,0" fill="#0A84FF"/>
+            <!-- Tempo principale -->
+            <text x="0" y="-27" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif">5 anni</text>
+            <!-- Sub label -->
+            <text x="0" y="-14" text-anchor="middle" fill="rgba(255,255,255,0.82)" font-size="9.5" font-weight="500" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif">Percorso più rapido</text>
           </g>
-          <!-- Alternative ETA bubble on the map -->
-          <g id="nav-eta-bubble-alt" transform="translate(800 225)" class="nav-bubble-alt">
-            <path d="M -65 -34 A 8 8 0 0 1 -57 -42 L 57 -42 A 8 8 0 0 1 65 -34 L 65 -14 A 8 8 0 0 1 57 -6 L 6 -6 L 0 0 L -6 -6 L -57 -6 A 8 8 0 0 1 -65 -14 Z" fill="rgba(35,35,40,0.82)" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.3))"/>
-            <circle cx="-38" cy="-25" r="5.5" fill="#34C759"/>
-            <text x="-38" y="-23" text-anchor="middle" fill="#fff" font-size="6.5" font-weight="900" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">$</text>
-            <text x="-26" y="-21" fill="#fff" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" text-anchor="start">6 anni</text>
-            <text x="0" y="-10" fill="rgba(255,255,255,0.65)" font-size="9" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" text-anchor="middle">Evita autostrade</text>
+          <!-- ETA bubble alternativo (dark, senza callout) -->
+          <g id="nav-eta-bubble-alt" transform="translate(820 215)" class="nav-bubble-alt">
+            <rect x="-64" y="-40" width="128" height="34" rx="9" fill="rgba(38,38,42,0.90)" stroke="rgba(255,255,255,0.13)" stroke-width="1" filter="drop-shadow(0 3px 10px rgba(0,0,0,0.3))"/>
+            <text x="0" y="-23" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif">~6 anni</text>
+            <text x="0" y="-11" text-anchor="middle" fill="rgba(255,255,255,0.60)" font-size="9" font-weight="500" font-family="-apple-system,BlinkMacSystemFont,'SF Pro Text','Inter',sans-serif">Alternativo</text>
           </g>
           <!-- puck GPS -->
           <g id="nav-puck" transform="translate(120 590)">
@@ -761,6 +759,116 @@ function appicon(string $file, string $remote): string {
       btn.classList.add('on');
     });
   });
+
+  /* ── Liquid Glass Engine — Apple Tahoe style, neutral + legible ── */
+  function initLiquidGlass(el, options) {
+    if (!el) return;
+
+    // Only apply on Chrome/Edge (backdrop-filter + feDisplacementMap)
+    var ua = navigator.userAgent.toLowerCase();
+    var isChrome = ua.indexOf('chrome') > -1 && ua.indexOf('edg') === -1;
+    var isEdge   = ua.indexOf('edg') > -1;
+    var supportsBackdrop = typeof CSS !== 'undefined' && CSS.supports && CSS.supports('backdrop-filter', 'blur(1px)');
+    if (!supportsBackdrop && !(isChrome || isEdge)) return;
+
+    var opt = Object.assign({
+      borderRadius: 18,
+      // Neutral glass: no chromatic aberration — single grey-scale displacement map
+      // Small scale = subtle refraction at edge only, text stays perfectly crisp
+      displace: 6,
+      blur: 36,           // background blur (applied via backdrop-filter)
+      saturation: 1.6,    // colour pop of the blurred bg
+      brightness: 8,      // % brightness of the dark centre fill (0-100)
+      fillOpacity: 0.72   // opacity of the solid backdrop fill
+    }, options || {});
+
+    var uid      = 'lg-' + Math.random().toString(36).substr(2, 8);
+    var filterId = 'f-' + uid;
+    var mapId    = 'map-' + uid;
+
+    // SVG hidden filter definition
+    var svgNS = 'http://www.w3.org/2000/svg';
+    var fSvg  = document.createElementNS(svgNS, 'svg');
+    fSvg.setAttribute('style', 'position:absolute;width:0;height:0;pointer-events:none;overflow:hidden;');
+    fSvg.setAttribute('aria-hidden', 'true');
+
+    // We use a single-channel (greyscale) displacement map:
+    // edges go from black → white, centre is neutral grey (50%).
+    // feDisplacementMap reads the R channel: 50% grey = no shift, edges shift slightly.
+    // Result: glass-edge refraction, zero chromatic fringing → high legibility.
+    fSvg.innerHTML =
+      '<defs>' +
+        '<filter id="' + filterId + '" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="linearRGB">' +
+          '<feImage id="fim-' + uid + '" result="dmap" preserveAspectRatio="none"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="dmap" xChannelSelector="R" yChannelSelector="G" scale="' + opt.displace + '" result="displaced"/>' +
+          '<feGaussianBlur in="displaced" stdDeviation="0.35"/>' +
+        '</filter>' +
+      '</defs>';
+
+    document.body.appendChild(fSvg);
+    var feImg = fSvg.querySelector('#fim-' + uid);
+
+    // Generate a greyscale edge map: black centre, white ring at border.
+    // This creates a subtle refraction/lensing at the glass perimeter.
+    function buildMap(w, h) {
+      var r = opt.borderRadius;
+      // Radial gradient from transparent-grey (edge) to mid-grey (centre)
+      // Using a conic/radial trick in SVG: feFlood + feMorphology would be complex,
+      // so we embed a tiny inline SVG as a data URI.
+      var mapSvg =
+        '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '">' +
+          '<defs>' +
+            '<radialGradient id="rg" cx="50%" cy="50%" r="55%">' +
+              '<stop offset="0%"   stop-color="rgb(128,128,128)"/>' + // centre: neutral (no displacement)
+              '<stop offset="75%"  stop-color="rgb(128,128,128)"/>' + // mid: still neutral
+              '<stop offset="90%"  stop-color="rgb(220,220,220)"/>' + // near edge: slight push
+              '<stop offset="100%" stop-color="rgb(255,255,255)"/>' + // edge: max push
+            '</radialGradient>' +
+            // Vertical gradient for subtle up/down edge refraction
+            '<linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">' +
+              '<stop offset="0%"   stop-color="rgb(180,180,255)" stop-opacity="0.4"/>' +
+              '<stop offset="50%"  stop-color="rgb(128,128,128)" stop-opacity="0"/>' +
+              '<stop offset="100%" stop-color="rgb(70,70,200)"   stop-opacity="0.35"/>' +
+            '</linearGradient>' +
+          '</defs>' +
+          '<rect width="' + w + '" height="' + h + '" fill="url(#rg)" rx="' + r + '"/>' +
+          '<rect width="' + w + '" height="' + h + '" fill="url(#lg)" rx="' + r + '" opacity="0.6"/>' +
+        '</svg>';
+      return 'data:image/svg+xml,' + encodeURIComponent(mapSvg);
+    }
+
+    function update() {
+      var rect = el.getBoundingClientRect();
+      var w = Math.max(rect.width  || el.offsetWidth  || 300, 1);
+      var h = Math.max(rect.height || el.offsetHeight || 200, 1);
+      feImg.setAttribute('href', buildMap(w, h));
+      feImg.setAttribute('width',  w);
+      feImg.setAttribute('height', h);
+    }
+
+    // Apply the filter + legible backdrop parameters
+    var bf = 'url(#' + filterId + ') blur(' + opt.blur + 'px) saturate(' + opt.saturation + ')';
+    el.style.backdropFilter       = bf;
+    el.style.webkitBackdropFilter = bf;
+    // Keep the background semi-opaque dark fill so text stays readable
+    // (do NOT set to transparent — the SVG map brings glass, CSS brings legibility)
+    el.style.background = 'rgba(20,20,24,' + opt.fillOpacity + ')';
+
+    if (typeof ResizeObserver !== 'undefined') {
+      new ResizeObserver(update).observe(el);
+    } else {
+      window.addEventListener('resize', update);
+    }
+    update();
+    // Retry once layout is stable
+    requestAnimationFrame(function(){ update(); setTimeout(update, 80); });
+  }
+
+  // Apply Liquid Glass to sidebar panel + detail card
+  var panelEl  = document.getElementById('nav-panel');
+  var detailEl = document.querySelector('#w-fine .nav-detail-inner');
+  if (panelEl)  initLiquidGlass(panelEl,  { borderRadius: 18, displace: 8,  fillOpacity: 0.74 });
+  if (detailEl) initLiquidGlass(detailEl, { borderRadius: 18, displace: 6,  fillOpacity: 0.76 });
 
   /* ── Stato iniziale: overview ── */
   showOverview();
