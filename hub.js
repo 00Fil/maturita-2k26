@@ -753,3 +753,104 @@ if (rebBtn) {
   if(x)x.addEventListener('click',function(ev){ev.stopPropagation();if(typeof closeWin==='function')closeWin(document.getElementById('w-fine'));});
   render();
 })();
+
+/* ============================================================
+   App Note funzionale: cartelle, tag, note, toolbar e checklist reali
+   ============================================================ */
+(function(){
+  const app = document.querySelector('[data-notes-app]');
+  if (!app) return;
+  const notes = [
+    { id:'identity', title:'Chi sono', filter:'featured', tags:['method'], meta:'Oggi', state:'Nota fissata', kicker:'Identità',
+      summary:'<mark>Capisco come funzionano le cose, poi le costruisco.</mark> Parto dalla curiosità, studio il problema e lo trasformo in qualcosa che funzioni davvero.',
+      main:['Non mi interessa solo saper usare gli strumenti: voglio capire il perché dietro le cose, dal codice alla comunicazione.', 'Il mio modo di lavorare è osservare, smontare, progettare e poi rifinire finché il risultato non sembra naturale.'],
+      sideTitle:'La frase guida', side:'Belle fuori, solide dentro, utili per qualcuno.', minis:[['Metodo','Curiosità, ordine e attenzione ai dettagli.'],['Carattere','Determinazione, responsabilità e voglia di arrivare fino in fondo.']], checks:['Spiegare con chiarezza','Costruire con metodo','Curare i dettagli','Portare a termine'] },
+    { id:'school', title:'Il mio percorso', filter:'school', tags:['method'], meta:'Scuola', state:'Formazione', kicker:'Cerebotani · Informatica',
+      summary:'Ho scelto Informatica e Telecomunicazioni perché volevo entrare in un mondo concreto: software, sistemi, reti e progettazione.',
+      main:['All’IIS Cerebotani ho imparato che la tecnologia non è solo codice: è metodo, documentazione e capacità di spiegare quello che si fa.', 'Le materie tecniche mi hanno abituato a ragionare per sistemi: capire le parti, collegarle e farle funzionare insieme.'],
+      sideTitle:'Cosa resta', side:'Il valore non è memorizzare strumenti, ma imparare a imparare strumenti nuovi.', minis:[['Competenze','Applicazioni, reti, sistemi e gestione progetto.'],['Comunicazione','Documentare e presentare un lavoro tecnico.']], checks:['Reti e sistemi','Sviluppo applicazioni','Documentazione','Progetti'] },
+    { id:'pcto', title:'CS Metal Europe', filter:'work', tags:['pcto','method'], meta:'PCTO', state:'Esperienza reale', kicker:'Scuola-lavoro',
+      summary:'Due anni nello stesso contesto aziendale mi hanno fatto vedere come un lavoro tecnico diventa utile quando entra in un processo reale.',
+      main:['Ho lavorato su dati di produzione, immagini, sito, blog, magazzino e comunicazione.', 'La cosa più importante è stata capire che anche una tabella, una frase o una foto sono scelte progettuali se devono aiutare qualcuno a capire meglio.'],
+      sideTitle:'Lezione chiave', side:'Scrivere vuol dire pensare a chi legge. Costruire software vuol dire pensare a chi lo userà.', minis:[['Azienda','CS Metal Europe, Bedizzole.'],['Risultato','Un progetto concreto, collegato al mondo del lavoro.']], checks:['Dati produzione','Comunicazione','Magazzino','E-commerce'] },
+    { id:'projects', title:'Progetti personali', filter:'work', tags:['method','community'], meta:'Dal 2024', state:'In costruzione', kicker:'Fuori dal programma',
+      summary:'I progetti personali sono il punto in cui la scuola incontra la mia iniziativa: prendo una necessità reale e provo a farla diventare software.',
+      main:['Il gestionale per l’oratorio di Bedizzole nasce da un bisogno concreto e mi ha costretto a ragionare su persone, flussi e responsabilità.', 'denuvo.studio è lo spazio in cui raccolgo ciò che costruisco e dove provo a unire codice, identità visiva e cura del dettaglio.'],
+      sideTitle:'Approccio', side:'Prima il problema, poi la struttura, poi l’interfaccia. Il codice arriva quando l’idea è chiara.', minis:[['Gestionale','Software per oratorio e attività locali.'],['Denuvo','Portfolio, ricerca visiva e sviluppo web.']], checks:['Analisi bisogno','UI ordinata','Backend solido','Deploy'] },
+    { id:'outside', title:'Fuori dall’aula', filter:'life', tags:['community'], meta:'Esperienze', state:'Comunità', kicker:'Persone e responsabilità',
+      summary:'Fuori dalla scuola ho imparato a collaborare, parlare con persone diverse e prendermi cura di qualcosa che non riguarda solo me.',
+      main:['Volontariato, Torneo dei Roncai, Festa del Sorriso e animazione in oratorio mi hanno insegnato presenza e affidabilità.', 'Il concorso Volo tra le Righe mi ha mostrato che anche creatività e racconto possono diventare un progetto strutturato.'],
+      sideTitle:'Cosa mi ha dato', side:'La tecnologia serve di più quando nasce da attenzione verso le persone.', minis:[['Volontariato','Organizzazione, squadra, disponibilità.'],['Concorso','Playlist narrativa e comunicazione creativa.']], checks:['Collaborare','Organizzare','Comunicare','Aiutare'] },
+    { id:'music', title:'Musica e disciplina', filter:'life', tags:['method'], meta:'Violoncello', state:'Costanza', kicker:'Dal 2018',
+      summary:'Il violoncello mi ha insegnato che migliorare non è un colpo di fortuna: è ripetizione, ascolto e correzione continua.',
+      main:['Studiare uno strumento significa accettare che il dettaglio conta: postura, tempo, suono, intenzione.', 'È la stessa disciplina che provo a portare nei progetti: iterare, ascoltare il risultato, correggere.'],
+      sideTitle:'Metodo musicale', side:'Ripeti, ascolta, correggi. Poi ripeti meglio.', minis:[['Pazienza','Non tutto funziona al primo tentativo.'],['Precisione','Il dettaglio cambia la qualità percepita.']], checks:['Esercizio','Ascolto','Correzione','Costanza'] },
+    { id:'future', title:'Dove voglio andare', filter:'featured', tags:['method'], meta:'Dopo il diploma', state:'Direzione', kicker:'Prossima tappa',
+      summary:'Voglio continuare a crescere nel software, costruendo prodotti curati, solidi e comprensibili anche fuori dal contesto scolastico.',
+      main:['La direzione è continuare con l’informatica, rafforzare le basi e imparare a lavorare in contesti più grandi e internazionali.', 'Mi interessa il punto in cui tecnologia, design e utilità si incontrano: quando un prodotto non solo funziona, ma comunica qualità.'],
+      sideTitle:'Obiettivo', side:'Diventare una persona capace di costruire software che abbia identità, struttura e impatto.', minis:[['Studio','Basi più solide e visione ampia.'],['Lavoro','Contesti reali, internazionali, ambiziosi.']], checks:['Studiare informatica','Crescere nel design','Lavorare su prodotti reali','Pensare internazionale'] }
+  ];
+  const list = app.querySelector('[data-notes-list]');
+  const screen = app.querySelector('[data-note-screen]');
+  const title = app.querySelector('[data-notes-title]');
+  const count = app.querySelector('[data-notes-count]');
+  const state = app.querySelector('[data-note-state]');
+  let filter = 'all', current = 'identity', textSize = 'normal', grid = false, checklist = false;
+  function visible(){ return notes.filter(n => filter === 'all' || n.filter === filter || n.tags.includes(filter) || (filter === 'featured' && ['identity','future','pcto'].includes(n.id))); }
+  function renderList(){
+    const rows = visible();
+    if (!rows.some(n => n.id === current)) current = rows[0]?.id || notes[0].id;
+    title.textContent = filter === 'all' ? 'Tutte iCloud' : (app.querySelector(`[data-filter="${filter}"] b`)?.textContent || app.querySelector(`[data-filter="${filter}"]`)?.textContent || 'Note');
+    count.textContent = rows.length + (rows.length === 1 ? ' nota' : ' note');
+    list.innerHTML = rows.map(n => `<button class="note-preview ${n.id===current?'on':''}" data-note="${n.id}" type="button"><b>${n.title}</b><small>${n.meta}</small><p>${strip(n.summary)}</p></button>`).join('');
+  }
+  function strip(s){ return s.replace(/<[^>]+>/g,''); }
+  function renderNote(){
+    const n = notes.find(x => x.id === current) || notes[0];
+    state.textContent = n.state;
+    screen.dataset.size = textSize;
+    screen.dataset.view = grid ? 'grid' : 'page';
+    screen.innerHTML = `<div class="note-topline"><span>14 giugno 2026 · ${n.meta}</span><span class="copy-status" data-copy-status>Copiato</span></div><span class="note-kicker">${n.kicker}</span><h2>${n.title}</h2><p class="note-summary">${n.summary}</p><div class="note-layout"><div class="note-main-card">${n.main.map(p=>`<p>${p}</p>`).join('')}<div class="note-check-panel ${checklist?'on':''}"><ul class="note-check-list">${n.checks.map((c,i)=>`<li><button type="button" data-check="${i}" aria-label="Completa ${c}"></button>${c}</li>`).join('')}</ul></div></div><div class="note-side"><div class="note-side-card"><b>${n.sideTitle}</b><p>${n.side}</p></div><div class="note-mini-grid">${n.minis.map(m=>`<div class="note-mini-card"><b>${m[0]}</b><p>${m[1]}</p></div>`).join('')}</div></div></div>`;
+  }
+  function render(){ renderList(); renderNote(); syncButtons(); }
+  function syncButtons(){
+    app.querySelectorAll('[data-filter]').forEach(b => b.classList.toggle('on', b.dataset.filter === filter));
+    app.querySelector('[data-note-action="font"]')?.classList.toggle('on', textSize === 'large');
+    app.querySelector('[data-note-action="grid"]')?.classList.toggle('on', grid);
+    app.querySelector('[data-note-action="check"]')?.classList.toggle('on', checklist);
+    app.querySelector('[data-note-action="focus"]')?.classList.toggle('on', app.classList.contains('focus'));
+  }
+  app.addEventListener('click', e => {
+    const f = e.target.closest('[data-filter]');
+    if (f) { filter = f.dataset.filter; render(); sndClick?.(); return; }
+    const row = e.target.closest('[data-note]');
+    if (row) { current = row.dataset.note; render(); sndOpen?.(); return; }
+    const chk = e.target.closest('[data-check]');
+    if (chk) { chk.closest('li').classList.toggle('done'); sndClick?.(); return; }
+    const act = e.target.closest('[data-note-action]');
+    if (act) {
+      const a = act.dataset.noteAction;
+      if (a === 'font') textSize = textSize === 'large' ? 'normal' : 'large';
+      if (a === 'grid') grid = !grid;
+      if (a === 'check') checklist = !checklist;
+      if (a === 'focus') app.classList.toggle('focus');
+      if (a === 'share') {
+        const n = notes.find(x => x.id === current);
+        navigator.clipboard?.writeText(strip(n.summary)).catch(()=>{});
+        const st = app.querySelector('[data-copy-status]');
+        if (st) { st.classList.add('show'); setTimeout(()=>st.classList.remove('show'), 950); }
+        sndClick?.();
+        return;
+      }
+      render(); sndClick?.(); return;
+    }
+    const prev = e.target.closest('[data-note-prev]');
+    if (prev) {
+      const rows = visible(); const i = rows.findIndex(n => n.id === current);
+      current = rows[(i - 1 + rows.length) % rows.length]?.id || current;
+      render(); sndClick?.();
+    }
+  });
+  render();
+})();
+

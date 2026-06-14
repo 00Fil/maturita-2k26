@@ -125,95 +125,48 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-orange" id="w-io" style="left:7%;top:6%;width:980px">
+<section class="win a-orange" id="w-io" style="left:6%;top:6%;width:1040px">
   <div class="titlebar"><span class="wt">Su di me — Note</span></div>
-  <div class="wbody notes-app">
+  <div class="wbody notes-app" data-notes-app>
     <aside class="notes-folders" aria-label="Cartelle Note">
       <div class="notes-account">
-        <span class="notes-dot"></span>
+        <span class="notes-dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12a2 2 0 0 1 2 2v12.5A1.5 1.5 0 0 1 18.5 20H5.5A1.5 1.5 0 0 1 4 18.5V6a2 2 0 0 1 2-2Z"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></span>
         <div><b>iCloud</b><small>Filippo Corsini</small></div>
       </div>
-      <button class="notes-folder on"><span>☰</span><div><b>Tutte le note</b><small>7 note</small></div></button>
-      <button class="notes-folder"><span>★</span><div><b>In evidenza</b><small>Identità e progetti</small></div></button>
-      <button class="notes-folder"><span>⌘</span><div><b>Informatica</b><small>Scuola, software, reti</small></div></button>
-      <button class="notes-folder"><span>♪</span><div><b>Vita fuori scuola</b><small>Musica e comunità</small></div></button>
+      <button class="notes-folder on" data-filter="all" type="button"><span><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></span><div><b>Tutte le note</b><small data-count="all">7 note</small></div></button>
+      <button class="notes-folder" data-filter="featured" type="button"><span><svg viewBox="0 0 24 24"><path d="m12 4 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4-3.9-3.8 5.4-.8Z"/></svg></span><div><b>In evidenza</b><small data-count="featured">3 note</small></div></button>
+      <button class="notes-folder" data-filter="school" type="button"><span><svg viewBox="0 0 24 24"><path d="M4 19V8l8-4 8 4v11M8 19v-7h8v7"/></svg></span><div><b>Formazione</b><small data-count="school">2 note</small></div></button>
+      <button class="notes-folder" data-filter="work" type="button"><span><svg viewBox="0 0 24 24"><path d="M9 7V5h6v2M5 8h14v11H5zM5 12h14"/></svg></span><div><b>Progetti</b><small data-count="work">3 note</small></div></button>
+      <button class="notes-folder" data-filter="life" type="button"><span><svg viewBox="0 0 24 24"><path d="M9 18V5l9-2v13M9 18a3 2 0 1 1 0-4M18 16a3 2 0 1 1 0-4"/></svg></span><div><b>Vita fuori scuola</b><small data-count="life">2 note</small></div></button>
       <div class="notes-folder-title">Tag</div>
-      <div class="notes-tags"><span>#scuola</span><span>#pcto</span><span>#progetti</span><span>#volontariato</span></div>
+      <div class="notes-tags">
+        <button data-filter="method" type="button">#metodo</button>
+        <button data-filter="pcto" type="button">#pcto</button>
+        <button data-filter="community" type="button">#comunità</button>
+      </div>
     </aside>
 
     <aside class="notes-list" aria-label="Elenco note">
-      <div class="notes-list-head"><b>Tutte iCloud</b><small>7 note</small></div>
-      <button class="note-preview on"><b>Chi sono</b><small>Oggi</small><p>Capisco come funzionano le cose, poi provo a costruirle.</p></button>
-      <button class="note-preview"><b>Il mio percorso</b><small>Scuola</small><p>Informatica e Telecomunicazioni al Cerebotani di Lonato.</p></button>
-      <button class="note-preview"><b>CS Metal Europe</b><small>PCTO</small><p>Due anni nello stesso contesto aziendale, fino a un progetto vero.</p></button>
-      <button class="note-preview"><b>Progetti personali</b><small>Dal 2024</small><p>Gestionale per l’oratorio, denuvo.studio, idee trasformate in codice.</p></button>
-      <button class="note-preview"><b>Fuori dall’aula</b><small>Esperienze</small><p>Concorso letterario, volontariato, animazione ed educazione.</p></button>
-      <button class="note-preview"><b>Musica e disciplina</b><small>Violoncello</small><p>La costanza imparata studiando uno strumento.</p></button>
-      <button class="note-preview"><b>Dove voglio andare</b><small>Dopo il diploma</small><p>Continuare a crescere nel software, con una mentalità internazionale.</p></button>
+      <div class="notes-list-head"><b data-notes-title>Tutte iCloud</b><small data-notes-count>7 note</small></div>
+      <div class="notes-list-items" data-notes-list></div>
     </aside>
 
-    <article class="notes-paper">
+    <article class="notes-paper" aria-live="polite">
       <div class="notes-toolbar">
-        <div class="notes-toolbar-left"><span class="notes-back">‹</span><span class="notes-pill">Nota bloccata</span></div>
-        <div class="notes-toolbar-actions"><span>Aa</span><span>☷</span><span>▦</span><span>✎</span><span>•••</span></div>
-      </div>
-
-      <div class="note-date">14 giugno 2026 alle 20:46</div>
-      <h2>Filippo Corsini</h2>
-      <p class="note-lead"><mark>Capisco come funzionano le cose, poi le costruisco.</mark> È la frase che mi rappresenta di più: parto dalla curiosità, studio il problema, lo smonto e provo a trasformarlo in qualcosa che funzioni davvero.</p>
-
-      <div class="note-hero-card">
-        <div class="note-sticky">
-          <span class="note-sticky-pin"></span>
-          <b>Identità</b>
-          <p>Non mi interessa solo “saper usare” gli strumenti: voglio capire il perché dietro le cose, dal codice alla comunicazione, fino al modo in cui un progetto viene portato davanti a persone reali.</p>
+        <div class="notes-toolbar-left">
+          <button class="notes-back" data-note-prev type="button" aria-label="Nota precedente"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button>
+          <span class="notes-pill" data-note-state>Nota fissata</span>
         </div>
-        <div class="note-sketch" aria-hidden="true">
-          <div class="sketch-title">idea → metodo → prodotto</div>
-          <svg viewBox="0 0 320 170" fill="none">
-            <path d="M37 92 C75 32 132 30 161 82 C190 132 250 132 285 71" stroke="#8E7A24" stroke-width="4" stroke-linecap="round" opacity=".75"/>
-            <rect x="34" y="36" width="74" height="54" rx="10" stroke="#D6A600" stroke-width="3"/>
-            <rect x="126" y="65" width="74" height="54" rx="10" stroke="#D6A600" stroke-width="3"/>
-            <rect x="218" y="35" width="74" height="54" rx="10" stroke="#D6A600" stroke-width="3"/>
-            <text x="71" y="67" text-anchor="middle">curiosità</text>
-            <text x="163" y="96" text-anchor="middle">studio</text>
-            <text x="255" y="66" text-anchor="middle">costruisco</text>
-          </svg>
+        <div class="notes-toolbar-actions">
+          <button data-note-action="font" type="button" aria-label="Cambia dimensione testo">Aa</button>
+          <button data-note-action="check" type="button" aria-label="Mostra checklist"><svg viewBox="0 0 24 24"><path d="M5 7h.01M9 7h10M5 12h.01M9 12h10M5 17h.01M9 17h10"/></svg></button>
+          <button data-note-action="grid" type="button" aria-label="Vista schede"><svg viewBox="0 0 24 24"><path d="M5 5h6v6H5zM13 5h6v6h-6zM5 13h6v6H5zM13 13h6v6h-6z"/></svg></button>
+          <button data-note-action="focus" type="button" aria-label="Modalità focus"><svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></button>
+          <button data-note-action="share" type="button" aria-label="Copia citazione"><svg viewBox="0 0 24 24"><path d="M12 5v10M8 9l4-4 4 4M5 14v4h14v-4"/></svg></button>
         </div>
       </div>
 
-      <section class="note-section">
-        <h3>Il percorso che mi ha formato</h3>
-        <p>Ho scelto <b>Informatica e Telecomunicazioni</b> all’IIS «Cerebotani» di Lonato perché volevo stare dentro un mondo concreto: programmazione, sistemi, reti, progettazione e gestione dei progetti. In questi anni ho imparato che la tecnologia non è solo codice: è metodo, precisione, documentazione e capacità di spiegare quello che si fa.</p>
-        <ul class="note-checks">
-          <li><span></span>sviluppare applicazioni e servizi a distanza;</li>
-          <li><span></span>ragionare su reti, sistemi e dati;</li>
-          <li><span></span>documentare e presentare un lavoro tecnico in modo chiaro.</li>
-        </ul>
-      </section>
-
-      <section class="note-section note-grid-2">
-        <div>
-          <h3>CS Metal Europe</h3>
-          <p>Il PCTO non è stato un episodio isolato: è stato un percorso continuo in azienda. Ho lavorato con dati di produzione, immagini, comunicazione, magazzino e contenuti online. La parte più importante è stata capire che anche un testo, un’immagine o una tabella sono decisioni progettuali.</p>
-        </div>
-        <div class="note-callout">
-          <b>La cosa che porto via</b>
-          <p>Scrivere vuol dire pensare a chi legge. Costruire software vuol dire pensare a chi lo userà.</p>
-        </div>
-      </section>
-
-      <section class="note-section">
-        <h3>Progetti, comunità e disciplina</h3>
-        <div class="note-cards">
-          <div><b>Gestionale per l’oratorio</b><p>Un progetto nato fuori da scuola, sviluppato applicando competenze tecniche e approfondimenti personali.</p></div>
-          <div><b>denuvo.studio</b><p>Il luogo in cui raccolgo ciò che costruisco, curando sia il codice sia l’esperienza visiva.</p></div>
-          <div><b>Violoncello</b><p>Dal 2018 mi ha insegnato che migliorare richiede costanza, ascolto e ripetizione.</p></div>
-          <div><b>Volontariato</b><p>Festa del Sorriso, Torneo dei Roncai, animazione: esperienze che mi hanno insegnato responsabilità e squadra.</p></div>
-        </div>
-      </section>
-
-      <blockquote class="note-quote">“Voglio continuare a costruire cose vere: belle fuori, solide dentro, utili per qualcuno.”</blockquote>
+      <div class="note-screen" data-note-screen></div>
     </article>
   </div>
 </section>
