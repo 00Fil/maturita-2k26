@@ -101,102 +101,43 @@
 /* ===== Scrollbar: più discreta, accentua all'hover ===== */
 .wbody::-webkit-scrollbar-thumb,.main::-webkit-scrollbar-thumb,.sidebar::-webkit-scrollbar-thumb,.mpanel::-webkit-scrollbar-thumb{transition:background .2s ease}
 .wbody:hover::-webkit-scrollbar-thumb,.main:hover::-webkit-scrollbar-thumb{background:rgba(127,127,135,.5)}
-#w-fine .nav-map::-webkit-scrollbar{display:none}
+#w-fine .mp-map::-webkit-scrollbar{display:none}
 
 /* ===== Menubar e tooltip dock: transizioni leggermente più fluide ===== */
 .dapp .tip{transition:opacity .2s ease,transform .4s var(--spring-pop)}
 
-/* ===== Navigatore "Mappe" — turn-by-turn stile Apple Maps ===== */
-#w-fine .nav{position:relative;flex:1;min-height:580px;overflow:hidden;background:#e7e3d8;border-radius:0 0 23px 23px;isolation:isolate}
-#w-fine .nav::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.10),transparent 18%,transparent 72%,rgba(0,0,0,.16));mix-blend-mode:soft-light}
-#w-fine .nav-map{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation}
-#w-fine .nav-map::-webkit-scrollbar{display:none}
-#w-fine #nav-route,#w-fine #nav-route-done,#w-fine #nav-route-base{stroke-linecap:round;stroke-linejoin:round}
+/* ===== "Mappe" — Indicazioni stile Apple Maps (mp-*) ===== */
+#w-fine .mp{position:relative;flex:1;min-height:600px;overflow:hidden;background:#e7e3d8;border-radius:0 0 23px 23px;isolation:isolate;font-family:inherit}
+#w-fine .mp-map{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:pointer;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+#w-fine .mp-map::-webkit-scrollbar{display:none}
+#w-fine #mp-route,#w-fine #mp-route-done,#w-fine #mp-route-base{stroke-linecap:round;stroke-linejoin:round}
+#w-fine .mp-mk{transition:opacity .35s var(--ease-apple),filter .35s var(--ease-apple)}
+#w-fine .mp-mk.on{filter:drop-shadow(0 4px 10px rgba(10,90,180,.35))}
+#w-fine #mp-puck{filter:drop-shadow(0 3px 9px rgba(10,90,180,.5))}
+#w-fine .mp button{-webkit-appearance:none;appearance:none;font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 
-/* segnaposto: dimensione costante (gestita via JS con contro-scala) */
-#w-fine .mk{transition:opacity .3s ease,filter .3s ease}
-#w-fine .mk:not(.on):not(.done){opacity:.9}
-#w-fine .mk.on{filter:drop-shadow(0 3px 7px rgba(0,0,0,.26))}
-#w-fine #nav-puck{filter:drop-shadow(0 3px 9px rgba(10,90,180,.5))}
-
-#w-fine .nav button{-webkit-appearance:none;appearance:none;font-family:inherit;margin:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
-
-/* riquadro manovra (in alto a sinistra) */
-#w-fine .nav-stack{position:absolute;left:16px;top:16px;width:320px;max-width:calc(100% - 116px);z-index:6}
-#w-fine .nav-bar{display:flex;align-items:center;gap:13px;padding:13px 16px;border-radius:20px;color:#fff;background:linear-gradient(180deg,#34c759,#1ba045);box-shadow:0 18px 42px rgba(8,82,30,.34),inset 0 0 0 1px rgba(255,255,255,.18),inset 0 1px 0 rgba(255,255,255,.32);animation:navBarIn .45s var(--ease-apple) both}
-@keyframes navBarIn{from{opacity:0;transform:translateX(-14px) scale(.97)}to{opacity:1;transform:none}}
-#w-fine .nav-man{flex:none;width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:#fff}
-#w-fine .nav-man svg{width:30px;height:30px;display:block;filter:drop-shadow(0 1px 1px rgba(0,0,0,.2))}
-#w-fine .nav-meta{min-width:0;flex:1}
-#w-fine .nav-kick{display:block;font-size:11px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.82);line-height:1.1;margin-bottom:2px}
-#w-fine .nav-dist{font-size:23px;font-weight:800;line-height:1.04;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#w-fine .nav-instr{margin-top:1px;font-size:13px;font-weight:600;line-height:1.2;color:rgba(255,255,255,.92);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-
-/* controlli mappa (zoom + bussola) */
-#w-fine .nav-ctrl{position:absolute;right:14px;top:14px;display:flex;flex-direction:column;gap:10px;align-items:center;z-index:6}
-#w-fine .nav-zoom{display:flex;flex-direction:column;width:38px;border-radius:12px;overflow:hidden;background:rgba(252,252,254,.8);backdrop-filter:blur(28px) saturate(1.6);-webkit-backdrop-filter:blur(28px) saturate(1.6);box-shadow:0 10px 28px rgba(0,0,0,.18),inset 0 0 0 1px rgba(255,255,255,.55)}
-#w-fine .nav-zoom button{width:38px;height:38px;border:0;background:transparent;color:#1d1d1f;font-size:21px;font-weight:420;display:flex;align-items:center;justify-content:center;line-height:1;transition:background .18s ease}
-#w-fine .nav-zoom button:hover{background:rgba(118,118,128,.14)}
-#w-fine .nav-zoom button:active{background:rgba(118,118,128,.24)}
-#w-fine .nav-zoom span{height:1px;background:rgba(60,60,67,.16);margin:0 7px}
-#w-fine .nav-comp{width:38px;height:38px;border-radius:50%;border:0;background:rgba(252,252,254,.8);backdrop-filter:blur(28px) saturate(1.6);-webkit-backdrop-filter:blur(28px) saturate(1.6);box-shadow:0 10px 28px rgba(0,0,0,.18),inset 0 0 0 1px rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;transition:transform .28s var(--spring-pop)}
-#w-fine .nav-comp:active{transform:scale(.9)}
-#w-fine .nav-comp svg{width:20px;height:20px;display:block}
-
-/* foglio di arrivo (in basso) */
-#w-fine .nav-sheet{position:absolute;left:16px;right:16px;bottom:16px;display:flex;align-items:center;gap:16px;padding:12px 14px 12px 18px;border-radius:20px;background:rgba(250,250,252,.82);backdrop-filter:blur(34px) saturate(1.7);-webkit-backdrop-filter:blur(34px) saturate(1.7);box-shadow:0 18px 48px rgba(0,0,0,.24),inset 0 0 0 1px rgba(255,255,255,.55);color:#1d1d1f;z-index:6;animation:navSheetIn .5s var(--ease-apple) both}
-@keyframes navSheetIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-#w-fine .nav-sheet-main{min-width:0}
-#w-fine .nav-eta{display:block;font-size:18px;font-weight:800;letter-spacing:-.02em;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#w-fine .nav-sheet small{display:block;margin-top:2px;font-size:12px;font-weight:600;color:#6e6e73}
-#w-fine .nav-dots{display:flex;gap:9px;margin-left:auto}
-#w-fine .nav-dot{width:11px;height:11px;border-radius:50%;border:0;padding:0;background:rgba(120,120,128,.34);transition:transform .25s var(--spring-pop),background .25s ease}
-#w-fine .nav-dot:hover{transform:scale(1.2)}
-#w-fine .nav-dot.done{background:#34C759}
-#w-fine .nav-dot.on{background:#0A84FF;transform:scale(1.32)}
-#w-fine .nav-end{flex:none;padding:9px 20px;border:0;border-radius:13px;background:#FF3B30;color:#fff;font-size:14.5px;font-weight:750;letter-spacing:-.01em;box-shadow:0 6px 16px rgba(255,59,48,.34);transition:transform .22s var(--spring-pop),filter .18s ease}
-#w-fine .nav-end:hover{filter:brightness(1.06)}
-#w-fine .nav-end:active{transform:scale(.93)}
-
-@media (max-width:760px){
-  #w-fine .nav{min-height:440px}
-  #w-fine .nav-stack{width:280px;max-width:calc(100% - 92px)}
-  #w-fine .nav-dist{font-size:21px}
+/* materiale vetro condiviso (vibrancy) */
+#w-fine .mp-panel,
+#w-fine .mp-maneuver,
+#w-fine .mp-zoom,
+#w-fine .mp-comp,
+#w-fine .mp-drive{
+  background:rgba(250,250,252,.66);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  backdrop-filter:blur(40px) saturate(180%);
+  border:.5px solid rgba(255,255,255,.55);
+  box-shadow:0 16px 44px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.5);
 }
 
-/* ===== Scheda "Su di me" / "Chi sono" (#w-io) — classi iox-* ===== */
-/* Layout introdotto col redesign della scheda ma mai definito in CSS:
-   senza queste regole i contenitori restavano blocchi grezzi impilati. */
-#w-io .wbody.iox{display:flex;flex-direction:column;gap:14px;padding:18px 20px 20px}
-#w-io .iox-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-#w-io .iox-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-#w-io .iox-stat{display:flex;flex-direction:column;gap:2px;padding:11px 14px;border-radius:14px;background:var(--surface);box-shadow:var(--edge),0 2px 8px rgba(12,16,40,.06)}
-#w-io .iox-stat b{font-size:21px;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--text)}
-#w-io .iox-stat small{font-size:9.5px;font-weight:750;text-transform:uppercase;letter-spacing:.06em;color:var(--faint)}
-#w-io .iox-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
-#w-io .iox-col{display:flex;flex-direction:column;gap:14px;min-width:0}
-#w-io .iox-hero{position:relative;overflow:hidden;padding:18px 20px;border-radius:18px;color:#fff;background:var(--acc,var(--orange));box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 12px 28px color-mix(in srgb, var(--acc,var(--orange)) 40%, transparent)}
-#w-io .iox-hero .as-kicker{color:#fff;opacity:.85}
-#w-io .iox-hero h3{margin:6px 0 7px;font-size:18px;font-weight:800;letter-spacing:-.025em;line-height:1.18}
-#w-io .iox-hero p{font-size:12.5px;line-height:1.55;font-weight:500;opacity:.95}
-#w-io .iox-block{display:flex;flex-direction:column;gap:8px}
-#w-io .iox-lbl{padding:2px 2px 0;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--faint)}
-#w-io .iox-row{display:flex;gap:12px;padding:12px 14px;border-radius:14px;background:var(--surface);box-shadow:var(--edge),0 2px 8px rgba(12,16,40,.06)}
-#w-io .iox-k{flex:none;width:84px;padding-top:1px;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--kc,var(--acc,var(--blue)))}
-#w-io .iox-tx{min-width:0}
-#w-io .iox-tx b{display:block;font-size:13px;font-weight:750;letter-spacing:-.01em}
-#w-io .iox-tx p{margin-top:2px;font-size:12px;font-weight:500;line-height:1.5;color:var(--muted)}
-#w-io .iox-card{position:relative;overflow:hidden;padding:12px 15px 12px 16px;border-radius:14px;background:var(--surface);box-shadow:var(--edge),0 2px 8px rgba(12,16,40,.06);border-left:3px solid var(--kc,var(--acc,var(--blue)))}
-#w-io .iox-card .iox-tag{display:inline-block;margin-bottom:4px;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--kc,var(--acc,var(--blue)))}
-#w-io .iox-card b{display:block;font-size:13.5px;font-weight:750;letter-spacing:-.01em}
-#w-io .iox-card p{margin-top:2px;font-size:12px;font-weight:500;line-height:1.5;color:var(--muted)}
-
-/* ingresso a cascata coerente con le altre schede */
-.win.open .iox-stat,.win.open .iox-hero,.win.open .iox-row,.win.open .iox-card{animation:riseIn .5s var(--ease-apple) both}
-.win.open .iox-col:nth-child(2) .iox-card:nth-child(2){animation-delay:.06s}
-.win.open .iox-col:nth-child(2) .iox-card:nth-child(3){animation-delay:.12s}
-
-@media (max-width:760px){
-  #w-io .iox-stats{grid-template-columns:repeat(2,1fr)}
-  #w-io .iox-cols{grid-template-columns:1fr}
-}
+/* pannello Indicazioni (panoramica) */
+#w-fine .mp-panel{position:absolute;left:14px;top:14px;bottom:14px;width:286px;z-index:7;border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:12px;color:#1d1d1f;overflow:auto;transition:transform .55s var(--ease-apple),opacity .35s var(--ease-apple)}
+#w-fine .mp.driving .mp-panel{transform:translateX(calc(-100% - 22px));opacity:0;pointer-events:none}
+#w-fine .mp-seg{display:flex;gap:2px;padding:3px;border-radius:11px;background:rgba(118,118,128,.12)}
+#w-fine .mp-seg button{flex:1;height:30px;border:0;border-radius:8px;background:transparent;color:#3c3c43;display:flex;align-items:center;justify-content:center;transition:background .25s var(--ease-apple),transform .2s var(--spring-pop)}
+#w-fine .mp-seg button svg{width:19px;height:19px}
+#w-fine .mp-seg button.on{background:#fff;color:#0a84ff;box-shadow:0 1px 4px rgba(0,0,0,.16)}
+#w-fine .mp-seg button:active{transform:scale(.92)}
+#w-fine .mp-field{position:relative;display:flex;flex-direction:column;gap:2px;padding:4px 0}
+#w-fine .mp-field::before{content:"";position:absolute;left:20px;top:24px;bottom:24px;width:2px;background:rgba(60,60,67,.18);border-radius:2px}
+#w-fine .mp-stop{position:relative;display:flex;align-items:center;gap:12px;padding:7px 8px;border:0;background:transparent;border-radius:10px;text-align:left;transition:background .2s ease,transform .2s var(--spring-pop)}
+#w-fine .mp-stop:hover{background:rgba(118,
