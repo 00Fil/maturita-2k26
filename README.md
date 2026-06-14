@@ -1,23 +1,33 @@
 # PCTO · Maturità 2026
 
 Sito di presentazione del percorso PCTO per l'esame di Maturità.
-Lock screen in stile macOS → backend PHP minimale → MySQL → desktop/app in stile macOS con la presentazione.
+Login animato (morph button) → backend PHP minimale → MySQL → desktop in stile macOS con la presentazione.
 
 ## Struttura
 
 | File | Cosa fa |
 |---|---|
-| `index.php` | Lock screen macOS con form di accesso |
+| `index.php` | La pagina con il tasto morph e il form di accesso |
 | `login.php` | Backend: verifica il codice e registra l'accesso su MySQL |
 | `hub.php` | Il desktop in stile macOS: la presentazione in 6 capitoli, protetta dalla sessione |
-| `macos-system.css` | Design system unico: lock screen, desktop, app, dock, finestre, centro di controllo |
-| `login.js` | Interazioni della schermata di login e modalità demo |
-| `hub.js` | Interazioni core del desktop: finestre, dock, menubar, control center |
-| `hub-extras.js` | Interazioni specialistiche: Spotlight e Mappe |
+| `macos.css` | Design system unico: token, vetro, finestre, dock, login, app e responsive |
+| `hub.js` / `login.js` / `sound.js` | Interazioni desktop, lock screen e micro-suoni |
 | `logout.php` | Chiude la sessione e torna al login |
 | `setup.sql` | Crea il database `pcto` e la tabella `accessi` |
 | `Dockerfile` | Immagine PHP 8.3 + Apache con `pdo_mysql` |
 | `docker-compose.yml` | Stack completo: app + MySQL 8.4 (con init automatico) |
+
+## Design system macOS
+
+Il progetto ora usa **un solo file CSS**, `macos.css`. Dentro ci sono:
+
+- token globali: font SF Pro, colori, accenti, ombre, hairline, raggi e curve di easing;
+- componenti base: menubar, dock, finestre, semafori, Centro di Controllo, card glass;
+- lock screen: input password meno bianco/trasparente, blur più materico e transizione più rapida verso il desktop;
+- contenuti delle app: scheda personale, agenda PCTO, Launchpad e Mappe hanno layout e identità coerenti;
+- responsive e accessibilità: focus ring, reduced motion e fallback dark mode.
+
+I vecchi fogli `hub.css` e `hub-polish.css` sono stati consolidati in `macos.css` e non vengono più caricati.
 
 ## Variabili d'ambiente
 
@@ -33,17 +43,6 @@ Lock screen in stile macOS → backend PHP minimale → MySQL → desktop/app in
 
 Senza variabili impostate valgono i default di Laragon: il progetto funziona
 anche copiato in `C:\laragon\www\pcto` senza Docker.
-
-## Design system macOS
-
-Il progetto usa **un solo file CSS**, `macos-system.css`. Dentro ci sono:
-
-- token condivisi (`--mac-*`) per font, blur, easing, radius, hairline, ombre e superfici;
-- base della lock screen e del desktop, centralizzata nello stesso linguaggio;
-- componenti universali: finestre, semafori, dock, cards, sidebar, control center, login input;
-- stili dedicati per le app che prima avevano contenuti non completamente stilati (`Su di me` e `Mappe`).
-
-Regola di manutenzione: non creare nuovi file CSS per singole app. Estendi `macos-system.css` con token e componenti riusabili.
 
 ## Modalità Demo (per la presentazione)
 
@@ -70,14 +69,16 @@ Se la modalità demo è spenta, il backend non calcola né invia nessun passaggi
 ## Il desktop (hub.php)
 
 Dopo il login si arriva su un desktop in stile macOS — stessa estetica della pagina di
-accesso (superfici neutre, bordi hairline) con un colore accento per ogni app.
-La finestra "Presentazione" si apre da sola e guida i 10 minuti di esposizione in 5 app/capitoli:
+accesso, governata da `macos.css`: superfici glass, bordi hairline, raggi coerenti,
+motion Apple-like e un colore accento per ogni app.
+La finestra "Scaletta" si apre da sola e guida i 10 minuti di esposizione in 6 capitoli:
 
-1. **Su di me** — identità, competenze e percorso personale
-2. **Fuori dall'aula** — progetti, concorsi e volontariato
-3. **CS Metal Europe** — 240 ore di PCTO e primo contratto
-4. **Dove voglio andare** — rotta dopo il diploma, università ed estero
-5. **Spotlight** — frase conclusiva prima delle domande
+1. **Da dove parto** — il filo conduttore personale (1')
+2. **Il percorso in azienda** — due anni in CS Metal Europe, 240 ore (3')
+3. **Cosa ho imparato** — tre lezioni oltre gli strumenti (2')
+4. **Il progetto** — questo sito, dal login al desktop (2')
+5. **I collegamenti** — le materie dentro l'esperienza (1')
+6. **Cosa porto via** — bilancio e direzione (1')
 
 Ogni capitolo è un'app nel dock (ingrandimento al passaggio, rimbalzo all'apertura);
 le finestre si trascinano, si chiudono e si massimizzano con i semafori.

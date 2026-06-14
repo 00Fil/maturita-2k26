@@ -17,7 +17,7 @@ function appicon(string $file, string $remote): string {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desktop · Maturità 2026</title>
-<link rel="stylesheet" href="macos-system.css?v=<?= @filemtime(__DIR__ . '/macos-system.css') ?>">
+<link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
 <?php if ($boot): ?><link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high"><?php endif; ?>
 </head>
 <body<?= $boot ? ' class="booting"' : '' ?>>
@@ -302,8 +302,5 @@ function appicon(string $file, string $remote): string {
 </nav>
 
 <script src="hub.js"></script>
-<script src="hub-extras.js?v=<?= @filemtime(__DIR__ . '/hub-extras.js') ?>"></script>
-
-
 </body>
 </html>

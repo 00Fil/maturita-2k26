@@ -4,11 +4,13 @@ FROM php:8.3-apache
 # Estensione PDO per MySQL
 RUN docker-php-ext-install pdo_mysql
 
-# Build offline-friendly: tutte le icone usate sono vendorizzate in assets/icons-b64.
-RUN mkdir -p /var/www/html/assets/icons
+# Icona Terminal (WhiteSur — non presente nel set ufficiale fornito)
+ARG ICONS=https://raw.githubusercontent.com/vinceliuice/WhiteSur-icon-theme/3cc051a4709e67921a9d47cd2a3e0111bbe5e2bd
+RUN mkdir -p /var/www/html/assets/icons && \
+    curl -fsSL "$ICONS/src/apps/scalable/terminal.svg" -o /var/www/html/assets/icons/terminal.svg
 
 # File dell'app
-COPY index.php login.php logout.php hub.php macos-system.css login.js hub.js hub-extras.js sound.js /var/www/html/
+COPY index.php login.php logout.php hub.php macos.css login.js hub.js sound.js /var/www/html/
 COPY assets/ /var/www/html/assets/
 
 # Decodifica le icone ufficiali macOS (vendorizzate come base64 nel repo)
