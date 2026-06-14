@@ -1,11 +1,4 @@
 /* ============================================================
-   login.js — comportamento della lock screen macOS
-   - orologio live
-   - input password / feedback
-   - chiamata fetch a login.php
-   - demo tecnica opzionale con ?demo=1
-   ============================================================ */
-/* ============================================================
    OROLOGIO LIVE (stile macOS, locale italiano)
    ============================================================ */
 const dateEl = document.getElementById('date');
@@ -106,7 +99,7 @@ form.addEventListener('submit', async (e) => {
     } else {
       setCaption('Accesso riuscito · apro il desktop…', false);
       document.body.classList.add('unlock');
-      setTimeout(() => window.location.replace('hub.php'), 430);
+      setTimeout(() => window.location.replace('hub.php'), 720);
     }
   } catch (err) {
     if (demoMode) avviaDemo([
@@ -120,7 +113,7 @@ form.addEventListener('submit', async (e) => {
 
 demoEnter.addEventListener('click', () => {
   document.body.classList.add('unlock');
-  setTimeout(() => window.location.replace('hub.php'), 430);
+  setTimeout(() => window.location.replace('hub.php'), 720);
 });
 
 /* ============================================================

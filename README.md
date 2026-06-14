@@ -1,34 +1,23 @@
 # PCTO · Maturità 2026
 
 Sito di presentazione del percorso PCTO per l'esame di Maturità.
-Login screen in stile macOS → backend PHP minimale → MySQL → desktop in stile macOS con la presentazione.
+Lock screen in stile macOS → backend PHP minimale → MySQL → desktop/app in stile macOS con la presentazione.
 
 ## Struttura
 
 | File | Cosa fa |
 |---|---|
-| `index.php` | Lock/login screen in stile macOS con video, orologio, avatar e password field |
+| `index.php` | Lock screen macOS con form di accesso |
 | `login.php` | Backend: verifica il codice e registra l'accesso su MySQL |
 | `hub.php` | Il desktop in stile macOS: la presentazione in 6 capitoli, protetta dalla sessione |
-| `assets/css/macos-system.css` | Design system unico: login, desktop, finestre, dock, Centro di Controllo e contenuti delle app |
-| `assets/js/hub.js` | Interazioni del desktop: finestre, dock, menu bar, timer e Centro di Controllo |
-| `assets/js/sound.js` | Micro-feedback audio dell’interfaccia |
+| `macos-system.css` | Design system unico: lock screen, desktop, app, dock, finestre, centro di controllo |
+| `login.js` | Interazioni della schermata di login e modalità demo |
+| `hub.js` | Interazioni core del desktop: finestre, dock, menubar, control center |
+| `hub-extras.js` | Interazioni specialistiche: Spotlight e Mappe |
 | `logout.php` | Chiude la sessione e torna al login |
 | `setup.sql` | Crea il database `pcto` e la tabella `accessi` |
 | `Dockerfile` | Immagine PHP 8.3 + Apache con `pdo_mysql` |
 | `docker-compose.yml` | Stack completo: app + MySQL 8.4 (con init automatico) |
-
-
-## Design system macOS
-
-Il progetto ora usa un solo file CSS come fonte di verità:
-
-```
-assets/css/macos-system.css
-```
-
-Dentro sono centralizzati font SF Pro, token di colore, materiali glass, raggi, ombre, cursori, animazioni, login screen, desktop, finestre e contenuti delle applicazioni.
-La documentazione operativa è in `docs/DESIGN_SYSTEM.md`.
 
 ## Variabili d'ambiente
 
@@ -44,6 +33,17 @@ La documentazione operativa è in `docs/DESIGN_SYSTEM.md`.
 
 Senza variabili impostate valgono i default di Laragon: il progetto funziona
 anche copiato in `C:\laragon\www\pcto` senza Docker.
+
+## Design system macOS
+
+Il progetto usa **un solo file CSS**, `macos-system.css`. Dentro ci sono:
+
+- token condivisi (`--mac-*`) per font, blur, easing, radius, hairline, ombre e superfici;
+- base della lock screen e del desktop, centralizzata nello stesso linguaggio;
+- componenti universali: finestre, semafori, dock, cards, sidebar, control center, login input;
+- stili dedicati per le app che prima avevano contenuti non completamente stilati (`Su di me` e `Mappe`).
+
+Regola di manutenzione: non creare nuovi file CSS per singole app. Estendi `macos-system.css` con token e componenti riusabili.
 
 ## Modalità Demo (per la presentazione)
 
@@ -71,14 +71,13 @@ Se la modalità demo è spenta, il backend non calcola né invia nessun passaggi
 
 Dopo il login si arriva su un desktop in stile macOS — stessa estetica della pagina di
 accesso (superfici neutre, bordi hairline) con un colore accento per ogni app.
-La finestra "Scaletta" si apre da sola e guida i 10 minuti di esposizione in 6 capitoli:
+La finestra "Presentazione" si apre da sola e guida i 10 minuti di esposizione in 5 app/capitoli:
 
-1. **Da dove parto** — il filo conduttore personale (1')
-2. **Il percorso in azienda** — due anni in CS Metal Europe, 240 ore (3')
-3. **Cosa ho imparato** — tre lezioni oltre gli strumenti (2')
-4. **Il progetto** — questo sito, dal login al desktop (2')
-5. **I collegamenti** — le materie dentro l'esperienza (1')
-6. **Cosa porto via** — bilancio e direzione (1')
+1. **Su di me** — identità, competenze e percorso personale
+2. **Fuori dall'aula** — progetti, concorsi e volontariato
+3. **CS Metal Europe** — 240 ore di PCTO e primo contratto
+4. **Dove voglio andare** — rotta dopo il diploma, università ed estero
+5. **Spotlight** — frase conclusiva prima delle domande
 
 Ogni capitolo è un'app nel dock (ingrandimento al passaggio, rimbalzo all'apertura);
 le finestre si trascinano, si chiudono e si massimizzano con i semafori.
