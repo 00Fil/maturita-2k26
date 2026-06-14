@@ -1845,3 +1845,49 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 }
 
 .ntool-more { letter-spacing: -0.08em; }
+
+/* ============================================================
+   NOTES MOCK — versione scusa: chrome, card sinistra e allineamenti corretti
+   ============================================================ */
+.notes-window { position: fixed; background: #f4f4f5 !important; border-radius: 26px !important; }
+.notes-window::before {
+  content:""; position:absolute; z-index:0; left:8px; top:8px; bottom:8px; width:214px;
+  border-radius:20px; background:rgba(255,255,255,.86);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.72), 0 1px 10px rgba(0,0,0,.035);
+  pointer-events:none;
+}
+.notes-window .titlebar.notes-titlebar {
+  position:relative; z-index:2; height:46px; padding:0 14px;
+  background:transparent; border-bottom:0; box-shadow:none;
+}
+.notes-window .titlebar .wt { display:none; }
+.notes-window .lights { z-index:3; }
+.notes-chrome-left { position:absolute; left:88px; top:9px; display:flex; gap:14px; align-items:center; }
+.notes-chrome-mid { position:absolute; left:500px; top:8px; display:flex; gap:18px; align-items:center; }
+.notes-window .ntool {
+  width:28px; height:28px; border:0; border-radius:50%; background:transparent; box-shadow:none;
+  color:#4a4a4c; display:flex; align-items:center; justify-content:center; padding:0;
+}
+.notes-window .ntool svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.75; stroke-linecap:round; stroke-linejoin:round; }
+.notes-window .ntool-more { background:rgba(255,255,255,.70); box-shadow:0 8px 22px rgba(0,0,0,.07); font-size:11px; letter-spacing:-.04em; font-weight:700; color:#4a4a4c; }
+.notes-mock { position:relative; z-index:1; grid-template-columns:230px 290px minmax(0,1fr); background:#f5f5f6; }
+.nm-sidebar { background:transparent; border-right:0; padding:5px 14px 14px; }
+.nm-primary { margin-top:0; }
+.nm-list-pane { background:rgba(247,247,248,.96); border-right:1px solid rgba(0,0,0,.075); }
+.nm-editor-pane { background:#fbfbfb; }
+.nm-side-item { height:28px; grid-template-columns:18px minmax(0,1fr) 28px; padding:0 6px; column-gap:4px; }
+.nm-side-item.selected { grid-template-columns:10px 18px minmax(0,1fr) 22px 16px; padding:0 6px 0 4px; background:#ffb300; }
+.nm-side-item b { font-size:12.7px; line-height:28px; }
+.nm-side-item em { font-size:12.5px; line-height:28px; text-align:right; min-width:16px; justify-self:end; }
+.nm-side-item.selected em { line-height:28px; align-self:center; }
+.nm-side-item.selected .nm-chev { position:static; font-size:14px; line-height:1; width:10px; text-align:center; opacity:.9; }
+.nm-side-item:not(.selected) .nm-chev { position:absolute; left:2px; }
+.nm-dots { display:flex; align-items:center; justify-content:center; width:20px; height:18px; margin:0; font-size:10px; font-weight:650; letter-spacing:-.02em; opacity:.88; }
+.nm-section-label { margin:17px 0 7px 3px; }
+.nm-tags button { background:#d8d8da; color:#343437; }
+.nm-list-title { height:46px; align-items:flex-start; padding-left:2px; }
+.nm-list-title h2 { font-size:15.5px; }
+.nm-day { margin-top:14px; }
+.nm-note-row.active { background:#d9d9db; }
+@media (max-width:900px){ .notes-chrome-mid{left:470px}.notes-chrome-left{left:84px} }
+

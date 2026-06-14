@@ -126,21 +126,19 @@ function appicon(string $file, string $remote): string {
 </section>
 
 <section class="win a-orange notes-window" id="w-io" style="left:5%;top:5%;width:1080px">
-  <div class="titlebar notes-titlebar"><span class="wt">Imported Notes</span>
-    <div class="notes-window-tools" aria-hidden="true">
-      <button class="ntool ntool-folder"><svg viewBox="0 0 24 24"><path d="M3.5 6.8h6.2l1.8 2h9v8.4a2.3 2.3 0 0 1-2.3 2.3H5.8a2.3 2.3 0 0 1-2.3-2.3z"/><path d="M3.5 9h17"/></svg></button>
+  <div class="titlebar notes-titlebar"><span class="wt"></span>
+    <div class="notes-chrome-left" aria-hidden="true">
+      <button class="ntool"><svg viewBox="0 0 24 24"><path d="M3.5 6.8h6.2l1.8 2h9v8.4a2.3 2.3 0 0 1-2.3 2.3H5.8a2.3 2.3 0 0 1-2.3-2.3z"/><path d="M3.5 9h17"/></svg></button>
       <button class="ntool"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M9 5v14"/></svg></button>
+    </div>
+    <div class="notes-chrome-mid" aria-hidden="true">
       <button class="ntool ntool-more">•••</button>
       <button class="ntool"><svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/></svg></button>
     </div>
   </div>
   <div class="wbody notes-mock" aria-label="Mock grafico app Note macOS">
     <aside class="nm-sidebar">
-      <div class="nm-top-row">
-        <button class="nm-icon-button"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4z"/><path d="M9 5v14"/></svg></button>
-      </div>
-
-      <nav class="nm-side-list">
+      <nav class="nm-side-list nm-primary">
         <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M5 5h14v14H5z"/><path d="M8 9h8M8 13h6"/></svg></span><b>Quick Notes</b><em>6</em></button>
         <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M9.5 12h5M12 9.5v5"/></svg></span><b>Shared</b><em>550</em></button>
       </nav>
@@ -150,17 +148,10 @@ function appicon(string $file, string $remote): string {
         <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>All iCloud</b><em>638</em></button>
         <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>Notes</b><em>14</em></button>
         <button class="nm-side-item selected"><span class="nm-chev">⌄</span><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>Imported Notes</b><span class="nm-dots">•••</span><em>1</em></button>
-        <button class="nm-side-item indent"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>Profile</b><em>1</em></button>
         <button class="nm-side-item"><span class="nm-chev">›</span><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>ETS</b><em>2</em></button>
         <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>Prompts</b><em>2</em></button>
         <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>Research IT</b><em>15</em></button>
-        <button class="nm-side-item"><span class="nm-chev">›</span><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>Cook 2025</b><em>0</em></button>
         <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M6 7h12M9 7V5h6v2M8 10v8M12 10v8M16 10v8M7 7l1 13h8l1-13"/></svg></span><b>Recently Deleted</b><em>27</em></button>
-      </nav>
-
-      <div class="nm-section-label">Google</div>
-      <nav class="nm-side-list">
-        <button class="nm-side-item"><span class="nm-si"><svg viewBox="0 0 24 24"><path d="M3.5 7h6l1.6 2h9.4v9.5H3.5z"/></svg></span><b>Notes</b><em>0</em></button>
       </nav>
 
       <div class="nm-section-label">Tags</div>
