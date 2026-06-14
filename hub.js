@@ -343,7 +343,7 @@ document.querySelectorAll('.win').forEach(win => {
     win.style.left = Math.round(nx) + 'px';
     win.style.top = Math.round(ny) + 'px';
   });
-  const end = () => { drag = false; };
+  const end = () => { if (drag && !win.classList.contains('maxi')) captureNormal(win); drag = false; };
   tb.addEventListener('pointerup', end);
   tb.addEventListener('pointercancel', end);
   tb.addEventListener('dblclick', e => { if (e.target.closest('.lights')) return; toggleMax(win); });
@@ -983,4 +983,139 @@ if (rebBtn) {
   setInterval(keepDockState,500);
   keepDockState();
 })();
+
+/* Window manager stability override: dimensioni stabili + Finder sempre presente */
+const FINDER_ID = 'w-pres';
+function isFinder(win){ return !!win && win.id === FINDER_ID; }
+function hasFullscreenApp(){
+  return Array.from(document.querySelectorAll('.win.open.maxi')).some(w => !isFinder(w));
+}
+function rectFromElement(win){
+  const r = win.getBoundingClientRect();
+  return {
+    left: Math.round(r.left),
+    top: Math.round(r.top),
+    width: Math.round(r.width),
+    height: Math.round(r.height),
+    radius: 24
+  };
+}
+function captureNormal(win){
+  if(!win || win.classList.contains('maxi')) return;
+  const r = rectFromElement(win);
+  if(r.width > 80 && r.height > 80) win._normalRect = r;
+}
+function ensureNormalRect(win){
+  if(!win._normalRect){
+    const r = rectFromElement(win);
+    win._normalRect = { left:r.left, top:r.top, width:r.width, height:r.height, radius:24 };
+  }
+  return win._normalRect;
+}
+function syncFinderVisibility(){
+  const finder = document.getElementById(FINDER_ID);
+  if(!finder) return;
+  if(!hasFullscreenApp()){
+    finder.classList.remove('closing');
+    if(!finder.classList.contains('open')) finder.classList.add('open');
+    if(!finder.style.zIndex) focusWin(finder);
+    syncDock();
+    if(typeof dockShow === 'function') dockShow();
+  }
+}
+function fitWin(win){
+  if(!win || win.classList.contains('maxi')) return;
+  requestAnimationFrame(() => {
+    const r = win.getBoundingClientRect();
+    const limit = window.innerHeight - 82;
+    if(r.bottom > limit) win.style.top = Math.max(40, Math.round(limit - r.height)) + 'px';
+    captureNormal(win);
+  });
+}
+function openWin(id){
+  const win = document.getElementById(id);
+  if(!win) return;
+  if(!win.classList.contains('open')){
+    win.classList.remove('closing');
+    win.classList.add('open');
+    sndOpen();
+  }
+  focusWin(win);
+  if(!win.classList.contains('maxi')) captureNormal(win);
+  fitWin(win);
+  syncDock();
+  syncFinderVisibility();
+}
+function closeWin(win){
+  if(!win) return;
+  if(isFinder(win) && !hasFullscreenApp()){
+    win.classList.remove('closing');
+    win.classList.add('open');
+    focusWin(win);
+    syncDock();
+    if(typeof dockShow === 'function') dockShow();
+    return;
+  }
+  sndClose();
+  if(!win.classList.contains('maxi')) captureNormal(win);
+  win.classList.add('closing');
+  setTimeout(() => {
+    win.classList.remove('open','closing','maxi');
+    win.style.transition = '';
+    win.style.removeProperty('max-height');
+    win.style.removeProperty('border-radius');
+    win._mxBusy = false;
+    syncDock();
+    syncFinderVisibility();
+  },260);
+}
+function closeAll(){
+  document.querySelectorAll('.win.open').forEach((w,i)=>{
+    if(isFinder(w)) return;
+    setTimeout(()=>closeWin(w), i*60);
+  });
+  setTimeout(syncFinderVisibility, 340);
+}
+function toggleMax(win){
+  if(!win) return;
+  focusWin(win);
+  if(win._mxBusy) return;
+  const goMax = !win.classList.contains('maxi');
+  const start = rectFromElement(win);
+  win._mxBusy = true;
+  setWinBox(win, start, false);
+  void win.offsetWidth;
+  let target;
+  if(goMax){
+    win._normalRect = { left:start.left, top:start.top, width:start.width, height:start.height, radius:24 };
+    win.classList.add('maxi');
+    sndOpen();
+    target = maxiBounds();
+  } else {
+    target = ensureNormalRect(win);
+    target = { left:target.left, top:target.top, width:target.width, height:target.height, radius:24 };
+    sndClose();
+    if(typeof dockWake === 'function') dockWake();
+  }
+  requestAnimationFrame(()=>setWinBox(win, target, true));
+  setTimeout(()=>{
+    win.style.transition='';
+    if(!goMax){
+      win.classList.remove('maxi');
+      setWinBox(win, target, false);
+      win.style.transition='';
+      captureNormal(win);
+    }
+    win._mxBusy=false;
+    syncDock();
+    syncFinderVisibility();
+  },430);
+}
+window.addEventListener('resize',()=>{
+  document.querySelectorAll('.win.maxi').forEach(w=>setWinBox(w, maxiBounds(), false));
+  syncFinderVisibility();
+});
+document.querySelectorAll('.win').forEach(w=>{ if(!w.classList.contains('maxi')) captureNormal(w); });
+setInterval(syncFinderVisibility, 500);
+syncFinderVisibility();
 

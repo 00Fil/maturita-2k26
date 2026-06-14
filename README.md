@@ -148,3 +148,7 @@ Le barre evento restano continue, ma griglia e numeri dei giorni sono sempre vis
 
 ### Calendario PCTO — scheletro vero
 Il calendario non usa più overlay sopra la griglia: ogni giorno resta una cella reale con bordo e numero, mentre i range sono segmenti interni continui.
+
+
+### Window manager stabile
+Le finestre salvano la propria dimensione normale prima del fullscreen e la ripristinano identica; Finder resta aperto se non c’è un’app a schermo intero.
