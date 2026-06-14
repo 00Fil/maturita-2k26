@@ -128,16 +128,17 @@ function appicon(string $file, string $remote): string {
 <section class="win a-orange" id="w-io" style="left:6%;top:6%;width:1040px">
   <div class="titlebar"><span class="wt">Su di me — Note</span></div>
   <div class="wbody notes-app" data-notes-app>
+
     <aside class="notes-folders" aria-label="Cartelle Note">
       <div class="notes-account">
-        <span class="notes-dot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12a2 2 0 0 1 2 2v12.5A1.5 1.5 0 0 1 18.5 20H5.5A1.5 1.5 0 0 1 4 18.5V6a2 2 0 0 1 2-2Z"/><path d="M7 8h10M7 12h10M7 16h6"/></svg></span>
+        <span class="notes-dot notes-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.8A2.8 2.8 0 0 1 7.8 3h8.4A2.8 2.8 0 0 1 19 5.8v12.4a2.8 2.8 0 0 1-2.8 2.8H7.8A2.8 2.8 0 0 1 5 18.2z"/><path d="M8.2 8h7.6M8.2 12h7.6M8.2 16h4.8"/></svg></span>
         <div><b>iCloud</b><small>Filippo Corsini</small></div>
       </div>
-      <button class="notes-folder on" data-filter="all" type="button"><span><svg viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14"/></svg></span><div><b>Tutte le note</b><small data-count="all">7 note</small></div></button>
-      <button class="notes-folder" data-filter="featured" type="button"><span><svg viewBox="0 0 24 24"><path d="m12 4 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4-3.9-3.8 5.4-.8Z"/></svg></span><div><b>In evidenza</b><small data-count="featured">3 note</small></div></button>
-      <button class="notes-folder" data-filter="school" type="button"><span><svg viewBox="0 0 24 24"><path d="M4 19V8l8-4 8 4v11M8 19v-7h8v7"/></svg></span><div><b>Formazione</b><small data-count="school">2 note</small></div></button>
-      <button class="notes-folder" data-filter="work" type="button"><span><svg viewBox="0 0 24 24"><path d="M9 7V5h6v2M5 8h14v11H5zM5 12h14"/></svg></span><div><b>Progetti</b><small data-count="work">3 note</small></div></button>
-      <button class="notes-folder" data-filter="life" type="button"><span><svg viewBox="0 0 24 24"><path d="M9 18V5l9-2v13M9 18a3 2 0 1 1 0-4M18 16a3 2 0 1 1 0-4"/></svg></span><div><b>Vita fuori scuola</b><small data-count="life">2 note</small></div></button>
+      <button class="notes-folder on" data-filter="all" type="button"><span class="notes-icon"><svg viewBox="0 0 24 24"><path d="M8 6h10M8 12h10M8 18h10"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg></span><div><b>Tutte le note</b><small data-count="all">7 note</small></div></button>
+      <button class="notes-folder" data-filter="featured" type="button"><span class="notes-icon"><svg viewBox="0 0 24 24"><path d="M12 3.8 14.6 9l5.7.8-4.1 4 1 5.7-5.2-2.7-5.2 2.7 1-5.7-4.1-4 5.7-.8z"/></svg></span><div><b>In evidenza</b><small data-count="featured">3 note</small></div></button>
+      <button class="notes-folder" data-filter="school" type="button"><span class="notes-icon"><svg viewBox="0 0 24 24"><path d="m3 8.5 9-4.5 9 4.5-9 4.5z"/><path d="M7 10.7v5.1c0 1.5 2.2 2.7 5 2.7s5-1.2 5-2.7v-5.1"/></svg></span><div><b>Formazione</b><small data-count="school">2 note</small></div></button>
+      <button class="notes-folder" data-filter="work" type="button"><span class="notes-icon"><svg viewBox="0 0 24 24"><path d="M9 7V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V7"/><rect x="4" y="7" width="16" height="12" rx="2.5"/><path d="M4 12h16"/></svg></span><div><b>Progetti</b><small data-count="work">3 note</small></div></button>
+      <button class="notes-folder" data-filter="life" type="button"><span class="notes-icon"><svg viewBox="0 0 24 24"><path d="M9 18V5l10-2v13"/><path d="M9 18c0 1.1-1.3 2-3 2s-3-.9-3-2 1.3-2 3-2 3 .9 3 2Z"/><path d="M19 16c0 1.1-1.3 2-3 2s-3-.9-3-2 1.3-2 3-2 3 .9 3 2Z"/></svg></span><div><b>Vita fuori scuola</b><small data-count="life">2 note</small></div></button>
       <div class="notes-folder-title">Tag</div>
       <div class="notes-tags">
         <button data-filter="method" type="button">#metodo</button>
