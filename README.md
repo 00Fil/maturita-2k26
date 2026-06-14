@@ -136,3 +136,11 @@ Gli eventi PCTO sono stati trasformati da card ripetute a barre continue nel mes
 
 ### Launchpad rimosso definitivamente
 App Store/Launchpad non compare più in Finder, Dock, ordine finestre o sezioni HTML.
+
+
+### Dock sempre visibile
+Il Dock resta visibile quando nessuna app è a schermo intero; si nasconde solo durante un fullscreen reale.
+
+
+### Calendario PCTO — griglia sopra i range
+Le barre evento restano continue, ma griglia e numeri dei giorni sono sempre visibili sopra i range.

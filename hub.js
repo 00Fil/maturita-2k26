@@ -280,15 +280,16 @@ document.head.appendChild(dockCss);
 let dockHot = false;
 let dockGrace = 0;
 function dockShow() { dock.classList.remove('autohide'); }
-function dockHide() { if (!dockHot && performance.now() >= dockGrace) dock.classList.add('autohide'); }
+function dockHide() { if (typeof hasFullscreenApp === 'function' && !hasFullscreenApp()) { dockShow(); return; } if (!dockHot && performance.now() >= dockGrace) dock.classList.add('autohide'); }
 function dockWake(ms) { dockShow(); dockGrace = performance.now() + (ms || 1500); }
 document.addEventListener('pointermove', e => {
   if (e.clientY >= window.innerHeight - 80) dockShow();
-  else if (e.clientY < window.innerHeight - 110) dockHide();
+  else if (typeof hasFullscreenApp === 'function' && hasFullscreenApp() && e.clientY < window.innerHeight - 110) dockHide();
+  else dockShow();
 });
 dock.addEventListener('pointerenter', () => { dockHot = true; dockShow(); });
 dock.addEventListener('pointerleave', () => { dockHot = false; dockHide(); });
-setTimeout(() => dock.classList.add('autohide'), 2800);
+setTimeout(() => { if (typeof hasFullscreenApp === 'function' && hasFullscreenApp()) dock.classList.add('autohide'); else dockShow(); }, 2800);
 
 dock.querySelectorAll('.dapp').forEach(d => {
   const btn = d.querySelector('.ai');
@@ -975,5 +976,18 @@ if (rebBtn) {
   });
   window.addEventListener('scroll',hide,true);
   window.addEventListener('resize',hide);
+})();
+
+/* Dock visibility guard: resta sempre visibile se nessuna app è a schermo intero */
+(function(){
+  const d=document.getElementById('dock');
+  if(!d) return;
+  function keepDockState(){
+    if(typeof hasFullscreenApp === 'function' && !hasFullscreenApp()) d.classList.remove('autohide');
+  }
+  document.addEventListener('click',()=>setTimeout(keepDockState,60),true);
+  window.addEventListener('resize',keepDockState);
+  setInterval(keepDockState,500);
+  keepDockState();
 })();
 
