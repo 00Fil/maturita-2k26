@@ -141,7 +141,7 @@ body.demo { overflow-y: auto; }
   z-index: 3;
   min-height: 100vh;
   min-height: 100dvh;
-  transition: opacity 0.7s var(--ease), transform 0.9s var(--ease), filter 0.7s var(--ease);
+  transition: opacity 0.42s var(--ease), transform 0.6s var(--ease), filter 0.42s var(--ease);
 }
 
 /* Orologio — ancorato in alto, centrato */
@@ -371,9 +371,12 @@ body.ready .clock { animation-delay: 0.05s; }
 body.ready .user { animation-delay: 0.12s; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* sblocco: dissolvenza del lock + leggero zoom dello sfondo */
-body.unlock .lock { opacity: 0; transform: scale(1.04); filter: blur(8px); pointer-events: none; }
-body.unlock .wallpaper { transform: scale(1.1); filter: brightness(1.05); }
+/* sblocco in stile macOS: il contenuto del lock si solleva e sfuma,
+   lo sfondo prosegue lo zoom verso il desktop (continuità con hub.php) */
+body.unlock { pointer-events: none; }
+body.unlock .lock { opacity: 0; transform: scale(1.06) translateY(-8px); filter: blur(12px); pointer-events: none; }
+body.unlock .menubar, body.unlock .scrim { opacity: 0; transition: opacity 0.4s var(--ease); }
+body.unlock .wallpaper { transform: scale(1.16); filter: brightness(1.08) saturate(1.04); transition: transform 0.6s var(--ease), filter 0.5s var(--ease); }
 
 /* ============================================================
    DEMO (?demo=1) — widget “dietro le quinte” in vetro macOS
@@ -749,7 +752,7 @@ form.addEventListener('submit', async (e) => {
     } else {
       setCaption('Accesso riuscito · apro il desktop…', false);
       document.body.classList.add('unlock');
-      setTimeout(() => window.location.replace('hub.php'), 720);
+      setTimeout(() => window.location.replace('hub.php'), 520);
     }
   } catch (err) {
     if (demoMode) avviaDemo([
@@ -763,7 +766,7 @@ form.addEventListener('submit', async (e) => {
 
 demoEnter.addEventListener('click', () => {
   document.body.classList.add('unlock');
-  setTimeout(() => window.location.replace('hub.php'), 720);
+  setTimeout(() => window.location.replace('hub.php'), 520);
 });
 
 /* ============================================================

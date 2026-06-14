@@ -177,3 +177,15 @@
   #w-fine .nav-stack{width:300px;max-width:calc(100% - 92px)}
   #w-fine .nav-dist{font-size:28px}
 }
+
+/* ===== Ingresso del desktop dopo lo sblocco (continua la transizione dalla lock screen) =====
+   Dissolvenza morbida dell'intero desktop: maschera il "flash" tra le due pagine e fa
+   materializzare la scrivania mentre menubar, dock e finestre entrano con le loro animazioni.
+   NB: si anima SOLO opacity (mai transform/filter sul body) per non creare un containing
+   block che romperebbe il posizionamento fixed di menubar e dock.
+   Salta durante il boot (?boot=1) per non interferire con la sequenza di avvio. */
+@keyframes deskReveal{from{opacity:0}to{opacity:1}}
+body:not(.booting){animation:deskReveal .62s var(--ease-apple) both}
+@media (prefers-reduced-motion: reduce){
+  body:not(.booting){animation-duration:.001s}
+}
