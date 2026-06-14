@@ -133,13 +133,16 @@ function appicon(string $file, string $remote): string {
       <button class="finder-side-row"><span><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M8 18v2h8v-2"/></svg></span>On My Mac</button>
     </aside>
     <main class="finder-main">
-      <div class="finder-path"><b>Applications</b><span>6 applicazioni</span></div>
+      <div class="finder-path"><b>Applications</b><span>7 applicazioni</span></div>
       <div class="finder-grid">
         <button class="finder-app-icon" data-open="w-pres" data-desc="Indice della presentazione: da qui apri tutte le sezioni del percorso.">
           <span class="finder-img"><?= appicon('finder.webp', '/original/file-manager.svg') ?></span><b>Finder</b><small>Presentazione</small>
         </button>
         <button class="finder-app-icon" data-open="w-io" data-desc="App Note in dark mode: curriculum, attività e progetti raccontati in modo sintetico.">
           <span class="finder-img"><?= appicon('notes.png', '/src/apps/scalable/accessories-text-editor.svg') ?></span><b>Notes</b><small>Su di me</small>
+        </button>
+        <button class="finder-app-icon" data-open="w-skills" data-desc="Raccoglie esperienze fuori dall'aula: Sportly, concorsi, volontariato e musica.">
+          <span class="finder-img"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></span><b>Launchpad</b><small>Fuori dall'aula</small>
         </button>
         <button class="finder-app-icon" data-open="w-fsl" data-desc="La sezione dedicata al PCTO presso CS Metal Europe e al lavoro svolto in azienda.">
           <span class="finder-img"><?= appicon('calendar.webp', '/original/calendar.svg') ?></span><b>Calendar</b><small>CS Metal Europe</small>
@@ -154,6 +157,7 @@ function appicon(string $file, string $remote): string {
           <span class="finder-img"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></span><b>Trash</b><small>Chiudi tutto</small>
         </button>
       </div>
+      <div class="finder-hover-card" aria-hidden="true"><b>Passa su un'app</b><span>Mostro qui una descrizione rapida.</span></div>
     </main>
   </div>
 </section>
@@ -217,35 +221,66 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-green" id="w-fsl" style="left:14%;top:8%;width:740px">
-  <div class="titlebar"><span class="wt">CS Metal Europe — la mia alternanza</span></div>
-  <div class="wbody" style="display:flex;flex-direction:column">
-    <div class="cal-tb"><h3>Formazione scuola-lavoro <span>· CS Metal Europe</span></h3>
-      <div class="cal-stats"><span class="cstat lgcard"><b>240</b><span>ore</span></span><span class="cstat lgcard"><b>2</b><span>anni</span></span><span class="cstat lgcard"><b>12</b><span>persone</span></span></div>
+<section class="win a-indigo" id="w-skills" style="left:17%;top:7%;width:700px">
+  <div class="titlebar"><span class="wt">Fuori dall'aula — Launchpad</span></div>
+  <div class="wbody as-body">
+    <div class="as-hero lgcard"><span class="as-kicker">Fuori da scuola</span><h3>Quello che faccio fuori dall'aula</h3><p>Fuori dalla scuola ho seguito progetti, concorsi e attività di volontariato. Sono le esperienze in cui ho imparato a collaborare e a portare a termine quello che inizio.</p></div>
+    <div class="as-duo">
+      <div class="as-mini lgcard" style="background:#0A84FF"><span class="as-kicker">Concorso · vinto</span><h4>Volo tra le Righe</h4><p>Ho presentato un romanzo con una playlist narrativa, unendo testo, musica e immagini. Il progetto ha vinto il concorso.</p></div>
+      <div class="as-mini lgcard" style="background:#34C759"><span class="as-kicker">Dal progetto alla startup</span><h4>GPOI · Sportly</h4><p>Da un lavoro di gestione di progetto è nato Sportly, portato dall'idea iniziale fino al prototipo pubblicato online.</p></div>
     </div>
-    <div class="agenda">
-      <div class="agroup"><h4><b>L'azienda e io</b></h4>
-        <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#34C759"></span><span class="tm">Bedizzole</span><div><b>Acciai speciali, dentro il gruppo giapponese Proterial</b><p>CS Metal Europe è un'azienda di Bedizzole con dodici persone, parte del gruppo giapponese Proterial. Ho svolto 240 ore in due anni, in un unico percorso continuo.</p></div></div>
-        </div>
-      </div>
-      <div class="agroup"><h4><b>Due anni di crescita</b></h4>
-        <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#31A8FF"></span><span class="tm">3ª</span><div><b>I primi compiti: dati e grafica</b><p>Ho lavorato sui dati di produzione e sulle immagini dell'azienda, e ho seguito il sito e il blog. Così sono entrato nel modo di lavorare dell'azienda.</p></div></div>
-          <div class="evt lgcard"><span class="bar" style="background:#FF9500"></span><span class="tm">4ª</span><div><b>Dal magazzino alla comunicazione</b><p>Sono passato dalla gestione del magazzino e dei materiali alla comunicazione dell'azienda sui social, vedendo la stessa realtà da due lati diversi.</p></div></div>
-        </div>
-      </div>
-      <div class="agroup"><h4><b>La difficoltà che mi ha cambiato</b></h4>
-        <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#FF3B30"></span><span class="tm">La lezione</span><div><b>Scrivere vuol dire pensare a chi legge</b><p>Preparando l'invito a un evento ho capito che ogni parola ha uno scopo e va scelta pensando a chi legge.</p></div></div>
-        </div>
-      </div>
-      <div class="agroup"><h4><b>Il risultato</b></h4>
-        <div class="evts">
-          <div class="evt lgcard"><span class="bar" style="background:#1D6F42"></span><span class="tm">Contratto</span><div><b>Un e-commerce vero e il mio primo contratto</b><p>Ho realizzato un negozio online e la vendita su Amazon, con un programma in PHP che mantiene allineato il catalogo. Per questo lavoro ho firmato il mio primo contratto.</p></div></div>
-        </div>
-      </div>
+    <div class="as-sec">Le altre cose che mi tengono vivo</div>
+    <div class="aprows">
+      <div class="aprow lgcard"><span class="apic" style="background:#1C1C1E;color:#7AC74F">Mc</span><div><b>Server Minecraft</b><p>Il primo servizio online che ho gestito: un piccolo server con altre persone collegate a giocare insieme.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#5856D6">ds</span><div><b>denuvo.studio</b><p>Il mio sito personale, dove pubblico i progetti e curo ogni dettaglio, dal codice alla grafica.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#FF9500">Vo</span><div><b>Volontariato</b><p>Festa del Sorriso e Torneo dei Roncai: aiuto a organizzare e mi metto a disposizione degli altri.</p></div><span class="getb">Fuori</span></div>
+      <div class="aprow lgcard"><span class="apic" style="background:#AF52DE">Ms</span><div><b>Musica e sport</b><p>Il violoncello e l'allenamento sono la disciplina che porto in tutto quello che faccio.</p></div><span class="getb">Fuori</span></div>
     </div>
+    <div class="sf-note">Per me sono modi diversi di fare la stessa cosa: costruire qualcosa e portarlo fino in fondo.</div>
+  </div>
+</section>
+
+<section class="win a-green pcto-calendar-window" id="w-fsl" style="left:8%;top:7%;width:1040px">
+  <div class="titlebar pcto-titlebar"><span class="wt">CS Metal Europe — Calendario PCTO</span></div>
+  <div class="wbody pcto-cal-app" data-pcto-calendar>
+    <aside class="pcto-side">
+      <div class="pcto-side-head">
+        <span class="pcto-cloud">iCloud</span>
+        <h3>PCTO</h3>
+        <p>Due anni di tirocinio, letti come calendario operativo.</p>
+      </div>
+      <button class="pcto-year-card active" data-pcto-year="2024" type="button">
+        <span class="pcto-check blue"></span>
+        <div><b>3ª I · Aprile 2024</b><small>08/04 — 27/04 · 120 ore</small></div>
+      </button>
+      <button class="pcto-year-card" data-pcto-year="2025" type="button">
+        <span class="pcto-check pink"></span>
+        <div><b>4ª I · Novembre 2024</b><small>11/11 — 30/11 · 120 ore</small></div>
+      </button>
+      <div class="pcto-side-label">Azienda</div>
+      <div class="pcto-company-card">
+        <b>CS Metal Europe SRL</b>
+        <span>Via Benaco 86, Bedizzole</span>
+        <span>Ufficio commerciale/logistico · magazzino</span>
+      </div>
+      <div class="pcto-mini-month" data-pcto-mini></div>
+    </aside>
+
+    <main class="pcto-main">
+      <header class="pcto-toolbar">
+        <button class="pcto-round" data-pcto-prev type="button" aria-label="Anno precedente"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button>
+        <div class="pcto-month-title"><h2 data-pcto-title>Aprile 2024</h2><span data-pcto-subtitle>3ª I · CS Metal Europe</span></div>
+        <button class="pcto-round" data-pcto-next type="button" aria-label="Anno successivo"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
+        <div class="pcto-segment" role="tablist" aria-label="Periodo PCTO">
+          <button class="active" data-pcto-year="2024" type="button">2023/24</button>
+          <button data-pcto-year="2025" type="button">2024/25</button>
+        </div>
+      </header>
+
+      <section class="pcto-calendar-grid" data-pcto-grid aria-label="Calendario mese PCTO"></section>
+    </main>
+
+    <aside class="pcto-detail" data-pcto-detail aria-live="polite"></aside>
   </div>
 </section>
 
@@ -319,6 +354,7 @@ function appicon(string $file, string $remote): string {
 <nav class="dock" id="dock">
   <span class="dapp" data-w="w-pres"><button class="ai" aria-label="Presentazione"><?= appicon('finder.webp', '/original/file-manager.svg') ?></button><span class="dot"></span><span class="tip">Presentazione · Finder</span></span>
   <span class="dapp" data-w="w-io"><button class="ai" aria-label="Su di me"><?= appicon('notes.png', '/src/apps/scalable/accessories-text-editor.svg') ?></button><span class="dot"></span><span class="tip">Su di me · Note</span></span>
+  <span class="dapp" data-w="w-skills"><button class="ai" aria-label="Fuori dall'aula"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></button><span class="dot"></span><span class="tip">Fuori dall'aula · Launchpad</span></span>
   <span class="dapp" data-w="w-fsl"><button class="ai" aria-label="CS Metal Europe"><?= appicon('calendar.webp', '/original/calendar.svg') ?></button><span class="dot"></span><span class="tip">CS Metal Europe · Calendario</span></span>
   <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Dove voglio andare"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Dove voglio andare · Mappe</span></span>
   <span class="dapp" data-spot><button class="ai" aria-label="Spotlight"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></button><span class="dot"></span><span class="tip">Spotlight</span></span>

@@ -90,56 +90,18 @@ document.querySelectorAll('.win .titlebar').forEach(tb => {
 });
 
 let zTop = 20;
-const FINDER_ID = 'w-pres';
-function isFinder(win) { return !!win && win.id === FINDER_ID; }
-function hasFullscreenApp() {
-  return Array.from(document.querySelectorAll('.win.open.maxi')).some(w => !isFinder(w));
-}
-function captureNormal(win) {
-  const r = win.getBoundingClientRect();
-  return {
-    left: Math.round(r.left),
-    top: Math.round(r.top),
-    width: Math.round(r.width),
-    height: Math.round(r.height),
-    radius: 24
-  };
-}
-function ensureNormalRect(win) {
-  if (!win._normalRect) win._normalRect = captureNormal(win);
-  return win._normalRect;
-}
-function focusWin(win) {
-  zTop += 1;
-  win.style.zIndex = zTop;
-}
+function focusWin(win) { zTop += 1; win.style.zIndex = zTop; }
 function syncDock() {
   document.querySelectorAll('.dapp[data-w]').forEach(d => {
     const w = document.getElementById(d.dataset.w);
     d.classList.toggle('running', !!w && w.classList.contains('open'));
   });
 }
-function syncFinderVisibility() {
-  const finder = document.getElementById(FINDER_ID);
-  if (!finder) return;
-  if (!hasFullscreenApp() && !finder.classList.contains('open')) {
-    finder.classList.remove('closing');
-    finder.classList.add('open');
-    if (finder._normalRect) setWinBox(finder, finder._normalRect, false, true);
-    focusWin(finder);
-  }
-  syncDock();
-}
 function fitWin(win) {
   requestAnimationFrame(() => {
-    if (!win.classList.contains('open') || win.classList.contains('maxi')) return;
     const r = win.getBoundingClientRect();
     const limit = window.innerHeight - 82;
-    if (r.bottom > limit) {
-      const ntop = Math.max(40, Math.round(limit - r.height));
-      win.style.top = ntop + 'px';
-      win._normalRect = captureNormal(win);
-    }
+    if (r.bottom > limit) win.style.top = Math.max(40, Math.round(limit - r.height)) + 'px';
   });
 }
 function openWin(id) {
@@ -148,92 +110,80 @@ function openWin(id) {
   if (!win.classList.contains('open')) {
     win.classList.remove('closing');
     win.classList.add('open');
-    if (win._normalRect && !win.classList.contains('maxi')) setWinBox(win, win._normalRect, false, true);
     sndOpen();
   }
   focusWin(win);
   fitWin(win);
   syncDock();
-  if (!isFinder(win)) setTimeout(syncFinderVisibility, 0);
 }
 function closeWin(win) {
-  if (!win) return;
-  // Il Finder resta sempre aperto quando non c'è un'app a schermo intero.
-  if (isFinder(win) && !hasFullscreenApp()) {
-    focusWin(win);
-    return;
-  }
   sndClose();
-  if (!win.classList.contains('maxi')) win._normalRect = captureNormal(win);
   win.classList.add('closing');
   setTimeout(() => {
     win.classList.remove('open', 'closing', 'maxi');
     win.style.transition = '';
-    if (win._normalRect) setWinBox(win, win._normalRect, false, true);
+    win.style.removeProperty('width');
+    win.style.removeProperty('height');
+    win.style.removeProperty('max-height');
+    win.style.removeProperty('border-radius');
     win._mxBusy = false;
     syncDock();
-    syncFinderVisibility();
   }, 260);
 }
 function closeAll() {
-  document.querySelectorAll('.win.open').forEach((w, i) => {
-    if (isFinder(w)) return;
-    setTimeout(() => closeWin(w), i * 60);
-  });
-  setTimeout(syncFinderVisibility, 360);
+  document.querySelectorAll('.win.open').forEach((w, i) => setTimeout(() => closeWin(w), i * 60));
 }
 
 const MAXI_EASE = 'cubic-bezier(.32,.72,0,1)';
 function maxiBounds() {
   return { left: 0, top: 34, width: window.innerWidth, height: window.innerHeight - 34, radius: 0 };
 }
-function setWinBox(win, r, anim, normalMode) {
+function setWinBox(win, r, anim) {
+  win.style.setProperty('max-height', 'none', 'important');
   win.style.transition = anim ? ('left .38s ' + MAXI_EASE + ', top .38s ' + MAXI_EASE + ', width .38s ' + MAXI_EASE + ', height .38s ' + MAXI_EASE + ', border-radius .38s ' + MAXI_EASE) : 'none';
-  win.style.setProperty('left', Math.round(r.left) + 'px', 'important');
-  win.style.setProperty('top', Math.round(r.top) + 'px', 'important');
-  win.style.setProperty('width', Math.round(r.width) + 'px', 'important');
-  win.style.setProperty('height', Math.round(r.height) + 'px', 'important');
-  win.style.setProperty('max-height', normalMode ? 'calc(100vh - 118px)' : 'none', 'important');
-  win.style.setProperty('border-radius', (r.radius !== undefined ? r.radius : 24) + 'px', 'important');
+  win.style.setProperty('left', r.left + 'px', 'important');
+  win.style.setProperty('top', r.top + 'px', 'important');
+  win.style.setProperty('width', r.width + 'px', 'important');
+  win.style.setProperty('height', r.height + 'px', 'important');
+  if (r.radius !== undefined) win.style.setProperty('border-radius', r.radius + 'px', 'important');
 }
 function toggleMax(win) {
   focusWin(win);
   if (win._mxBusy) return;
   const goMax = !win.classList.contains('maxi');
-  const start = captureNormal(win);
-  setWinBox(win, start, false, !goMax);
+  const start = win.getBoundingClientRect();
+  setWinBox(win, { left: start.left, top: start.top, width: start.width, height: start.height }, false);
   void win.offsetWidth;
   win._mxBusy = true;
   let target;
   if (goMax) {
-    win._normalRect = start;
+    win._restore = { left: start.left, top: start.top, width: start.width, height: start.height };
     win.classList.add('maxi');
     sndOpen();
     target = maxiBounds();
   } else {
-    target = win._normalRect || start;
-    target.radius = 24;
+    target = win._restore ? { left: win._restore.left, top: win._restore.top, width: win._restore.width, height: win._restore.height, radius: 24 } : { left: start.left, top: start.top, width: start.width, height: start.height, radius: 24 };
     sndClose();
     dockWake();
   }
-  requestAnimationFrame(() => setWinBox(win, target, true, !goMax));
+  requestAnimationFrame(() => setWinBox(win, target, true));
   setTimeout(() => {
     win.style.transition = '';
     if (!goMax) {
       win.classList.remove('maxi');
-      setWinBox(win, target, false, true);
-      dockWake();
-      syncFinderVisibility();
+      win.style.removeProperty('width');
+      win.style.removeProperty('height');
+      win.style.removeProperty('max-height');
+      win.style.removeProperty('border-radius');
     }
     win._mxBusy = false;
   }, 430);
 }
 window.addEventListener('resize', () => {
-  document.querySelectorAll('.win.maxi').forEach(w => setWinBox(w, maxiBounds(), false, false));
+  document.querySelectorAll('.win.maxi').forEach(w => setWinBox(w, maxiBounds(), false));
 });
 
 document.querySelectorAll('.win').forEach(win => {
-  if (win.classList.contains('open')) win._normalRect = captureNormal(win);
   win.addEventListener('pointerdown', () => focusWin(win));
   win.querySelector('.c-close').addEventListener('click', e => { e.stopPropagation(); closeWin(win); });
   win.querySelector('.c-min').addEventListener('click', e => { e.stopPropagation(); closeWin(win); });
@@ -245,7 +195,7 @@ document.addEventListener('click', e => {
   if (t) openWin(t.dataset.open);
 });
 
-const ORDER = ['w-pres', 'w-io', 'w-fsl', 'w-fine'];
+const ORDER = ['w-pres', 'w-io', 'w-skills', 'w-fsl', 'w-fine'];
 function topChapter() {
   let best = null, z = -1;
   ORDER.forEach(id => {
@@ -889,53 +839,98 @@ if (rebBtn) {
   render();
 })();
 
-
-/* Finder dark: tooltip flottante sopra a tutto e azioni reali */
+/* Finder dark: hover descrizione dinamica e azioni reali */
 (function(){
   const finder=document.querySelector('.finder-window');
   if(!finder) return;
-  let tip=document.querySelector('.finder-floating-desc');
-  if(!tip){
-    tip=document.createElement('div');
-    tip.className='finder-floating-desc';
-    tip.setAttribute('aria-hidden','true');
-    tip.innerHTML='<b></b><span></span>';
-    document.body.appendChild(tip);
-  }
-  function place(btn){
-    const r=btn.getBoundingClientRect();
-    const tr=tip.getBoundingClientRect();
-    let left=r.left + r.width/2 - tr.width/2;
-    let top=r.bottom + 10;
-    left=Math.max(14, Math.min(left, window.innerWidth - tr.width - 14));
-    if(top + tr.height > window.innerHeight - 18) top = r.top - tr.height - 10;
-    tip.style.left=Math.round(left)+'px';
-    tip.style.top=Math.round(top)+'px';
-  }
+  const card=finder.querySelector('.finder-hover-card');
   finder.querySelectorAll('.finder-app-icon').forEach(btn=>{
     btn.addEventListener('mouseenter',()=>{
-      const name=btn.querySelector('b')?.textContent || 'Applicazione';
-      tip.querySelector('b').textContent=name;
-      tip.querySelector('span').textContent=btn.dataset.desc || '';
-      tip.classList.add('show');
-      tip.setAttribute('aria-hidden','false');
-      requestAnimationFrame(()=>place(btn));
-    });
-    btn.addEventListener('mousemove',()=>place(btn));
-    btn.addEventListener('mouseleave',()=>{
-      tip.classList.remove('show');
-      tip.setAttribute('aria-hidden','true');
+      if(card){
+        const name=btn.querySelector('b')?.textContent || 'Applicazione';
+        card.querySelector('b').textContent=name;
+        card.querySelector('span').textContent=btn.dataset.desc || '';
+      }
     });
     btn.addEventListener('click',e=>{
       if(btn.dataset.act==='trash'){
         e.preventDefault();
         if(typeof closeAll==='function') closeAll();
       }
-      tip.classList.remove('show');
-      tip.setAttribute('aria-hidden','true');
     });
   });
-  window.addEventListener('scroll',()=>tip.classList.remove('show'),true);
-  window.addEventListener('resize',()=>tip.classList.remove('show'));
+})();
+
+
+/* ============================================================
+   PCTO Calendar — due anni di tirocinio, eventi mensili e dettaglio.
+   ============================================================ */
+(function(){
+  const app=document.querySelector('[data-pcto-calendar]');
+  if(!app) return;
+  const months=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  const weekdays=['lun','mar','mer','gio','ven','sab','dom'];
+  const data={
+    2024:{
+      key:'2024', yearLabel:'A.S. 2023/2024', className:'3ª I', month:3, year:2024, start:'2024-04-08', end:'2024-04-27', tutorSchool:'Savarino Annamaria', tutorCompany:'Delia Pea', hours:'120 ore',
+      title:'Aprile 2024', subtitle:'3ª I · dal 08/04 al 27/04',
+      events:[
+        {id:'azienda-24', color:'#0A84FF', range:['2024-04-08','2024-04-12'], label:'Ufficio commerciale', title:'Ingresso in azienda e contesto', body:'Avvio del tirocinio presso CS Metal Europe: ufficio commerciale e logistico, affiancamento al tutor, osservazione dell’organizzazione aziendale e del collegamento tra ufficio vendite e magazzino.', bullets:['azienda: taglio su misura di acciai Proterial','uffici rinnovati su due piani','gestionale per comunicare con il magazzino']},
+        {id:'dati-24', color:'#34C759', range:['2024-04-15','2024-04-19'], label:'Dati e grafica', title:'Fogli di calcolo, contenuti e invito', body:'Lavoro su formattazione e struttura di fogli di calcolo, creazione di contenuti promozionali e ideazione dell’invito per un evento aziendale.', bullets:['Excel per dati e tabelle','Adobe Photoshop e Illustrator','prime regole di scrittura efficace per marketing']},
+        {id:'web-24', color:'#FF9500', range:['2024-04-22','2024-04-27'], label:'WordPress e blog', title:'Sito web aziendale e comunicazione', body:'Intervento sul sito aziendale tramite WordPress: sistemazione di problematiche, progettazione di una sezione blog e osservazione del lavoro commerciale.', bullets:['WordPress, HTML e CSS','blog aziendale','TeamSystem / Embyon come gestionale osservato']}
+      ]
+    },
+    2025:{
+      key:'2025', yearLabel:'A.S. 2024/2025', className:'4ª I', month:10, year:2024, start:'2024-11-11', end:'2024-11-30', tutorSchool:'Ottelli Manuele', tutorCompany:'Corrado Patriarchi', hours:'120 ore',
+      title:'Novembre 2024', subtitle:'4ª I · dal 11/11 al 30/11',
+      events:[
+        {id:'magazzino-25', color:'#0A84FF', range:['2024-11-11','2024-11-16'], label:'Inventario', title:'Prima settimana: magazzino e inventario', body:'Attività in magazzino con DPI, controllo tra pezzi registrati nel sistema informatico e pezzi realmente presenti, verifica di spostamenti o tagli e annotazione delle rettifiche.', bullets:['guanti e metro per misurare i pezzi','rettifiche su foglio Excel','contatto con produzione e magazzino']},
+        {id:'ufficio-25', color:'#BF5AF2', range:['2024-11-18','2024-11-23'], label:'WordPress', title:'Ufficio commerciale/logistico', body:'Passaggio in ufficio con postazione personale: aggiornamento del sito aziendale in WordPress, inserimento di articoli nella sezione blog e modifiche grafiche.', bullets:['WordPress per sito e blog','ufficio commerciale e logistico','osservazione richieste clienti e ordini']},
+        {id:'social-25', color:'#FF2D55', range:['2024-11-25','2024-11-30'], label:'Social e Canva', title:'Comunicazione aziendale', body:'Creazione di contenuti per Instagram e LinkedIn, lavoro con Canva e maggiore attenzione a leggibilità, chiarezza e tono dei testi destinati ai lettori.', bullets:['Canva per contenuti online','post Instagram e LinkedIn','newsletter e testi più chiari']}
+      ]
+    }
+  };
+  let current='2024';
+  let activeEvent=null;
+  const grid=app.querySelector('[data-pcto-grid]');
+  const detail=app.querySelector('[data-pcto-detail]');
+  const title=app.querySelector('[data-pcto-title]');
+  const subtitle=app.querySelector('[data-pcto-subtitle]');
+  const mini=app.querySelector('[data-pcto-mini]');
+  function parseDate(v){ const [y,m,d]=v.split('-').map(Number); return new Date(y,m-1,d); }
+  function iso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+  function inRange(day,ev){ const x=parseDate(day), a=parseDate(ev.range[0]), b=parseDate(ev.range[1]); return x>=a && x<=b; }
+  function firstMonday(year,month){ const d=new Date(year,month,1); const offset=(d.getDay()+6)%7; d.setDate(d.getDate()-offset); return d; }
+  function monthDays(period){ const first=firstMonday(period.year,period.month); const days=[]; for(let i=0;i<42;i++){ const d=new Date(first); d.setDate(first.getDate()+i); days.push(d); } return days; }
+  function renderGrid(period){
+    const days=monthDays(period);
+    grid.innerHTML=weekdays.map(w=>`<div class="pcto-weekday">${w}</div>`).join('') + days.map(d=>{
+      const day=iso(d); const faded=d.getMonth()!==period.month; const today=day===period.end;
+      const evs=period.events.filter(ev=>inRange(day,ev));
+      return `<button class="pcto-day ${faded?'muted':''} ${today?'end':''}" data-day="${day}" type="button"><b>${d.getDate()}</b>${evs.map(ev=>`<span class="pcto-pill" style="--ev:${ev.color}" data-event="${ev.id}">${ev.label}</span>`).join('')}</button>`;
+    }).join('');
+  }
+  function renderDetail(period, ev){
+    detail.innerHTML=`<div class="pcto-detail-top"><span>${period.yearLabel}</span><h3>${period.className} · ${period.hours}</h3><p>${period.subtitle}</p></div><div class="pcto-tutors"><div><b>Tutor scuola</b><span>${period.tutorSchool}</span></div><div><b>Tutor azienda</b><span>${period.tutorCompany}</span></div></div><article class="pcto-event-card" style="--ev:${ev.color}"><span class="pcto-event-range">${ev.range[0].split('-').reverse().join('/')} — ${ev.range[1].split('-').reverse().join('/')}</span><h2>${ev.title}</h2><p>${ev.body}</p><ul>${ev.bullets.map(b=>`<li>${b}</li>`).join('')}</ul></article>`;
+  }
+  function renderMini(period){
+    mini.innerHTML=`<div class="mini-head"><b>${months[period.month]} ${period.year}</b><span>${period.className}</span></div><div class="mini-strip">${period.events.map(ev=>`<button type="button" data-event="${ev.id}" style="--ev:${ev.color}"><span></span>${ev.label}</button>`).join('')}</div>`;
+  }
+  function sync(){
+    const period=data[current];
+    if(!activeEvent || !period.events.some(e=>e.id===activeEvent)) activeEvent=period.events[0].id;
+    const ev=period.events.find(e=>e.id===activeEvent) || period.events[0];
+    title.textContent=period.title;
+    subtitle.textContent=period.subtitle;
+    app.querySelectorAll('[data-pcto-year]').forEach(b=>b.classList.toggle('active',b.dataset.pctoYear===current));
+    renderGrid(period); renderMini(period); renderDetail(period,ev);
+    app.querySelectorAll(`[data-event="${ev.id}"]`).forEach(el=>el.classList.add('active'));
+  }
+  app.addEventListener('click',e=>{
+    const y=e.target.closest('[data-pcto-year]'); if(y){current=y.dataset.pctoYear; activeEvent=null; sync(); sndClick?.(); return;}
+    const ev=e.target.closest('[data-event]'); if(ev){activeEvent=ev.dataset.event; sync(); sndOpen?.(); return;}
+    if(e.target.closest('[data-pcto-prev]')||e.target.closest('[data-pcto-next]')){current=current==='2024'?'2025':'2024'; activeEvent=null; sync(); sndClick?.();}
+  });
+  sync();
 })();
 

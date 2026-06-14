@@ -126,9 +126,5 @@ Gli slot immagini dell’app Note sono documentati in `assets/notes/README-IMMAG
 La finestra principale è stata ricostruita come Finder in dark mode: sidebar, toolbar, griglia Applications e descrizioni rapide al passaggio sulle app.
 
 
-### App Store/Launchpad rimosso
-La sezione App Store/Launchpad è stata rimossa da Finder e Dock perché i contenuti sono ora raccolti nell’app Note.
-
-
-### Launchpad completamente rimosso
-Apple Store/Launchpad è stato rimosso da Finder, Dock e finestre: i contenuti sono raccolti nell’app Note.
+### Calendario PCTO interattivo
+La sezione CS Metal Europe è stata ricostruita come calendario mensile dark mode: Aprile 2024 e Novembre 2024 sono intercambiabili, con eventi colorati e pannello descrittivo laterale.
