@@ -90,18 +90,56 @@ document.querySelectorAll('.win .titlebar').forEach(tb => {
 });
 
 let zTop = 20;
-function focusWin(win) { zTop += 1; win.style.zIndex = zTop; }
+const FINDER_ID = 'w-pres';
+function isFinder(win) { return !!win && win.id === FINDER_ID; }
+function hasFullscreenApp() {
+  return Array.from(document.querySelectorAll('.win.open.maxi')).some(w => !isFinder(w));
+}
+function captureNormal(win) {
+  const r = win.getBoundingClientRect();
+  return {
+    left: Math.round(r.left),
+    top: Math.round(r.top),
+    width: Math.round(r.width),
+    height: Math.round(r.height),
+    radius: 24
+  };
+}
+function ensureNormalRect(win) {
+  if (!win._normalRect) win._normalRect = captureNormal(win);
+  return win._normalRect;
+}
+function focusWin(win) {
+  zTop += 1;
+  win.style.zIndex = zTop;
+}
 function syncDock() {
   document.querySelectorAll('.dapp[data-w]').forEach(d => {
     const w = document.getElementById(d.dataset.w);
     d.classList.toggle('running', !!w && w.classList.contains('open'));
   });
 }
+function syncFinderVisibility() {
+  const finder = document.getElementById(FINDER_ID);
+  if (!finder) return;
+  if (!hasFullscreenApp() && !finder.classList.contains('open')) {
+    finder.classList.remove('closing');
+    finder.classList.add('open');
+    if (finder._normalRect) setWinBox(finder, finder._normalRect, false, true);
+    focusWin(finder);
+  }
+  syncDock();
+}
 function fitWin(win) {
   requestAnimationFrame(() => {
+    if (!win.classList.contains('open') || win.classList.contains('maxi')) return;
     const r = win.getBoundingClientRect();
     const limit = window.innerHeight - 82;
-    if (r.bottom > limit) win.style.top = Math.max(40, Math.round(limit - r.height)) + 'px';
+    if (r.bottom > limit) {
+      const ntop = Math.max(40, Math.round(limit - r.height));
+      win.style.top = ntop + 'px';
+      win._normalRect = captureNormal(win);
+    }
   });
 }
 function openWin(id) {
@@ -110,80 +148,92 @@ function openWin(id) {
   if (!win.classList.contains('open')) {
     win.classList.remove('closing');
     win.classList.add('open');
+    if (win._normalRect && !win.classList.contains('maxi')) setWinBox(win, win._normalRect, false, true);
     sndOpen();
   }
   focusWin(win);
   fitWin(win);
   syncDock();
+  if (!isFinder(win)) setTimeout(syncFinderVisibility, 0);
 }
 function closeWin(win) {
+  if (!win) return;
+  // Il Finder resta sempre aperto quando non c'è un'app a schermo intero.
+  if (isFinder(win) && !hasFullscreenApp()) {
+    focusWin(win);
+    return;
+  }
   sndClose();
+  if (!win.classList.contains('maxi')) win._normalRect = captureNormal(win);
   win.classList.add('closing');
   setTimeout(() => {
     win.classList.remove('open', 'closing', 'maxi');
     win.style.transition = '';
-    win.style.removeProperty('width');
-    win.style.removeProperty('height');
-    win.style.removeProperty('max-height');
-    win.style.removeProperty('border-radius');
+    if (win._normalRect) setWinBox(win, win._normalRect, false, true);
     win._mxBusy = false;
     syncDock();
+    syncFinderVisibility();
   }, 260);
 }
 function closeAll() {
-  document.querySelectorAll('.win.open').forEach((w, i) => setTimeout(() => closeWin(w), i * 60));
+  document.querySelectorAll('.win.open').forEach((w, i) => {
+    if (isFinder(w)) return;
+    setTimeout(() => closeWin(w), i * 60);
+  });
+  setTimeout(syncFinderVisibility, 360);
 }
 
 const MAXI_EASE = 'cubic-bezier(.32,.72,0,1)';
 function maxiBounds() {
   return { left: 0, top: 34, width: window.innerWidth, height: window.innerHeight - 34, radius: 0 };
 }
-function setWinBox(win, r, anim) {
-  win.style.setProperty('max-height', 'none', 'important');
+function setWinBox(win, r, anim, normalMode) {
   win.style.transition = anim ? ('left .38s ' + MAXI_EASE + ', top .38s ' + MAXI_EASE + ', width .38s ' + MAXI_EASE + ', height .38s ' + MAXI_EASE + ', border-radius .38s ' + MAXI_EASE) : 'none';
-  win.style.setProperty('left', r.left + 'px', 'important');
-  win.style.setProperty('top', r.top + 'px', 'important');
-  win.style.setProperty('width', r.width + 'px', 'important');
-  win.style.setProperty('height', r.height + 'px', 'important');
-  if (r.radius !== undefined) win.style.setProperty('border-radius', r.radius + 'px', 'important');
+  win.style.setProperty('left', Math.round(r.left) + 'px', 'important');
+  win.style.setProperty('top', Math.round(r.top) + 'px', 'important');
+  win.style.setProperty('width', Math.round(r.width) + 'px', 'important');
+  win.style.setProperty('height', Math.round(r.height) + 'px', 'important');
+  win.style.setProperty('max-height', normalMode ? 'calc(100vh - 118px)' : 'none', 'important');
+  win.style.setProperty('border-radius', (r.radius !== undefined ? r.radius : 24) + 'px', 'important');
 }
 function toggleMax(win) {
   focusWin(win);
   if (win._mxBusy) return;
   const goMax = !win.classList.contains('maxi');
-  const start = win.getBoundingClientRect();
-  setWinBox(win, { left: start.left, top: start.top, width: start.width, height: start.height }, false);
+  const start = captureNormal(win);
+  setWinBox(win, start, false, !goMax);
   void win.offsetWidth;
   win._mxBusy = true;
   let target;
   if (goMax) {
-    win._restore = { left: start.left, top: start.top, width: start.width, height: start.height };
+    win._normalRect = start;
     win.classList.add('maxi');
     sndOpen();
     target = maxiBounds();
   } else {
-    target = win._restore ? { left: win._restore.left, top: win._restore.top, width: win._restore.width, height: win._restore.height, radius: 24 } : { left: start.left, top: start.top, width: start.width, height: start.height, radius: 24 };
+    target = win._normalRect || start;
+    target.radius = 24;
     sndClose();
     dockWake();
   }
-  requestAnimationFrame(() => setWinBox(win, target, true));
+  requestAnimationFrame(() => setWinBox(win, target, true, !goMax));
   setTimeout(() => {
     win.style.transition = '';
     if (!goMax) {
       win.classList.remove('maxi');
-      win.style.removeProperty('width');
-      win.style.removeProperty('height');
-      win.style.removeProperty('max-height');
-      win.style.removeProperty('border-radius');
+      setWinBox(win, target, false, true);
+      dockWake();
+      syncFinderVisibility();
     }
     win._mxBusy = false;
   }, 430);
 }
 window.addEventListener('resize', () => {
-  document.querySelectorAll('.win.maxi').forEach(w => setWinBox(w, maxiBounds(), false));
+  document.querySelectorAll('.win.maxi').forEach(w => setWinBox(w, maxiBounds(), false, false));
 });
 
 document.querySelectorAll('.win').forEach(win => {
+  if (win.classList.contains('open')) win._normalRect = captureNormal(win);
   win.addEventListener('pointerdown', () => focusWin(win));
   win.querySelector('.c-close').addEventListener('click', e => { e.stopPropagation(); closeWin(win); });
   win.querySelector('.c-min').addEventListener('click', e => { e.stopPropagation(); closeWin(win); });
@@ -195,15 +245,6 @@ document.addEventListener('click', e => {
   if (t) openWin(t.dataset.open);
 });
 
-const ORDER = ['w-pres', 'w-io', 'w-skills', 'w-fsl', 'w-fine'];
-function topChapter() {
-  let best = null, z = -1;
-  ORDER.forEach(id => {
-    const w = document.getElementById(id);
-    if (w && w.classList.contains('open') && (+w.style.zIndex || 0) >= z) { z = +w.style.zIndex || 0; best = id; }
-  });
-  return best || 'w-pres';
-}
 document.querySelectorAll('[data-nav]').forEach(b => {
   b.addEventListener('click', () => {
     const i = ORDER.indexOf(topChapter());
