@@ -760,115 +760,22 @@ function appicon(string $file, string $remote): string {
     });
   });
 
-  /* ── Liquid Glass Engine — Apple Tahoe style, neutral + legible ── */
+  /* ── Clean macOS Tahoe Translucent Material ── */
   function initLiquidGlass(el, options) {
     if (!el) return;
-
-    // Only apply on Chrome/Edge (backdrop-filter + feDisplacementMap)
-    var ua = navigator.userAgent.toLowerCase();
-    var isChrome = ua.indexOf('chrome') > -1 && ua.indexOf('edg') === -1;
-    var isEdge   = ua.indexOf('edg') > -1;
-    var supportsBackdrop = typeof CSS !== 'undefined' && CSS.supports && CSS.supports('backdrop-filter', 'blur(1px)');
-    if (!supportsBackdrop && !(isChrome || isEdge)) return;
-
-    var opt = Object.assign({
-      borderRadius: 18,
-      // Neutral glass: no chromatic aberration — single grey-scale displacement map
-      // Small scale = subtle refraction at edge only, text stays perfectly crisp
-      displace: 6,
-      blur: 36,           // background blur (applied via backdrop-filter)
-      saturation: 1.6,    // colour pop of the blurred bg
-      brightness: 8,      // % brightness of the dark centre fill (0-100)
-      fillOpacity: 0.72   // opacity of the solid backdrop fill
-    }, options || {});
-
-    var uid      = 'lg-' + Math.random().toString(36).substr(2, 8);
-    var filterId = 'f-' + uid;
-    var mapId    = 'map-' + uid;
-
-    // SVG hidden filter definition
-    var svgNS = 'http://www.w3.org/2000/svg';
-    var fSvg  = document.createElementNS(svgNS, 'svg');
-    fSvg.setAttribute('style', 'position:absolute;width:0;height:0;pointer-events:none;overflow:hidden;');
-    fSvg.setAttribute('aria-hidden', 'true');
-
-    // We use a single-channel (greyscale) displacement map:
-    // edges go from black → white, centre is neutral grey (50%).
-    // feDisplacementMap reads the R channel: 50% grey = no shift, edges shift slightly.
-    // Result: glass-edge refraction, zero chromatic fringing → high legibility.
-    fSvg.innerHTML =
-      '<defs>' +
-        '<filter id="' + filterId + '" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="linearRGB">' +
-          '<feImage id="fim-' + uid + '" result="dmap" preserveAspectRatio="none"/>' +
-          '<feDisplacementMap in="SourceGraphic" in2="dmap" xChannelSelector="R" yChannelSelector="G" scale="' + opt.displace + '" result="displaced"/>' +
-          '<feGaussianBlur in="displaced" stdDeviation="0.35"/>' +
-        '</filter>' +
-      '</defs>';
-
-    document.body.appendChild(fSvg);
-    var feImg = fSvg.querySelector('#fim-' + uid);
-
-    // Generate a greyscale edge map: black centre, white ring at border.
-    // This creates a subtle refraction/lensing at the glass perimeter.
-    function buildMap(w, h) {
-      var r = opt.borderRadius;
-      // Radial gradient from transparent-grey (edge) to mid-grey (centre)
-      // Using a conic/radial trick in SVG: feFlood + feMorphology would be complex,
-      // so we embed a tiny inline SVG as a data URI.
-      var mapSvg =
-        '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '">' +
-          '<defs>' +
-            '<radialGradient id="rg" cx="50%" cy="50%" r="55%">' +
-              '<stop offset="0%"   stop-color="rgb(128,128,128)"/>' + // centre: neutral (no displacement)
-              '<stop offset="75%"  stop-color="rgb(128,128,128)"/>' + // mid: still neutral
-              '<stop offset="90%"  stop-color="rgb(220,220,220)"/>' + // near edge: slight push
-              '<stop offset="100%" stop-color="rgb(255,255,255)"/>' + // edge: max push
-            '</radialGradient>' +
-            // Vertical gradient for subtle up/down edge refraction
-            '<linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">' +
-              '<stop offset="0%"   stop-color="rgb(180,180,255)" stop-opacity="0.4"/>' +
-              '<stop offset="50%"  stop-color="rgb(128,128,128)" stop-opacity="0"/>' +
-              '<stop offset="100%" stop-color="rgb(70,70,200)"   stop-opacity="0.35"/>' +
-            '</linearGradient>' +
-          '</defs>' +
-          '<rect width="' + w + '" height="' + h + '" fill="url(#rg)" rx="' + r + '"/>' +
-          '<rect width="' + w + '" height="' + h + '" fill="url(#lg)" rx="' + r + '" opacity="0.6"/>' +
-        '</svg>';
-      return 'data:image/svg+xml,' + encodeURIComponent(mapSvg);
-    }
-
-    function update() {
-      var rect = el.getBoundingClientRect();
-      var w = Math.max(rect.width  || el.offsetWidth  || 300, 1);
-      var h = Math.max(rect.height || el.offsetHeight || 200, 1);
-      feImg.setAttribute('href', buildMap(w, h));
-      feImg.setAttribute('width',  w);
-      feImg.setAttribute('height', h);
-    }
-
-    // Apply the filter + legible backdrop parameters
-    var bf = 'url(#' + filterId + ') blur(' + opt.blur + 'px) saturate(' + opt.saturation + ')';
-    el.style.backdropFilter       = bf;
-    el.style.webkitBackdropFilter = bf;
-    // Keep the background semi-opaque dark fill so text stays readable
-    // (do NOT set to transparent — the SVG map brings glass, CSS brings legibility)
-    el.style.background = 'rgba(20,20,24,' + opt.fillOpacity + ')';
-
-    if (typeof ResizeObserver !== 'undefined') {
-      new ResizeObserver(update).observe(el);
-    } else {
-      window.addEventListener('resize', update);
-    }
-    update();
-    // Retry once layout is stable
-    requestAnimationFrame(function(){ update(); setTimeout(update, 80); });
+    // We leverage CSS backdrop-filter for perfect, hardware-accelerated legibility
+    el.style.backdropFilter = 'blur(40px) saturate(1.7) brightness(0.95)';
+    el.style.webkitBackdropFilter = 'blur(40px) saturate(1.7) brightness(0.95)';
+    el.style.background = 'rgba(28, 28, 32, 0.72)';
+    el.style.border = '1px solid rgba(255, 255, 255, 0.12)';
+    el.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08)';
   }
 
-  // Apply Liquid Glass to sidebar panel + detail card
+  // Apply native macOS style to sidebar panel + detail card
   var panelEl  = document.getElementById('nav-panel');
   var detailEl = document.querySelector('#w-fine .nav-detail-inner');
-  if (panelEl)  initLiquidGlass(panelEl,  { borderRadius: 18, displace: 8,  fillOpacity: 0.74 });
-  if (detailEl) initLiquidGlass(detailEl, { borderRadius: 18, displace: 6,  fillOpacity: 0.76 });
+  if (panelEl)  initLiquidGlass(panelEl);
+  if (detailEl) initLiquidGlass(detailEl);
 
   /* ── Stato iniziale: overview ── */
   showOverview();
