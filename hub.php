@@ -17,10 +17,10 @@ function appicon(string $file, string $remote): string {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desktop · Maturità 2026</title>
-<link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
+<link rel="stylesheet" href="assets/css/macos-system.css?v=<?= @filemtime(__DIR__ . '/assets/css/macos-system.css') ?>">
 <?php if ($boot): ?><link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high"><?php endif; ?>
 </head>
-<body<?= $boot ? ' class="booting"' : '' ?>>
+<body class="desktop-screen<?= $boot ? ' booting' : '' ?>">
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-cap" viewBox="0 0 56 56" fill="currentColor"><path d="M33.9370467,26.5128481 C34.0071746,34.0650232 40.5622987,36.5781967 40.6349206,36.6102741 C40.579494,36.787517 39.5875211,40.1917925 37.1813698,43.708166 C35.1013579,46.748249 32.9425798,49.7771957 29.5418665,49.8399278 C26.2003256,49.9014987 25.1258336,47.8583854 21.3055063,47.8583854 C17.486333,47.8583854 16.2925236,49.7771906 13.129383,49.9014987 C9.84683186,50.0257159 7.34720367,46.6140516 5.24990601,43.5851051 C0.964332248,37.3892927 -2.31073284,26.0771949 2.08685175,18.4413444 C4.27147795,14.64935 8.17557011,12.2481009 12.4131131,12.1865253 C15.6364944,12.125039 18.6789832,14.3551087 20.649477,14.3551087 C22.6187214,14.3551087 26.3159929,11.6732544 30.2027979,12.0671186 C31.8299473,12.1348421 36.3973824,12.7243949 39.3302579,17.0173633 C39.0939405,17.1638624 33.880373,20.1989532 33.9370467,26.5128552 M27.6570067,7.96804814 C29.3997351,5.85854475 30.5726917,2.92192094 30.2526965,0 C27.7406844,0.100960353 24.7030975,1.67393506 22.9012871,3.78227787 C21.286519,5.64931362 19.8723452,8.63762341 20.2539138,11.5017132 C23.0538462,11.7183402 25.9141925,10.078893 27.6570067,7.96805157" transform="translate(8 3)"/></symbol>
@@ -301,6 +301,95 @@ function appicon(string $file, string $remote): string {
   <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
 </nav>
 
-<script src="hub.js"></script>
+<script src="assets/js/hub.js"></script>
+<script>
+(function(){
+  var spot=document.getElementById('spot');
+  if(!spot)return;
+  var box=spot.querySelector('.spot-box');
+  var type=spot.querySelector('.spot-type');
+  var TEXT='Le parole non sono mai neutre';
+  var timer=null;
+  function openSpot(){
+    if(spot.classList.contains('on'))return;
+    spot.classList.add('on');
+    spot.setAttribute('aria-hidden','false');
+    if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}
+    type.textContent='';
+    var i=0;
+    clearInterval(timer);
+    timer=setInterval(function(){
+      type.textContent=TEXT.slice(0,++i);
+      if(i>=TEXT.length)clearInterval(timer);
+    },48);
+  }
+  function closeSpot(){
+    if(!spot.classList.contains('on'))return;
+    spot.classList.remove('on');
+    spot.setAttribute('aria-hidden','true');
+    clearInterval(timer);
+    if(typeof sndClose==='function'){try{sndClose();}catch(e){}}
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-spot]');
+    if(t){e.preventDefault();openSpot();return;}
+    if(spot.classList.contains('on')&&!box.contains(e.target))closeSpot();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSpot();});
+})();
+</script>
+<script>
+(function(){
+  var map=document.getElementById('mv-map');
+  var cam=document.getElementById('mv-cam');
+  var puck=document.getElementById('mv-puck');
+  var trav=document.getElementById('mv-trav');
+  if(!map||!cam||!puck)return;
+  var stops=[
+    {x:170,y:520,p:0,m:'m0',name:'Maturità al Cerebotani',kind:'Partenza',kk:'Partenza',body:'È il punto di partenza. In cinque anni al Cerebotani ho imparato a programmare e a risolvere i problemi con metodo. Da qui parte la strada che ho in mente per il dopo.'},
+    {x:390,y:430,p:0.30,m:'m1',name:'PCTO · CS Metal Europe',kind:'Sosta',kk:'Sosta lungo la strada',body:'Una sosta lungo il tragitto, come il rifornimento prima di un viaggio lungo. In azienda ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. Qui ho capito quale direzione voglio prendere.'},
+    {x:610,y:300,p:0.63,m:'m2',name:'Università · Informatica',kind:'Tappa',kk:'La prossima tappa',body:'Voglio continuare a studiare informatica. Mi serve per costruire software con basi più solide e arrivare preparato al lavoro.'},
+    {x:850,y:150,p:1,m:'m3',name:'Lavorare all\'estero',kind:'Arrivo',kk:'La meta del viaggio',body:'La meta del viaggio. Voglio portare quello che ho imparato fuori dall\'Italia e lavorare nel software in un contesto internazionale.'}
+  ];
+  var list=document.getElementById('nv-list'),elKk=document.getElementById('nv-kk'),elBody=document.getElementById('nv-body'),elStep=document.getElementById('nv-step'),elEta=document.getElementById('nv-eta'),elHint=document.getElementById('nv-hint');
+  var i=0,n=stops.length,j;
+  for(j=0;j<n;j++){
+    var s=stops[j];
+    var col=j===0?'#34C759':(j===n-1?'#FF3B30':'#8E8E93');
+    var ct=(j===0||j===n-1)?'':String(j);
+    var b=document.createElement('button');
+    b.className='dir-row';b.setAttribute('data-i',j);
+    b.innerHTML='<span class="dir-pin" style="--c:'+col+'">'+ct+'</span><span class="dir-txt"><b>'+s.name+'</b><small>'+s.kind+'</small></span>';
+    list.appendChild(b);
+  }
+  var sc=1.16,zoom=1,VW=1000,VH=640,TX=600,TY=320,minX=-300,maxX=1300,minY=-260,maxY=900;
+  function render(){
+    var s=stops[i],k,e=sc*zoom;
+    puck.setAttribute('transform','translate('+s.x+' '+s.y+')');
+    trav.setAttribute('stroke-dashoffset',(1-s.p).toFixed(4));
+    var dx=TX-e*s.x, dy=TY-e*s.y;
+    dx=Math.max(VW-e*maxX,Math.min(-e*minX,dx));
+    dy=Math.max(VH-e*maxY,Math.min(-e*minY,dy));
+    cam.setAttribute('transform','translate('+dx.toFixed(1)+' '+dy.toFixed(1)+') scale('+e.toFixed(3)+')');
+    elKk.textContent=s.kk;elBody.textContent=s.body;
+    elStep.textContent=(i+1)+'/'+n;
+    elEta.textContent=(i===n-1)?'sei arrivato':'prossima: '+stops[i+1].kind.toLowerCase();
+    elHint.textContent=(i===n-1)?'Tocca per ricominciare':'Tocca la mappa per proseguire';
+    var mks=cam.querySelectorAll('.mk');for(k=0;k<mks.length;k++)mks[k].classList.remove('on');
+    var cur=document.getElementById(s.m);if(cur)cur.classList.add('on');
+    var rows=list.children;for(k=0;k<rows.length;k++)rows[k].className='dir-row'+(k===i?' on':'');
+  }
+  function go(ni){i=((ni%n)+n)%n;render();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
+  map.addEventListener('click',function(){go(i+1);});
+  list.addEventListener('click',function(e){var t=e.target.closest('.dir-row');if(!t)return;go(parseInt(t.getAttribute('data-i'),10));});
+  var zin=document.getElementById('mv-zin'),zout=document.getElementById('mv-zout'),comp=document.getElementById('mv-comp');
+  if(zin)zin.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.min(1.5,zoom+0.18);render();});
+  if(zout)zout.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.max(0.8,zoom-0.18);render();});
+  if(comp)comp.addEventListener('click',function(ev){ev.stopPropagation();zoom=1;render();});
+  var x=document.querySelector('#w-fine .dir-x');
+  if(x)x.addEventListener('click',function(ev){ev.stopPropagation();if(typeof closeWin==='function')closeWin(document.getElementById('w-fine'));});
+  render();
+})();
+</script>
 </body>
 </html>
