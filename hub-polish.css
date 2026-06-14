@@ -101,7 +101,7 @@
 /* ===== Scrollbar: più discreta, accentua all'hover ===== */
 .wbody::-webkit-scrollbar-thumb,.main::-webkit-scrollbar-thumb,.sidebar::-webkit-scrollbar-thumb,.mpanel::-webkit-scrollbar-thumb{transition:background .2s ease}
 .wbody:hover::-webkit-scrollbar-thumb,.main:hover::-webkit-scrollbar-thumb{background:rgba(127,127,135,.5)}
-#w-fine .nav-map::-webkit-scrollbar{display:none}
+#w-fine .mp-map::-webkit-scrollbar{display:none}
 
 /* ===== Menubar e tooltip dock: transizioni leggermente più fluide ===== */
 .dapp .tip{transition:opacity .2s ease,transform .4s var(--spring-pop)}
