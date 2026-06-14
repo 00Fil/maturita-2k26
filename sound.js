@@ -1,423 +1,510 @@
-/* ============================================================
-   sound.js — Suoni dell'interfaccia in stile macOS
-   ------------------------------------------------------------
-   Tutti i suoni sono SINTETIZZATI in tempo reale con la Web Audio
-   API: nessun file audio binario, nessun sample protetto da
-   copyright Apple. Sono ricostruzioni "a orecchio" dei suoni di
-   sistema macOS (timbro, inviluppi, partiali, filtri) — la
-   replica perfetta 1:1 richiederebbe i sample originali, qui si
-   punta alla massima fedelta possibile per via sintetica.
-
-   API pubblica:
-     window.Snd.click() / tink() / pop() / tock() / bottle() /
-     funk() / glass() / basso() / blow() / frog() / hero() /
-     morse() / ping() / purr() / submarine() / boop() /
-     startup() / screenshot() / trash() / volume() / toggle(on) /
-     send() / receive() / lock() / unlock() / go() / play(name)
-
-   Retro-compatibilita (usate da index.php e dal listener globale):
-     sndAudio(), sndNote(), sndVol(), sndClick(), sndGo()
-   ============================================================ */
+/*
+ * sound.js — Motore audio dell'interfaccia in stile macOS.
+ *
+ * Tutti i suoni sono SINTETIZZATI in tempo reale con la Web Audio API: niente
+ * file audio, niente sample protetti da copyright. La sintesi modella le
+ * caratteristiche timbriche dei suoni di sistema di macOS (frequenze, inviluppi,
+ * parzialità inarmoniche, filtri) per avvicinarsi il più possibile all'originale.
+ * Una replica 1:1 perfetta richiederebbe i campioni proprietari di Apple; questa
+ * è la migliore approssimazione ottenibile via sintesi.
+ *
+ * API pubblica:
+ *   window.Snd.<nome>()  — riproduce un suono (es. Snd.tink(), Snd.funk()).
+ *   Snd.play('tink')     — alias per nome.
+ *   Snd.unlock()         — sblocca l'AudioContext dopo la prima interazione.
+ *
+ * Retro-compatibilità (NON rimuovere, usate da index.php e dal listener globale):
+ *   sndAudio(), sndNote(), sndVol(), sndClick(), sndGo()
+ */
 (function () {
   'use strict';
 
-  /* ---------- Contesto e catena master ---------- */
-  var ctx = null;      // AudioContext
-  var bus = null;      // ingresso "dry" comune
-  var master = null;   // gain finale
-  var reverbIn = null; // mandata al riverbero
-  var inited = false;
+  /* ----------------------------------------------------------------------- *
+   *  Catena audio principale
+   * ----------------------------------------------------------------------- */
+  let sndCtx = null;   // AudioContext
+  let sndBus = null;   // ingresso "asciutto" condiviso
+  let dryGain = null;  // mandata diretta
+  let wetGain = null;   // mandata al riverbero
+  let master = null;   // gain finale
+  let verb = null;      // ConvolverNode (riverbero generato)
 
-  function buildReverb(context) {
-    /* Impulso sintetico (decadimento esponenziale) per dare "aria"
-       ai suoni cristallini (glass, hero, startup, submarine). */
-    var rate = context.sampleRate;
-    var len = Math.floor(rate * 1.8);
-    var buf = context.createBuffer(2, len, rate);
-    for (var ch = 0; ch < 2; ch++) {
-      var d = buf.getChannelData(ch);
-      for (var i = 0; i < len; i++) {
-        var t = i / len;
-        d[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, 2.6);
-      }
-    }
-    var conv = context.createConvolver();
-    conv.buffer = buf;
-    return conv;
-  }
+  /* Crea (una sola volta) il grafo audio e lo restituisce. */
+  function sndAudio() {
+    if (!sndCtx) {
+      sndCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-  function audio() {
-    if (!inited) {
-      try {
-        ctx = new (window.AudioContext || window.webkitAudioContext)();
-      } catch (e) { return null; }
-      // Lowpass dolce: smussa le frequenze piu dure, come l'output di sistema.
-      var lp = ctx.createBiquadFilter();
+      // Lowpass morbido: smussa le alte come l'output di sistema di un Mac.
+      const lp = sndCtx.createBiquadFilter();
       lp.type = 'lowpass';
       lp.frequency.value = 12000;
-      lp.Q.value = 0.4;
+      lp.Q.value = 0.5;
 
-      master = ctx.createGain();
+      master = sndCtx.createGain();
       master.gain.value = 0.9;
 
-      bus = ctx.createGain();
-      bus.gain.value = 1;
-      bus.connect(lp);
+      // Ingresso condiviso dei suoni.
+      sndBus = sndCtx.createGain();
+
+      // Mandate parallele: diretto + riverbero.
+      dryGain = sndCtx.createGain();
+      dryGain.gain.value = 1.0;
+      wetGain = sndCtx.createGain();
+      wetGain.gain.value = 0.0; // i singoli suoni alzano il wet quando serve
+
+      verb = sndCtx.createConvolver();
+      verb.buffer = makeImpulse(1.8, 2.6);
+
+      sndBus.connect(dryGain);
+      sndBus.connect(wetGain);
+      wetGain.connect(verb);
+      dryGain.connect(lp);
+      verb.connect(lp);
       lp.connect(master);
-
-      // Mandata riverbero (parallela, dosata).
-      var verb = buildReverb(ctx);
-      var verbGain = ctx.createGain();
-      verbGain.gain.value = 0.5;
-      reverbIn = ctx.createGain();
-      reverbIn.gain.value = 1;
-      reverbIn.connect(verb);
-      verb.connect(verbGain);
-      verbGain.connect(master);
-
-      master.connect(ctx.destination);
-      inited = true;
+      master.connect(sndCtx.destination);
     }
-    if (ctx && ctx.state === 'suspended') { try { ctx.resume(); } catch (e) {} }
-    return ctx;
+    if (sndCtx.state === 'suspended') sndCtx.resume();
+    return sndCtx;
   }
 
-  /* ---------- Volume (allineato al control center) ---------- */
-  function vol() {
-    var raw = localStorage.getItem('cc-vol');
-    var v = parseFloat(raw == null ? 25 : raw);
-    if (isNaN(v)) v = 25;
-    return Math.max(0, Math.min(1, v / 100));
-  }
-
-  /* ---------- Mattoni di sintesi ---------- */
-  function now(off) { return ctx.currentTime + (off || 0); }
-
-  // Oscillatore con inviluppo ADSR esponenziale.
-  function tone(o) {
-    var osc = ctx.createOscillator();
-    var g = ctx.createGain();
-    osc.type = o.type || 'sine';
-    osc.frequency.setValueAtTime(o.f0 || o.freq, o.t);
-    if (o.f1 && o.f1 !== (o.f0 || o.freq)) {
-      // glissato di frequenza
-      osc.frequency.exponentialRampToValueAtTime(Math.max(o.f1, 1), o.t + o.dur);
+  /* Riverbero a impulso sintetico (rumore con decadimento esponenziale). */
+  function makeImpulse(seconds, decay) {
+    const ctx = sndCtx;
+    const rate = ctx.sampleRate;
+    const len = Math.max(1, Math.floor(seconds * rate));
+    const buf = ctx.createBuffer(2, len, rate);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < len; i++) {
+        const t = i / len;
+        d[i] = (Math.random() * 2 - 1) * Math.pow(1 - t, decay);
+      }
     }
-    if (o.detune) osc.detune.value = o.detune;
-    var peak = Math.max(o.peak, 0.0002);
-    var atk = o.atk == null ? 0.006 : o.atk;
-    g.gain.setValueAtTime(0.0001, o.t);
-    g.gain.exponentialRampToValueAtTime(peak, o.t + atk);
-    g.gain.exponentialRampToValueAtTime(0.0001, o.t + o.dur);
-    osc.connect(g);
-    g.connect(o.dest || bus);
-    if (o.verb && reverbIn) g.connect(reverbIn);
-    osc.start(o.t);
-    osc.stop(o.t + o.dur + 0.05);
-    return osc;
+    return buf;
   }
 
-  function noiseBuf(dur) {
-    var n = Math.floor(ctx.sampleRate * dur);
-    var b = ctx.createBuffer(1, n, ctx.sampleRate);
-    var d = b.getChannelData(0);
-    for (var i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
-    return b;
-  }
-
-  // Burst di rumore filtrato (click/whoosh/crumple).
-  function noise(o) {
-    var src = ctx.createBufferSource();
-    src.buffer = noiseBuf(o.dur + 0.05);
-    var f = ctx.createBiquadFilter();
-    f.type = o.filter || 'bandpass';
-    f.frequency.setValueAtTime(o.f0 || 1500, o.t);
-    if (o.f1) f.frequency.exponentialRampToValueAtTime(Math.max(o.f1, 1), o.t + o.dur);
-    f.Q.value = o.q == null ? 1 : o.q;
-    var g = ctx.createGain();
-    g.gain.setValueAtTime(0.0001, o.t);
-    g.gain.exponentialRampToValueAtTime(Math.max(o.peak, 0.0002), o.t + (o.atk || 0.004));
-    g.gain.exponentialRampToValueAtTime(0.0001, o.t + o.dur);
-    src.connect(f); f.connect(g); g.connect(o.dest || bus);
-    if (o.verb && reverbIn) g.connect(reverbIn);
-    src.start(o.t);
-    src.stop(o.t + o.dur + 0.06);
-    return src;
-  }
-
-  // Campana inarmonica additiva (per tink/glass/hero).
-  function bell(t, base, partials, dur, peak, verb) {
-    for (var i = 0; i < partials.length; i++) {
-      var p = partials[i];
-      tone({ type: 'sine', f0: base * p[0], t: t, dur: dur * (p[2] || 1),
-             peak: peak * p[1], atk: 0.004, verb: verb });
+  /* Buffer di rumore bianco riutilizzabile per click/percussioni. */
+  let _noise = null;
+  function noiseBuffer() {
+    if (!_noise) {
+      const ctx = sndAudio();
+      const len = Math.floor(ctx.sampleRate * 1.0);
+      _noise = ctx.createBuffer(1, len, ctx.sampleRate);
+      const d = _noise.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
     }
+    return _noise;
   }
 
-  function guard(fn) {
-    var v = vol();
-    if (!v) return;
-    if (!audio()) return;
-    try { fn(v); } catch (e) {}
+  function now() { return sndAudio().currentTime; }
+
+  /* Volume globale, allineato al centro di controllo del desktop (0..1). */
+  function sndVol() {
+    const raw = localStorage.getItem('cc-vol');
+    const v = parseFloat(raw == null ? '25' : raw);
+    return isNaN(v) ? 0.25 : Math.max(0, Math.min(1, v / 100));
   }
 
-  /* ============================================================
-     SUITE SUONI macOS
-     ============================================================ */
+  /* ----------------------------------------------------------------------- *
+   *  Primitive di sintesi
+   * ----------------------------------------------------------------------- */
 
-  // Click leggero dei controlli (default UI).
-  function click() { guard(function (v) {
-    var t = now(0.004);
-    tone({ type: 'sine', f0: 1318.51, t: t, dur: 0.05, peak: v * 0.05 });
-    tone({ type: 'sine', f0: 2637.02, t: t, dur: 0.03, peak: v * 0.012 });
+  /*
+   * Una "voce" oscillatore con inviluppo esponenziale percussivo.
+   * opt: { freq, type, at, dur, peak, attack, end, detune, dest, glideTo, glideAt }
+   */
+  function voice(opt) {
+    const ctx = sndAudio();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    const at = opt.at != null ? opt.at : ctx.currentTime + 0.005;
+    const dur = opt.dur != null ? opt.dur : 0.2;
+    const peak = Math.max(opt.peak != null ? opt.peak : 0.1, 0.0002);
+    const attack = opt.attack != null ? opt.attack : 0.006;
+
+    o.type = opt.type || 'sine';
+    o.frequency.setValueAtTime(opt.freq, at);
+    if (opt.detune) o.detune.value = opt.detune;
+    if (opt.glideTo) {
+      o.frequency.exponentialRampToValueAtTime(
+        Math.max(opt.glideTo, 1),
+        opt.glideAt != null ? opt.glideAt : at + dur
+      );
+    }
+
+    g.gain.setValueAtTime(0.0001, at);
+    g.gain.exponentialRampToValueAtTime(peak, at + attack);
+    g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+
+    o.connect(g).connect(opt.dest || sndBus);
+    o.start(at);
+    o.stop(at + dur + 0.05);
+    return { o: o, g: g };
+  }
+
+  /* Compatibilità storica: nota sinusoidale percussiva sul bus principale. */
+  function sndNote(freq, at, dur, peak) {
+    voice({ freq: freq, at: at, dur: dur, peak: peak, type: 'sine' });
+  }
+
+  /* Burst di rumore filtrato (per click meccanici, otturatore, cestino). */
+  function noise(opt) {
+    const ctx = sndAudio();
+    const src = ctx.createBufferSource();
+    src.buffer = noiseBuffer();
+    src.loop = true;
+    const bp = ctx.createBiquadFilter();
+    bp.type = opt.type || 'bandpass';
+    bp.frequency.value = opt.freq || 2000;
+    bp.Q.value = opt.Q != null ? opt.Q : 1;
+    const g = ctx.createGain();
+    const at = opt.at != null ? opt.at : ctx.currentTime + 0.005;
+    const dur = opt.dur != null ? opt.dur : 0.05;
+    const peak = Math.max(opt.peak != null ? opt.peak : 0.1, 0.0002);
+    g.gain.setValueAtTime(0.0001, at);
+    g.gain.exponentialRampToValueAtTime(peak, at + (opt.attack || 0.002));
+    g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+    src.connect(bp).connect(g).connect(opt.dest || sndBus);
+    src.start(at);
+    src.stop(at + dur + 0.05);
+  }
+
+  /* Alza temporaneamente la mandata al riverbero per un suono "in ambiente". */
+  function withReverb(amount, ms) {
+    sndAudio();
+    const t = sndCtx.currentTime;
+    wetGain.gain.cancelScheduledValues(t);
+    wetGain.gain.setValueAtTime(amount, t);
+    wetGain.gain.setTargetAtTime(0.0, t + (ms || 300) / 1000, 0.25);
+  }
+
+  function safe(fn) { try { if (sndVol() > 0) fn(); } catch (e) {} }
+
+  /* ----------------------------------------------------------------------- *
+   *  Suoni di sistema macOS (approssimazioni sintetizzate)
+   * ----------------------------------------------------------------------- */
+
+  /* Tink — click cristallino acuto. */
+  function sTink() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    voice({ freq: 1760, at: t, dur: 0.13, peak: v * 0.10, attack: 0.003 });
+    voice({ freq: 3520, at: t, dur: 0.09, peak: v * 0.035, attack: 0.003 });
+    voice({ freq: 5280, at: t, dur: 0.05, peak: v * 0.012, attack: 0.002 });
   }); }
 
-  // Tink — click vetroso acuto.
-  function tink() { guard(function (v) {
-    var t = now(0.004);
-    bell(t, 1, [[1720, 1, 1], [3440, 0.35, 0.8], [5160, 0.12, 0.6]], 0.13, v * 0.09, true);
+  /* Pop — bolla breve (rimozione/feedback). */
+  function sPop() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    voice({ freq: 980, glideTo: 560, glideAt: t + 0.06, at: t, dur: 0.08, peak: v * 0.12, type: 'sine' });
+    noise({ freq: 1600, Q: 1.2, at: t, dur: 0.02, peak: v * 0.03 });
   }); }
 
-  // Pop — bolla/cork breve con glissato discendente.
-  function pop() { guard(function (v) {
-    var t = now(0.004);
-    tone({ type: 'sine', f0: 1180, f1: 560, t: t, dur: 0.07, peak: v * 0.16, atk: 0.003 });
-    noise({ filter: 'bandpass', f0: 1700, q: 6, t: t, dur: 0.02, peak: v * 0.03 });
+  /* Tock — tic secco (tastiera/segmented). */
+  function sTock() { safe(function () {
+    const v = sndVol(), t = now() + 0.003;
+    noise({ freq: 2200, Q: 0.8, at: t, dur: 0.02, peak: v * 0.08 });
+    voice({ freq: 720, at: t, dur: 0.03, peak: v * 0.04, type: 'triangle' });
   }); }
 
-  // Tock — tick secco per tastiera/segmented.
-  function tock() { guard(function (v) {
-    var t = now(0.003);
-    noise({ filter: 'bandpass', f0: 2200, q: 2.5, t: t, dur: 0.022, peak: v * 0.09, atk: 0.001 });
-    tone({ type: 'sine', f0: 900, t: t, dur: 0.02, peak: v * 0.03 });
+  /* Bottle / Boop — goccia d'acqua (sweep ascendente). */
+  function sBottle() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    voice({ freq: 600, glideTo: 1300, glideAt: t + 0.05, at: t, dur: 0.10, peak: v * 0.10, type: 'sine' });
+    voice({ freq: 1200, glideTo: 2600, glideAt: t + 0.05, at: t, dur: 0.07, peak: v * 0.03, type: 'sine' });
   }); }
 
-  // Bottle / Boop — goccia d'acqua (glissato ascendente).
-  function bottle() { guard(function (v) {
-    var t = now(0.004);
-    tone({ type: 'sine', f0: 620, f1: 1240, t: t, dur: 0.12, peak: v * 0.12, atk: 0.004, verb: true });
-  }); }
-  function boop() { guard(function (v) {
-    var t = now(0.004);
-    tone({ type: 'sine', f0: 880, t: t, dur: 0.08, peak: v * 0.12 });
+  /* Funk — doppio honk discendente con "wah" (alert classico). */
+  function sFunk() { safe(function () {
+    const v = sndVol(), t = now() + 0.01;
+    function honk(f, start, len, peak) {
+      const o = sndCtx.createOscillator();
+      const bp = sndCtx.createBiquadFilter();
+      const g = sndCtx.createGain();
+      o.type = 'sawtooth';
+      o.frequency.value = f;
+      bp.type = 'bandpass';
+      bp.Q.value = 4;
+      bp.frequency.setValueAtTime(f * 1.2, start);
+      bp.frequency.linearRampToValueAtTime(f * 3.5, start + len * 0.5);
+      bp.frequency.linearRampToValueAtTime(f * 1.2, start + len);
+      g.gain.setValueAtTime(0.0001, start);
+      g.gain.exponentialRampToValueAtTime(peak, start + 0.02);
+      g.gain.setValueAtTime(peak, start + len * 0.7);
+      g.gain.exponentialRampToValueAtTime(0.0001, start + len);
+      o.connect(bp).connect(g).connect(sndBus);
+      o.start(start); o.stop(start + len + 0.05);
+    }
+    honk(415.30, t, 0.16, v * 0.12);          // G#4
+    honk(311.13, t + 0.17, 0.22, v * 0.12);   // D#4
   }); }
 
-  // Funk — il classico "duh-doo" discendente con wah.
-  function funk() { guard(function (v) {
-    function honk(t, f) {
-      var osc = ctx.createOscillator();
-      var g = ctx.createGain();
-      var bp = ctx.createBiquadFilter();
-      osc.type = 'sawtooth';
-      osc.frequency.value = f;
-      bp.type = 'bandpass'; bp.Q.value = 4;
-      bp.frequency.setValueAtTime(f * 1.2, t);
-      bp.frequency.linearRampToValueAtTime(f * 3.2, t + 0.06);
-      bp.frequency.linearRampToValueAtTime(f * 1.4, t + 0.22);
+  /* Glass — alert moderno (campana inarmonica con riverbero). */
+  function sGlass() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    withReverb(0.5, 600);
+    const parts = [1245, 1865, 2490, 3110, 4150];
+    const peaks = [0.09, 0.06, 0.045, 0.025, 0.012];
+    parts.forEach(function (f, i) {
+      voice({ freq: f, at: t + i * 0.012, dur: 0.5 - i * 0.06, peak: v * peaks[i], attack: 0.003 });
+    });
+  }); }
+
+  /* Basso — tonfo grave discendente. */
+  function sBasso() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    voice({ freq: 165, glideTo: 70, glideAt: t + 0.35, at: t, dur: 0.4, peak: v * 0.16, type: 'sine' });
+    voice({ freq: 330, glideTo: 140, glideAt: t + 0.3, at: t, dur: 0.25, peak: v * 0.05, type: 'sawtooth' });
+  }); }
+
+  /* Blow — soffio (rumore filtrato in salita + sinusoide). */
+  function sBlow() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    const ctx = sndCtx;
+    const src = ctx.createBufferSource();
+    src.buffer = noiseBuffer(); src.loop = true;
+    const bp = ctx.createBiquadFilter();
+    bp.type = 'bandpass'; bp.Q.value = 2;
+    bp.frequency.setValueAtTime(500, t);
+    bp.frequency.exponentialRampToValueAtTime(1400, t + 0.25);
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(v * 0.12, t + 0.08);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+    src.connect(bp).connect(g).connect(sndBus);
+    src.start(t); src.stop(t + 0.35);
+    voice({ freq: 520, glideTo: 880, glideAt: t + 0.25, at: t, dur: 0.28, peak: v * 0.04, type: 'sine' });
+  }); }
+
+  /* Frog — gracidio (impulsi modulati gravi). */
+  function sFrog() { safe(function () {
+    const v = sndVol();
+    const t0 = now() + 0.005;
+    for (let i = 0; i < 5; i++) {
+      const t = t0 + i * 0.055;
+      voice({ freq: 180 + i * 12, at: t, dur: 0.04, peak: v * 0.10, type: 'square' });
+    }
+  }); }
+
+  /* Hero — coro lungo e riverberante. */
+  function sHero() { safe(function () {
+    const v = sndVol(), t = now() + 0.01;
+    withReverb(0.7, 1400);
+    const chord = [392.0, 523.25, 659.25, 783.99]; // G C E G
+    chord.forEach(function (f, i) {
+      const o = sndCtx.createOscillator();
+      const g = sndCtx.createGain();
+      o.type = 'sine'; o.frequency.value = f; o.detune.value = (i - 1.5) * 4;
       g.gain.setValueAtTime(0.0001, t);
-      g.gain.exponentialRampToValueAtTime(v * 0.16, t + 0.02);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.26);
-      osc.connect(bp); bp.connect(g); g.connect(bus);
-      osc.start(t); osc.stop(t + 0.3);
-    }
-    var t = now(0.01);
-    honk(t, 415.30);        // G#4
-    honk(t + 0.16, 311.13); // Eb4
+      g.gain.exponentialRampToValueAtTime(v * 0.06, t + 0.25);
+      g.gain.setValueAtTime(v * 0.06, t + 0.9);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6);
+      o.connect(g).connect(sndBus);
+      o.start(t); o.stop(t + 1.7);
+    });
   }); }
 
-  // Glass — alert moderno luminoso (arpeggio di partiali).
-  function glass() { guard(function (v) {
-    var t = now(0.01);
-    var notes = [1244.5, 1661.2, 2217.5];
-    for (var i = 0; i < notes.length; i++) {
-      var tt = t + i * 0.045;
-      bell(tt, notes[i] / 1244.5 * 1244.5, [[1, 1, 1], [2.76, 0.3, 0.7], [5.4, 0.1, 0.5]], 0.5, v * 0.06, true);
-      tone({ type: 'sine', f0: notes[i], t: tt, dur: 0.55, peak: v * 0.06, atk: 0.004, verb: true });
-    }
+  /* Morse — due beep telegrafici. */
+  function sMorse() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    voice({ freq: 1000, at: t, dur: 0.06, peak: v * 0.10, type: 'sine', attack: 0.004 });
+    voice({ freq: 1000, at: t + 0.12, dur: 0.16, peak: v * 0.10, type: 'sine', attack: 0.004 });
   }); }
 
-  // Basso — thud grave discendente.
-  function basso() { guard(function (v) {
-    var t = now(0.005);
-    tone({ type: 'sawtooth', f0: 165, f1: 70, t: t, dur: 0.4, peak: v * 0.18, atk: 0.006 });
-    tone({ type: 'sine', f0: 110, f1: 55, t: t, dur: 0.45, peak: v * 0.14 });
+  /* Ping — sonar pulito. */
+  function sPing() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    withReverb(0.25, 500);
+    voice({ freq: 1000, at: t, dur: 0.45, peak: v * 0.12, attack: 0.004 });
+    voice({ freq: 2000, at: t, dur: 0.18, peak: v * 0.02, attack: 0.004 });
   }); }
 
-  // Blow — soffio: rumore filtrato in salita + sinusoide.
-  function blow() { guard(function (v) {
-    var t = now(0.005);
-    noise({ filter: 'bandpass', f0: 400, f1: 1400, q: 1.2, t: t, dur: 0.32, peak: v * 0.10, atk: 0.05 });
-    tone({ type: 'sine', f0: 520, f1: 760, t: t, dur: 0.3, peak: v * 0.05, atk: 0.05, verb: true });
-  }); }
-
-  // Frog — croak: pulsazioni gravi modulate.
-  function frog() { guard(function (v) {
-    var t = now(0.005);
-    for (var i = 0; i < 5; i++) {
-      var tt = t + i * 0.045;
-      tone({ type: 'square', f0: 180 + i * 12, t: tt, dur: 0.04, peak: v * 0.08 });
-    }
-  }); }
-
-  // Hero — "ahh" lungo e riverberato (epico).
-  function hero() { guard(function (v) {
-    var t = now(0.01);
-    var fund = 523.25; // C5
-    bell(t, fund, [[1, 1, 1], [2, 0.5, 0.9], [3, 0.3, 0.8], [4, 0.18, 0.7], [5, 0.1, 0.6]], 1.4, v * 0.05, true);
-  }); }
-
-  // Morse — due beep (dot-dash).
-  function morse() { guard(function (v) {
-    var t = now(0.005);
-    tone({ type: 'sine', f0: 1000, t: t, dur: 0.08, peak: v * 0.12 });
-    tone({ type: 'sine', f0: 1000, t: t + 0.14, dur: 0.2, peak: v * 0.12 });
-  }); }
-
-  // Ping — sonar pulito.
-  function ping() { guard(function (v) {
-    var t = now(0.005);
-    tone({ type: 'sine', f0: 1000, t: t, dur: 0.5, peak: v * 0.12, atk: 0.002, verb: true });
-  }); }
-
-  // Purr — rumore grave con tremolo.
-  function purr() { guard(function (v) {
-    var t = now(0.005);
-    var osc = ctx.createOscillator();
-    var lfo = ctx.createOscillator();
-    var lfoG = ctx.createGain();
-    var g = ctx.createGain();
-    osc.type = 'sine'; osc.frequency.value = 85;
-    lfo.type = 'sine'; lfo.frequency.value = 22;
+  /* Purr — fusa gravi modulate. */
+  function sPurr() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    const ctx = sndCtx;
+    const o = ctx.createOscillator();
+    const lfo = ctx.createOscillator();
+    const lfoG = ctx.createGain();
+    const g = ctx.createGain();
+    o.type = 'triangle'; o.frequency.value = 85;
+    lfo.type = 'sine'; lfo.frequency.value = 24;
     lfoG.gain.value = v * 0.06;
     g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(v * 0.1, t + 0.05);
+    g.gain.exponentialRampToValueAtTime(v * 0.08, t + 0.05);
     g.gain.exponentialRampToValueAtTime(0.0001, t + 0.5);
-    lfo.connect(lfoG); lfoG.connect(g.gain);
-    osc.connect(g); g.connect(bus);
-    osc.start(t); lfo.start(t);
-    osc.stop(t + 0.55); lfo.stop(t + 0.55);
+    lfo.connect(lfoG).connect(g.gain);
+    o.connect(g).connect(sndBus);
+    o.start(t); lfo.start(t);
+    o.stop(t + 0.55); lfo.stop(t + 0.55);
   }); }
 
-  // Submarine — sonar profondo con coda riverberata.
-  function submarine() { guard(function (v) {
-    var t = now(0.005);
-    tone({ type: 'sine', f0: 120, t: t, dur: 1.2, peak: v * 0.16, atk: 0.01, verb: true });
-    tone({ type: 'sine', f0: 480, t: t, dur: 0.3, peak: v * 0.04, verb: true });
+  /* Submarine — sonar profondo con coda riverberante. */
+  function sSubmarine() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    withReverb(0.8, 1600);
+    voice({ freq: 120, at: t, dur: 1.2, peak: v * 0.16, attack: 0.01 });
+    voice({ freq: 240, at: t, dur: 0.6, peak: v * 0.03 });
   }); }
 
-  // Startup chime — il celebre accordo di Fa# maggiore.
-  function startup() { guard(function (v) {
-    var t = now(0.02);
-    // F#2 C#3 F#3 A#3 C#4 F#4 (Hz approssimati)
-    var notes = [92.50, 138.59, 185.00, 233.08, 277.18, 369.99];
-    for (var i = 0; i < notes.length; i++) {
-      var f = notes[i];
-      // due osc leggermente scordati = coro/chorus
-      tone({ type: 'sawtooth', f0: f, t: t, dur: 2.6, peak: v * 0.05, atk: 0.04, detune: -6, verb: true });
-      tone({ type: 'sawtooth', f0: f, t: t, dur: 2.6, peak: v * 0.05, atk: 0.04, detune: 6, verb: true });
-      tone({ type: 'sine', f0: f, t: t, dur: 2.6, peak: v * 0.04, atk: 0.04, verb: true });
-    }
+  /* Sosumi — "doi-oing" con bend di pitch. */
+  function sSosumi() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    const o = sndCtx.createOscillator();
+    const g = sndCtx.createGain();
+    o.type = 'sine';
+    o.frequency.setValueAtTime(520, t);
+    o.frequency.linearRampToValueAtTime(660, t + 0.06);
+    o.frequency.linearRampToValueAtTime(500, t + 0.16);
+    o.frequency.linearRampToValueAtTime(600, t + 0.26);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(v * 0.12, t + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.35);
+    o.connect(g).connect(sndBus);
+    o.start(t); o.stop(t + 0.4);
   }); }
 
-  // Screenshot — otturatore fotocamera (due click meccanici).
-  function screenshot() { guard(function (v) {
-    var t = now(0.004);
-    noise({ filter: 'highpass', f0: 2000, q: 0.7, t: t, dur: 0.03, peak: v * 0.12, atk: 0.001 });
-    noise({ filter: 'highpass', f0: 1500, q: 0.7, t: t + 0.06, dur: 0.05, peak: v * 0.10, atk: 0.001 });
+  /* ----------------------------------------------------------------------- *
+   *  Suoni di interazione dell'app
+   * ----------------------------------------------------------------------- */
+
+  /* Click leggero dei controlli (retro-compatibile). */
+  function sndClick() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    sndNote(1318.51, t, 0.045, v * 0.05);
+    sndNote(2637.02, t, 0.03, v * 0.012);
   }); }
 
-  // Trash — accartocciamento (raffiche di rumore).
-  function trash() { guard(function (v) {
-    var t = now(0.004);
-    for (var i = 0; i < 7; i++) {
-      var tt = t + i * 0.04 + Math.random() * 0.02;
-      noise({ filter: 'bandpass', f0: 1200 + Math.random() * 2500, q: 1.5,
-              t: tt, dur: 0.05, peak: v * (0.05 + Math.random() * 0.05), atk: 0.002 });
-    }
+  /* Tick del cursore volume. */
+  function sVolume() { safe(function () {
+    const v = sndVol(), t = now() + 0.003;
+    voice({ freq: 1500, at: t, dur: 0.03, peak: v * 0.06, type: 'sine', attack: 0.002 });
   }); }
 
-  // Volume tick — il "pop" di feedback quando regoli il volume.
-  function volume() { guard(function (v) {
-    var t = now(0.003);
-    tone({ type: 'sine', f0: 1050, f1: 760, t: t, dur: 0.06, peak: v * 0.12, atk: 0.002 });
-  }); }
-
-  // Toggle — switch on/off.
-  function toggle(on) { guard(function (v) {
-    var t = now(0.003);
+  /* Toggle interruttore (on/off). */
+  function sToggle(on) { safe(function () {
+    const v = sndVol(), t = now() + 0.004;
     if (on === false) {
-      tone({ type: 'sine', f0: 760, f1: 520, t: t, dur: 0.06, peak: v * 0.1 });
+      voice({ freq: 760, glideTo: 520, glideAt: t + 0.05, at: t, dur: 0.07, peak: v * 0.09 });
     } else {
-      tone({ type: 'sine', f0: 760, f1: 1040, t: t, dur: 0.06, peak: v * 0.1 });
+      voice({ freq: 620, glideTo: 920, glideAt: t + 0.05, at: t, dur: 0.07, peak: v * 0.09 });
     }
   }); }
 
-  // Send — whoosh di invio messaggio.
-  function send() { guard(function (v) {
-    var t = now(0.004);
-    noise({ filter: 'bandpass', f0: 600, f1: 3200, q: 0.8, t: t, dur: 0.28, peak: v * 0.08, atk: 0.02 });
-    tone({ type: 'sine', f0: 500, f1: 1200, t: t, dur: 0.26, peak: v * 0.05, verb: true });
+  /* Otturatore fotocamera (screenshot). */
+  function sScreenshot() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    noise({ freq: 2600, Q: 0.7, at: t, dur: 0.03, peak: v * 0.14 });
+    noise({ freq: 1800, Q: 0.7, at: t + 0.05, dur: 0.05, peak: v * 0.12 });
   }); }
 
-  // Receive — pop di messaggio ricevuto.
-  function receive() { guard(function (v) {
-    var t = now(0.004);
-    tone({ type: 'sine', f0: 1400, f1: 1900, t: t, dur: 0.12, peak: v * 0.1, verb: true });
+  /* Svuota cestino (accartocciamento di carta). */
+  function sTrash() { safe(function () {
+    const v = sndVol();
+    const t0 = now() + 0.005;
+    for (let i = 0; i < 14; i++) {
+      const t = t0 + Math.random() * 0.4;
+      noise({ freq: 1500 + Math.random() * 3000, Q: 1.5, at: t, dur: 0.03, peak: v * 0.05 });
+    }
   }); }
 
-  // Lock / Unlock.
-  function lock() { guard(function (v) {
-    var t = now(0.004);
-    noise({ filter: 'bandpass', f0: 2600, q: 3, t: t, dur: 0.03, peak: v * 0.09, atk: 0.001 });
-    tone({ type: 'sine', f0: 660, f1: 440, t: t + 0.02, dur: 0.1, peak: v * 0.06 });
-  }); }
-  function unlock() { guard(function (v) {
-    var t = now(0.004);
-    tone({ type: 'sine', f0: 440, f1: 660, t: t, dur: 0.1, peak: v * 0.06 });
-    noise({ filter: 'bandpass', f0: 2600, q: 3, t: t + 0.06, dur: 0.03, peak: v * 0.09, atk: 0.001 });
+  /* Invio messaggio (whoosh ascendente). */
+  function sSend() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    voice({ freq: 500, glideTo: 1500, glideAt: t + 0.18, at: t, dur: 0.2, peak: v * 0.08, type: 'sine' });
   }); }
 
-  // Login riuscito: accordo ascendente prima di aprire il desktop.
-  function go() { guard(function (v) {
-    var t = now(0.01);
-    tone({ type: 'sine', f0: 392.00, t: t,        dur: 0.3,  peak: v * 0.08, verb: true });
-    tone({ type: 'sine', f0: 523.25, t: t + 0.07, dur: 0.3,  peak: v * 0.07, verb: true });
-    tone({ type: 'sine', f0: 659.25, t: t + 0.14, dur: 0.35, peak: v * 0.06, verb: true });
-    tone({ type: 'sine', f0: 783.99, t: t + 0.21, dur: 0.4,  peak: v * 0.05, verb: true });
+  /* Ricezione messaggio (due note ascendenti). */
+  function sReceive() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    voice({ freq: 880, at: t, dur: 0.12, peak: v * 0.09 });
+    voice({ freq: 1318.51, at: t + 0.08, dur: 0.16, peak: v * 0.08 });
   }); }
 
-  /* ============================================================
-     API pubblica + retro-compatibilita
-     ============================================================ */
-  var Snd = {
-    click: click, tink: tink, pop: pop, tock: tock, bottle: bottle, boop: boop,
-    funk: funk, glass: glass, basso: basso, blow: blow, frog: frog, hero: hero,
-    morse: morse, ping: ping, purr: purr, submarine: submarine, startup: startup,
-    screenshot: screenshot, trash: trash, volume: volume, toggle: toggle,
-    send: send, receive: receive, lock: lock, unlock: unlock, go: go,
-    vol: vol, ctx: audio,
-    play: function (name, arg) { if (typeof Snd[name] === 'function') Snd[name](arg); }
+  /* Blocco schermo. */
+  function sLock() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    voice({ freq: 600, glideTo: 300, glideAt: t + 0.1, at: t, dur: 0.12, peak: v * 0.10 });
+    noise({ freq: 1200, Q: 1, at: t, dur: 0.03, peak: v * 0.04 });
+  }); }
+
+  /* Sblocco schermo. */
+  function sUnlock() { safe(function () {
+    const v = sndVol(), t = now() + 0.005;
+    voice({ freq: 400, glideTo: 800, glideAt: t + 0.1, at: t, dur: 0.12, peak: v * 0.10 });
+    voice({ freq: 1200, at: t + 0.06, dur: 0.08, peak: v * 0.03 });
+  }); }
+
+  /* Startup chime — accordo F# major lungo e riverberante. */
+  function sStartup() { safe(function () {
+    const v = sndVol(), t = now() + 0.02;
+    withReverb(0.9, 2600);
+    // F#2 C#3 F#3 A#3 C#4 F#4 (accordo di Fa# maggiore)
+    const notes = [92.50, 138.59, 185.00, 233.08, 277.18, 369.99];
+    notes.forEach(function (f, i) {
+      ['sine', 'triangle'].forEach(function (tp, k) {
+        const o = sndCtx.createOscillator();
+        const g = sndCtx.createGain();
+        o.type = tp; o.frequency.value = f; o.detune.value = (k ? 6 : -6);
+        const peak = v * (0.10 - i * 0.012) * (k ? 0.4 : 1);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(Math.max(peak, 0.0003), t + 0.12);
+        g.gain.setValueAtTime(Math.max(peak, 0.0003), t + 1.0);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 2.6);
+        o.connect(g).connect(sndBus);
+        o.start(t); o.stop(t + 2.7);
+      });
+    });
+  }); }
+
+  /* Accesso riuscito: accordo ascendente (retro-compatibile, ora con riverbero). */
+  function sndGo() { safe(function () {
+    const v = sndVol(), t = now() + 0.01;
+    withReverb(0.35, 700);
+    sndNote(392, t, 0.3, v * 0.08);
+    sndNote(523.25, t + 0.07, 0.3, v * 0.07);
+    sndNote(659.25, t + 0.14, 0.35, v * 0.06);
+    sndNote(783.99, t + 0.21, 0.4, v * 0.05);
+  }); }
+
+  /* ----------------------------------------------------------------------- *
+   *  API pubblica + retro-compatibilità
+   * ----------------------------------------------------------------------- */
+  const Snd = {
+    ctx: sndAudio,
+    vol: sndVol,
+    unlock: function () { try { sndAudio(); } catch (e) {} },
+    // suoni di sistema
+    tink: sTink, pop: sPop, tock: sTock, bottle: sBottle, boop: sBottle,
+    funk: sFunk, glass: sGlass, basso: sBasso, blow: sBlow, frog: sFrog,
+    hero: sHero, morse: sMorse, ping: sPing, purr: sPurr,
+    submarine: sSubmarine, sosumi: sSosumi,
+    // interazione
+    click: sndClick, volume: sVolume, toggle: sToggle, screenshot: sScreenshot,
+    trash: sTrash, send: sSend, receive: sReceive, lock: sLock, unlock_ui: sUnlock,
+    startup: sStartup, go: sndGo,
+    play: function (name, arg) { if (typeof this[name] === 'function') this[name](arg); }
   };
   window.Snd = Snd;
 
-  // Funzioni globali storiche (compat con index.php / hub.js).
-  window.sndAudio = audio;
-  window.sndVol = vol;
-  window.sndClick = click;
-  window.sndGo = go;
-  window.sndNote = function (freq, at, dur, peak) {
-    if (!audio()) return;
-    tone({ type: 'sine', f0: freq, t: at, dur: dur, peak: peak });
-  };
+  // Funzioni globali storiche (usate da index.php e da altri script).
+  window.sndAudio = sndAudio;
+  window.sndNote = sndNote;
+  window.sndVol = sndVol;
+  window.sndClick = sndClick;
+  window.sndGo = sndGo;
 
-  // Listener globale: click leggero su bottoni e puntini del title bar.
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Listener globale: click leggero sui controlli (comportamento preesistente).
   document.addEventListener('click', function (e) {
-    if (reduce) return;
-    var el = e.target.closest && e.target.closest('button, .dots i, [data-snd]');
-    if (!el) return;
-    var custom = el.getAttribute && el.getAttribute('data-snd');
-    if (custom && typeof Snd[custom] === 'function') Snd[custom]();
-    else click();
+    if (e.target.closest('button, .dots i')) sndClick();
   }, true);
+
+  // Sblocca l'AudioContext alla prima interazione utente (policy autoplay).
+  ['pointerdown', 'keydown', 'touchstart'].forEach(function (ev) {
+    window.addEventListener(ev, function unlockOnce() {
+      try { sndAudio(); } catch (e) {}
+      ['pointerdown', 'keydown', 'touchstart'].forEach(function (e2) {
+        window.removeEventListener(e2, unlockOnce);
+      });
+    }, { once: false, capture: true });
+  });
 })();
