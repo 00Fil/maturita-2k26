@@ -371,12 +371,12 @@ body.ready .clock { animation-delay: 0.05s; }
 body.ready .user { animation-delay: 0.12s; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* sblocco in stile macOS: rapido e clean — il contenuto del lock si solleva
-   e sfuma in fretta, lo sfondo dà una breve spinta di zoom verso il desktop
-   (l'handoff è coperto dal deskReveal di hub-polish.css) */
+/* sblocco in stile macOS: il contenuto del lock si solleva e sfuma rapidamente,
+   lo sfondo prosegue un breve zoom verso il desktop (continuità con hub.php).
+   Tempi volutamente brevi: l'handoff verso hub.php avviene in ~240ms. */
 body.unlock { pointer-events: none; }
 body.unlock .lock { opacity: 0; transform: scale(1.04) translateY(-6px); filter: blur(8px); pointer-events: none; }
-body.unlock .menubar, body.unlock .scrim { opacity: 0; transition: opacity 0.22s var(--ease); }
+body.unlock .menubar, body.unlock .scrim { opacity: 0; transition: opacity 0.2s var(--ease); }
 body.unlock .wallpaper { transform: scale(1.1); filter: brightness(1.06) saturate(1.03); transition: transform 0.34s var(--ease), filter 0.3s var(--ease); }
 
 /* ============================================================
