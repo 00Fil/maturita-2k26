@@ -10,24 +10,36 @@ Login animato (morph button) → backend PHP minimale → MySQL → desktop in s
 | `index.php` | La pagina con il tasto morph e il form di accesso |
 | `login.php` | Backend: verifica il codice e registra l'accesso su MySQL |
 | `hub.php` | Il desktop in stile macOS: la presentazione in 6 capitoli, protetta dalla sessione |
-| `macos.css` | Design system unico: token, vetro, finestre, dock, login, app e responsive |
-| `hub.js` / `login.js` / `sound.js` | Interazioni desktop, lock screen e micro-suoni |
+| `macos-system.css` / `hub.js` | Design system unico e interazioni del desktop (finestre, dock, menu bar) |
 | `logout.php` | Chiude la sessione e torna al login |
 | `setup.sql` | Crea il database `pcto` e la tabella `accessi` |
 | `Dockerfile` | Immagine PHP 8.3 + Apache con `pdo_mysql` |
 | `docker-compose.yml` | Stack completo: app + MySQL 8.4 (con init automatico) |
 
+
 ## Design system macOS
 
-Il progetto ora usa **un solo file CSS**, `macos.css`. Dentro ci sono:
+La UI ora segue un contratto unico: `macos-system.css` è l'unica sorgente CSS caricata sia dalla lock screen sia dal desktop. Dentro il file sono raccolti:
 
-- token globali: font SF Pro, colori, accenti, ombre, hairline, raggi e curve di easing;
-- componenti base: menubar, dock, finestre, semafori, Centro di Controllo, card glass;
-- lock screen: input password meno bianco/trasparente, blur più materico e transizione più rapida verso il desktop;
-- contenuti delle app: scheda personale, agenda PCTO, Launchpad e Mappe hanno layout e identità coerenti;
-- responsive e accessibilità: focus ring, reduced motion e fallback dark mode.
+- token globali (`--mac-*`) per colori, raggi, ombre, blur, easing e spring;
+- superfici universali per menubar, dock, finestre, titlebar, card, centro di controllo e form;
+- scope espliciti `body[data-surface="lock"]` e `body[data-surface="desktop"]`, così il CSS del login non contamina il desktop e viceversa;
+- fix per le app che prima avevano contenuti senza identità, in particolare **Informazioni** e **Mappe**;
+- animazioni più corte e coerenti, evitando la transizione lenta/lattea tra login e desktop.
 
-I vecchi fogli `hub.css` e `hub-polish.css` sono stati consolidati in `macos.css` e non vengono più caricati.
+Regola di manutenzione: non aggiungere CSS inline nei file PHP. Se nasce un componente nuovo, prima creare o riusare un token/componente in `macos-system.css`.
+
+## Struttura runtime pulita
+
+| File | Responsabilità |
+|---|---|
+| `macos-system.css` | Design system unico macOS-like |
+| `index.php` | Markup della lock screen |
+| `login.js` | Interazioni della lock screen e demo login |
+| `hub.php` | Markup del desktop e delle app |
+| `hub.js` | Window manager, dock, centro di controllo, Spotlight, Mappe |
+| `sound.js` | Feedback audio sintetico |
+| `login.php` | Backend PHP di autenticazione e registrazione accessi |
 
 ## Variabili d'ambiente
 
@@ -69,8 +81,7 @@ Se la modalità demo è spenta, il backend non calcola né invia nessun passaggi
 ## Il desktop (hub.php)
 
 Dopo il login si arriva su un desktop in stile macOS — stessa estetica della pagina di
-accesso, governata da `macos.css`: superfici glass, bordi hairline, raggi coerenti,
-motion Apple-like e un colore accento per ogni app.
+accesso (superfici neutre, bordi hairline) con un colore accento per ogni app.
 La finestra "Scaletta" si apre da sola e guida i 10 minuti di esposizione in 6 capitoli:
 
 1. **Da dove parto** — il filo conduttore personale (1')
@@ -116,3 +127,17 @@ Poi apri http://localhost:8080 — al primo avvio MySQL esegue `setup.sql` da so
 5. Deploy — fine.
 
 Gli accessi registrati sono nella tabella `accessi` del database `pcto`.
+
+
+## Validazione refactor
+
+Controlli eseguiti nel sandbox:
+
+- `node --check login.js`
+- `node --check hub.js`
+- `node --check sound.js`
+- verifica che `index.php` e `hub.php` non contengano più `<style>` o `<script>` inline
+- verifica che il runtime carichi un solo CSS: `macos-system.css`
+- verifica del bilanciamento delle parentesi nel CSS
+
+Nota: nel sandbox non era disponibile il comando `php`, quindi la validazione `php -l` va eseguita in locale/Docker.

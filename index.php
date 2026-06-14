@@ -6,9 +6,9 @@
 <title>PCTO — Maturità 2026</title>
 <!-- precarica il logo della scuola: serve subito al loader -->
 <link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high">
-<link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
+<link rel="stylesheet" href="macos-system.css?v=<?= @filemtime(__DIR__ . '/macos-system.css') ?>">
 </head>
-<body class="login-screen">
+<body data-surface="lock">
 
 <!-- PRELOADER (logo scuola) — primo elemento: appare subito -->
 <div id="boot" aria-hidden="true">
