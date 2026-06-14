@@ -195,7 +195,7 @@ document.addEventListener('click', e => {
   if (t) openWin(t.dataset.open);
 });
 
-const ORDER = ['w-pres', 'w-io', 'w-skills', 'w-fsl', 'w-fine'];
+const ORDER = ['w-pres', 'w-io', 'w-fsl', 'w-fine'];
 function topChapter() {
   let best = null, z = -1;
   ORDER.forEach(id => {

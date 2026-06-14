@@ -133,16 +133,13 @@ function appicon(string $file, string $remote): string {
       <button class="finder-side-row"><span><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M8 18v2h8v-2"/></svg></span>On My Mac</button>
     </aside>
     <main class="finder-main">
-      <div class="finder-path"><b>Applications</b><span>7 applicazioni</span></div>
+      <div class="finder-path"><b>Applications</b><span>6 applicazioni</span></div>
       <div class="finder-grid">
         <button class="finder-app-icon" data-open="w-pres" data-desc="Indice della presentazione: da qui apri tutte le sezioni del percorso.">
           <span class="finder-img"><?= appicon('finder.webp', '/original/file-manager.svg') ?></span><b>Finder</b><small>Presentazione</small>
         </button>
         <button class="finder-app-icon" data-open="w-io" data-desc="App Note in dark mode: curriculum, attività e progetti raccontati in modo sintetico.">
           <span class="finder-img"><?= appicon('notes.png', '/src/apps/scalable/accessories-text-editor.svg') ?></span><b>Notes</b><small>Su di me</small>
-        </button>
-        <button class="finder-app-icon" data-open="w-skills" data-desc="Raccoglie esperienze fuori dall'aula: Sportly, concorsi, volontariato e musica.">
-          <span class="finder-img"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></span><b>Launchpad</b><small>Fuori dall'aula</small>
         </button>
         <button class="finder-app-icon" data-open="w-fsl" data-desc="La sezione dedicata al PCTO presso CS Metal Europe e al lavoro svolto in azienda.">
           <span class="finder-img"><?= appicon('calendar.webp', '/original/calendar.svg') ?></span><b>Calendar</b><small>CS Metal Europe</small>
@@ -217,25 +214,6 @@ function appicon(string $file, string $remote): string {
       </div>
       <article class="nr-note" data-note-screen></article>
     </main>
-  </div>
-</section>
-
-<section class="win a-indigo" id="w-skills" style="left:17%;top:7%;width:700px">
-  <div class="titlebar"><span class="wt">Fuori dall'aula — Launchpad</span></div>
-  <div class="wbody as-body">
-    <div class="as-hero lgcard"><span class="as-kicker">Fuori da scuola</span><h3>Quello che faccio fuori dall'aula</h3><p>Fuori dalla scuola ho seguito progetti, concorsi e attività di volontariato. Sono le esperienze in cui ho imparato a collaborare e a portare a termine quello che inizio.</p></div>
-    <div class="as-duo">
-      <div class="as-mini lgcard" style="background:#0A84FF"><span class="as-kicker">Concorso · vinto</span><h4>Volo tra le Righe</h4><p>Ho presentato un romanzo con una playlist narrativa, unendo testo, musica e immagini. Il progetto ha vinto il concorso.</p></div>
-      <div class="as-mini lgcard" style="background:#34C759"><span class="as-kicker">Dal progetto alla startup</span><h4>GPOI · Sportly</h4><p>Da un lavoro di gestione di progetto è nato Sportly, portato dall'idea iniziale fino al prototipo pubblicato online.</p></div>
-    </div>
-    <div class="as-sec">Le altre cose che mi tengono vivo</div>
-    <div class="aprows">
-      <div class="aprow lgcard"><span class="apic" style="background:#1C1C1E;color:#7AC74F">Mc</span><div><b>Server Minecraft</b><p>Il primo servizio online che ho gestito: un piccolo server con altre persone collegate a giocare insieme.</p></div><span class="getb">Fuori</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#5856D6">ds</span><div><b>denuvo.studio</b><p>Il mio sito personale, dove pubblico i progetti e curo ogni dettaglio, dal codice alla grafica.</p></div><span class="getb">Fuori</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#FF9500">Vo</span><div><b>Volontariato</b><p>Festa del Sorriso e Torneo dei Roncai: aiuto a organizzare e mi metto a disposizione degli altri.</p></div><span class="getb">Fuori</span></div>
-      <div class="aprow lgcard"><span class="apic" style="background:#AF52DE">Ms</span><div><b>Musica e sport</b><p>Il violoncello e l'allenamento sono la disciplina che porto in tutto quello che faccio.</p></div><span class="getb">Fuori</span></div>
-    </div>
-    <div class="sf-note">Per me sono modi diversi di fare la stessa cosa: costruire qualcosa e portarlo fino in fondo.</div>
   </div>
 </section>
 
@@ -353,7 +331,6 @@ function appicon(string $file, string $remote): string {
 <nav class="dock" id="dock">
   <span class="dapp" data-w="w-pres"><button class="ai" aria-label="Presentazione"><?= appicon('finder.webp', '/original/file-manager.svg') ?></button><span class="dot"></span><span class="tip">Presentazione · Finder</span></span>
   <span class="dapp" data-w="w-io"><button class="ai" aria-label="Su di me"><?= appicon('notes.png', '/src/apps/scalable/accessories-text-editor.svg') ?></button><span class="dot"></span><span class="tip">Su di me · Note</span></span>
-  <span class="dapp" data-w="w-skills"><button class="ai" aria-label="Fuori dall'aula"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></button><span class="dot"></span><span class="tip">Fuori dall'aula · Launchpad</span></span>
   <span class="dapp" data-w="w-fsl"><button class="ai" aria-label="CS Metal Europe"><?= appicon('calendar.webp', '/original/calendar.svg') ?></button><span class="dot"></span><span class="tip">CS Metal Europe · Calendario</span></span>
   <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Dove voglio andare"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Dove voglio andare · Mappe</span></span>
   <span class="dapp" data-spot><button class="ai" aria-label="Spotlight"><?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?></button><span class="dot"></span><span class="tip">Spotlight</span></span>

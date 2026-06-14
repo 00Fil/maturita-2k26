@@ -24,7 +24,7 @@ Il progetto ora usa **un solo file CSS**, `macos.css`. Dentro ci sono:
 - token globali: font SF Pro, colori, accenti, ombre, hairline, raggi e curve di easing;
 - componenti base: menubar, dock, finestre, semafori, Centro di Controllo, card glass;
 - lock screen: input password meno bianco/trasparente, blur più materico e transizione più rapida verso il desktop;
-- contenuti delle app: “Su di me” è una app Note reale in dark mode, allineata al sistema e compilata con dati fattuali del Curriculum; la sidebar usa icone SVG stile Lucide ad alto contrasto e le note hanno layout diversi, mentre agenda PCTO, Launchpad e Mappe hanno layout e identità coerenti;
+- contenuti delle app: “Su di me” è una app Note reale in dark mode, allineata al sistema e compilata con dati fattuali del Curriculum; la sidebar usa icone SVG stile Lucide ad alto contrasto e le note hanno layout diversi, mentre agenda PCTO e Mappe hanno layout e identità coerenti;
 - responsive e accessibilità: focus ring, reduced motion e fallback dark mode.
 
 I vecchi fogli `hub.css` e `hub-polish.css` sono stati consolidati in `macos.css` e non vengono più caricati.
@@ -132,3 +132,7 @@ La sezione CS Metal Europe è stata ricostruita come calendario mensile dark mod
 
 ### Calendario PCTO — linea continua Apple-like
 Gli eventi PCTO sono stati trasformati da card ripetute a barre continue nel mese, con pannello dettaglio più leggero e colori meno saturi.
+
+
+### Launchpad rimosso definitivamente
+App Store/Launchpad non compare più in Finder, Dock, ordine finestre o sezioni HTML.
