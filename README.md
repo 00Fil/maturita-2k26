@@ -144,3 +144,7 @@ Il Dock resta visibile quando nessuna app è a schermo intero; si nasconde solo 
 
 ### Calendario PCTO — griglia sopra i range
 Le barre evento restano continue, ma griglia e numeri dei giorni sono sempre visibili sopra i range.
+
+
+### Calendario PCTO — scheletro vero
+Il calendario non usa più overlay sopra la griglia: ogni giorno resta una cella reale con bordo e numero, mentre i range sono segmenti interni continui.
