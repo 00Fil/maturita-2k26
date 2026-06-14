@@ -526,13 +526,14 @@ function appicon(string $file, string $remote): string {
   /* ── Stato camera ── */
   // Overview: mostra tutta la mappa, zoom basso, centrato sul percorso
   // Detail:   zoom alto centrato su una tappa
-  var OVERVIEW = { x:600, y:350, zoom:1 };
+  var OVERVIEW = { x:600, y:350, zoom:1, offsetX:80, offsetY:0 };
   var DETAIL_ZOOM = 2.0;
+  var DETAIL_OFFSET_X = 150;
   var mode = 'overview'; // 'overview' | 'detail'
   var idx = -1; // -1 = overview, 0..n-1 = detail
 
-  var cur = { x:OVERVIEW.x, y:OVERVIEW.y, zoom:OVERVIEW.zoom, len:0, rot:0 };
-  var tgt = { x:OVERVIEW.x, y:OVERVIEW.y, zoom:OVERVIEW.zoom, len:0, rot:0 };
+  var cur = { x:OVERVIEW.x, y:OVERVIEW.y, zoom:OVERVIEW.zoom, len:0, rot:0, offsetX:OVERVIEW.offsetX, offsetY:OVERVIEW.offsetY };
+  var tgt = { x:OVERVIEW.x, y:OVERVIEW.y, zoom:OVERVIEW.zoom, len:0, rot:0, offsetX:OVERVIEW.offsetX, offsetY:OVERVIEW.offsetY };
 
   /* ── Helpers percorso ── */
   function pointAt(l){ return route.getPointAtLength(Math.max(0,Math.min(L,l))); }
@@ -545,8 +546,8 @@ function appicon(string $file, string $remote): string {
     var inv = 1/S;
     
     // Camera: centra (cur.x, cur.y) nel mezzo del viewport e ruota di -cur.rot
-    var tx = VW/2;
-    var ty = VH/2;
+    var tx = VW/2 + cur.offsetX;
+    var ty = VH/2 + cur.offsetY;
     cam.setAttribute('transform','translate('+tx+' '+ty+') rotate('+(-cur.rot).toFixed(2)+') scale('+S.toFixed(4)+') translate('+(-cur.x).toFixed(2)+' '+(-cur.y).toFixed(2)+')');
 
     // Puck
@@ -566,11 +567,11 @@ function appicon(string $file, string $remote): string {
     var bc = mode==='overview' ? 1 : 0;
     if(bubble){
       bubble.style.opacity = bc;
-      bubble.setAttribute('transform','translate(620 420) scale('+inv.toFixed(4)+')');
+      bubble.setAttribute('transform','translate(540 360) scale('+inv.toFixed(4)+')');
     }
     if(bubbleAlt){
       bubbleAlt.style.opacity = bc;
-      bubbleAlt.setAttribute('transform','translate(800 225) scale('+inv.toFixed(4)+')');
+      bubbleAlt.setAttribute('transform','translate(800 220) scale('+inv.toFixed(4)+')');
     }
 
     // Percorso fatto (stroke-dashoffset)
@@ -586,11 +587,14 @@ function appicon(string $file, string $remote): string {
     cur.zoom += (tgt.zoom-cur.zoom)*LERP;
     cur.len += (tgt.len-cur.len)*LERP;
     cur.rot += (tgt.rot-cur.rot)*LERP;
+    cur.offsetX += (tgt.offsetX-cur.offsetX)*LERP;
+    cur.offsetY += (tgt.offsetY-cur.offsetY)*LERP;
 
     var done = Math.abs(tgt.x-cur.x)<0.3 && Math.abs(tgt.y-cur.y)<0.3
             && Math.abs(tgt.zoom-cur.zoom)<0.001 && Math.abs(tgt.len-cur.len)<0.3
-            && Math.abs(tgt.rot-cur.rot)<0.1;
-    if(done){ cur.x=tgt.x; cur.y=tgt.y; cur.zoom=tgt.zoom; cur.len=tgt.len; cur.rot=tgt.rot; }
+            && Math.abs(tgt.rot-cur.rot)<0.1 && Math.abs(tgt.offsetX-cur.offsetX)<0.3
+            && Math.abs(tgt.offsetY-cur.offsetY)<0.3;
+    if(done){ cur.x=tgt.x; cur.y=tgt.y; cur.zoom=tgt.zoom; cur.len=tgt.len; cur.rot=tgt.rot; cur.offsetX=tgt.offsetX; cur.offsetY=tgt.offsetY; }
     applyFrame();
     if(!done){ raf=requestAnimationFrame(frame); } else { raf=null; }
   }
@@ -629,6 +633,15 @@ function appicon(string $file, string $remote): string {
     tgt.len = st.len;
     tgt.rot = (angleAt(st.len) + 90) * 0.25;
 
+    var isMobile = document.getElementById('nav').clientWidth < 700;
+    if (isMobile) {
+      tgt.offsetX = 0;
+      tgt.offsetY = 100;
+    } else {
+      tgt.offsetX = DETAIL_OFFSET_X;
+      tgt.offsetY = 0;
+    }
+
     // Card
     detBadge.textContent = (i+1);
     detBadge.style.background = st.color;
@@ -663,6 +676,15 @@ function appicon(string $file, string $remote): string {
     tgt.zoom = OVERVIEW.zoom;
     tgt.len = 0;
     tgt.rot = 0;
+
+    var isMobile = document.getElementById('nav').clientWidth < 700;
+    if (isMobile) {
+      tgt.offsetX = 0;
+      tgt.offsetY = 40;
+    } else {
+      tgt.offsetX = OVERVIEW.offsetX;
+      tgt.offsetY = 0;
+    }
 
     detail.classList.remove('show');
     paintSteps();
