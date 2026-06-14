@@ -152,3 +152,7 @@ Il calendario non usa più overlay sopra la griglia: ogni giorno resta una cella
 
 ### Window manager stabile
 Le finestre salvano la propria dimensione normale prima del fullscreen e la ripristinano identica; Finder resta aperto se non c’è un’app a schermo intero.
+
+
+### Maps Navigator rebuild
+La sezione Dove voglio andare è stata trasformata in un navigatore stile Apple Maps con percorso animato, tappe cliccabili, zoom, scheda istruzioni e spiegazioni per ogni tappa.

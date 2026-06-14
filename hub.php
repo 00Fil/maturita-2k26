@@ -261,62 +261,53 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-blue" id="w-fine" style="left:9%;top:7%;width:940px">
-  <div class="titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
-  <div class="mv" id="mv">
-    <svg class="mv-map" id="mv-map" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid slice">
-      <g id="mv-cam">
-        <rect x="-320" y="-280" width="1660" height="1220" fill="#E9E6DD"/>
-        <path d="M-320 120 C150 170 320 70 520 120 C720 170 880 90 1340 140 L1340 -280 L-320 -280 Z" fill="#A9D2F0"/>
-        <path d="M-320 120 C150 170 320 70 520 120 C720 170 880 90 1340 140" stroke="#93C2E6" stroke-width="2" fill="none"/>
-        <circle cx="120" cy="560" r="92" fill="#C9E6B4"/>
-        <circle cx="-130" cy="700" r="120" fill="#C9E6B4"/>
-        <circle cx="980" cy="560" r="86" fill="#C9E6B4"/>
-        <circle cx="1120" cy="300" r="96" fill="#C9E6B4"/>
-        <rect x="430" y="470" width="170" height="150" rx="22" fill="#C9E6B4"/>
-        <path d="M-320 360 C220 340 480 392 1340 350" stroke="#fff" stroke-width="26" fill="none" stroke-linecap="round"/>
-        <path d="M-320 520 C260 506 520 548 1340 500" stroke="#fff" stroke-width="15" fill="none" stroke-linecap="round"/>
-        <path d="M-320 210 C240 196 560 232 1340 205" stroke="#fff" stroke-width="11" fill="none"/>
-        <path d="M-320 760 C240 748 560 784 1340 756" stroke="#fff" stroke-width="13" fill="none"/>
-        <path d="M-320 60 C200 50 520 92 1340 60" stroke="#fff" stroke-width="9" fill="none"/>
-        <path d="M180 -280 C210 160 150 420 200 940" stroke="#fff" stroke-width="15" fill="none"/>
-        <path d="M520 -280 C500 180 560 420 520 940" stroke="#fff" stroke-width="18" fill="none"/>
-        <path d="M820 -280 C850 160 800 440 840 940" stroke="#fff" stroke-width="12" fill="none"/>
-        <path d="M-80 -280 C-50 160 -110 420 -60 940" stroke="#fff" stroke-width="11" fill="none"/>
-        <path d="M1120 -280 C1150 160 1090 440 1140 940" stroke="#fff" stroke-width="12" fill="none"/>
-        <rect x="250" y="150" width="90" height="56" rx="9" fill="#DDD6C7"/>
-        <rect x="120" y="250" width="64" height="58" rx="9" fill="#DDD6C7"/>
-        <rect x="600" y="150" width="78" height="52" rx="9" fill="#DDD6C7"/>
-        <rect x="700" y="430" width="80" height="56" rx="9" fill="#DDD6C7"/>
-        <rect x="330" y="600" width="66" height="46" rx="9" fill="#DDD6C7"/>
-        <rect x="900" y="250" width="70" height="50" rx="9" fill="#DDD6C7"/>
-        <rect x="-180" y="320" width="76" height="58" rx="9" fill="#DDD6C7"/>
-        <rect x="1180" y="430" width="80" height="56" rx="9" fill="#DDD6C7"/>
-        <rect x="1010" y="120" width="72" height="50" rx="9" fill="#DDD6C7"/>
-        <rect x="40" y="680" width="80" height="56" rx="9" fill="#DDD6C7"/>
-        <path d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#fff" stroke-width="13" fill="none" stroke-linecap="round"/>
-        <path d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#C2CEDB" stroke-width="6" fill="none" stroke-linecap="round"/>
-        <path id="mv-trav" pathLength="1" d="M170 520 C280 478 330 472 390 430 C480 372 510 360 610 300 C710 240 760 210 850 150" stroke="#0A84FF" stroke-width="6" fill="none" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1"/>
-        <g class="mk" id="m0" transform="translate(170 520)"><circle r="9" fill="#34C759" stroke="#fff" stroke-width="3.5"/><text class="mlab" y="-20" text-anchor="middle">Maturità</text></g>
-        <g class="mk" id="m1" transform="translate(390 430)"><circle r="11" fill="#8E8E93" stroke="#fff" stroke-width="3"/><text class="mnum" y="4" text-anchor="middle">1</text><text class="mlab small" y="28" text-anchor="middle">PCTO</text></g>
-        <g class="mk" id="m2" transform="translate(610 300)"><circle r="11" fill="#8E8E93" stroke="#fff" stroke-width="3"/><text class="mnum" y="4" text-anchor="middle">2</text><text class="mlab" y="-20" text-anchor="middle">Università</text></g>
-        <g class="mk" id="m3" transform="translate(850 150)"><path d="M0 0 C-9 -13 -9 -23 0 -31 C9 -23 9 -13 0 0 Z" fill="#FF3B30" stroke="#fff" stroke-width="2.5"/><circle cx="0" cy="-20" r="5.5" fill="#fff"/><text class="mlab" y="18" text-anchor="middle">Estero</text></g>
-        <g id="mv-puck" transform="translate(170 520)"><circle r="10" fill="#0A84FF" opacity="0.28"><animate attributeName="r" values="9;17;9" dur="1.9s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.28;0.04;0.28" dur="1.9s" repeatCount="indefinite"/></circle><circle r="7" fill="#0A84FF" stroke="#fff" stroke-width="2.5"/></g>
-      </g>
-    </svg>
-    <div class="dir">
-      <div class="dir-hd">
-        <div class="dir-ti"><b>Indicazioni</b><small>Dal diploma a dove voglio arrivare</small></div>
-        <button class="dir-x" type="button" aria-label="Chiudi">✕</button>
+<section class="win a-blue maps-window" id="w-fine" style="left:9%;top:7%;width:1040px">
+  <div class="titlebar maps-titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
+  <div class="maps-app" data-maps-navigator>
+    <aside class="maps-side">
+      <div class="maps-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg><input value="dal diploma al lavoro software" aria-label="Cerca percorso" readonly><button type="button" aria-label="Cancella">×</button></div>
+      <span class="maps-label">Luoghi</span>
+      <button class="maps-side-row on" data-maps-step="0" type="button"><span class="maps-row-ico green">●</span><b>Maturità</b><small>Cerebotani · punto di partenza</small></button>
+      <button class="maps-side-row" data-maps-step="1" type="button"><span class="maps-row-ico gray">1</span><b>CS Metal Europe</b><small>PCTO · metodo e realtà aziendale</small></button>
+      <button class="maps-side-row" data-maps-step="2" type="button"><span class="maps-row-ico blue">2</span><b>Informatica</b><small>Università · basi solide</small></button>
+      <button class="maps-side-row" data-maps-step="3" type="button"><span class="maps-row-ico red">⌖</span><b>Estero</b><small>Software · contesto internazionale</small></button>
+      <div class="maps-route-card">
+        <div class="maps-mode-tabs"><button class="active" type="button">🚗</button><button type="button">🚶</button><button type="button">🚆</button><button type="button">✈︎</button></div>
+        <div class="maps-route-stops" data-maps-stops></div>
+        <button class="maps-add-stop" type="button" data-maps-next>Aggiungi prossima tappa</button>
       </div>
-      <div class="dir-list" id="nv-list"></div>
-      <div class="dir-card"><span class="kk" id="nv-kk"></span><p id="nv-body"></p></div>
-      <div class="dir-foot"><div><b class="big" id="nv-step"></b><small id="nv-eta"></small></div><span class="dir-hint" id="nv-hint"></span></div>
-    </div>
-    <div class="mv-ctrl">
-      <div class="mv-zoom"><button id="mv-zin" type="button" aria-label="Zoom avanti">+</button><span></span><button id="mv-zout" type="button" aria-label="Zoom indietro">−</button></div>
-      <button class="mv-comp" id="mv-comp" type="button" aria-label="Nord"><svg viewBox="0 0 24 24"><path d="M12 4 L15 13 L12 11 L9 13 Z" fill="#FF3B30"/><path d="M12 20 L9 11 L12 13 L15 11 Z" fill="#8E8E93"/></svg></button>
-    </div>
+      <div class="maps-recent"><span>Recenti</span><b data-maps-recent>Pronto per partire</b><small>tocca la mappa o scegli una tappa</small></div>
+    </aside>
+    <main class="maps-main">
+      <svg class="maps-map" id="maps-map" viewBox="0 0 1100 690" preserveAspectRatio="xMidYMid slice" aria-label="Mappa del percorso futuro">
+        <defs>
+          <filter id="mapsGlow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <linearGradient id="seaGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#07375d"/><stop offset=".55" stop-color="#0b6f8f"/><stop offset="1" stop-color="#0a2559"/></linearGradient>
+          <linearGradient id="landGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#245a48"/><stop offset=".50" stop-color="#3f8c5b"/><stop offset="1" stop-color="#78a969"/></linearGradient>
+        </defs>
+        <rect x="-260" y="-180" width="1620" height="1050" fill="url(#seaGrad)"/>
+        <g id="maps-cam">
+          <path d="M-160 60 C120 0 260 60 405 30 C610 -12 790 60 1260 -40 L1260 870 L-160 870 Z" fill="url(#landGrad)"/>
+          <path d="M390 -80 C405 30 365 115 395 195 C438 310 385 408 438 505 C480 586 560 590 610 690" fill="none" stroke="rgba(255,255,255,.20)" stroke-width="23" stroke-linecap="round"/>
+          <path d="M80 455 C235 405 290 360 385 318 C520 260 620 220 760 170 C870 130 945 82 1060 45" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="18" stroke-linecap="round"/>
+          <path d="M-120 225 C130 198 310 220 535 185 C755 150 875 180 1205 142" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="11" stroke-linecap="round"/>
+          <path d="M-120 590 C105 548 310 565 520 532 C720 500 908 505 1220 460" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="13" stroke-linecap="round"/>
+          <path d="M90 565 C248 510 330 466 432 406 C548 338 604 292 708 238 C812 184 898 112 1015 62" fill="none" stroke="rgba(0,0,0,.25)" stroke-width="17" stroke-linecap="round"/>
+          <path d="M90 565 C248 510 330 466 432 406 C548 338 604 292 708 238 C812 184 898 112 1015 62" fill="none" stroke="#0a84ff" stroke-width="11" stroke-linecap="round"/>
+          <path id="maps-route-progress" pathLength="1" d="M90 565 C248 510 330 466 432 406 C548 338 604 292 708 238 C812 184 898 112 1015 62" fill="none" stroke="#67c7ff" stroke-width="11" stroke-linecap="round" stroke-dasharray="1 1" stroke-dashoffset="1" filter="url(#mapsGlow)"/>
+          <g class="maps-city"><text x="215" y="342">Brescia</text><text x="500" y="278">Milano</text><text x="755" y="198">Europa</text><text x="884" y="306">Software</text><text x="355" y="548">Italia</text></g>
+          <g class="maps-marker on" id="maps-stop-0" transform="translate(90 565)"><circle r="12" fill="#34c759" stroke="#fff" stroke-width="4"/><text y="-22" text-anchor="middle">Diploma</text></g>
+          <g class="maps-marker" id="maps-stop-1" transform="translate(432 406)"><circle r="13" fill="#8e8e93" stroke="#fff" stroke-width="4"/><text class="num" y="4" text-anchor="middle">1</text><text y="30" text-anchor="middle">PCTO</text></g>
+          <g class="maps-marker" id="maps-stop-2" transform="translate(708 238)"><circle r="13" fill="#0a84ff" stroke="#fff" stroke-width="4"/><text class="num" y="4" text-anchor="middle">2</text><text y="-24" text-anchor="middle">Università</text></g>
+          <g class="maps-marker" id="maps-stop-3" transform="translate(1015 62)"><path d="M0 0 C-12 -17 -12 -32 0 -43 C12 -32 12 -17 0 0 Z" fill="#ff3b30" stroke="#fff" stroke-width="3"/><circle cx="0" cy="-28" r="6" fill="#fff"/><text y="22" text-anchor="middle">Estero</text></g>
+          <g id="maps-puck" transform="translate(90 565)"><circle r="12" fill="#0a84ff" opacity=".28"><animate attributeName="r" values="11;24;11" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".28;.04;.28" dur="2s" repeatCount="indefinite"/></circle><circle r="8" fill="#0a84ff" stroke="#fff" stroke-width="3"/></g>
+        </g>
+      </svg>
+      <div class="maps-top-card" data-maps-instruction><div class="maps-turn-icon" data-maps-icon>→</div><div><span data-maps-kicker>Partenza</span><b data-maps-title>Maturità al Cerebotani</b><p data-maps-copy>Da qui parte il percorso.</p></div></div>
+      <div class="maps-controls"><button data-maps-zoom="in" type="button">+</button><span></span><button data-maps-zoom="out" type="button">−</button></div>
+      <button class="maps-compass" data-maps-reset type="button" aria-label="Reimposta mappa"><svg viewBox="0 0 24 24"><path d="M12 3l4 11-4-2-4 2 4-11z" fill="#ff3b30"/><path d="M12 21l-4-11 4 2 4-2-4 11z" fill="#8e8e93"/></svg></button>
+      <section class="maps-bottom-sheet"><div><b data-maps-eta>Pronto a partire</b><small data-maps-sub>4 tappe · percorso personale</small></div><div class="maps-dots" data-maps-dots></div><button class="maps-go" data-maps-next type="button">Avanti</button></section>
+    </main>
   </div>
 </section>
 

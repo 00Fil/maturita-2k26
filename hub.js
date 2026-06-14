@@ -703,57 +703,6 @@ if (rebBtn) {
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSpot();});
 })();
 
-(function(){
-  var map=document.getElementById('mv-map');
-  var cam=document.getElementById('mv-cam');
-  var puck=document.getElementById('mv-puck');
-  var trav=document.getElementById('mv-trav');
-  if(!map||!cam||!puck)return;
-  var stops=[
-    {x:170,y:520,p:0,m:'m0',name:'Maturità al Cerebotani',kind:'Partenza',kk:'Partenza',body:'È il punto di partenza. In cinque anni al Cerebotani ho imparato a programmare e a risolvere i problemi con metodo. Da qui parte la strada che ho in mente per il dopo.'},
-    {x:390,y:430,p:0.30,m:'m1',name:'PCTO · CS Metal Europe',kind:'Sosta',kk:'Sosta lungo la strada',body:'Una sosta lungo il tragitto, come il rifornimento prima di un viaggio lungo. In azienda ho lavorato sui dati, sulla comunicazione e su un e-commerce vero, fino al mio primo contratto. Qui ho capito quale direzione voglio prendere.'},
-    {x:610,y:300,p:0.63,m:'m2',name:'Università · Informatica',kind:'Tappa',kk:'La prossima tappa',body:'Voglio continuare a studiare informatica. Mi serve per costruire software con basi più solide e arrivare preparato al lavoro.'},
-    {x:850,y:150,p:1,m:'m3',name:'Lavorare all\'estero',kind:'Arrivo',kk:'La meta del viaggio',body:'La meta del viaggio. Voglio portare quello che ho imparato fuori dall\'Italia e lavorare nel software in un contesto internazionale.'}
-  ];
-  var list=document.getElementById('nv-list'),elKk=document.getElementById('nv-kk'),elBody=document.getElementById('nv-body'),elStep=document.getElementById('nv-step'),elEta=document.getElementById('nv-eta'),elHint=document.getElementById('nv-hint');
-  var i=0,n=stops.length,j;
-  for(j=0;j<n;j++){
-    var s=stops[j];
-    var col=j===0?'#34C759':(j===n-1?'#FF3B30':'#8E8E93');
-    var ct=(j===0||j===n-1)?'':String(j);
-    var b=document.createElement('button');
-    b.className='dir-row';b.setAttribute('data-i',j);
-    b.innerHTML='<span class="dir-pin" style="--c:'+col+'">'+ct+'</span><span class="dir-txt"><b>'+s.name+'</b><small>'+s.kind+'</small></span>';
-    list.appendChild(b);
-  }
-  var sc=1.16,zoom=1,VW=1000,VH=640,TX=600,TY=320,minX=-300,maxX=1300,minY=-260,maxY=900;
-  function render(){
-    var s=stops[i],k,e=sc*zoom;
-    puck.setAttribute('transform','translate('+s.x+' '+s.y+')');
-    trav.setAttribute('stroke-dashoffset',(1-s.p).toFixed(4));
-    var dx=TX-e*s.x, dy=TY-e*s.y;
-    dx=Math.max(VW-e*maxX,Math.min(-e*minX,dx));
-    dy=Math.max(VH-e*maxY,Math.min(-e*minY,dy));
-    cam.setAttribute('transform','translate('+dx.toFixed(1)+' '+dy.toFixed(1)+') scale('+e.toFixed(3)+')');
-    elKk.textContent=s.kk;elBody.textContent=s.body;
-    elStep.textContent=(i+1)+'/'+n;
-    elEta.textContent=(i===n-1)?'sei arrivato':'prossima: '+stops[i+1].kind.toLowerCase();
-    elHint.textContent=(i===n-1)?'Tocca per ricominciare':'Tocca la mappa per proseguire';
-    var mks=cam.querySelectorAll('.mk');for(k=0;k<mks.length;k++)mks[k].classList.remove('on');
-    var cur=document.getElementById(s.m);if(cur)cur.classList.add('on');
-    var rows=list.children;for(k=0;k<rows.length;k++)rows[k].className='dir-row'+(k===i?' on':'');
-  }
-  function go(ni){i=((ni%n)+n)%n;render();if(typeof sndOpen==='function'){try{sndOpen();}catch(e){}}}
-  map.addEventListener('click',function(){go(i+1);});
-  list.addEventListener('click',function(e){var t=e.target.closest('.dir-row');if(!t)return;go(parseInt(t.getAttribute('data-i'),10));});
-  var zin=document.getElementById('mv-zin'),zout=document.getElementById('mv-zout'),comp=document.getElementById('mv-comp');
-  if(zin)zin.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.min(1.5,zoom+0.18);render();});
-  if(zout)zout.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.max(0.8,zoom-0.18);render();});
-  if(comp)comp.addEventListener('click',function(ev){ev.stopPropagation();zoom=1;render();});
-  var x=document.querySelector('#w-fine .dir-x');
-  if(x)x.addEventListener('click',function(ev){ev.stopPropagation();if(typeof closeWin==='function')closeWin(document.getElementById('w-fine'));});
-  render();
-})();
 
 
 /* ============================================================
@@ -1118,4 +1067,55 @@ window.addEventListener('resize',()=>{
 document.querySelectorAll('.win').forEach(w=>{ if(!w.classList.contains('maxi')) captureNormal(w); });
 setInterval(syncFinderVisibility, 500);
 syncFinderVisibility();
+
+/* Maps Navigator — percorso animato con spiegazioni */
+(function(){
+  const app=document.querySelector('[data-maps-navigator]');
+  if(!app) return;
+  const cam=app.querySelector('#maps-cam');
+  const puck=app.querySelector('#maps-puck');
+  const progress=app.querySelector('#maps-route-progress');
+  const rows=[...app.querySelectorAll('[data-maps-step]')];
+  const stopsBox=app.querySelector('[data-maps-stops]');
+  const dots=app.querySelector('[data-maps-dots]');
+  const recent=app.querySelector('[data-maps-recent]');
+  const title=app.querySelector('[data-maps-title]');
+  const kicker=app.querySelector('[data-maps-kicker]');
+  const copy=app.querySelector('[data-maps-copy]');
+  const icon=app.querySelector('[data-maps-icon]');
+  const eta=app.querySelector('[data-maps-eta]');
+  const sub=app.querySelector('[data-maps-sub]');
+  const stops=[
+    {x:90,y:565,p:0,icon:'→',kicker:'Partenza',title:'Maturità al Cerebotani',eta:'Inizio percorso',sub:'diploma · competenze tecniche',copy:'Il punto da cui parte tutto: scuola, informatica, metodo e capacità di trasformare un problema in una soluzione concreta.',explain:'Base tecnica: programmazione, logica, metodo, responsabilità.'},
+    {x:432,y:406,p:.34,icon:'↱',kicker:'Tra 300 m',title:'CS Metal Europe · PCTO',eta:'Prima sosta importante',sub:'azienda · dati · comunicazione',copy:'Il tirocinio diventa una tappa reale: Excel, WordPress, contenuti aziendali, magazzino e ufficio commerciale mostrano come lavora un’azienda.',explain:'Qui collego scuola e lavoro: dati, sito, comunicazione e gestione.'},
+    {x:708,y:238,p:.67,icon:'↑',kicker:'Prosegui',title:'Università · Informatica',eta:'Tappa successiva',sub:'studio · basi solide · software',copy:'La direzione è continuare con informatica: approfondire algoritmi, sistemi e progettazione per costruire software con più consapevolezza.',explain:'Studio più verticale per rendere solide le competenze.'},
+    {x:1015,y:62,p:1,icon:'⌖',kicker:'Arrivo',title:'Lavoro software all’estero',eta:'Meta finale',sub:'ambiente internazionale',copy:'Obiettivo finale: lavorare nel software in un contesto internazionale, portando metodo, creatività e capacità di apprendere velocemente.',explain:'Meta: crescere in un contesto più grande e internazionale.'}
+  ];
+  let current=0, zoom=1;
+  stopsBox.innerHTML=stops.map((s,i)=>`<button class="maps-stop-line ${i===0?'active':''}" data-maps-step="${i}" type="button"><span>${i===0?'●':i}</span><b>${s.title}</b></button>`).join('');
+  dots.innerHTML=stops.map((_,i)=>`<button class="maps-dot ${i===0?'on':''}" data-maps-step="${i}" type="button" aria-label="Tappa ${i+1}"></button>`).join('');
+  function render(){
+    const s=stops[current];
+    const scale=1.07*zoom;
+    const dx=650-scale*s.x, dy=360-scale*s.y;
+    cam.style.transform=`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${scale.toFixed(3)})`;
+    puck.setAttribute('transform',`translate(${s.x} ${s.y})`);
+    progress.style.strokeDashoffset=(1-s.p).toFixed(4);
+    title.textContent=s.title; kicker.textContent=s.kicker; copy.textContent=s.copy; icon.textContent=s.icon;
+    eta.textContent=s.eta; sub.textContent=s.sub; recent.textContent=s.title;
+    app.querySelectorAll('[data-maps-step]').forEach(el=>el.classList.toggle('on', +el.dataset.mapsStep===current));
+    app.querySelectorAll('.maps-stop-line').forEach((el,i)=>{el.classList.toggle('active',i===current);el.classList.toggle('done',i<current);});
+    app.querySelectorAll('.maps-dot').forEach((el,i)=>{el.classList.toggle('on',i===current);el.classList.toggle('done',i<current);});
+    app.querySelectorAll('.maps-marker').forEach((el,i)=>{el.classList.toggle('on',i===current);el.classList.toggle('done',i<current);});
+  }
+  function go(i){current=(i+stops.length)%stops.length; render(); try{sndOpen?.()}catch(e){} }
+  app.addEventListener('click',e=>{
+    const st=e.target.closest('[data-maps-step]'); if(st){go(+st.dataset.mapsStep); return;}
+    if(e.target.closest('[data-maps-next]')){go(current+1); return;}
+    const z=e.target.closest('[data-maps-zoom]'); if(z){zoom=Math.max(.82,Math.min(1.45,zoom+(z.dataset.mapsZoom==='in'?.14:-.14))); render(); return;}
+    if(e.target.closest('[data-maps-reset]')){zoom=1; render(); return;}
+    if(e.target.closest('.maps-map')) go(current+1);
+  });
+  render();
+})();
 
