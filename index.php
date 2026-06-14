@@ -6,10 +6,9 @@
 <title>PCTO — Maturità 2026</title>
 <!-- precarica il logo della scuola: serve subito al loader -->
 <link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high">
-<!-- Stile della schermata di blocco -->
-  <link rel="stylesheet" href="assets/css/login.css?v=<?= @filemtime(__DIR__ . '/assets/css/login.css') ?>">
+<link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
 </head>
-<body>
+<body class="login-screen">
 
 <!-- PRELOADER (logo scuola) — primo elemento: appare subito -->
 <div id="boot" aria-hidden="true">
@@ -18,7 +17,9 @@
 </div>
 
 <!-- SFONDO VIDEO (poster di fallback: bg.png) -->
-<div class="wallpaper" aria-hidden="true"></div>
+<video class="wallpaper" id="bgVideo" autoplay muted loop playsinline preload="auto" poster="assets/bg.png">
+  <source src="assets/lock.mp4" type="video/mp4">
+</video>
 <div class="scrim"></div>
 
 <!-- MENU BAR -->
@@ -124,7 +125,7 @@
   </div>
 </aside>
 
-<script src="assets/js/sound.js?v=<?= @filemtime(__DIR__ . '/assets/js/sound.js') ?>"></script>
-<script src="assets/js/login.js?v=<?= @filemtime(__DIR__ . '/assets/js/login.js') ?>"></script>
+<script src="sound.js"></script>
+<script src="login.js"></script>
 </body>
 </html>

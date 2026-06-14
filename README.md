@@ -9,31 +9,25 @@ Login animato (morph button) → backend PHP minimale → MySQL → desktop in s
 |---|---|
 | `index.php` | La pagina con il tasto morph e il form di accesso |
 | `login.php` | Backend: verifica il codice e registra l'accesso su MySQL |
-| `hub.php` | Il desktop in stile macOS: la presentazione, protetta dalla sessione |
+| `hub.php` | Il desktop in stile macOS: la presentazione in 6 capitoli, protetta dalla sessione |
+| `macos.css` | Design system unico: token, vetro, finestre, dock, login, app e responsive |
+| `hub.js` / `login.js` / `sound.js` | Interazioni desktop, lock screen e micro-suoni |
 | `logout.php` | Chiude la sessione e torna al login |
 | `setup.sql` | Crea il database `pcto` e la tabella `accessi` |
 | `Dockerfile` | Immagine PHP 8.3 + Apache con `pdo_mysql` |
 | `docker-compose.yml` | Stack completo: app + MySQL 8.4 (con init automatico) |
 
-### Frontend modulare (`assets/`)
+## Design system macOS
 
-Tutto il CSS e il JavaScript sono organizzati per responsabilità, niente più stile
-e script inline nelle pagine PHP.
+Il progetto ora usa **un solo file CSS**, `macos.css`. Dentro ci sono:
 
-| Percorso | Cosa fa |
-|---|---|
-| `assets/css/macos.css` | **Design system unico.** L'essenza di macOS in un solo file: token (colori, vetri, ombre, curve di animazione), tipografia SF Pro, materiali, menu bar, finestre + semaforo, dock, Centro di Controllo. È la base che dà identità a tutto il desktop. |
-| `assets/css/apps/*.css` | Un foglio per ogni app del desktop (`presentation`, `about`, `launchpad`, `calendar`, `maps`, `spotlight`): si occupano **solo** del contenuto della finestra. Il "vetro" esterno viene da `macos.css`. |
-| `assets/css/login.css` | Stile della schermata di blocco (sfondo, orologio, campo password in vetro smerigliato, animazione di sblocco). |
-| `assets/js/desktop.js` | Logica del desktop: boot, gestione finestre, semaforo, dock, Centro di Controllo, audio di sistema. Espone le funzioni globali usate dagli altri moduli. |
-| `assets/js/spotlight.js` | Overlay Spotlight del desktop. |
-| `assets/js/maps.js` | App "Mappe": navigazione a tappe del percorso. |
-| `assets/js/login.js` | Logica della schermata di blocco: orologio, preloader, invio del form, modalità demo. |
-| `assets/js/sound.js` | Effetti sonori di sistema condivisi (Web Audio). |
+- token globali: font SF Pro, colori, accenti, ombre, hairline, raggi e curve di easing;
+- componenti base: menubar, dock, finestre, semafori, Centro di Controllo, card glass;
+- lock screen: input password meno bianco/trasparente, blur più materico e transizione più rapida verso il desktop;
+- contenuti delle app: scheda personale, agenda PCTO, Launchpad e Mappe hanno layout e identità coerenti;
+- responsive e accessibilità: focus ring, reduced motion e fallback dark mode.
 
-> **Ordine di caricamento JS:** `desktop.js` va sempre per primo perché definisce
-> le funzioni globali (`openWin`, `closeWin`, `sndOpen`, …) usate da `spotlight.js`
-> e `maps.js`.
+I vecchi fogli `hub.css` e `hub-polish.css` sono stati consolidati in `macos.css` e non vengono più caricati.
 
 ## Variabili d'ambiente
 
@@ -75,7 +69,8 @@ Se la modalità demo è spenta, il backend non calcola né invia nessun passaggi
 ## Il desktop (hub.php)
 
 Dopo il login si arriva su un desktop in stile macOS — stessa estetica della pagina di
-accesso (superfici neutre, bordi hairline) con un colore accento per ogni app.
+accesso, governata da `macos.css`: superfici glass, bordi hairline, raggi coerenti,
+motion Apple-like e un colore accento per ogni app.
 La finestra "Scaletta" si apre da sola e guida i 10 minuti di esposizione in 6 capitoli:
 
 1. **Da dove parto** — il filo conduttore personale (1')

@@ -17,15 +17,7 @@ function appicon(string $file, string $remote): string {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desktop · Maturità 2026</title>
-<!-- Design system unico -->
-  <link rel="stylesheet" href="assets/css/macos.css?v=<?= @filemtime(__DIR__ . '/assets/css/macos.css') ?>">
-    <!-- Stile per singola app (uno per finestra) -->
-  <link rel="stylesheet" href="assets/css/apps/presentation.css?v=<?= @filemtime(__DIR__ . '/assets/css/apps/presentation.css') ?>">
-  <link rel="stylesheet" href="assets/css/apps/about.css?v=<?= @filemtime(__DIR__ . '/assets/css/apps/about.css') ?>">
-  <link rel="stylesheet" href="assets/css/apps/launchpad.css?v=<?= @filemtime(__DIR__ . '/assets/css/apps/launchpad.css') ?>">
-  <link rel="stylesheet" href="assets/css/apps/calendar.css?v=<?= @filemtime(__DIR__ . '/assets/css/apps/calendar.css') ?>">
-  <link rel="stylesheet" href="assets/css/apps/maps.css?v=<?= @filemtime(__DIR__ . '/assets/css/apps/maps.css') ?>">
-  <link rel="stylesheet" href="assets/css/apps/spotlight.css?v=<?= @filemtime(__DIR__ . '/assets/css/apps/spotlight.css') ?>">
+<link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
 <?php if ($boot): ?><link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high"><?php endif; ?>
 </head>
 <body<?= $boot ? ' class="booting"' : '' ?>>
@@ -41,7 +33,7 @@ function appicon(string $file, string $remote): string {
 <div id="boot" aria-hidden="true"><img src="assets/iisc-logo.png" alt="" fetchpriority="high" decoding="async"><div class="bbar"><span></span></div></div>
 <?php endif; ?>
 
-<div class="bg"></div>
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
 
 <nav class="menubar">
   <button class="logo" data-open="w-pres" aria-label="Apri la presentazione"><svg><use href="#i-cap"/></svg></button>
@@ -290,7 +282,8 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<div id="spot" class="spot" aria-hidden="true">  <div class="spot-box">
+<div id="spot" class="spot" aria-hidden="true">
+  <div class="spot-box">
     <svg class="spot-ic" width="27" height="27" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
     <span class="spot-q"><span class="spot-type"></span><span class="spot-cur"></span></span>
   </div>
@@ -308,9 +301,6 @@ function appicon(string $file, string $remote): string {
   <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
 </nav>
 
-<!-- Moduli JS: desktop.js per primo (espone le funzioni globali usate dagli altri) -->
-<script src="assets/js/desktop.js?v=<?= @filemtime(__DIR__ . '/assets/js/desktop.js') ?>"></script>
-<script src="assets/js/spotlight.js?v=<?= @filemtime(__DIR__ . '/assets/js/spotlight.js') ?>"></script>
-<script src="assets/js/maps.js?v=<?= @filemtime(__DIR__ . '/assets/js/maps.js') ?>"></script>
+<script src="hub.js"></script>
 </body>
 </html>
