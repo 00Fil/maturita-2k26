@@ -1,43 +1,14 @@
-<?php
-/* ============================================================
-   index.php — SCHERMATA DI BLOCCO (lock screen) in stile macOS
-   ------------------------------------------------------------
-   Pagina di accesso del progetto PCTO — Maturita 2026.
-   - Sfondo STATICO condiviso col desktop (assets/bg.png): la
-     stessa immagine di hub.php, cosi lo sblocco non "salta"
-     tra due sfondi diversi.
-   - Orologio live, utente "Filippo Corsini" con foto.
-   - Preloader col logo della scuola.
-
-   Struttura modulare:
-   - Stile  → assets/css/design-system.css (essenza condivisa)
-              + assets/css/apps/login.css (componenti del login)
-   - Logica → assets/js/audio.js (suoni) + assets/js/login.js
-
-   Backend INVARIATO: POST nome + codice → login.php → hub.php.
-   ============================================================ */
-
-/* Versione dei file statici (cache-busting via mtime). */
-function asset(string $p): string {
-  $v = @filemtime(__DIR__ . '/' . $p);
-  return $p . ($v ? '?v=' . $v : '');
-}
-?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PCTO — Maturita 2026</title>
-
+<title>PCTO — Maturità 2026</title>
 <!-- precarica il logo della scuola: serve subito al loader -->
 <link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high">
-
-<!-- Design system unico + modulo del login -->
-<link rel="stylesheet" href="<?= asset('assets/css/design-system.css') ?>">
-<link rel="stylesheet" href="<?= asset('assets/css/apps/login.css') ?>">
+<link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
 </head>
-<body>
+<body class="login-screen">
 
 <!-- PRELOADER (logo scuola) — primo elemento: appare subito -->
 <div id="boot" aria-hidden="true">
@@ -45,12 +16,14 @@ function asset(string $p): string {
   <div class="bbar"><span id="bbarFill"></span></div>
 </div>
 
-<!-- SFONDO STATICO condiviso col desktop (assets/bg.png via .bg) -->
-<div class="bg"></div>
+<!-- SFONDO VIDEO (poster di fallback: bg.png) -->
+<video class="wallpaper" id="bgVideo" autoplay muted loop playsinline preload="auto" poster="assets/bg.png">
+  <source src="assets/lock.mp4" type="video/mp4">
+</video>
 <div class="scrim"></div>
 
-<!-- MENU BAR del lock -->
-<div class="lk-bar">
+<!-- MENU BAR -->
+<div class="menubar">
   <span class="mb-item lang">IT</span>
   <span class="mb-item" aria-label="Centro di Controllo">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="6.5" width="18" height="4.2" rx="2.1"/><rect x="3" y="13.3" width="18" height="4.2" rx="2.1"/><circle cx="8" cy="8.6" r="1.1" fill="currentColor" stroke="none"/><circle cx="16" cy="15.4" r="1.1" fill="currentColor" stroke="none"/></svg>
@@ -66,7 +39,7 @@ function asset(string $p): string {
 <!-- LOCK SCREEN -->
 <div class="lock" id="lock">
 
-  <div class="lk-clock">
+  <div class="clock">
     <div class="date" id="date">—</div>
     <div class="time" id="time">—</div>
   </div>
@@ -97,7 +70,7 @@ function asset(string $p): string {
 
 </div>
 
-<!-- DEMO (?demo=1) — widget "dietro le quinte" -->
+<!-- DEMO (?demo=1) -->
 <aside class="demo-widget" id="demoWidget" aria-live="polite">
   <div class="demo-head">
     <span class="demo-eyebrow">Dietro le quinte</span>
@@ -152,8 +125,7 @@ function asset(string $p): string {
   </div>
 </aside>
 
-<!-- Moduli JavaScript: audio condiviso + logica del login -->
-<script src="<?= asset('assets/js/audio.js') ?>"></script>
-<script src="<?= asset('assets/js/login.js') ?>"></script>
+<script src="sound.js"></script>
+<script src="login.js"></script>
 </body>
 </html>

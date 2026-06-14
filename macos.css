@@ -1436,3 +1436,118 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 /* Dettagli minori del desktop: blob wallpaper e voce Riavvia. */
 .bg .b1, .bg .b2, .bg .b3 { display: none; }
 .reboot svg { width: 14px; height: 14px; }
+
+/* ============================================================
+   NOTES APP — “Su di me” come Note di macOS
+   ============================================================ */
+.notes-app {
+  display: grid;
+  grid-template-columns: 184px 248px minmax(0, 1fr);
+  min-height: 560px;
+  height: min(720px, calc(100vh - 122px));
+  padding: 0;
+  overflow: hidden;
+  background: color-mix(in srgb, #F5F1E5 62%, var(--surface));
+}
+.notes-folders {
+  padding: 12px 9px;
+  background: color-mix(in srgb, #ECE8DA 72%, transparent);
+  border-right: 1px solid var(--border);
+  overflow: auto;
+}
+.notes-account { display:flex; align-items:center; gap:9px; padding: 6px 8px 12px; }
+.notes-account b { display:block; font-size:13px; font-weight:850; letter-spacing:-.02em; }
+.notes-account small { display:block; margin-top:1px; font-size:10.5px; color:var(--faint); font-weight:700; }
+.notes-dot { width:25px; height:25px; border-radius:8px; background:linear-gradient(180deg,#FFD84D,#D5A600); box-shadow:inset 0 1px 0 rgba(255,255,255,.45), 0 3px 10px rgba(180,130,0,.22); }
+.notes-folder { width:100%; display:flex; align-items:center; gap:9px; border:0; border-radius:11px; padding:7px 8px; margin:2px 0; color:var(--text); background:transparent; text-align:left; font:inherit; transition:background .18s ease, transform .26s var(--spring-soft); }
+.notes-folder:hover { background:rgba(255,255,255,.35); }
+.notes-folder:active { transform:scale(.985); }
+.notes-folder.on { background:rgba(255,255,255,.55); box-shadow:var(--edge); }
+.notes-folder > span { flex:none; width:22px; height:22px; display:flex; align-items:center; justify-content:center; border-radius:7px; color:#7A6500; background:rgba(255,204,0,.18); font-weight:850; }
+.notes-folder b { display:block; font-size:12.3px; font-weight:760; letter-spacing:-.01em; }
+.notes-folder small { display:block; margin-top:1px; font-size:10.3px; color:var(--faint); font-weight:650; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.notes-folder-title { padding:14px 8px 6px; color:var(--faint); font-size:10px; font-weight:850; letter-spacing:.08em; text-transform:uppercase; }
+.notes-tags { display:flex; flex-wrap:wrap; gap:6px; padding:0 4px; }
+.notes-tags span { padding:4px 8px; border-radius:999px; font-size:10.5px; font-weight:750; color:#7A6500; background:rgba(255,204,0,.14); box-shadow:inset 0 0 0 1px rgba(122,101,0,.08); }
+.notes-list {
+  padding: 12px 9px;
+  background: color-mix(in srgb, #F6F2E8 74%, var(--surface));
+  border-right: 1px solid var(--border);
+  overflow:auto;
+}
+.notes-list-head { display:flex; align-items:baseline; justify-content:space-between; padding:4px 7px 10px; }
+.notes-list-head b { font-size:19px; font-weight:850; letter-spacing:-.035em; }
+.notes-list-head small { color:var(--faint); font-size:11px; font-weight:700; }
+.note-preview { width:100%; display:grid; grid-template-columns:1fr auto; gap:1px 8px; border:0; border-radius:14px; padding:10px 11px; margin:5px 0; background:transparent; color:var(--text); text-align:left; font:inherit; transition:background .18s ease, transform .28s var(--spring-soft), box-shadow .22s ease; }
+.note-preview:hover { background:rgba(255,255,255,.38); }
+.note-preview.on { background:rgba(255,255,255,.72); box-shadow:var(--edge), 0 2px 10px rgba(85,70,20,.08); }
+.note-preview b { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13.2px; font-weight:790; letter-spacing:-.015em; }
+.note-preview small { color:var(--faint); font-size:10.5px; font-weight:720; }
+.note-preview p { grid-column:1 / -1; margin:2px 0 0; color:var(--muted); font-size:11.5px; line-height:1.38; font-weight:520; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.notes-paper {
+  position:relative;
+  overflow:auto;
+  padding: 0 0 42px;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.7) 0 1px, transparent 1px) 0 0 / 38px 38px,
+    linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,252,244,.78));
+}
+.notes-paper::before { content:""; position:sticky; top:0; z-index:2; display:block; height:0; box-shadow:0 1px 0 rgba(60,60,67,.10); }
+.notes-toolbar { position:sticky; top:0; z-index:3; height:44px; display:flex; align-items:center; justify-content:space-between; padding:0 18px; background:rgba(255,252,244,.76); -webkit-backdrop-filter:blur(28px) saturate(1.55); backdrop-filter:blur(28px) saturate(1.55); border-bottom:1px solid rgba(60,60,67,.10); }
+.notes-toolbar-left, .notes-toolbar-actions { display:flex; align-items:center; gap:9px; }
+.notes-back { font-size:24px; line-height:1; color:#B58900; font-weight:400; }
+.notes-pill { padding:4px 9px; border-radius:999px; background:rgba(255,204,0,.16); color:#7A6500; font-size:11px; font-weight:780; }
+.notes-toolbar-actions span { min-width:24px; height:24px; display:flex; align-items:center; justify-content:center; border-radius:8px; color:#5f5f66; font-size:12px; font-weight:760; background:rgba(118,118,128,.08); }
+.note-date { margin:28px auto 8px; max-width:690px; text-align:center; color:#9A9588; font-size:12.5px; font-weight:650; }
+.notes-paper h2 { max-width:690px; margin:0 auto 16px; font-size:34px; line-height:1.06; font-weight:880; letter-spacing:-.045em; color:#3A3935; }
+.note-lead, .note-section, .note-quote, .note-hero-card { max-width:690px; margin-left:auto; margin-right:auto; }
+.note-lead { font-size:16px; line-height:1.62; color:#4A4842; font-weight:520; }
+.note-lead mark { padding:0 .18em; border-radius:5px; background:linear-gradient(180deg, transparent 42%, rgba(255,214,10,.48) 42%); color:inherit; }
+.note-hero-card { display:grid; grid-template-columns:.95fr 1.05fr; gap:14px; margin-top:20px; margin-bottom:22px; }
+.note-sticky { position:relative; transform:rotate(-1.2deg); padding:18px 18px 17px; border-radius:8px 20px 18px 18px; background:linear-gradient(180deg,#FFF3A8,#FFE26A); box-shadow:0 18px 34px rgba(118,88,0,.18), inset 0 1px 0 rgba(255,255,255,.55); color:#3A3000; }
+.note-sticky-pin { position:absolute; top:9px; left:50%; width:44px; height:5px; border-radius:999px; translate:-50% 0; background:rgba(122,101,0,.24); box-shadow:inset 0 1px 0 rgba(255,255,255,.4); }
+.note-sticky b { display:block; margin-top:8px; font-size:18px; font-weight:870; letter-spacing:-.03em; }
+.note-sticky p { margin:7px 0 0; font-size:13px; line-height:1.52; font-weight:560; }
+.note-sketch { border-radius:18px; padding:14px 14px 7px; background:rgba(255,255,255,.58); box-shadow:var(--edge), 0 8px 22px rgba(118,88,0,.08); }
+.sketch-title { color:#8E7A24; font-size:11px; font-weight:850; letter-spacing:.08em; text-transform:uppercase; }
+.note-sketch svg { width:100%; height:auto; display:block; margin-top:2px; }
+.note-sketch text { font-family:"Comic Sans MS", "SF Pro Display", sans-serif; font-size:14px; fill:#5f5528; }
+.note-section { margin-top:22px; padding-top:18px; border-top:1px solid rgba(60,60,67,.12); }
+.note-section h3 { margin:0 0 8px; font-size:21px; font-weight:850; letter-spacing:-.035em; color:#3A3935; }
+.note-section p { margin:0; font-size:14.2px; line-height:1.62; color:#4A4842; font-weight:520; }
+.note-checks { list-style:none; margin:13px 0 0; padding:0; display:grid; gap:8px; }
+.note-checks li { display:flex; gap:9px; align-items:flex-start; font-size:13.5px; color:#4A4842; font-weight:560; }
+.note-checks span { flex:none; margin-top:3px; width:15px; height:15px; border-radius:50%; background:#FFD60A; box-shadow:inset 0 0 0 3px rgba(255,255,255,.72); }
+.note-grid-2 { display:grid; grid-template-columns:1fr 220px; gap:16px; align-items:start; }
+.note-callout { padding:14px 15px; border-radius:17px; background:rgba(255,204,0,.16); box-shadow:inset 0 0 0 1px rgba(122,101,0,.10); }
+.note-callout b { display:block; color:#7A6500; font-size:13px; font-weight:850; margin-bottom:5px; }
+.note-callout p { font-size:12.5px; line-height:1.48; color:#5f5528; }
+.note-cards { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.note-cards div { padding:13px 14px; border-radius:17px; background:rgba(255,255,255,.55); box-shadow:var(--edge), 0 2px 10px rgba(85,70,20,.06); }
+.note-cards b { display:block; margin-bottom:4px; font-size:13.6px; font-weight:820; color:#3A3935; letter-spacing:-.015em; }
+.note-cards p { font-size:12.5px; line-height:1.48; }
+.note-quote { margin-top:24px; padding:18px 22px; border-left:4px solid #FFD60A; border-radius:0 18px 18px 0; background:rgba(255,255,255,.5); color:#3A3935; font-size:20px; line-height:1.38; font-weight:760; letter-spacing:-.025em; }
+.win.open .notes-folder, .win.open .note-preview, .win.open .note-section, .win.open .note-hero-card { animation:riseIn .46s var(--ease-apple) both; }
+.win.open .note-preview:nth-child(3){animation-delay:.04s}.win.open .note-preview:nth-child(4){animation-delay:.08s}.win.open .note-preview:nth-child(5){animation-delay:.12s}.win.open .note-preview:nth-child(6){animation-delay:.16s}
+@media (prefers-color-scheme: dark) {
+  .notes-app { background: color-mix(in srgb, #29261F 64%, var(--surface)); }
+  .notes-folders { background: rgba(35,33,28,.68); }
+  .notes-list { background: rgba(42,39,32,.70); }
+  .notes-paper { background:linear-gradient(180deg, rgba(34,32,27,.92), rgba(28,27,24,.88)); }
+  .notes-toolbar { background:rgba(34,32,27,.76); }
+  .notes-paper h2,.note-section h3,.note-cards b,.note-quote { color:#F5F1E8; }
+  .note-lead,.note-section p,.note-checks li { color:rgba(245,241,232,.78); }
+  .note-cards div,.note-sketch,.note-quote { background:rgba(255,255,255,.08); }
+}
+@media (max-width: 900px) {
+  .notes-app { grid-template-columns: 210px minmax(0,1fr); }
+  .notes-folders { display:none; }
+}
+@media (max-width: 760px) {
+  .notes-app { grid-template-columns:1fr; height:calc(100vh - 140px); }
+  .notes-list { display:none; }
+  .notes-paper { padding-left:16px; padding-right:16px; }
+  .note-hero-card,.note-grid-2,.note-cards { grid-template-columns:1fr; }
+  .notes-paper h2 { font-size:30px; }
+}
+

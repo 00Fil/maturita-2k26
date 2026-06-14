@@ -10,12 +10,6 @@ function appicon(string $file, string $remote): string {
   global $RAW;
   return '<img src="assets/icons/' . $file . '" alt="" draggable="false" onerror="this.onerror=null;this.src=\'' . $RAW . $remote . '\'">';
 }
-
-/* Versione dei file statici (cache-busting via mtime). */
-function asset(string $p): string {
-  $v = @filemtime(__DIR__ . '/' . $p);
-  return $p . ($v ? '?v=' . $v : '');
-}
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -23,14 +17,7 @@ function asset(string $p): string {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desktop · Maturità 2026</title>
-<!-- Design system unico + moduli per ogni app -->
-<link rel="stylesheet" href="<?= asset('assets/css/design-system.css') ?>">
-<link rel="stylesheet" href="<?= asset('assets/css/apps/finder.css') ?>">
-<link rel="stylesheet" href="<?= asset('assets/css/apps/about.css') ?>">
-<link rel="stylesheet" href="<?= asset('assets/css/apps/launchpad.css') ?>">
-<link rel="stylesheet" href="<?= asset('assets/css/apps/calendar.css') ?>">
-<link rel="stylesheet" href="<?= asset('assets/css/apps/maps.css') ?>">
-<link rel="stylesheet" href="<?= asset('assets/css/apps/spotlight.css') ?>">
+<link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
 <?php if ($boot): ?><link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high"><?php endif; ?>
 </head>
 <body<?= $boot ? ' class="booting"' : '' ?>>
@@ -128,7 +115,7 @@ function asset(string $p): string {
     <div class="main">
       <div class="ftools"><b>I miei 10 minuti</b><span>Apro io raccontando la mia storia, poi rispondo alle domande della commissione.</span><span class="fseg"><button class="on" data-view="gallery">Galleria</button><button data-view="list">Elenco</button></span></div>
       <div class="fgrid">
-        <button class="fitem lgcard" data-open="w-io" data-tag="rifl" style="animation-delay:.05s"><span class="fbadge" style="background:#FF9500">01</span><b>Su di me</b><span>Chi sono, cosa mi appassiona e da dove nasce la mia voglia di costruire.</span><span class="tt">Apri · Informazioni</span></button>
+        <button class="fitem lgcard" data-open="w-io" data-tag="rifl" style="animation-delay:.05s"><span class="fbadge" style="background:#FF9500">01</span><b>Su di me</b><span>Chi sono, cosa mi appassiona e da dove nasce la mia voglia di costruire.</span><span class="tt">Apri · Note</span></button>
         <button class="fitem lgcard" data-open="w-skills" data-tag="fuori" style="animation-delay:.1s"><span class="fbadge" style="background:#5856D6">02</span><b>Fuori dall'aula</b><span>I progetti, i concorsi e il volontariato che ho seguito fuori dalla scuola.</span><span class="tt">Apri · Launchpad</span></button>
         <button class="fitem lgcard" data-open="w-fsl" data-tag="fsl" style="animation-delay:.15s"><span class="fbadge" style="background:#34C759">03</span><b>CS Metal Europe</b><span>Le 240 ore di alternanza in azienda e cosa mi hanno insegnato.</span><span class="tt">Apri · Calendario</span></button>
         <button class="fitem lgcard" data-open="w-fine" data-tag="rifl" style="animation-delay:.2s"><span class="fbadge" style="background:#AF52DE">04</span><b>Dove voglio andare</b><span>Il percorso che voglio seguire dopo il diploma.</span><span class="tt">Apri · Mappe</span></button>
@@ -138,50 +125,96 @@ function asset(string $p): string {
   </div>
 </section>
 
-<section class="win a-orange" id="w-io" style="left:8%;top:6%;width:880px">
-  <div class="titlebar"><span class="wt">Su di me — Informazioni</span></div>
-  <div class="wbody iox">
-    <div class="iox-head">
-      <span class="cavatar">FC</span>
-      <div class="cid"><h2>Filippo Corsini</h2><p>Diploma Tecnico · Informatica e Telecomunicazioni — IIS «Cerebotani», Lonato</p></div>
-      <div class="cacts"><a class="cact" href="mailto:ciao@denuvo.studio"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m2 7 10 6L22 7"/></svg>mail</a><a class="cact" href="https://github.com/00Fil" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4"/><path d="m16 8 4 4-4 4"/><path d="m13 5-2 14"/></svg>GitHub</a></div>
-    </div>
-    <div class="iox-stats">
-      <span class="iox-stat"><b>29</b><small>Credito</small></span>
-      <span class="iox-stat"><b>240</b><small>Ore PCTO</small></span>
-      <span class="iox-stat"><b>B2</b><small>Inglese QCER</small></span>
-      <span class="iox-stat"><b>4</b><small>Livello EQF</small></span>
-    </div>
-    <div class="iox-cols">
-      <div class="iox-col">
-        <div class="iox-hero">
-          <span class="as-kicker">In una riga</span>
-          <h3>Capisco come funzionano le cose, poi le costruisco.</h3>
-          <p>È la curiosità che mi ha portato a scegliere informatica, a realizzare progetti miei e a trasformarli in qualcosa di concreto — fino al mio primo contratto.</p>
+<section class="win a-orange" id="w-io" style="left:7%;top:6%;width:980px">
+  <div class="titlebar"><span class="wt">Su di me — Note</span></div>
+  <div class="wbody notes-app">
+    <aside class="notes-folders" aria-label="Cartelle Note">
+      <div class="notes-account">
+        <span class="notes-dot"></span>
+        <div><b>iCloud</b><small>Filippo Corsini</small></div>
+      </div>
+      <button class="notes-folder on"><span>☰</span><div><b>Tutte le note</b><small>7 note</small></div></button>
+      <button class="notes-folder"><span>★</span><div><b>In evidenza</b><small>Identità e progetti</small></div></button>
+      <button class="notes-folder"><span>⌘</span><div><b>Informatica</b><small>Scuola, software, reti</small></div></button>
+      <button class="notes-folder"><span>♪</span><div><b>Vita fuori scuola</b><small>Musica e comunità</small></div></button>
+      <div class="notes-folder-title">Tag</div>
+      <div class="notes-tags"><span>#scuola</span><span>#pcto</span><span>#progetti</span><span>#volontariato</span></div>
+    </aside>
+
+    <aside class="notes-list" aria-label="Elenco note">
+      <div class="notes-list-head"><b>Tutte iCloud</b><small>7 note</small></div>
+      <button class="note-preview on"><b>Chi sono</b><small>Oggi</small><p>Capisco come funzionano le cose, poi provo a costruirle.</p></button>
+      <button class="note-preview"><b>Il mio percorso</b><small>Scuola</small><p>Informatica e Telecomunicazioni al Cerebotani di Lonato.</p></button>
+      <button class="note-preview"><b>CS Metal Europe</b><small>PCTO</small><p>Due anni nello stesso contesto aziendale, fino a un progetto vero.</p></button>
+      <button class="note-preview"><b>Progetti personali</b><small>Dal 2024</small><p>Gestionale per l’oratorio, denuvo.studio, idee trasformate in codice.</p></button>
+      <button class="note-preview"><b>Fuori dall’aula</b><small>Esperienze</small><p>Concorso letterario, volontariato, animazione ed educazione.</p></button>
+      <button class="note-preview"><b>Musica e disciplina</b><small>Violoncello</small><p>La costanza imparata studiando uno strumento.</p></button>
+      <button class="note-preview"><b>Dove voglio andare</b><small>Dopo il diploma</small><p>Continuare a crescere nel software, con una mentalità internazionale.</p></button>
+    </aside>
+
+    <article class="notes-paper">
+      <div class="notes-toolbar">
+        <div class="notes-toolbar-left"><span class="notes-back">‹</span><span class="notes-pill">Nota bloccata</span></div>
+        <div class="notes-toolbar-actions"><span>Aa</span><span>☷</span><span>▦</span><span>✎</span><span>•••</span></div>
+      </div>
+
+      <div class="note-date">14 giugno 2026 alle 20:46</div>
+      <h2>Filippo Corsini</h2>
+      <p class="note-lead"><mark>Capisco come funzionano le cose, poi le costruisco.</mark> È la frase che mi rappresenta di più: parto dalla curiosità, studio il problema, lo smonto e provo a trasformarlo in qualcosa che funzioni davvero.</p>
+
+      <div class="note-hero-card">
+        <div class="note-sticky">
+          <span class="note-sticky-pin"></span>
+          <b>Identità</b>
+          <p>Non mi interessa solo “saper usare” gli strumenti: voglio capire il perché dietro le cose, dal codice alla comunicazione, fino al modo in cui un progetto viene portato davanti a persone reali.</p>
         </div>
-        <div class="iox-block">
-          <div class="iox-lbl">Il percorso ufficiale</div>
-          <div class="iox-row" style="--kc:#FF9500"><span class="iox-k">Indirizzo</span><div class="iox-tx"><b>Informatica e Telecomunicazioni.</b><p>Cinque anni all’IIS «Cerebotani» di Lonato tra programmazione, sistemi e reti. Diploma di livello EQF 4.</p></div></div>
-          <div class="iox-row" style="--kc:#FF9500"><span class="iox-k">Competenze</span><div class="iox-tx"><b>Reti, sistemi, sviluppo, progetti.</b><p>Il profilo tecnico, con inglese B2 (QCER) per leggere la documentazione e lavorare in contesti internazionali.</p></div></div>
-          <div class="iox-row" style="--kc:#34C759"><span class="iox-k">In azienda</span><div class="iox-tx"><b>240 ore alla CS Metal Europe.</b><p>Dati di produzione, comunicazione e un e-commerce vero con un gestionale in PHP: il mio primo contratto.</p></div></div>
+        <div class="note-sketch" aria-hidden="true">
+          <div class="sketch-title">idea → metodo → prodotto</div>
+          <svg viewBox="0 0 320 170" fill="none">
+            <path d="M37 92 C75 32 132 30 161 82 C190 132 250 132 285 71" stroke="#8E7A24" stroke-width="4" stroke-linecap="round" opacity=".75"/>
+            <rect x="34" y="36" width="74" height="54" rx="10" stroke="#D6A600" stroke-width="3"/>
+            <rect x="126" y="65" width="74" height="54" rx="10" stroke="#D6A600" stroke-width="3"/>
+            <rect x="218" y="35" width="74" height="54" rx="10" stroke="#D6A600" stroke-width="3"/>
+            <text x="71" y="67" text-anchor="middle">curiosità</text>
+            <text x="163" y="96" text-anchor="middle">studio</text>
+            <text x="255" y="66" text-anchor="middle">costruisco</text>
+          </svg>
         </div>
       </div>
-      <div class="iox-col">
-        <div class="iox-block">
-          <div class="iox-lbl">Risultati e progetti</div>
-          <div class="iox-card" style="--kc:#0A84FF"><span class="iox-tag">Concorso · vinto</span><b>«Volo tra le Righe 3.0»</b><p>Un romanzo raccontato con una playlist narrativa: vittoria nella categoria playlist.</p></div>
-          <div class="iox-card" style="--kc:#5856D6"><span class="iox-tag">Progetto</span><b>Gestionale per l’oratorio di Bedizzole</b><p>Dal 2024, un software costruito con le competenze di scuola e tanti approfondimenti personali.</p></div>
-          <div class="iox-card" style="--kc:#34C759"><span class="iox-tag">Online</span><b>denuvo.studio</b><p>Il sito dove pubblico quello che costruisco, curando ogni dettaglio dal codice alla grafica.</p></div>
+
+      <section class="note-section">
+        <h3>Il percorso che mi ha formato</h3>
+        <p>Ho scelto <b>Informatica e Telecomunicazioni</b> all’IIS «Cerebotani» di Lonato perché volevo stare dentro un mondo concreto: programmazione, sistemi, reti, progettazione e gestione dei progetti. In questi anni ho imparato che la tecnologia non è solo codice: è metodo, precisione, documentazione e capacità di spiegare quello che si fa.</p>
+        <ul class="note-checks">
+          <li><span></span>sviluppare applicazioni e servizi a distanza;</li>
+          <li><span></span>ragionare su reti, sistemi e dati;</li>
+          <li><span></span>documentare e presentare un lavoro tecnico in modo chiaro.</li>
+        </ul>
+      </section>
+
+      <section class="note-section note-grid-2">
+        <div>
+          <h3>CS Metal Europe</h3>
+          <p>Il PCTO non è stato un episodio isolato: è stato un percorso continuo in azienda. Ho lavorato con dati di produzione, immagini, comunicazione, magazzino e contenuti online. La parte più importante è stata capire che anche un testo, un’immagine o una tabella sono decisioni progettuali.</p>
         </div>
-        <div class="iox-block">
-          <div class="iox-lbl">Chi sono, oltre i voti</div>
-          <div class="iox-card" style="--kc:#AF52DE"><span class="iox-tag">Dal 2018</span><b>Suono il violoncello</b><p>Mi ha insegnato la costanza: per migliorare mi esercito ogni giorno, con metodo.</p></div>
-          <div class="iox-card" style="--kc:#FF9500"><span class="iox-tag">Comunità</span><b>Animatore in oratorio</b><p>Dal 2023, tra Torneo dei Roncai e Festa del Sorriso: organizzo e mi metto a disposizione.</p></div>
-          <div class="iox-card" style="--kc:#FF3B30"><span class="iox-tag">Come sono</span><b>Determinato e attento ai dettagli</b><p>Porto a termine quello che inizio e lavoro bene in squadra, come nello sport.</p></div>
+        <div class="note-callout">
+          <b>La cosa che porto via</b>
+          <p>Scrivere vuol dire pensare a chi legge. Costruire software vuol dire pensare a chi lo userà.</p>
         </div>
-      </div>
-    </div>
-    <div class="cnote">Le informazioni di questa scheda vengono dal mio <b>Curriculum dello studente</b> e dal percorso reale di questi cinque anni.</div>
+      </section>
+
+      <section class="note-section">
+        <h3>Progetti, comunità e disciplina</h3>
+        <div class="note-cards">
+          <div><b>Gestionale per l’oratorio</b><p>Un progetto nato fuori da scuola, sviluppato applicando competenze tecniche e approfondimenti personali.</p></div>
+          <div><b>denuvo.studio</b><p>Il luogo in cui raccolgo ciò che costruisco, curando sia il codice sia l’esperienza visiva.</p></div>
+          <div><b>Violoncello</b><p>Dal 2018 mi ha insegnato che migliorare richiede costanza, ascolto e ripetizione.</p></div>
+          <div><b>Volontariato</b><p>Festa del Sorriso, Torneo dei Roncai, animazione: esperienze che mi hanno insegnato responsabilità e squadra.</p></div>
+        </div>
+      </section>
+
+      <blockquote class="note-quote">“Voglio continuare a costruire cose vere: belle fuori, solide dentro, utili per qualcuno.”</blockquote>
+    </article>
   </div>
 </section>
 
@@ -305,7 +338,7 @@ function asset(string $p): string {
 
 <nav class="dock" id="dock">
   <span class="dapp" data-w="w-pres"><button class="ai" aria-label="Presentazione"><?= appicon('finder.webp', '/original/file-manager.svg') ?></button><span class="dot"></span><span class="tip">Presentazione · Finder</span></span>
-  <span class="dapp" data-w="w-io"><button class="ai" aria-label="Su di me"><?= appicon('contacts.webp', '/src/apps/scalable/addressbook.svg') ?></button><span class="dot"></span><span class="tip">Su di me · Informazioni</span></span>
+  <span class="dapp" data-w="w-io"><button class="ai" aria-label="Su di me"><?= appicon('notes.png', '/src/apps/scalable/accessories-text-editor.svg') ?></button><span class="dot"></span><span class="tip">Su di me · Note</span></span>
   <span class="dapp" data-w="w-skills"><button class="ai" aria-label="Fuori dall'aula"><?= appicon('appstore.webp', '/src/apps/scalable/software-store.svg') ?></button><span class="dot"></span><span class="tip">Fuori dall'aula · Launchpad</span></span>
   <span class="dapp" data-w="w-fsl"><button class="ai" aria-label="CS Metal Europe"><?= appicon('calendar.webp', '/original/calendar.svg') ?></button><span class="dot"></span><span class="tip">CS Metal Europe · Calendario</span></span>
   <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Dove voglio andare"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Dove voglio andare · Mappe</span></span>
@@ -314,14 +347,6 @@ function asset(string $p): string {
   <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
 </nav>
 
-<!-- Moduli JavaScript (ordine di dipendenza: audio per primo) -->
-<script src="<?= asset('assets/js/audio.js') ?>"></script>
-<script src="<?= asset('assets/js/clock.js') ?>"></script>
-<script src="<?= asset('assets/js/boot.js') ?>"></script>
-<script src="<?= asset('assets/js/windows.js') ?>"></script>
-<script src="<?= asset('assets/js/dock.js') ?>"></script>
-<script src="<?= asset('assets/js/control-center.js') ?>"></script>
-<script src="<?= asset('assets/js/apps/spotlight.js') ?>"></script>
-<script src="<?= asset('assets/js/apps/maps.js') ?>"></script>
+<script src="hub.js"></script>
 </body>
 </html>
