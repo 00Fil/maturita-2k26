@@ -234,8 +234,10 @@ function appicon(string $file, string $remote): string {
         <button class="nav-panel-close" id="nav-panel-x" type="button" aria-label="Chiudi indicazioni">✕</button>
       </div>
       <div class="nav-panel-transport">
-        <button class="nav-tmode on" data-mode="car" type="button" aria-label="Auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="7" rx="2"/><path d="M5 11V7a2 2 0 012-2h10a2 2 0 012 2v4"/><circle cx="7.5" cy="15.5" r="1.5"/><circle cx="16.5" cy="15.5" r="1.5"/></svg></button>
-        <button class="nav-tmode" data-mode="walk" type="button" aria-label="A piedi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M14 22l-2-8-4 4"/><path d="M10 14l4-4 2 4"/><path d="M10 10l-2 8"/></svg></button>
+        <button class="nav-tmode on" data-mode="car" type="button" aria-label="Auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="7" rx="2"/><path d="M5 11V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4"/><circle cx="7" cy="15" r="1"/><circle cx="17" cy="15" r="1"/></svg></button>
+        <button class="nav-tmode" data-mode="walk" type="button" aria-label="A piedi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4" r="2"/><path d="M10 10v4l2 4 2 4"/><path d="M14 10l-2 3-2-2"/></svg></button>
+        <button class="nav-tmode" data-mode="transit" type="button" aria-label="Mezzi pubblici"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="16" rx="2"/><path d="M4 11h16"/><path d="M8 15h.01"/><path d="M16 15h.01"/><path d="M6 19L4 21"/><path d="M18 19l2 2"/></svg></button>
+        <button class="nav-tmode" data-mode="cycle" type="button" aria-label="In bici"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg></button>
       </div>
       <div class="nav-panel-route">
         <div class="nav-route-from"><span class="nav-rdot start"></span><span>Maturità 2026</span></div>
@@ -336,9 +338,22 @@ function appicon(string $file, string $remote): string {
           <g class="mk-label" id="ml4" transform="translate(1120 100)"><rect x="-32" y="-56" width="64" height="22" rx="11" fill="rgba(255,59,48,.9)"/><text x="0" y="-41" text-anchor="middle" fill="#fff" font-size="11" font-weight="700" font-family="'SF Pro Text','Inter',system-ui,sans-serif">Carriera</text></g>
           <!-- ETA bubble sulla mappa (stile Apple Maps) -->
           <g id="nav-eta-bubble" transform="translate(620 420)" class="nav-bubble">
-            <rect x="-52" y="-16" width="104" height="32" rx="16" fill="#007AFF"/>
-            <text x="0" y="-4" text-anchor="middle" fill="#fff" font-size="10" font-weight="700" font-family="'SF Pro Text','Inter',system-ui,sans-serif">5 anni</text>
-            <text x="0" y="9" text-anchor="middle" fill="rgba(255,255,255,.82)" font-size="9" font-weight="600" font-family="'SF Pro Text','Inter',system-ui,sans-serif">Più diretto</text>
+            <path d="M -65 -34 A 8 8 0 0 1 -57 -42 L 57 -42 A 8 8 0 0 1 65 -34 L 65 -14 A 8 8 0 0 1 57 -6 L 6 -6 L 0 0 L -6 -6 L -57 -6 A 8 8 0 0 1 -65 -14 Z" fill="#007AFF" stroke="#ffffff" stroke-width="1.5" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.3))"/>
+            <!-- piccolo dollaro verde -->
+            <circle cx="-38" cy="-25" r="5.5" fill="#34C759"/>
+            <text x="-38" y="-23" text-anchor="middle" fill="#fff" font-size="6.5" font-weight="900" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">$</text>
+            <!-- testo tempo -->
+            <text x="-26" y="-21" fill="#fff" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" text-anchor="start">5 anni</text>
+            <!-- subtesto -->
+            <text x="0" y="-10" fill="rgba(255,255,255,0.85)" font-size="9" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" text-anchor="middle">Percorso più rapido</text>
+          </g>
+          <!-- Alternative ETA bubble on the map -->
+          <g id="nav-eta-bubble-alt" transform="translate(800 225)" class="nav-bubble-alt">
+            <path d="M -65 -34 A 8 8 0 0 1 -57 -42 L 57 -42 A 8 8 0 0 1 65 -34 L 65 -14 A 8 8 0 0 1 57 -6 L 6 -6 L 0 0 L -6 -6 L -57 -6 A 8 8 0 0 1 -65 -14 Z" fill="rgba(35,35,40,0.82)" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" filter="drop-shadow(0 4px 10px rgba(0,0,0,0.3))"/>
+            <circle cx="-38" cy="-25" r="5.5" fill="#34C759"/>
+            <text x="-38" y="-23" text-anchor="middle" fill="#fff" font-size="6.5" font-weight="900" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif">$</text>
+            <text x="-26" y="-21" fill="#fff" font-size="11.5" font-weight="700" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" text-anchor="start">6 anni</text>
+            <text x="0" y="-10" fill="rgba(255,255,255,0.65)" font-size="9" font-weight="600" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif" text-anchor="middle">Evita autostrade</text>
           </g>
           <!-- puck GPS -->
           <g id="nav-puck" transform="translate(120 590)">
@@ -455,6 +470,7 @@ function appicon(string $file, string $remote): string {
   var routeDone = document.getElementById('nav-route-done');
   var puck = document.getElementById('nav-puck');
   var bubble = document.getElementById('nav-eta-bubble');
+  var bubbleAlt = document.getElementById('nav-eta-bubble-alt');
   if(!svg||!cam||!route||!routeDone||!puck) return;
 
   var detail    = document.getElementById('nav-detail');
@@ -511,7 +527,7 @@ function appicon(string $file, string $remote): string {
   // Overview: mostra tutta la mappa, zoom basso, centrato sul percorso
   // Detail:   zoom alto centrato su una tappa
   var OVERVIEW = { x:600, y:350, zoom:1 };
-  var DETAIL_ZOOM = 2.4;
+  var DETAIL_ZOOM = 2.0;
   var mode = 'overview'; // 'overview' | 'detail'
   var idx = -1; // -1 = overview, 0..n-1 = detail
 
@@ -546,11 +562,15 @@ function appicon(string $file, string $remote): string {
       if(gl) gl.setAttribute('transform','translate('+stops[s].x.toFixed(2)+' '+stops[s].y.toFixed(2)+') rotate('+cur.rot.toFixed(2)+') scale('+inv.toFixed(4)+')');
     }
 
-    // ETA bubble: contro-scala
+    // ETA bubbles: contro-scala
+    var bc = mode==='overview' ? 1 : 0;
     if(bubble){
-      var bc = mode==='overview' ? 1 : 0;
       bubble.style.opacity = bc;
       bubble.setAttribute('transform','translate(620 420) scale('+inv.toFixed(4)+')');
+    }
+    if(bubbleAlt){
+      bubbleAlt.style.opacity = bc;
+      bubbleAlt.setAttribute('transform','translate(800 225) scale('+inv.toFixed(4)+')');
     }
 
     // Percorso fatto (stroke-dashoffset)
@@ -559,7 +579,7 @@ function appicon(string $file, string $remote): string {
 
   /* ── Animazione ── */
   var raf = null;
-  var LERP = 0.08; // fattore di interpolazione (lento = smooth)
+  var LERP = 0.045; // fattore di interpolazione lento = estremamente smooth e naturale
   function frame(){
     cur.x += (tgt.x-cur.x)*LERP;
     cur.y += (tgt.y-cur.y)*LERP;
@@ -607,7 +627,7 @@ function appicon(string $file, string $remote): string {
     tgt.y = st.y;
     tgt.zoom = DETAIL_ZOOM;
     tgt.len = st.len;
-    tgt.rot = angleAt(st.len) + 90;
+    tgt.rot = (angleAt(st.len) + 90) * 0.25;
 
     // Card
     detBadge.textContent = (i+1);
