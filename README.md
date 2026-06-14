@@ -24,7 +24,7 @@ Il progetto ora usa **un solo file CSS**, `macos.css`. Dentro ci sono:
 - token globali: font SF Pro, colori, accenti, ombre, hairline, raggi e curve di easing;
 - componenti base: menubar, dock, finestre, semafori, Centro di Controllo, card glass;
 - lock screen: input password meno bianco/trasparente, blur più materico e transizione più rapida verso il desktop;
-- contenuti delle app: “Su di me” è una vera app Note macOS navigabile: cartelle, tag, note, checklist, vista schede, font e focus sono interattivi; la sidebar usa icone SVG stile Lucide ad alto contrasto e le note hanno layout diversi, mentre agenda PCTO, Launchpad e Mappe hanno layout e identità coerenti;
+- contenuti delle app: “Su di me” è temporaneamente un mock grafico vuoto in stile Notes macOS, basato sulla reference; la sidebar usa icone SVG stile Lucide ad alto contrasto e le note hanno layout diversi, mentre agenda PCTO, Launchpad e Mappe hanno layout e identità coerenti;
 - responsive e accessibilità: focus ring, reduced motion e fallback dark mode.
 
 I vecchi fogli `hub.css` e `hub-polish.css` sono stati consolidati in `macos.css` e non vengono più caricati.

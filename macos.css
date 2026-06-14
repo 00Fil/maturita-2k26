@@ -1727,3 +1727,121 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
   .note-hero-layout,.note-notebook-layout,.note-story-layout,.note-mosaic-layout,.note-letter-layout,.note-practice-layout,.note-direction-layout{grid-template-columns:1fr;grid-template-rows:auto}.note-hero-quote,.mosaic-card.m1{grid-row:auto}
 }
 
+/* ============================================================
+   NOTES MOCK EXACT — layout vuoto stile screenshot macOS Notes
+   ============================================================ */
+.notes-window {
+  border-radius: 26px !important;
+  background: rgba(246,246,246,.96) !important;
+  box-shadow: 0 34px 90px rgba(0,0,0,.34), inset 0 0 0 1px rgba(255,255,255,.72) !important;
+}
+.notes-window .titlebar.notes-titlebar {
+  height: 46px;
+  padding: 0 16px;
+  background: rgba(250,250,250,.88);
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  box-shadow: none;
+}
+.notes-window .titlebar .wt {
+  text-align: left;
+  margin-left: 206px;
+  margin-right: 0;
+  color: #2f2f31;
+  font-size: 13px;
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+.notes-window-tools { margin-left:auto; display:flex; align-items:center; gap:18px; color:#3a3a3c; }
+.notes-window-tools .ntool {
+  width: 28px; height: 28px; border:0; border-radius:50%; background: rgba(255,255,255,.72);
+  display:flex; align-items:center; justify-content:center; color:#3a3a3c; box-shadow:0 10px 26px rgba(0,0,0,.08);
+  font-size:13px; font-weight:800;
+}
+.notes-window-tools .ntool svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.notes-window-tools .ntool-folder { box-shadow:none; background:transparent; }
+.notes-mock {
+  display:grid;
+  grid-template-columns: 230px 290px minmax(0,1fr);
+  height: min(650px, calc(100vh - 120px));
+  padding:0;
+  overflow:hidden;
+  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  color:#1d1d1f;
+  background:#fff;
+  user-select:none;
+}
+.notes-mock button { font: inherit; }
+.nm-sidebar {
+  background: rgba(245,245,245,.92);
+  border-right: 1px solid rgba(0,0,0,.075);
+  padding: 0 12px 14px;
+  overflow:hidden;
+}
+.nm-top-row { height: 8px; display:flex; justify-content:flex-end; align-items:center; }
+.nm-icon-button { display:none; }
+.nm-side-list { display:flex; flex-direction:column; gap:2px; }
+.nm-section-label {
+  margin: 18px 0 8px 5px;
+  color:#b0b0b2;
+  font-size: 12px;
+  line-height:1;
+  font-weight:700;
+  letter-spacing:-.01em;
+}
+.nm-side-item {
+  position:relative; width:100%; height:30px; border:0; border-radius:7px; background:transparent; color:#222;
+  display:grid; grid-template-columns: 18px 1fr auto; align-items:center; gap:4px; padding:0 7px; text-align:left;
+  transition: background .12s ease;
+}
+.nm-side-item:hover { background:rgba(0,0,0,.045); }
+.nm-side-item.selected {
+  background:#ffb300;
+  color:#fff;
+  box-shadow: inset 0 0 0 .5px rgba(0,0,0,.04);
+}
+.nm-side-item.indent { padding-left: 22px; grid-template-columns: 18px 1fr auto; }
+.nm-side-item b { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; font-weight:700; letter-spacing:-.025em; color:inherit; }
+.nm-side-item em { font-style:normal; color:#b4b4b6; font-size:13px; font-weight:600; justify-self:end; }
+.nm-side-item.selected em, .nm-side-item.selected .nm-dots { color:#fff; }
+.nm-chev { position:absolute; left:3px; color:currentColor; font-size:15px; opacity:.75; }
+.nm-dots { color:#fff; font-size:13px; font-weight:900; margin-right:4px; }
+.nm-si { width:17px; height:17px; display:flex; align-items:center; justify-content:center; color:#2f2f31; }
+.nm-side-item.selected .nm-si { color:#fff; }
+.nm-si svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.75; stroke-linecap:round; stroke-linejoin:round; display:block; }
+.nm-tags { display:flex; gap:8px; padding-left:2px; }
+.nm-tags button { border:0; border-radius:6px; background:#d7d7d9; color:#333; padding:5px 9px; font-size:12px; font-weight:750; letter-spacing:-.02em; }
+.nm-list-pane {
+  background: rgba(250,250,250,.96);
+  border-right:1px solid rgba(0,0,0,.08);
+  padding: 0 11px 14px;
+  overflow:hidden;
+}
+.nm-list-title { height:46px; display:flex; flex-direction:column; justify-content:center; }
+.nm-list-title h2 { margin:0; color:#262628; font-size:16px; font-weight:850; letter-spacing:-.035em; line-height:1.05; }
+.nm-list-title span { color:#6d6d70; font-size:12px; font-weight:600; margin-top:1px; }
+.nm-day { margin: 15px 0 10px 0; color:#1d1d1f; font-size:17px; font-weight:800; letter-spacing:-.03em; }
+.nm-note-row {
+  width:100%; height:64px; border:0; border-radius:8px; background:transparent; color:#1d1d1f; text-align:left;
+  padding: 11px 16px; display:flex; flex-direction:column; justify-content:center;
+}
+.nm-note-row.active { background:#d8d8da; }
+.nm-note-row b { font-size:13px; font-weight:850; letter-spacing:-.03em; line-height:1.15; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.nm-note-row p { margin:2px 0 0; color:#555; font-size:12px; line-height:1.15; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.nm-note-row p span { color:#1f1f21; font-weight:650; }
+.nm-editor-pane { background:#fff; overflow:hidden; }
+.nm-editor-content { margin: 41px 0 0 28px; width:min(650px, calc(100% - 56px)); color:#222; }
+.nm-editor-content h3 { margin:0 0 22px; font-size:12px; font-weight:500; letter-spacing:-.005em; color:#2a2a2c; }
+.nm-editor-content p { margin: 0 0 17px; color:#242426; font-size:13px; line-height:1.45; font-weight:500; letter-spacing:-.02em; }
+@media (max-width: 900px) {
+  .notes-mock { grid-template-columns: 210px 260px minmax(0,1fr); }
+  .notes-window .titlebar .wt { margin-left:190px; }
+}
+@media (max-width: 760px) {
+  .notes-mock { grid-template-columns: 1fr; }
+  .nm-sidebar,.nm-list-pane { display:none; }
+  .nm-editor-content { margin: 36px 22px; }
+  .notes-window .titlebar .wt { margin-left:54px; }
+}
+
+.ntool-more { letter-spacing: -0.08em; }
