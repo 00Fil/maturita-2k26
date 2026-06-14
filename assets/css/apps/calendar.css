@@ -1,0 +1,37 @@
+/* ============================================================================
+   apps/calendar.css — Contenuto dell'app "CS Metal Europe" (#w-fsl)
+   Agenda stile Calendario: barra titolo con statistiche + gruppi di eventi con
+   barra colorata. Accento verde (--green) coerente con l'icona Calendario.
+   ========================================================================== */
+
+/* Barra titolo + statistiche rapide */
+.cal-tb { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 16px 20px 8px; }
+.cal-tb h3 { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; }
+.cal-tb h3 span { color: var(--green); }
+.cal-stats { margin-left: auto; display: flex; gap: 7px; }
+.cstat { min-width: 78px; padding: 8px 12px 7px; text-align: center; border-radius: 13px; transition: transform .35s var(--spring-pop), box-shadow .25s ease; }
+.win.open .cstat { animation: riseIn .5s var(--ease-apple) both; }
+.win.open .cstat:nth-child(2) { animation-delay: .06s; }
+.win.open .cstat:nth-child(3) { animation-delay: .12s; }
+.cstat:hover { transform: translateY(-2px); box-shadow: var(--edge), var(--shadow-pop); }
+.cstat b { display: block; font-size: 19px; font-weight: 800; letter-spacing: -0.03em; color: var(--green); }
+.cstat span { font-size: 9.5px; font-weight: 750; text-transform: uppercase; letter-spacing: .06em; color: var(--faint); }
+
+/* Agenda a gruppi */
+.agenda { display: flex; flex-direction: column; gap: 14px; padding: 8px 20px 18px; }
+.agroup h4 { font-size: 12px; font-weight: 650; color: var(--muted); margin-bottom: 7px; }
+.agroup h4 b { color: var(--text); font-weight: 800; }
+.evts { display: flex; flex-direction: column; gap: 7px; }
+
+/* Evento: barra colorata + etichetta tempo + testo */
+.evt { display: flex; gap: 11px; padding: 11px 13px; align-items: flex-start; border-radius: var(--r-card); transition: transform .38s var(--spring-soft), box-shadow .3s ease, background .25s ease; }
+.win.open .evt { animation: riseIn .5s var(--ease-apple) both; }
+.win.open .agroup:nth-child(2) .evt { animation-delay: .10s; }
+.win.open .agroup:nth-child(3) .evt { animation-delay: .16s; }
+.win.open .agroup:nth-child(4) .evt { animation-delay: .22s; }
+.evt:hover  { transform: translateY(-2px); box-shadow: var(--edge), var(--shadow-pop); }
+.evt:active { transform: translateY(0) scale(.992); }
+.evt .bar { width: 4px; align-self: stretch; border-radius: 2px; flex-shrink: 0; }
+.evt .tm { width: 64px; flex-shrink: 0; font-size: 11px; font-weight: 750; color: var(--faint); padding-top: 2px; }
+.evt b { font-size: 13px; font-weight: 750; letter-spacing: -0.01em; display: block; }
+.evt p { font-size: 12px; color: var(--muted); font-weight: 500; line-height: 1.5; margin-top: 2px; }

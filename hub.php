@@ -10,6 +10,12 @@ function appicon(string $file, string $remote): string {
   global $RAW;
   return '<img src="assets/icons/' . $file . '" alt="" draggable="false" onerror="this.onerror=null;this.src=\'' . $RAW . $remote . '\'">';
 }
+
+/* Versione dei file statici (cache-busting via mtime). */
+function asset(string $p): string {
+  $v = @filemtime(__DIR__ . '/' . $p);
+  return $p . ($v ? '?v=' . $v : '');
+}
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -17,7 +23,14 @@ function appicon(string $file, string $remote): string {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desktop · Maturità 2026</title>
-<link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
+<!-- Design system unico + moduli per ogni app -->
+<link rel="stylesheet" href="<?= asset('assets/css/design-system.css') ?>">
+<link rel="stylesheet" href="<?= asset('assets/css/apps/finder.css') ?>">
+<link rel="stylesheet" href="<?= asset('assets/css/apps/about.css') ?>">
+<link rel="stylesheet" href="<?= asset('assets/css/apps/launchpad.css') ?>">
+<link rel="stylesheet" href="<?= asset('assets/css/apps/calendar.css') ?>">
+<link rel="stylesheet" href="<?= asset('assets/css/apps/maps.css') ?>">
+<link rel="stylesheet" href="<?= asset('assets/css/apps/spotlight.css') ?>">
 <?php if ($boot): ?><link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high"><?php endif; ?>
 </head>
 <body<?= $boot ? ' class="booting"' : '' ?>>
@@ -301,6 +314,14 @@ function appicon(string $file, string $remote): string {
   <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
 </nav>
 
-<script src="hub.js"></script>
+<!-- Moduli JavaScript (ordine di dipendenza: audio per primo) -->
+<script src="<?= asset('assets/js/audio.js') ?>"></script>
+<script src="<?= asset('assets/js/clock.js') ?>"></script>
+<script src="<?= asset('assets/js/boot.js') ?>"></script>
+<script src="<?= asset('assets/js/windows.js') ?>"></script>
+<script src="<?= asset('assets/js/dock.js') ?>"></script>
+<script src="<?= asset('assets/js/control-center.js') ?>"></script>
+<script src="<?= asset('assets/js/apps/spotlight.js') ?>"></script>
+<script src="<?= asset('assets/js/apps/maps.js') ?>"></script>
 </body>
 </html>

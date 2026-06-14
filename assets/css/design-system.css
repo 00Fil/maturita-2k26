@@ -1,0 +1,551 @@
+/* ============================================================================
+   design-system.css — IL LINGUAGGIO UNICO (replica di macOS)
+   ----------------------------------------------------------------------------
+   Questo è l'UNICO file che racchiude l'essenza del progetto: i token, i
+   materiali in vetro, la finestra con il semaforo e gli angoli, il Dock, il
+   Centro di Controllo e la schermata di accesso. Tutto il resto (il CONTENUTO
+   delle singole app) vive in moduli separati dentro assets/css/apps/ e si
+   appoggia SOLTANTO ai token definiti qui.
+
+   Indice:
+     1.  Font di sistema (SF Pro Display)
+     2.  Token di design (:root) + tema scuro
+     3.  Reset e base
+     4.  Sfondo (wallpaper unico, condiviso con il login)
+     5.  Schermata di avvio (boot)
+     6.  Primitive condivise (vetro, app-tile, scrollbar, focus)
+     7.  Menu bar
+     8.  Icone sulla scrivania
+     9.  Finestra: chrome, semaforo, angoli, layout a colonne
+     10. Dock
+     11. Centro di Controllo + oscuramento schermo
+     12. Lock screen (schermata di accesso)
+     13. Cursori macOS
+     14. Responsive + riduzione del movimento
+   ========================================================================== */
+
+
+/* === 1. FONT ============================================================== */
+@font-face { font-family: "SF Pro Display"; src: url("../fonts/SFPRODISPLAYREGULAR.OTF") format("opentype"); font-weight: 100 450; font-display: swap; }
+@font-face { font-family: "SF Pro Display"; src: url("../fonts/SFPRODISPLAYMEDIUM.OTF")  format("opentype"); font-weight: 451 650; font-display: swap; }
+@font-face { font-family: "SF Pro Display"; src: url("../fonts/SFPRODISPLAYBOLD.OTF")    format("opentype"); font-weight: 651 900; font-display: swap; }
+
+
+/* === 2. TOKEN DI DESIGN =================================================== */
+:root {
+  /* -- Tipografia -- */
+  --font: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* -- Testo -- */
+  --text:  #18181B;   /* testo primario   */
+  --muted: #5F5F66;   /* testo secondario */
+  --faint: #9C9CA3;   /* testo terziario  */
+
+  /* -- Linee e bordi -- */
+  --border:   rgba(20,22,40,0.10);
+  --hairline: rgba(255,255,255,0.42);   /* filo di luce in alto sui materiali */
+
+  /* -- Materiali in vetro (vibrancy) -- */
+  --surface:       rgba(255,255,255,0.62);   /* scheda su vetro            */
+  --surface-press: rgba(255,255,255,0.82);   /* scheda premuta / in rilievo */
+  --container:     rgba(244,244,248,0.72);   /* contenitore incassato      */
+  --glass:         linear-gradient(155deg, rgba(255,255,255,0.58) 0%, rgba(255,255,255,0.34) 48%, rgba(255,255,255,0.46) 100%); /* corpo finestra */
+  --glass-bar:     rgba(250,250,253,0.46);   /* menu bar, dock, control center */
+
+  /* -- Ombre -- */
+  --shadow-win: 0 36px 80px -20px rgba(12,16,40,0.42), 0 6px 18px rgba(12,16,40,0.12);
+  --shadow-pop: 0 10px 26px rgba(12,16,40,0.16);
+  /* Filo di luce inciso (in alto chiaro, intorno tenue, in basso scuro) */
+  --edge: inset 0 1px 0 var(--hairline), inset 0 0 0 1px rgba(255,255,255,0.20), inset 0 -1px 0 rgba(20,22,40,0.06);
+
+  /* -- Raggi -- */
+  --r-win:   24px;   /* angoli della finestra (cifra distintiva del progetto) */
+  --r-pop:   20px;   /* pannelli flottanti (control center)                  */
+  --r-card:  16px;   /* schede                                               */
+  --r-pill:  999px;  /* pillole, campi, indicatori                           */
+
+  /* -- Sfocature -- */
+  --blur-bar: blur(34px) saturate(1.9);
+  --blur-win: blur(44px) saturate(1.9);
+  --blur-pop: blur(40px) saturate(1.9);
+
+  /* -- Movimento (le curve sono l'anima delle animazioni macOS) -- */
+  --spring:      cubic-bezier(0.3, 1.36, 0.46, 1);   /* molla con leggero rimbalzo */
+  --spring-soft: cubic-bezier(0.22, 1, 0.36, 1);     /* decelerazione morbida      */
+  --spring-pop:  cubic-bezier(0.34, 1.56, 0.64, 1);  /* pop deciso                 */
+  --ease-apple:  cubic-bezier(0.32, 0.72, 0, 1);     /* la curva delle finestre    */
+  --dur: 0.8s;                                       /* durata delle entrate scena */
+
+  /* -- Stato -- */
+  --ok: #22C55E;
+
+  /* -- Palette accenti di sistema (identici a macOS) -- */
+  --blue: #0A84FF; --orange: #FF9500; --green: #34C759; --indigo: #5856D6;
+  --pink: #FF375F; --teal: #30B0C7; --purple: #AF52DE; --red: #FF3B30;
+  --acc: var(--blue);   /* accento corrente: lo ridefiniscono le classi .a-* */
+}
+
+/* -- Tema scuro: stessi token, valori adattati -- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text:  #F5F5F7;
+    --muted: rgba(235,235,245,0.64);
+    --faint: rgba(235,235,245,0.36);
+    --border:   rgba(255,255,255,0.10);
+    --hairline: rgba(255,255,255,0.16);
+    --surface:       rgba(58,58,64,0.46);
+    --surface-press: rgba(72,72,80,0.60);
+    --container:     rgba(28,28,32,0.60);
+    --glass:     linear-gradient(155deg, rgba(44,44,52,0.66) 0%, rgba(30,30,36,0.52) 48%, rgba(38,38,46,0.60) 100%);
+    --glass-bar: rgba(22,22,26,0.50);
+    --shadow-win: 0 36px 80px -20px rgba(0,0,0,0.70), 0 6px 18px rgba(0,0,0,0.40);
+    --shadow-pop: 0 10px 26px rgba(0,0,0,0.50);
+    --edge: inset 0 1px 0 var(--hairline), inset 0 0 0 1px rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.25);
+  }
+}
+
+/* -- Classi d'accento: impostano --acc su una finestra o una sezione -- */
+.a-blue   { --acc: var(--blue);   }
+.a-orange { --acc: var(--orange); }
+.a-green  { --acc: var(--green);  }
+.a-indigo { --acc: var(--indigo); }
+.a-pink   { --acc: var(--pink);   }
+.a-teal   { --acc: var(--teal);   }
+.a-purple { --acc: var(--purple); }
+.a-dark   { --acc: #1C1C1E;        }
+
+
+/* === 3. RESET E BASE ====================================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  user-select: none;
+}
+svg { display: block; }
+img { -webkit-user-drag: none; }
+button, input { font-family: inherit; }
+
+
+/* === 4. SFONDO (wallpaper unico) ==========================================
+   Lo STESSO sfondo del login: così il passaggio login -> desktop non ha
+   nessuno stacco. All'ingresso fa un piccolo assestamento che continua
+   visivamente lo zoom della schermata di accesso. */
+.bg {
+  position: fixed; inset: 0; z-index: -1; overflow: hidden;
+  background:
+    url("../bg.png") center / cover no-repeat,
+    linear-gradient(165deg, #1B4FA0 0%, #5A39A8 52%, #C8527E 100%);
+  animation: bgSettle 1.1s var(--ease-apple) both;
+}
+@keyframes bgSettle { from { transform: scale(1.06); } to { transform: scale(1); } }
+.bg .blob { display: none; }   /* residui storici: tenuti innocui */
+@media (prefers-color-scheme: dark) {
+  .bg { background:
+    url("../bg.png") center / cover no-repeat,
+    linear-gradient(165deg, #0C1F42 0%, #221647 52%, #43203A 100%); }
+}
+
+
+/* === 5. SCHERMATA DI AVVIO (boot) ========================================= */
+#boot {
+  position: fixed; inset: 0; z-index: 5000;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 46px;
+  background: #000;
+  transition: opacity .7s ease;
+}
+#boot.done { opacity: 0; pointer-events: none; }
+#boot img   { height: 96px; border-radius: 18px; animation: bootIn .9s var(--spring-soft) both; }
+#boot .bfall{ width: 88px; height: 88px; color: #fff; fill: currentColor; animation: bootIn .9s var(--spring-soft) both; }
+#boot .bbar {
+  width: 230px; height: 6px; border-radius: var(--r-pill); overflow: hidden;
+  background: rgba(255,255,255,0.22);
+  animation: bootIn .9s var(--spring-soft) .3s both;
+}
+#boot .bbar span { display: block; width: 0; height: 100%; border-radius: inherit; background: #fff; }
+@keyframes bootIn { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
+/* Durante il boot le animazioni in sottofondo restano in pausa */
+body.booting .menubar, body.booting .dock, body.booting .dicon,
+body.booting .win.open, body.booting .win.open * { animation-play-state: paused; }
+
+
+/* === 6. PRIMITIVE CONDIVISE =============================================== */
+
+/* 6.1 — Scheda in vetro con riflesso che segue il puntatore (--mx/--my da JS) */
+.lgcard {
+  position: relative; overflow: hidden;
+  background: var(--surface);
+  border-radius: var(--r-card);
+  box-shadow: var(--edge), 0 2px 8px rgba(12,16,40,0.06);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+.lgcard::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, -40%), rgba(255,255,255,0.42), transparent 62%);
+  opacity: 0; transition: opacity .35s ease;
+}
+.lgcard:hover::after { opacity: 1; }
+@media (prefers-color-scheme: dark) {
+  .lgcard::after { background: radial-gradient(240px circle at var(--mx, 50%) var(--my, -40%), rgba(255,255,255,0.14), transparent 62%); }
+}
+
+/* 6.2 — Icona-app generica (usata nel dock e altrove) */
+.ai {
+  display: flex; align-items: center; justify-content: center;
+  border: none; cursor: pointer; text-decoration: none;
+  border-radius: 24.5%;
+  color: var(--acc, var(--muted));
+  background: color-mix(in srgb, var(--acc, #888) 12%, var(--surface-press));
+  box-shadow: var(--edge);
+}
+
+/* 6.3 — Scrollbar discrete che si accentuano al passaggio */
+.wbody::-webkit-scrollbar, .main::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar { width: 8px; }
+.wbody::-webkit-scrollbar-thumb, .main::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(127,127,135,0.30); border-radius: 4px;
+  border: 2px solid transparent; background-clip: content-box;
+  transition: background .2s ease;
+}
+.wbody:hover::-webkit-scrollbar-thumb, .main:hover::-webkit-scrollbar-thumb { background: rgba(127,127,135,0.50); }
+
+/* 6.4 — Anello di focus d'accento (precisione e accessibilità) */
+:focus-visible { outline: 2px solid color-mix(in srgb, var(--acc, #0A84FF) 70%, transparent); outline-offset: 2px; border-radius: 8px; }
+.titlebar:focus-visible, .lights button:focus-visible, .dock .ai:focus-visible { outline: none; }
+
+
+/* === 7. MENU BAR ========================================================== */
+.menubar {
+  position: fixed; top: 0; left: 0; right: 0; height: 34px; z-index: 1000;
+  display: flex; align-items: center; gap: 1px; padding: 0 12px;
+  background: var(--glass-bar);
+  backdrop-filter: var(--blur-bar); -webkit-backdrop-filter: var(--blur-bar);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.12), 0 1px 12px rgba(12,16,40,0.10);
+  font-size: 13px; font-weight: 600;
+  animation: barIn var(--dur) var(--spring) both;
+}
+@keyframes barIn { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+.menubar .logo {
+  display: flex; align-items: center; padding: 4px 8px; color: var(--text);
+  background: none; border: none; border-radius: 8px;
+  transition: background .2s ease, transform .35s var(--spring);
+}
+.menubar .logo:hover  { background: rgba(255,255,255,0.22); box-shadow: var(--edge); }
+.menubar .logo:active { transform: scale(.92); }
+.menubar .logo svg { width: 16px; height: 16px; }
+.menubar .appname { font-weight: 800; letter-spacing: -0.02em; padding: 3px 8px; }
+.menubar .mitem {
+  display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 8px;
+  background: none; border: none; cursor: pointer; font: inherit; font-weight: 600;
+  color: var(--text); text-decoration: none;
+  transition: background .2s ease, transform .35s var(--spring);
+}
+.menubar .mitem:hover  { background: rgba(255,255,255,0.22); box-shadow: var(--edge); }
+.menubar .mitem:active { transform: scale(.94); }
+.menubar .right { margin-left: auto; display: flex; align-items: center; gap: 2px; }
+.menubar .sico { display: flex; align-items: center; gap: 4px; padding: 4px 7px; color: var(--text); }
+.menubar .sico svg { width: 15px; height: 15px; }
+.menubar .bpct { font-size: 11px; font-weight: 650; }
+.menubar .ccbtn {
+  display: flex; align-items: center; padding: 4px 7px; color: var(--text);
+  background: none; border: none; border-radius: 8px;
+  transition: background .2s ease, transform .35s var(--spring);
+}
+.menubar .ccbtn:hover, .menubar .ccbtn.on { background: rgba(255,255,255,0.22); box-shadow: var(--edge); }
+.menubar .ccbtn:active { transform: scale(.92); }
+.menubar .ccbtn svg { width: 15px; height: 15px; }
+.menubar .who { display: flex; align-items: center; gap: 6px; font-weight: 700; padding: 4px 9px; }
+.menubar .who .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 6px var(--ok); }
+.menubar .clock { font-variant-numeric: tabular-nums; padding: 0 8px; white-space: nowrap; }
+.menubar .clock.timer-on     { font-weight: 600; letter-spacing: .3px; }
+.menubar .clock.timer-quasi  { color: #FF9F0A; }
+.menubar .clock.timer-finito { color: #FF453A; }
+.menubar .exit svg { width: 14px; height: 14px; }
+
+
+/* === 8. ICONE SULLA SCRIVANIA ============================================= */
+.deskicons { position: fixed; top: 52px; right: 14px; z-index: 1; display: flex; flex-direction: column; gap: 6px; }
+.dicon {
+  width: 112px; display: flex; flex-direction: column; align-items: center; gap: 5px;
+  padding: 10px 6px 8px; border-radius: var(--r-card);
+  background: none; border: none; cursor: pointer; font: inherit;
+  transition: background .25s ease, box-shadow .25s ease, transform .35s var(--spring);
+  animation: dIn .7s var(--spring) both;
+}
+.deskicons .dicon:nth-child(1) { animation-delay: .45s; }
+.deskicons .dicon:nth-child(2) { animation-delay: .55s; }
+@keyframes dIn { from { opacity: 0; transform: translateY(-12px) scale(.94); } to { opacity: 1; transform: none; } }
+.dicon:hover  { background: rgba(255,255,255,0.14); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.22); backdrop-filter: blur(6px); }
+.dicon:active { transform: scale(.93); }
+.dicon .fico { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; }
+.dicon .fico img { width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.30)); }
+.dicon span:last-child { font-size: 11.5px; font-weight: 650; text-align: center; line-height: 1.3; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.55); }
+
+
+/* === 9. FINESTRA: chrome, semaforo, angoli ================================
+   È il componente più vicino al risultato voluto: vetro spesso, angoli
+   morbidi (--r-win), semaforo in alto a sinistra, ombra profonda. Qui c'è
+   solo il GUSCIO; il contenuto lo mettono i moduli delle singole app. */
+.win {
+  position: fixed; z-index: 10; display: none; flex-direction: column;
+  height: auto; max-height: calc(100vh - 118px); min-width: 320px;
+  border-radius: var(--r-win);
+  background: var(--glass);
+  backdrop-filter: var(--blur-win); -webkit-backdrop-filter: var(--blur-win);
+  box-shadow: var(--shadow-win), inset 0 1px 0 var(--hairline), inset 0 0 0 1px rgba(255,255,255,0.16), inset 0 -1px 0 rgba(20,22,40,0.08);
+  overflow: hidden;
+  transition: box-shadow .4s var(--ease-apple);
+}
+.win.open    { display: flex; animation: winIn .52s var(--ease-apple) both; }
+.win.closing { animation: winOut .28s var(--spring-soft) both; }
+/* Apertura "materica": entra dal basso mettendo a fuoco */
+@keyframes winIn  { 0% { opacity: 0; transform: scale(.90) translateY(26px); filter: blur(7px); } 55% { filter: blur(0); } 100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } }
+@keyframes winOut { from { opacity: 1; transform: scale(1); filter: blur(0); } to { opacity: 0; transform: scale(.93) translateY(12px); filter: blur(5px); } }
+.win.maxi { left: 8px !important; top: 42px !important; width: calc(100vw - 16px) !important; height: calc(100vh - 132px) !important; max-height: none; }
+
+/* 9.1 — Barra del titolo (presa per il trascinamento) */
+.titlebar {
+  display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 14px; flex-shrink: 0;
+  cursor: grab; touch-action: none; box-shadow: 0 1px 0 var(--border);
+}
+.titlebar:active { cursor: grabbing; }
+.titlebar .wt {
+  flex: 1; text-align: center; margin-right: 53px;
+  font-size: 13px; font-weight: 700; letter-spacing: -0.01em; color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* 9.2 — Semaforo (chiudi / riduci / ingrandisci) */
+.lights { display: flex; gap: 8px; }
+.lights button {
+  width: 12.5px; height: 12.5px; border-radius: 50%; cursor: pointer; padding: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(0,0,0,0.55); box-shadow: inset 0 0.5px 1px rgba(255,255,255,0.5);
+  transition: transform .3s var(--spring-pop), filter .15s ease;
+}
+.lights button svg { width: 7px; height: 7px; opacity: 0; transition: opacity .12s ease; }
+.titlebar:hover .lights button svg { opacity: 1; }       /* i glifi compaiono al passaggio */
+.lights button:hover  { transform: scale(1.14); filter: brightness(.92); }
+.lights button:active { transform: scale(.82); }
+.lights .c-close { background: #FF5F57; border: 0.5px solid #E0443E; }
+.lights .c-min   { background: #FEBC2E; border: 0.5px solid #D9A022; }
+.lights .c-max   { background: #28C840; border: 0.5px solid #1EAA33; }
+
+/* 9.3 — Corpo scorrevole della finestra */
+.wbody { flex: 1; overflow-y: auto; min-height: 0; }
+
+/* 9.4 — Layout a due colonne con sidebar stile Finder (primitiva riusabile) */
+.split   { flex: 1; display: flex; min-height: 0; }
+.sidebar {
+  width: 168px; flex-shrink: 0; padding: 10px 8px; overflow-y: auto;
+  background: color-mix(in srgb, var(--container) 60%, transparent);
+  box-shadow: 1px 0 0 var(--border);
+}
+.sb-title { font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .07em; color: var(--faint); padding: 10px 10px 5px; }
+.sb-item {
+  display: flex; align-items: center; gap: 8px; width: 100%;
+  font: inherit; font-size: 12.5px; font-weight: 600; color: var(--text);
+  background: none; border: none; text-align: left; white-space: nowrap;
+  padding: 6px 10px; border-radius: 9px;
+  transition: background .2s ease, transform .3s var(--spring);
+}
+.sb-item:not(.on):hover { background: rgba(255,255,255,0.18); transform: translateX(1px); }
+.sb-item:active { transform: scale(.97); }
+.sb-item.on { background: color-mix(in srgb, var(--acc) 18%, var(--surface-press)); box-shadow: var(--edge); }
+@media (prefers-color-scheme: dark) {
+  .sb-item.on { background: color-mix(in srgb, var(--acc) 26%, transparent); }
+  .sb-item:not(.on):hover { background: rgba(255,255,255,0.07); }
+}
+.sb-item .ic {
+  width: 20px; height: 20px; flex-shrink: 0; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9.5px; font-weight: 800; color: #fff;
+  box-shadow: inset 0 0.5px 0 rgba(255,255,255,0.4);
+}
+.sb-item.on .ic { box-shadow: inset 0 .5px 0 rgba(255,255,255,.45), 0 1px 5px color-mix(in srgb, var(--acc) 45%, transparent); }
+.sb-item .dotk { width: 11px; height: 11px; margin: 0 4.5px; border-radius: 50%; flex-shrink: 0; box-shadow: inset 0 0.5px 1px rgba(255,255,255,0.5); }
+.sb-item .cnt  { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--faint); }
+.main { flex: 1; min-width: 0; overflow-y: auto; display: flex; flex-direction: column; }
+
+/* 9.5 — Ingresso a cascata del contenuto quando la finestra si apre.
+   Le app usano la classe .rise sugli elementi che devono entrare in sequenza. */
+@keyframes riseIn { from { opacity: 0; transform: translateY(13px); } to { opacity: 1; transform: none; } }
+.win.open .rise { animation: riseIn .5s var(--ease-apple) both; }
+.win.open .rise:nth-child(1) { animation-delay: .04s; }
+.win.open .rise:nth-child(2) { animation-delay: .09s; }
+.win.open .rise:nth-child(3) { animation-delay: .14s; }
+.win.open .rise:nth-child(4) { animation-delay: .19s; }
+.win.open .rise:nth-child(5) { animation-delay: .24s; }
+.win.open .rise:nth-child(6) { animation-delay: .29s; }
+
+
+/* === 10. DOCK =============================================================
+   Vetro, icone con effetto lente (--s impostato dal JS), pallino di stato,
+   tooltip e rimbalzo all'apertura. L'auto-hide è gestito dal JS. */
+.dock {
+  position: fixed; bottom: 10px; left: 50%; transform: translateX(-50%);
+  z-index: 900; display: flex; align-items: flex-end; gap: 5px;
+  height: 60px; padding: 0 10px 7px; border-radius: 26px;
+  background: var(--glass-bar);
+  backdrop-filter: blur(36px) saturate(1.9); -webkit-backdrop-filter: blur(36px) saturate(1.9);
+  box-shadow: inset 0 1px 0 var(--hairline), inset 0 0 0 1px rgba(255,255,255,0.16), 0 16px 38px rgba(12,16,40,0.26);
+  animation: dockIn var(--dur) var(--spring) .15s both;
+}
+@keyframes dockIn { from { transform: translate(-50%, 140%); } to { transform: translate(-50%, 0); } }
+.dapp { position: relative; display: flex; flex-direction: column; align-items: center; }
+.dock .ai {
+  width: calc(50px * var(--s, 1)); height: calc(50px * var(--s, 1));
+  padding: 0; background: none; box-shadow: none; border-radius: 0;
+  transition: none; will-change: width, height;
+}
+.dock .ai img { width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 3px 7px rgba(0,0,0,.30)); }
+.dock .ai:active { filter: brightness(.85); }
+.dock .ai:active img { filter: drop-shadow(0 1px 3px rgba(0,0,0,.30)) brightness(.9); }
+.dock .ai.bounce { animation: bounce .7s var(--spring-soft); }
+@keyframes bounce { 0%, 100% { translate: 0 0; } 30% { translate: 0 -22px; } 60% { translate: 0 0; } 80% { translate: 0 -8px; } }
+.dsep { width: 1px; align-self: stretch; margin: 8px 4px; background: rgba(255,255,255,0.28); border-radius: 1px; }
+.dapp .dot { position: absolute; bottom: -7px; width: 5px; height: 5px; border-radius: 50%; background: #fff; opacity: 0; box-shadow: 0 0 5px rgba(255,255,255,.7); transition: opacity .3s ease; }
+.dapp.running .dot { opacity: .75; }
+.dapp .tip {
+  position: absolute; left: 50%; bottom: calc(100% + 14px); padding: 5px 12px; border-radius: 9px;
+  background: var(--surface-press); backdrop-filter: blur(14px);
+  box-shadow: var(--edge), var(--shadow-pop);
+  font-size: 12px; font-weight: 700; white-space: nowrap;
+  opacity: 0; transform: translate(-50%, 5px) scale(.9); pointer-events: none;
+  transition: opacity .2s ease, transform .4s var(--spring-pop);
+}
+.dapp:hover .tip { opacity: 1; transform: translate(-50%, 0) scale(1); }
+
+
+/* === 11. CENTRO DI CONTROLLO + OSCURAMENTO ================================ */
+#dim { position: fixed; inset: 0; z-index: 6000; background: #000; opacity: 0; pointer-events: none; transition: opacity .22s linear; }
+.ccpanel {
+  position: fixed; top: 40px; right: 10px; z-index: 4500;
+  width: 330px; padding: 10px; display: flex; flex-direction: column; gap: 10px;
+  border-radius: var(--r-pop);
+  background: var(--glass-bar);
+  backdrop-filter: var(--blur-pop); -webkit-backdrop-filter: var(--blur-pop);
+  box-shadow: inset 0 1px 0 var(--hairline), inset 0 0 0 1px rgba(255,255,255,0.16), 0 18px 44px rgba(12,16,40,0.3);
+  opacity: 0; visibility: hidden; transform: translateY(-8px) scale(.96); transform-origin: top right;
+  transition: opacity .18s ease, transform .35s var(--spring), visibility .2s;
+}
+.ccpanel.show { opacity: 1; visibility: visible; transform: none; }
+.ccgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ccmod  { border-radius: 15px; background: var(--surface); box-shadow: var(--edge), 0 2px 8px rgba(12,16,40,0.08); padding: 7px; }
+.ccconn { display: flex; flex-direction: column; gap: 1px; }
+.ccrow  { display: flex; align-items: center; gap: 8px; width: 100%; padding: 5px 6px; border-radius: 11px; background: none; border: none; font: inherit; text-align: left; color: var(--text); transition: transform .25s var(--spring-pop), background .2s ease; }
+.ccrow:hover  { background: rgba(127,127,135,0.16); }
+.ccrow:active { transform: scale(.97); background: rgba(127,127,135,0.26); }
+.ccico { width: 28px; height: 28px; flex-shrink: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(127,127,135,0.36); color: #fff; transition: background .25s ease; }
+.ccico svg { width: 15px; height: 15px; }
+.ccico.on { background: var(--blue); }
+.cctxt { min-width: 0; }
+.cctxt b { display: block; font-size: 12px; font-weight: 700; letter-spacing: -0.01em; }
+.cctxt small { display: block; font-size: 10.5px; font-weight: 550; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cccol { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.ccfocus { flex: 1; display: flex; align-items: center; gap: 8px; border: none; font: inherit; text-align: left; color: var(--text); padding: 7px 8px; transition: transform .25s var(--spring-pop); }
+.ccfocus:active { transform: scale(.97); }
+.ccduo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ccmini {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+  padding: 9px 4px 8px; border-radius: 15px; background: var(--surface);
+  box-shadow: var(--edge), 0 2px 8px rgba(12,16,40,0.08); border: none; font: inherit;
+  font-size: 10px; font-weight: 650; line-height: 1.25; text-align: center; color: var(--text);
+  transition: transform .25s var(--spring-pop), background .25s ease, color .25s ease;
+}
+.ccmini svg { width: 17px; height: 17px; }
+.ccmini:active { transform: scale(.94); }
+.ccmini.on { background: var(--blue); color: #fff; }
+.cclab { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: -0.01em; padding: 2px 4px 7px; }
+.ccsl  { padding: 9px 10px 11px; }
+.ccrange { position: relative; }
+.ccrange input {
+  -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 22px; margin: 0;
+  border-radius: var(--r-pill);
+  background: linear-gradient(to right, #fff var(--val, 100%), rgba(127,127,135,0.32) var(--val, 100%));
+  box-shadow: inset 0 0 0 0.5px rgba(20,22,40,0.12); outline: none;
+  cursor: url("../cursors/pointer.svg") 10 5, pointer;
+}
+.ccrange input::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 0.5px rgba(0,0,0,0.14), 0 1px 4px rgba(12,16,40,0.32); }
+.ccrange input::-moz-range-thumb     { width: 20px; height: 20px; border: none; border-radius: 50%; background: #fff; box-shadow: 0 0 0 0.5px rgba(0,0,0,0.14), 0 1px 4px rgba(12,16,40,0.32); }
+.ccrange .cic { position: absolute; left: 6px; top: 50%; translate: 0 -50%; width: 11px; height: 11px; color: rgba(60,60,67,0.55); pointer-events: none; }
+.ccrange .cic svg { width: 11px; height: 11px; }
+
+
+/* === 13. CURSORI macOS ==================================================== */
+body { cursor: url("../cursors/arrow.svg") 9 4, default; }
+button, a, .ai, .mitem, .fitem, .dicon, .lights button, .dapp .ai { cursor: url("../cursors/pointer.svg") 10 5, pointer; }
+.titlebar, .titlebar:active { cursor: url("../cursors/arrow.svg") 9 4, default; }
+input, textarea { cursor: url("../cursors/text.svg") 14 14, text; }
+
+
+/* === 14. RESPONSIVE + RIDUZIONE DEL MOVIMENTO ============================= */
+@media (max-width: 760px) {
+  .menubar .hideS { display: none; }
+  .deskicons { display: none; }
+  .win { left: 3vw !important; top: 44px !important; width: 94vw !important; height: calc(100vh - 140px) !important; max-height: none; }
+  .sidebar { display: none; }
+  .ccpanel { right: 6px; width: min(330px, 94vw); }
+  .dock { height: 48px; padding: 0 8px 5px; gap: 3px; }
+  .dock .ai { width: calc(38px * var(--s, 1)); height: calc(38px * var(--s, 1)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001s !important; transition-duration: 0.001s !important; }
+}
+
+
+/* === 15. STATI OROLOGIO (timer presentazione) ============================= */
+#clock.timer-on    { font-variant-numeric: tabular-nums; font-weight: 750; }
+#clock.timer-quasi { color: var(--orange); }
+#clock.timer-finito{ color: var(--red); animation: clockPulse 1s ease-in-out infinite; }
+@keyframes clockPulse { 50% { opacity: .45; } }
+
+
+/* === 16. DOCK — AUTO-HIDE ================================================= */
+/* Le regole base del dock stanno nella sezione Dock; qui solo la transizione
+   di comparsa/scomparsa, gestita dalla classe .autohide aggiunta via JS. */
+.dock { transition: transform .5s var(--ease-apple), opacity .4s ease, bottom .5s var(--ease-apple); }
+.dock.autohide { transform: translateX(-50%) translateY(120%); opacity: 0; pointer-events: none; }
+
+
+/* === 17. DIALOGO DI SPEGNIMENTO / RIAVVIO ================================= */
+#pwrdlg {
+  position: fixed; inset: 0; z-index: 6000; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.32); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  opacity: 0; pointer-events: none; transition: opacity .26s ease;
+}
+#pwrdlg.on { opacity: 1; pointer-events: auto; }
+.pwr-card {
+  width: min(320px, 86vw); display: flex; flex-direction: column; align-items: center; gap: 12px;
+  padding: 26px 24px 20px; text-align: center; border-radius: 22px;
+  background: var(--glass); backdrop-filter: var(--blur-pop) saturate(1.8); -webkit-backdrop-filter: var(--blur-pop) saturate(1.8);
+  border: 0.5px solid var(--border); box-shadow: var(--shadow-pop), inset 0 1px 0 rgba(255,255,255,0.5);
+  color: var(--text); transform: scale(.9); transition: transform .34s var(--spring-pop);
+}
+#pwrdlg.on .pwr-card { transform: scale(1); }
+.pwr-card svg { width: 46px; height: 46px; color: var(--text); opacity: .9; }
+.pwr-card b { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.35; }
+.pwr-acts { display: flex; gap: 10px; width: 100%; margin-top: 4px; }
+.pwr-acts button { flex: 1; font: inherit; font-size: 13px; font-weight: 700; padding: 9px 0; border-radius: var(--r-pill); border: 0; cursor: pointer; transition: transform .2s var(--spring-pop), filter .2s ease; }
+.pwr-acts button:active { transform: scale(.95); }
+.pwr-no  { background: var(--surface-press); color: var(--text); box-shadow: var(--edge); }
+.pwr-yes { background: var(--red); color: #fff; box-shadow: 0 4px 12px rgba(255,69,58,0.35); }
+.pwr-yes:hover { filter: brightness(1.05); }
+
+
+/* === 18. SCHERMATA DI COMMIATO (spegnimento) ============================= */
+#shut {
+  position: fixed; inset: 0; z-index: 7000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  background: #000; color: #fff; opacity: 0; transition: opacity 1.1s ease;
+}
+#shut.on { opacity: 1; }
+#shut b { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; }
+#shut span { font-size: 14px; font-weight: 500; opacity: .6; }
+.shut-spin { width: 26px; height: 26px; margin-top: 10px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,0.18); border-top-color: rgba(255,255,255,0.85); animation: shutSpin .9s linear infinite; }
+@keyframes shutSpin { to { transform: rotate(360deg); } }

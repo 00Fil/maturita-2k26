@@ -1,0 +1,58 @@
+/* ============================================================================
+   apps/finder.css — Contenuto dell'app "Presentazione" (finestra #w-pres)
+   Galleria stile Finder: barra strumenti + controllo segmentato + griglia di
+   schede. Si appoggia alle primitive del design system (.split/.sidebar/.main,
+   .lgcard). Qui vive SOLO l'identità di questa app.
+   ========================================================================== */
+
+/* Barra strumenti: titolo della sezione + sottotitolo + segmentato vista */
+.ftools { display: flex; align-items: baseline; gap: 7px; padding: 16px 20px 4px; }
+.ftools b { font-size: 17px; font-weight: 800; letter-spacing: -0.02em; }
+.ftools > span { font-size: 12.5px; color: var(--muted); font-weight: 550; }
+
+/* Controllo segmentato Galleria / Elenco */
+.fseg {
+  margin-left: auto; display: inline-flex; gap: 2px; padding: 2px;
+  border-radius: 9px; background: var(--container); box-shadow: inset 0 0 0 0.5px var(--border);
+}
+.fseg button {
+  border: none; background: none; font: inherit; font-size: 12px; font-weight: 650;
+  color: var(--muted); padding: 4px 12px; border-radius: 7px; cursor: pointer;
+  transition: background .28s var(--ease-apple), color .2s ease, transform .2s var(--spring-pop);
+}
+.fseg button:active { transform: scale(.93); }
+.fseg button.on { background: var(--surface-press); color: var(--text); box-shadow: 0 1px 4px rgba(12,16,40,.14), inset 0 0 0 .5px rgba(255,255,255,.5); }
+
+/* Griglia di schede (vista Galleria) */
+.fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px 20px 18px; }
+.fitem {
+  display: flex; flex-direction: column; gap: 3px; align-items: flex-start;
+  padding: 14px; text-align: left; border: none; font: inherit; cursor: pointer;
+  transition: transform .38s var(--spring-soft), box-shadow .3s ease;
+}
+.win.open .fitem { animation: riseIn .5s var(--ease-apple) both; }   /* delay impostato inline nel markup */
+.fitem:hover  { transform: translateY(-3px) scale(1.012); box-shadow: var(--edge), var(--shadow-pop); }
+.fitem:active { transform: scale(.97); }
+.fitem.hl     { transform: translateY(-3px); box-shadow: var(--edge), 0 0 0 2px var(--acc, var(--blue)), var(--shadow-pop); }   /* evidenziato da un tag della sidebar */
+.fitem .fbadge {
+  width: 30px; height: 30px; border-radius: 9px; margin-bottom: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800; color: #fff;
+  box-shadow: inset 0 0.5px 0 rgba(255,255,255,0.4), 0 2px 6px rgba(12,16,40,0.18);
+}
+.win.open .fitem .fbadge { animation: badgePop .5s var(--spring-pop) .12s both; }
+.fitem b { font-size: 13.5px; font-weight: 750; letter-spacing: -0.01em; }
+.fitem > span { font-size: 12px; color: var(--muted); font-weight: 500; line-height: 1.45; }
+.fitem .tt { margin-top: 5px; font-size: 10.5px; font-weight: 750; color: var(--faint); text-transform: uppercase; letter-spacing: .05em; }
+
+/* Vista Elenco (toggle .list aggiunto via JS) */
+.fgrid.list { grid-template-columns: 1fr; gap: 7px; }
+.fgrid.list .fitem { flex-direction: row; align-items: center; gap: 12px; padding: 10px 14px; }
+.fgrid.list .fitem .fbadge { margin-bottom: 0; }
+.fgrid.list .fitem b { flex-shrink: 0; min-width: 148px; font-size: 13px; }
+.fgrid.list .fitem > span { flex: 1; }
+.fgrid.list .fitem .tt { margin: 0 0 0 auto; flex-shrink: 0; }
+
+@keyframes badgePop { from { transform: scale(.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+@media (max-width: 760px) { .fgrid { grid-template-columns: 1fr; } }
