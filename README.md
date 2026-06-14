@@ -1,47 +1,39 @@
 # PCTO · Maturità 2026
 
 Sito di presentazione del percorso PCTO per l'esame di Maturità.
-Login in stile macOS → backend PHP minimale → MySQL → desktop in stile macOS con la presentazione.
+Login animato (morph button) → backend PHP minimale → MySQL → desktop in stile macOS con la presentazione.
 
 ## Struttura
 
-La repo è organizzata per separare nettamente **backend** (i `.php` nella root),
-**design system** (un unico file CSS) e **logica** (moduli JS), così da essere
-modulare e facile da mantenere.
+| File | Cosa fa |
+|---|---|
+| `index.php` | La pagina con il tasto morph e il form di accesso |
+| `login.php` | Backend: verifica il codice e registra l'accesso su MySQL |
+| `hub.php` | Il desktop in stile macOS: la presentazione, protetta dalla sessione |
+| `logout.php` | Chiude la sessione e torna al login |
+| `setup.sql` | Crea il database `pcto` e la tabella `accessi` |
+| `Dockerfile` | Immagine PHP 8.3 + Apache con `pdo_mysql` |
+| `docker-compose.yml` | Stack completo: app + MySQL 8.4 (con init automatico) |
 
-```
-.
-├── index.php            # Schermata di blocco (lock screen)
-├── login.php            # Backend di accesso: verifica codice + log su MySQL
-├── hub.php              # Desktop in stile macOS (protetto dalla sessione)
-├── logout.php           # Chiude la sessione e torna al lock
-├── setup.sql            # Crea il database `pcto` e la tabella `accessi`
-├── Dockerfile           # Immagine PHP 8.3 + Apache con pdo_mysql
-├── docker-compose.yml   # Stack completo: app + MySQL 8.4
-└── assets/
-    ├── css/
-    │   └── macos.css     # ⭐ DESIGN SYSTEM UNICO — l'unico file di stile
-    ├── js/
-    │   ├── audio.js      # Motore sonoro della lock screen (Web Audio)
-    │   ├── lock.js       # Logica della lock screen (orologio, password, sblocco, demo)
-    │   ├── desktop.js    # Window manager: finestre, dock, centro di controllo, audio, power
-    │   ├── maps.js       # App "Mappe" (finestra Dove voglio andare)
-    │   └── spotlight.js  # Overlay Spotlight (frase di chiusura)
-    ├── bg.png · lock.mp4 · profile.jpg · iisc-logo.png
-    ├── fonts/            # SF Pro Display (.otf)
-    ├── icons/ · icons-b64/
-    └── cursors/
-```
+### Frontend modulare (`assets/`)
 
-### Design system (`assets/css/macos.css`)
+Tutto il CSS e il JavaScript sono organizzati per responsabilità, niente più stile
+e script inline nelle pagine PHP.
 
-Un **unico file CSS** racchiude tutta l'estetica: token (colori d'accento,
-tipografia SF Pro, raggi, sfocature, curve di animazione), barra dei menu,
-finestre con semaforo e angoli, dock con magnificazione e auto-hide, Centro di
-Controllo, lock screen e lo stile dedicato di ogni app. Le applicazioni si
-differenziano solo per la classe d'accento (`.a-blue`, `.a-orange`, `.a-green`,
-`.a-indigo`, …) applicata alla finestra. Include modalità scura, layout
-responsive e rispetto di `prefers-reduced-motion`.
+| Percorso | Cosa fa |
+|---|---|
+| `assets/css/macos.css` | **Design system unico.** L'essenza di macOS in un solo file: token (colori, vetri, ombre, curve di animazione), tipografia SF Pro, materiali, menu bar, finestre + semaforo, dock, Centro di Controllo. È la base che dà identità a tutto il desktop. |
+| `assets/css/apps/*.css` | Un foglio per ogni app del desktop (`presentation`, `about`, `launchpad`, `calendar`, `maps`, `spotlight`): si occupano **solo** del contenuto della finestra. Il "vetro" esterno viene da `macos.css`. |
+| `assets/css/login.css` | Stile della schermata di blocco (sfondo, orologio, campo password in vetro smerigliato, animazione di sblocco). |
+| `assets/js/desktop.js` | Logica del desktop: boot, gestione finestre, semaforo, dock, Centro di Controllo, audio di sistema. Espone le funzioni globali usate dagli altri moduli. |
+| `assets/js/spotlight.js` | Overlay Spotlight del desktop. |
+| `assets/js/maps.js` | App "Mappe": navigazione a tappe del percorso. |
+| `assets/js/login.js` | Logica della schermata di blocco: orologio, preloader, invio del form, modalità demo. |
+| `assets/js/sound.js` | Effetti sonori di sistema condivisi (Web Audio). |
+
+> **Ordine di caricamento JS:** `desktop.js` va sempre per primo perché definisce
+> le funzioni globali (`openWin`, `closeWin`, `sndOpen`, …) usate da `spotlight.js`
+> e `maps.js`.
 
 ## Variabili d'ambiente
 

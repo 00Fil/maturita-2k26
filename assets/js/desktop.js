@@ -1,16 +1,15 @@
 /* ============================================================================
-   desktop.js — Window manager del desktop (hub.php)
+   desktop.js — LOGICA DEL DESKTOP (hub.php)
    ----------------------------------------------------------------------------
-   Gestisce: orologio + timer presentazione, boot loader, finestre (apertura,
-   chiusura, focus, ingrandimento, trascinamento), navigazione, dock con
-   magnificazione e auto-hide, Centro di Controllo (Wi-Fi, AirDrop, copia link,
-   schermo intero, luminosità, volume), motore sonoro, batteria e gestione
-   alimentazione (conferma spegnimento + schermata di commiato).
+   Cuore del "sistema operativo": orologio + timer presentazione, boot loader,
+   gestione finestre (apri/chiudi/massimizza/trascina), semaforo, dock con
+   magnificazione e auto-hide, Centro di Controllo, audio di sistema (Web Audio),
+   batteria/Wi-Fi e sequenze di spegnimento/riavvio.
 
-   Tutto lo stile è dichiarato in assets/css/macos.css: questo file NON inietta
-   più CSS (in passato lo faceva per dock-autohide, dialog e schermata di
-   spegnimento). Crea solo il DOM dinamico e ne gestisce il comportamento.
-   ============================================================================ */
+   Espone alcune funzioni globali usate dagli altri moduli (maps.js, spotlight.js):
+   openWin, closeWin, closeAll, focusWin, toggleMax, sndOpen, sndClose, ecc.
+   Per questo desktop.js va caricato PRIMA di maps.js e spotlight.js.
+   ========================================================================== */
 
 const clockEl = document.getElementById('clock');
 
@@ -47,10 +46,6 @@ function avviaTimerPresentazione() {
 tick();
 setInterval(tick, 1000);
 
-/* ----------------------------------------------------------------------------
-   Boot loader: la barra avanza con easing; il logo della scuola ha un fallback
-   vettoriale se l'immagine non si carica.
-   ---------------------------------------------------------------------------- */
 const boot = document.getElementById('boot');
 if (boot) {
   const fill = boot.querySelector('.bbar span');
@@ -94,9 +89,6 @@ if (boot) {
   requestAnimationFrame(frame);
 }
 
-/* ----------------------------------------------------------------------------
-   Finestre: semaforo (chiudi/riduci/ingrandisci), focus, z-index, fit.
-   ---------------------------------------------------------------------------- */
 const SVG_X    = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 2.5l5 5M7.5 2.5l-5 5"/></svg>';
 const SVG_MIN  = '<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 5h6"/></svg>';
 const SVG_MAX  = '<svg viewBox="0 0 10 10" fill="currentColor"><path d="M2.6 6.6L6.6 2.6H2.6zM7.4 3.4L3.4 7.4h4z"/></svg>';
@@ -138,6 +130,9 @@ function openWin(id) {
   syncDock();
 }
 function closeWin(win) {
+  // Accetta sia un id (stringa) sia direttamente l'elemento finestra.
+  if (typeof win === 'string') win = document.getElementById(win);
+  if (!win || !win.classList.contains('open')) return;
   sndClose();
   win.classList.add('closing');
   setTimeout(() => {
@@ -216,14 +211,15 @@ document.addEventListener('click', e => {
   if (t) openWin(t.dataset.open);
 });
 
-const ORDER = ['w-pres', 'w-io', 'w-fsl', 'w-skills', 'w-fine'];
+// Ordine di navigazione tra i "capitoli" (solo finestre realmente presenti).
+const ORDER = ['w-pres', 'w-io', 'w-skills', 'w-fsl', 'w-fine'];
 function topChapter() {
   let best = null, z = -1;
   ORDER.forEach(id => {
     const w = document.getElementById(id);
     if (w && w.classList.contains('open') && (+w.style.zIndex || 0) >= z) { z = +w.style.zIndex || 0; best = id; }
   });
-  return best || ORDER[0];
+  return best || 'w-pres';
 }
 document.querySelectorAll('[data-nav]').forEach(b => {
   b.addEventListener('click', () => {
@@ -233,7 +229,6 @@ document.querySelectorAll('[data-nav]').forEach(b => {
   });
 });
 
-/* Finder: segmented control galleria/elenco. */
 const fgrid = document.querySelector('.fgrid');
 document.querySelectorAll('.fseg button').forEach(b => {
   b.addEventListener('click', () => {
@@ -242,7 +237,6 @@ document.querySelectorAll('.fseg button').forEach(b => {
   });
 });
 
-/* Finder: i tag della sidebar evidenziano momentaneamente i capitoli. */
 let hlTimer = null;
 document.querySelectorAll('.sidebar [data-tag]').forEach(b => {
   b.addEventListener('click', () => {
@@ -256,9 +250,6 @@ document.querySelectorAll('.sidebar [data-tag]').forEach(b => {
   });
 });
 
-/* ----------------------------------------------------------------------------
-   Dock: magnificazione che segue il puntatore (molla con interpolazione).
-   ---------------------------------------------------------------------------- */
 const dock = document.getElementById('dock');
 const dockIcons = Array.from(dock.querySelectorAll('.dapp .ai'));
 const DOCK_GROW = 0.8;
@@ -296,7 +287,13 @@ dock.addEventListener('pointerleave', () => {
   wakeDock();
 });
 
-/* Auto-hide del dock (lo stile .dock/.dock.autohide vive in macos.css). */
+// Auto-hide del dock in stile macOS: resta nascosto e riappare avvicinandosi al bordo inferiore.
+const dockCss = document.createElement('style');
+dockCss.textContent =
+  '.dock{transition:bottom .42s cubic-bezier(.32,.72,0,1),opacity .42s ease}' +
+  '.dock.autohide{bottom:-82px;opacity:0;pointer-events:none}';
+document.head.appendChild(dockCss);
+
 let dockHot = false;
 let dockGrace = 0;
 function dockShow() { dock.classList.remove('autohide'); }
@@ -321,7 +318,6 @@ dock.querySelectorAll('.dapp').forEach(d => {
   });
 });
 
-/* Riflesso "liquid glass" che segue il puntatore sulle card. */
 document.addEventListener('pointermove', e => {
   const card = e.target.closest('.lgcard');
   if (!card) return;
@@ -330,9 +326,6 @@ document.addEventListener('pointermove', e => {
   card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
 });
 
-/* ----------------------------------------------------------------------------
-   Trascinamento delle finestre dalla titlebar.
-   ---------------------------------------------------------------------------- */
 document.querySelectorAll('.win').forEach(win => {
   const tb = win.querySelector('.titlebar');
   let drag = false, sx = 0, sy = 0, ox = 0, oy = 0, ow = 0, oh = 0;
@@ -364,9 +357,6 @@ syncDock();
 const first = document.querySelector('.win.open');
 if (first) { focusWin(first); fitWin(first); }
 
-/* ----------------------------------------------------------------------------
-   Centro di Controllo.
-   ---------------------------------------------------------------------------- */
 const ccBtn = document.getElementById('ccbtn');
 const ccPanel = document.getElementById('ccpanel');
 function ccClose() { ccPanel.classList.remove('show'); ccBtn.classList.remove('on'); }
@@ -447,9 +437,6 @@ rangeFill(volInput);
 volInput.addEventListener('input', () => { rangeFill(volInput); localStorage.setItem('cc-vol', volInput.value); sndTick(); });
 volInput.addEventListener('change', () => { tickAt = 0; sndTick(); });
 
-/* ----------------------------------------------------------------------------
-   Motore sonoro (Web Audio): apertura, chiusura, tick, click, avvio, uscita.
-   ---------------------------------------------------------------------------- */
 let actx = null, sndBus = null, tickAt = 0;
 function audio() {
   if (!actx) {
@@ -545,7 +532,6 @@ function sndExit() {
   } catch (e) {}
 }
 
-/* Batteria reale del dispositivo, se disponibile. */
 const bpct = document.getElementById('bpct');
 if (navigator.getBattery) {
   navigator.getBattery().then(b => {
@@ -558,18 +544,53 @@ if (navigator.getBattery) {
   bpct.remove();
 }
 
-/* Suono leggero a ogni click su un controllo. */
 document.addEventListener('click', e => {
   const el = e.target.closest('button, a');
   if (!el || el.closest('.lights')) return;
   sndClick();
 }, true);
 
-/* ----------------------------------------------------------------------------
-   Gestione alimentazione: conferma di spegnimento, dissolvenza dello schermo
-   e schermata di commiato. Gli stili di #pwrdlg e #shut vivono in macos.css;
-   qui creiamo solo il DOM e il comportamento.
-   ---------------------------------------------------------------------------- */
+/* Gestione alimentazione in stile macOS: conferma di spegnimento,
+   dissolvenza dello schermo e schermata di commiato scritta a mano. */
+const pwrCss = document.createElement('style');
+pwrCss.textContent =
+  '#pwrdlg{position:fixed;inset:0;z-index:7000;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .22s ease}' +
+  '#pwrdlg.show{opacity:1;pointer-events:auto}' +
+  '#pwrdlg .box{width:264px;background:rgba(244,244,247,.86);backdrop-filter:blur(30px) saturate(1.6);-webkit-backdrop-filter:blur(30px) saturate(1.6);border-radius:14px;border:1px solid rgba(255,255,255,.55);box-shadow:0 24px 64px rgba(0,0,0,.4);padding:20px 18px 16px;text-align:center;transform:scale(.9);transition:transform .26s cubic-bezier(.2,1.45,.45,1)}' +
+  '#pwrdlg.show .box{transform:scale(1)}' +
+  '#pwrdlg .pico{width:42px;height:42px;margin:0 auto 10px;color:#48484e}' +
+  '#pwrdlg .pico svg{width:100%;height:100%}' +
+  '#pwrdlg h3{font-size:13px;font-weight:700;color:#1d1d1f;margin:0 0 5px;letter-spacing:-.01em}' +
+  '#pwrdlg p{font-size:11px;font-weight:500;color:rgba(60,60,67,.72);line-height:1.45;margin:0 0 14px}' +
+  '#pwrdlg .row{display:flex;gap:8px}' +
+  '#pwrdlg .row button{flex:1;height:30px;border:none;border-radius:8px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:transform .15s ease,filter .15s ease}' +
+  '#pwrdlg .row button:hover{filter:brightness(1.04)}' +
+  '#pwrdlg .row button:active{transform:scale(.96)}' +
+  '#pwr-no{background:rgba(255,255,255,.92);color:#1d1d1f;box-shadow:0 1px 2px rgba(0,0,0,.12)}' +
+  '#pwr-si{background:#0a84ff;color:#fff;box-shadow:0 1px 2px rgba(0,0,0,.18)}' +
+  '#shut{position:fixed;inset:0;z-index:8000;background:#000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 1.2s cubic-bezier(.4,0,.2,1)}' +
+  '#shut.on{opacity:1;pointer-events:auto}' +
+  '#shut .gwrap{display:flex;flex-direction:column;align-items:center;gap:28px;transition:opacity 1.1s cubic-bezier(.4,0,.2,1),filter 1.1s cubic-bezier(.4,0,.2,1)}' +
+  '#shut .gtx{font-size:clamp(56px,11vw,116px);font-weight:600;letter-spacing:-.015em;line-height:1;background:linear-gradient(100deg,#fff 0%,#fff 38%,#a8c4ff 46%,#e0bbff 50%,#ffb8d6 54%,#fff 62%,#fff 100%);background-size:240% 100%;background-position:120% 0;-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;transform:scale(.96);filter:blur(14px);transition:opacity 1.8s cubic-bezier(.25,.1,.25,1),transform 2.8s cubic-bezier(.25,.1,.25,1),filter 1.8s cubic-bezier(.25,.1,.25,1)}' +
+  '#shut.draw .gtx{opacity:1;transform:scale(1);filter:blur(0);animation:gsheen 5.5s cubic-bezier(.4,0,.2,1) 1.8s infinite}' +
+  '#shut .gsub{font-size:15px;font-weight:500;letter-spacing:.01em;color:#86868b;opacity:0;transform:translateY(10px);transition:opacity 1.3s cubic-bezier(.16,1,.3,1),transform 1.3s cubic-bezier(.16,1,.3,1)}' +
+  '#shut.draw .gsub{opacity:1;transform:none;transition-delay:1.4s}' +
+  '#shut .gspin{position:relative;width:30px;height:30px;opacity:0;transition:opacity 1s cubic-bezier(.4,0,.2,1)}' +
+  '#shut.draw .gspin{opacity:1;transition-delay:2.4s}' +
+  '#shut .gspin i{position:absolute;left:50%;top:50%;width:3px;height:9px;margin:-15px 0 0 -1.5px;border-radius:1.5px;background:#fff;transform-origin:1.5px 15px;animation:gspin .9s linear infinite}' +
+  '#shut .gspin i:nth-child(1){transform:rotate(0deg);animation-delay:-.7875s}' +
+  '#shut .gspin i:nth-child(2){transform:rotate(45deg);animation-delay:-.675s}' +
+  '#shut .gspin i:nth-child(3){transform:rotate(90deg);animation-delay:-.5625s}' +
+  '#shut .gspin i:nth-child(4){transform:rotate(135deg);animation-delay:-.45s}' +
+  '#shut .gspin i:nth-child(5){transform:rotate(180deg);animation-delay:-.3375s}' +
+  '#shut .gspin i:nth-child(6){transform:rotate(225deg);animation-delay:-.225s}' +
+  '#shut .gspin i:nth-child(7){transform:rotate(270deg);animation-delay:-.1125s}' +
+  '#shut .gspin i:nth-child(8){transform:rotate(315deg);animation-delay:0s}' +
+  '#shut.end .gwrap{opacity:0;filter:blur(10px)}' +
+  '@keyframes gspin{0%{opacity:1}100%{opacity:.12}}' +
+  '@keyframes gsheen{0%{background-position:120% 0}60%{background-position:-80% 0}100%{background-position:-80% 0}}';
+document.head.appendChild(pwrCss);
+
 const pwrDlg = document.createElement('div');
 pwrDlg.id = 'pwrdlg';
 pwrDlg.innerHTML =

@@ -1,0 +1,176 @@
+/* ============================================================================
+   apps/about.css — App "Su di me" (finestra #w-io)
+   ----------------------------------------------------------------------------
+   RICOSTRUITA: il markup usa le classi .iox-* (intestazione, statistiche, due
+   colonne, blocchi, righe e schede) che prima non avevano ALCUNO stile, per cui
+   il contenuto si caricava "nudo". Qui ridefiniamo un'identità completa, coerente
+   con il design system (vetro, accenti, tipografia SF Pro).
+   ========================================================================== */
+
+/* Contenitore (sostituisce il padding di .wbody) */
+.iox { padding: 20px 22px 18px; display: flex; flex-direction: column; gap: 16px; }
+
+/* --- Intestazione: avatar con iniziali + identità + azioni rapide --- */
+.iox-head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.cavatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  background: var(--surface-press);
+  box-shadow: var(--edge), 0 0 0 3px rgba(255, 255, 255, 0.28), 0 4px 12px rgba(12, 16, 40, 0.14);
+  animation: pop var(--dur) var(--spring) 0.15s both;
+}
+@keyframes pop { from { opacity: 0; transform: scale(0); } to { opacity: 1; transform: scale(1); } }
+.cid h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.03em; }
+.cid p { font-size: 12.5px; color: var(--muted); font-weight: 550; margin-top: 1px; }
+.cacts { margin-left: auto; display: flex; gap: 8px; }
+.cact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--acc, var(--blue));
+  text-decoration: none;
+  padding: 7px 11px 5px;
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--edge);
+  transition: transform 0.35s var(--spring-pop), box-shadow 0.25s ease;
+}
+.cact:hover { transform: translateY(-3px) scale(1.03); box-shadow: var(--edge), var(--shadow-pop); }
+.cact:active { transform: scale(0.94); }
+
+/* --- Striscia di statistiche (credito, ore, livello…) --- */
+.iox-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.iox-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 11px 8px 9px;
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--edge), 0 2px 8px rgba(12, 16, 40, 0.06);
+  transition: transform 0.35s var(--spring-pop), box-shadow 0.25s ease;
+}
+.iox-stat:hover { transform: translateY(-2px); box-shadow: var(--edge), var(--shadow-pop); }
+.iox-stat b { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; color: var(--acc, var(--orange)); }
+.iox-stat small { font-size: 9.5px; font-weight: 750; text-transform: uppercase; letter-spacing: 0.05em; color: var(--faint); }
+
+/* --- Due colonne di contenuto --- */
+.iox-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+.iox-col { display: flex; flex-direction: column; gap: 16px; }
+
+/* Blocco "hero": la frase di sintesi in evidenza, su tinta d'accento */
+.iox-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 16px 18px;
+  border-radius: 16px;
+  color: #fff;
+  background: var(--acc, var(--orange));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 10px 26px color-mix(in srgb, var(--acc, var(--orange)) 36%, transparent);
+}
+.iox-hero .as-kicker { color: rgba(255, 255, 255, 0.85); }
+.iox-hero h3 { font-size: 18px; font-weight: 800; letter-spacing: -0.025em; margin: 5px 0 7px; line-height: 1.18; }
+.iox-hero p { font-size: 12.5px; line-height: 1.6; font-weight: 500; opacity: 0.95; }
+
+/* Blocco generico con etichetta + contenuti */
+.iox-block { display: flex; flex-direction: column; gap: 8px; }
+.iox-lbl { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--faint); padding: 0 2px; }
+
+/* Riga "chiave → testo" del percorso ufficiale (la chiave eredita --kc) */
+.iox-row {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--edge), 0 2px 8px rgba(12, 16, 40, 0.05);
+  transition: transform 0.38s var(--spring-soft), box-shadow 0.3s ease;
+}
+.iox-row:hover { transform: translateY(-2px); box-shadow: var(--edge), var(--shadow-pop); }
+.iox-k {
+  width: 84px;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--kc, var(--acc, var(--blue)));
+  padding-top: 2px;
+}
+.iox-tx b { font-size: 13.5px; font-weight: 750; letter-spacing: -0.01em; display: block; }
+.iox-tx p { font-size: 12.5px; color: var(--muted); font-weight: 500; line-height: 1.55; margin-top: 2px; }
+
+/* Scheda con "tag" colorato (risultati, progetti, vita oltre i voti) */
+.iox-card {
+  position: relative;
+  padding: 12px 14px 12px 17px;
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--edge), 0 2px 8px rgba(12, 16, 40, 0.05);
+  transition: transform 0.38s var(--spring-soft), box-shadow 0.3s ease;
+}
+/* Barretta colorata a sinistra, presa da --kc */
+.iox-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 4px;
+  border-radius: 0 3px 3px 0;
+  background: var(--kc, var(--acc, var(--blue)));
+}
+.iox-card:hover { transform: translateY(-2px); box-shadow: var(--edge), var(--shadow-pop); }
+.iox-tag {
+  display: inline-block;
+  font-size: 9.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--kc, var(--acc, var(--blue)));
+  margin-bottom: 4px;
+}
+.iox-card b { font-size: 13.5px; font-weight: 750; letter-spacing: -0.01em; display: block; }
+.iox-card p { font-size: 12px; color: var(--muted); font-weight: 500; line-height: 1.5; margin-top: 2px; }
+
+/* Nota a piè di scheda (richiamo al curriculum) */
+.cnote {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--muted);
+  font-weight: 500;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--orange) 9%, var(--surface));
+  box-shadow: var(--edge);
+}
+.cnote b { color: var(--text); font-weight: 800; }
+
+/* Ingresso a cascata all'apertura della finestra */
+.win.open .iox-stat,
+.win.open .iox-row,
+.win.open .iox-card,
+.win.open .iox-hero,
+.win.open .cnote { animation: riseIn 0.5s var(--ease-apple) both; }
+.win.open .iox-stat:nth-child(1) { animation-delay: 0.04s; }
+.win.open .iox-stat:nth-child(2) { animation-delay: 0.08s; }
+.win.open .iox-stat:nth-child(3) { animation-delay: 0.12s; }
+.win.open .iox-stat:nth-child(4) { animation-delay: 0.16s; }
+
+@media (max-width: 760px) {
+  .iox-cols { grid-template-columns: 1fr; }
+  .iox-stats { grid-template-columns: repeat(2, 1fr); }
+  .cacts { display: none; }
+}
