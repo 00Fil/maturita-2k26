@@ -1,9 +1,9 @@
 /* ============================================================
-   login.js — logica della lock screen macOS.
+   login.js — comportamento della lock screen macOS
    - orologio live
-   - validazione password
-   - transizione rapida al desktop
-   - modalità demo backend opzionale (?demo=1)
+   - input password / feedback
+   - chiamata fetch a login.php
+   - demo tecnica opzionale con ?demo=1
    ============================================================ */
 /* ============================================================
    OROLOGIO LIVE (stile macOS, locale italiano)

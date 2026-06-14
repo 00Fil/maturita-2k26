@@ -140,7 +140,7 @@ function maxiBounds() {
 }
 function setWinBox(win, r, anim) {
   win.style.setProperty('max-height', 'none', 'important');
-  win.style.transition = anim ? ('left .5s ' + MAXI_EASE + ', top .5s ' + MAXI_EASE + ', width .5s ' + MAXI_EASE + ', height .5s ' + MAXI_EASE + ', border-radius .5s ' + MAXI_EASE) : 'none';
+  win.style.transition = anim ? ('left .38s ' + MAXI_EASE + ', top .38s ' + MAXI_EASE + ', width .38s ' + MAXI_EASE + ', height .38s ' + MAXI_EASE + ', border-radius .38s ' + MAXI_EASE) : 'none';
   win.style.setProperty('left', r.left + 'px', 'important');
   win.style.setProperty('top', r.top + 'px', 'important');
   win.style.setProperty('width', r.width + 'px', 'important');
@@ -177,7 +177,7 @@ function toggleMax(win) {
       win.style.removeProperty('border-radius');
     }
     win._mxBusy = false;
-  }, 560);
+  }, 430);
 }
 window.addEventListener('resize', () => {
   document.querySelectorAll('.win.maxi').forEach(w => setWinBox(w, maxiBounds(), false));
@@ -195,14 +195,14 @@ document.addEventListener('click', e => {
   if (t) openWin(t.dataset.open);
 });
 
-const ORDER = ['w-pres', 'w-io', 'w-fsl', 'w-skills', 'w-prog', 'w-coll', 'w-fine'];
+const ORDER = ['w-pres', 'w-io', 'w-skills', 'w-fsl', 'w-fine'];
 function topChapter() {
   let best = null, z = -1;
   ORDER.forEach(id => {
     const w = document.getElementById(id);
     if (w && w.classList.contains('open') && (+w.style.zIndex || 0) >= z) { z = +w.style.zIndex || 0; best = id; }
   });
-  return best || 'w-coll';
+  return best || 'w-pres';
 }
 document.querySelectorAll('[data-nav]').forEach(b => {
   b.addEventListener('click', () => {
@@ -662,11 +662,10 @@ if (rebBtn) {
   });
 }
 
-
 /* ============================================================
-   App modules extracted from hub.php.
-   Keeping them here avoids inline JavaScript and makes the desktop
-   easier to maintain as one coherent application layer.
+   Moduli UI specifici del desktop: Spotlight + Mappe
+   Spostati qui per mantenere hub.php pulito e lasciare un solo punto
+   JavaScript per il comportamento delle applicazioni.
    ============================================================ */
 (function(){
   var spot=document.getElementById('spot');
@@ -751,6 +750,6 @@ if (rebBtn) {
   if(zout)zout.addEventListener('click',function(ev){ev.stopPropagation();zoom=Math.max(0.8,zoom-0.18);render();});
   if(comp)comp.addEventListener('click',function(ev){ev.stopPropagation();zoom=1;render();});
   var x=document.querySelector('#w-fine .dir-x');
-  if(x)x.addEventListener('click',function(ev){ev.stopPropagation();var w=document.getElementById('w-fine');if(w&&typeof closeWin==='function')closeWin(w);});
+  if(x)x.addEventListener('click',function(ev){ev.stopPropagation();if(typeof closeWin==='function')closeWin(document.getElementById('w-fine'));});
   render();
 })();
