@@ -2038,3 +2038,15 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 .spot-gallery-close{position:fixed;right:0;bottom:0;width:84px;height:84px;z-index:10002;border:0;background:transparent!important;opacity:0;pointer-events:none;cursor:default}
 body.spot-gallery-active .spot-gallery-close{pointer-events:auto}
 body.spot-gallery-active .dock{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(18px) scale(.98)}
+
+/* George Orwell Spotlight wallpaper */
+.bg{transition:filter .55s cubic-bezier(.22,1,.36,1), opacity .55s ease, background-image .2s ease}
+body.spot-gallery-active .bg{
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.16),rgba(0,0,0,.20)),
+    url("assets/spotlight-gallery/bg.png") center / cover no-repeat,
+    #08090b!important;
+  filter:saturate(.92) contrast(1.04) brightness(.72);
+}
+body.spot-gallery-active .menubar{background:rgba(10,10,12,.32);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2)}
+/* /George Orwell Spotlight wallpaper */
