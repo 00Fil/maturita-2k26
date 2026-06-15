@@ -148,7 +148,7 @@ function appicon(string $file, string $remote): string {
           <span class="finder-img"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></span><b>Maps</b><small>Dove voglio andare</small>
         </button>
         <button class="finder-app-icon" data-spot data-desc="Apre Spotlight con la frase conclusiva della presentazione.">
-          <span class="finder-img"><?= appicon('spotlight.png', '/src/apps/scalable/system-search.svg') ?></span><b>Spotlight</b><small>Chiusura</small>
+          <span class="finder-img"><?= appicon('spotlight.webp', '/src/apps/scalable/system-search.svg') ?></span><b>Spotlight</b><small>Chiusura</small>
         </button>
         <button class="finder-app-icon" data-act="trash" data-desc="Chiude tutte le finestre aperte e ripulisce il desktop.">
           <span class="finder-img"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></span><b>Trash</b><small>Chiudi tutto</small>
@@ -339,11 +339,11 @@ function appicon(string $file, string $remote): string {
 <div id="spot" class="spot" aria-hidden="true">
   <div class="spot-shell" role="dialog" aria-label="Spotlight">
     <div class="spot-box">
-      <span class="spot-icon-wrap"><?= appicon('spotlight.png', '/src/apps/scalable/system-search.svg') ?></span>
+      <span class="spot-icon-wrap"><?= appicon('spotlight.webp', '/src/apps/scalable/system-search.svg') ?></span>
       <span class="spot-q"><span class="spot-type"></span><span class="spot-ghost">Cerca con Spotlight</span><span class="spot-cur"></span></span>
     </div>
     <div class="spot-result" aria-hidden="true">
-      <span class="spot-result-icon"><?= appicon('spotlight.png', '/src/apps/scalable/system-search.svg') ?></span>
+      <span class="spot-result-icon"><?= appicon('spotlight.webp', '/src/apps/scalable/system-search.svg') ?></span>
       <span><b>Conclusione</b><small>L'ultima parola prima delle domande</small></span>
       <em>Invio</em>
     </div>
@@ -351,12 +351,56 @@ function appicon(string $file, string $remote): string {
   <p class="spot-sub">Cerca con Spotlight</p>
 </div>
 
+
+
+
+
+
+<!-- Spotlight image gallery windows -->
+<section class="win sg-window sg-center-win" id="sg-center" style="left:calc(50% - 319px);top:calc(50% - 201px);width:638px" data-spot-gallery-window data-spot-center>
+  <div class="titlebar sg-titlebar"><span class="wt">George Orwell — centro</span></div>
+  <div class="wbody sg-body">
+    <img src="assets/spotlight-gallery/center.png" alt="George Orwell — centro" draggable="false" data-natural-width="638" data-natural-height="359">
+  </div>
+</section>
+<section class="win sg-window" id="sg-img-1" style="left:4.5%;top:9%;width:330px" data-spot-gallery-window>
+  <div class="titlebar sg-titlebar"><span class="wt">Img 1</span></div>
+  <div class="wbody sg-body">
+    <img src="assets/spotlight-gallery/img-1.png" alt="Img 1" draggable="false" data-natural-width="1122" data-natural-height="1402">
+  </div>
+</section>
+<section class="win sg-window" id="sg-img-2" style="left:58%;top:8%;width:360px" data-spot-gallery-window>
+  <div class="titlebar sg-titlebar"><span class="wt">Img 2</span></div>
+  <div class="wbody sg-body">
+    <img src="assets/spotlight-gallery/img-2.png" alt="Img 2" draggable="false" data-natural-width="1122" data-natural-height="1402">
+  </div>
+</section>
+<section class="win sg-window" id="sg-img-3" style="left:8%;top:46%;width:340px" data-spot-gallery-window>
+  <div class="titlebar sg-titlebar"><span class="wt">Img 3</span></div>
+  <div class="wbody sg-body">
+    <img src="assets/spotlight-gallery/img-3.png" alt="Img 3" draggable="false" data-natural-width="1122" data-natural-height="1402">
+  </div>
+</section>
+<section class="win sg-window" id="sg-img-4" style="left:64%;top:42%;width:380px" data-spot-gallery-window>
+  <div class="titlebar sg-titlebar"><span class="wt">Img 4</span></div>
+  <div class="wbody sg-body">
+    <img src="assets/spotlight-gallery/img-4.png" alt="Img 4" draggable="false" data-natural-width="1122" data-natural-height="1402">
+  </div>
+</section>
+<section class="win sg-window" id="sg-img-5" style="left:31%;top:10%;width:320px" data-spot-gallery-window>
+  <div class="titlebar sg-titlebar"><span class="wt">Img 5</span></div>
+  <div class="wbody sg-body">
+    <img src="assets/spotlight-gallery/img-5.png" alt="Img 5" draggable="false" data-natural-width="1122" data-natural-height="1402">
+  </div>
+</section>
+<!-- /Spotlight image gallery windows -->
+
 <nav class="dock" id="dock">
   <span class="dapp" data-w="w-pres"><button class="ai" aria-label="Presentazione"><?= appicon('finder.webp', '/original/file-manager.svg') ?></button><span class="dot"></span><span class="tip">Presentazione · Finder</span></span>
   <span class="dapp" data-w="w-io"><button class="ai" aria-label="Su di me"><?= appicon('notes.png', '/src/apps/scalable/accessories-text-editor.svg') ?></button><span class="dot"></span><span class="tip">Su di me · Note</span></span>
   <span class="dapp" data-w="w-fsl"><button class="ai" aria-label="CS Metal Europe"><?= appicon('calendar.webp', '/original/calendar.svg') ?></button><span class="dot"></span><span class="tip">CS Metal Europe · Calendario</span></span>
   <span class="dapp" data-w="w-fine"><button class="ai" aria-label="Dove voglio andare"><?= appicon('maps.webp', '/original/gnome-maps.svg') ?></button><span class="dot"></span><span class="tip">Dove voglio andare · Mappe</span></span>
-  <span class="dapp" data-spot><button class="ai" aria-label="Spotlight"><?= appicon('spotlight.png', '/src/apps/scalable/system-search.svg') ?></button><span class="dot"></span><span class="tip">Spotlight</span></span>
+  <span class="dapp" data-spot><button class="ai" aria-label="Spotlight"><?= appicon('spotlight.webp', '/src/apps/scalable/system-search.svg') ?></button><span class="dot"></span><span class="tip">Spotlight</span></span>
   <span class="dsep"></span>
   <span class="dapp" data-act="trash"><button class="ai" aria-label="Cestino: chiudi tutte le finestre"><?= appicon('trash.webp', '/src/places/scalable/user-trash.svg') ?></button><span class="tip">Cestino · chiudi tutto</span></span>
 </nav>
