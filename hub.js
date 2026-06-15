@@ -1068,7 +1068,7 @@ document.querySelectorAll('.win').forEach(w=>{ if(!w.classList.contains('maxi'))
 setInterval(syncFinderVisibility, 500);
 syncFinderVisibility();
 
-/* Maps Navigator — percorso di vita, stile Apple Maps (panoramica + navigazione orientata) */
+/* Maps Navigator — path-locked cursor/progress */
 (function(){
   const app=document.querySelector('[data-maps-navigator]');
   if(!app) return;
@@ -1076,6 +1076,7 @@ syncFinderVisibility();
   const puck=app.querySelector('#maps-puck');
   const puckRot=app.querySelector('#maps-puck .puck-rot');
   const progress=app.querySelector('#maps-route-progress');
+  const route=app.querySelector('#maps-route');
   const stage=app.querySelector('[data-maps-stage]');
   const title=app.querySelector('[data-maps-title]');
   const kicker=app.querySelector('[data-maps-kicker]');
@@ -1084,53 +1085,69 @@ syncFinderVisibility();
   const bannerText=app.querySelector('[data-maps-bannertext]');
   const hint=app.querySelector('[data-maps-hint]');
   const pins=Array.from(app.querySelectorAll('.mw-pin'));
-  if(!cam||!stage) return;
+  if(!cam||!stage||!route||!progress||!puck) return;
 
-  // tappe reali (p = avanzamento lungo il percorso 0..1)
-  const stops=[
-    {x:150,y:650,p:0},
-    {x:360,y:560,p:.17},
-    {x:560,y:430,p:.42},
-    {x:790,y:280,p:.70},
-    {x:1020,y:130,p:1}
-  ];
-
-  // viste di navigazione: si parte poco PRIMA del Diploma (punto virtuale)
+  // Percentuali lungo il path reale. Puck e progresso usano questi stessi valori.
+  const stopP=[0,.17,.42,.70,1];
   const seq=[
-    {x:505,y:462,p:.36, tx:560,ty:430, active:2, icon:'↑', kicker:'Tra poco',        title:'Diploma',                copy:'Tra poche centinaia di metri raggiungi il Diploma, il primo grande traguardo del percorso.'},
-    {x:560,y:430,p:.42, tx:790,ty:280, active:2, icon:'◉', kicker:'Tappa raggiunta',  title:'Diploma',                copy:'Maturità conseguita. Prosegui dritto verso l’Università di Brescia.'},
-    {x:790,y:280,p:.70, tx:1020,ty:130,active:3, icon:'↑', kicker:'Prosegui dritto',  title:'Università · Brescia',   copy:'Ingegneria Informatica: qui costruisci basi solide nel software e nei sistemi.'},
-    {x:1020,y:130,p:1,  tx:1250,ty:-20, active:4, icon:'⚑', kicker:'Sei arrivato',     title:'Estero · America',       copy:'Destinazione raggiunta: una carriera all’estero, con il sogno America.'}
+    {p:.36, targetP:.42, active:2, icon:'↑', kicker:'Tra poco',       title:'Diploma',              copy:'Tra poche centinaia di metri raggiungi il Diploma, il primo grande traguardo del percorso.'},
+    {p:.42, targetP:.58, active:2, icon:'◉', kicker:'Tappa raggiunta', title:'Diploma',              copy:'Maturità conseguita. Prosegui dritto verso l’Università di Brescia.'},
+    {p:.70, targetP:.86, active:3, icon:'↑', kicker:'Prosegui dritto', title:'Università · Brescia', copy:'Ingegneria Informatica: qui costruisci basi solide nel software e nei sistemi.'},
+    {p:1,   targetP:1,   active:4, icon:'⚑', kicker:'Sei arrivato',    title:'Estero · America',     copy:'Destinazione raggiunta: una carriera all’estero, con il sogno America.'}
   ];
 
-  let vi=-1;            // -1 = panoramica; 0..3 = navigazione
+  let vi=-1;
   let userZoom=1;
   const last=seq.length-1;
 
-  function heading(x,y,tx,ty){ return -90 - Math.atan2(ty-y, tx-x)*180/Math.PI; }
+  function total(){ return route.getTotalLength(); }
+  function pt(p){
+    const L=total();
+    const clamped=Math.max(0,Math.min(1,p));
+    return route.getPointAtLength(L*clamped);
+  }
+  function headingFromPath(p,targetP){
+    const a=pt(p);
+    const b=pt(Math.max(0, Math.min(1, targetP!=null ? targetP : p+.012)));
+    return -90 - Math.atan2(b.y-a.y, b.x-a.x)*180/Math.PI;
+  }
   function flash(el){ if(!el) return; el.classList.remove('mw-flash'); void el.offsetWidth; el.classList.add('mw-flash'); }
+  function setProgress(p){ progress.style.strokeDashoffset=(1-Math.max(0,Math.min(1,p))).toFixed(4); }
 
   function render(){
-    const navMode = vi>=0;
+    const navMode=vi>=0;
     app.classList.toggle('nav', navMode);
 
     if(navMode){
       const v=seq[vi];
-      const rot=heading(v.x,v.y,v.tx,v.ty), S=1.95, cx=600, cy=548;
-      cam.style.transform=`translate(${cx}px, ${cy}px) rotate(${rot}deg) scale(${S}) translate(${-v.x}px, ${-v.y}px)`;
-      pins.forEach((g,i)=>{ const r=g.querySelector('.mw-pin-rot'); let t=`rotate(${-rot})`; if(i===v.active) t+=' scale(1.08)'; r.setAttribute('transform',t); });
+      const pos=pt(v.p);
+      const rot=headingFromPath(v.p, v.targetP);
+      const S=1.95, cx=600, cy=548;
+
+      // Camera, cursore e tratto completato condividono la stessa p sul path.
+      cam.style.transform=`translate(${cx}px, ${cy}px) rotate(${rot}deg) scale(${S}) translate(${-pos.x}px, ${-pos.y}px)`;
+      puck.setAttribute('transform',`translate(${pos.x.toFixed(2)} ${pos.y.toFixed(2)})`);
+      setProgress(v.p);
+
+      pins.forEach((g,i)=>{
+        const r=g.querySelector('.mw-pin-rot');
+        let t=`rotate(${-rot})`;
+        if(i===v.active) t+=' scale(1.08)';
+        if(r) r.setAttribute('transform',t);
+        g.classList.toggle('on', i===v.active);
+        g.classList.toggle('done', stopP[i] < v.p-0.02 && i!==v.active);
+      });
       if(puckRot) puckRot.setAttribute('transform',`rotate(${-rot})`);
-      puck.setAttribute('transform',`translate(${v.x} ${v.y})`);
-      progress.style.strokeDashoffset=(1-v.p).toFixed(4);
+
       kicker.textContent=v.kicker; title.textContent=v.title; copy.textContent=v.copy; icon.textContent=v.icon;
-      pins.forEach((g,i)=>{ g.classList.toggle('on', i===v.active); g.classList.toggle('done', stops[i].p < v.p-0.02 && i!==v.active); });
-      hint.textContent = vi<last ? 'Tocca per proseguire' : 'Tocca per rivedere la panoramica';
+      hint.textContent=vi<last ? 'Tocca per proseguire' : 'Tocca per rivedere la panoramica';
     } else {
       cam.style.transform=`translate(600px,380px) scale(${userZoom}) translate(-600px,-380px)`;
-      pins.forEach(g=>{ g.querySelector('.mw-pin-rot').setAttribute('transform',''); g.classList.remove('on','done'); });
+      pins.forEach(g=>{ const r=g.querySelector('.mw-pin-rot'); if(r) r.setAttribute('transform',''); g.classList.remove('on','done'); });
       if(puckRot) puckRot.setAttribute('transform','');
-      puck.setAttribute('transform',`translate(${stops[0].x} ${stops[0].y})`);
-      progress.style.strokeDashoffset='1';
+      const start=pt(0);
+      puck.setAttribute('transform',`translate(${start.x.toFixed(2)} ${start.y.toFixed(2)})`);
+      setProgress(0);
       kicker.textContent='Percorso'; title.textContent='5 anni di crescita'; copy.textContent='Tocca la mappa per avviare la navigazione.'; icon.textContent='↗';
       hint.textContent='Tocca la mappa per iniziare';
     }
@@ -1138,14 +1155,17 @@ syncFinderVisibility();
   }
 
   function advance(){
-    if(vi>=last) { vi=-1; userZoom=1; }
+    if(vi>=last){ vi=-1; userZoom=1; }
     else vi++;
     render();
   }
 
   stage.addEventListener('click', e=>{
     const z=e.target.closest('[data-maps-zoom]');
-    if(z){ if(vi<0){ userZoom=Math.max(1, Math.min(1.6, userZoom+(z.dataset.mapsZoom==='in'?.14:-.14))); render(); } return; }
+    if(z){
+      if(vi<0){ userZoom=Math.max(1,Math.min(1.6,userZoom+(z.dataset.mapsZoom==='in'?.14:-.14))); render(); }
+      return;
+    }
     advance();
     try{ sndOpen&&sndOpen(); }catch(err){}
   });

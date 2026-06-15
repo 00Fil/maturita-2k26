@@ -309,12 +309,6 @@ function appicon(string $file, string $remote): string {
           <path d="M-600 150 C220 120 420 175 600 150 C820 120 1010 60 1800 90 L1800 -600 L-600 -600 Z" fill="url(#mw-water)"/>
           <path d="M120 760 C140 600 250 560 300 470 C360 360 300 300 360 210" fill="none" stroke="#2b4a32" stroke-width="150" stroke-linecap="round" opacity=".5"/>
           <path d="M860 760 C900 640 1000 600 1100 560 C1200 520 1260 470 1320 420" fill="none" stroke="#2b4a32" stroke-width="130" stroke-linecap="round" opacity=".45"/>
-          <g stroke-linecap="round" fill="none">
-            <path d="M-200 540 C200 480 360 440 520 360 C720 262 880 230 1400 150" stroke="#3a3e45" stroke-width="9"/>
-            <path d="M40 760 C260 600 380 560 540 460 C720 350 900 300 1400 230" stroke="#33373d" stroke-width="6"/>
-            <path d="M300 760 C340 600 460 470 580 400 C700 330 760 250 800 120" stroke="#33373d" stroke-width="5"/>
-          </g>
-
           <path id="maps-route-base" d="M150 650 C250 605 300 595 360 560 C440 525 470 500 560 430 C650 360 700 340 790 280 C880 220 960 175 1020 130" fill="none" stroke="#0a4da8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
           <path id="maps-route" d="M150 650 C250 605 300 595 360 560 C440 525 470 500 560 430 C650 360 700 340 790 280 C880 220 960 175 1020 130" fill="none" stroke="#0a84ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
           <path id="maps-route-progress" pathLength="1" d="M150 650 C250 605 300 595 360 560 C440 525 470 500 560 430 C650 360 700 340 790 280 C880 220 960 175 1020 130" fill="none" stroke="#7cc4ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1" stroke-dashoffset="1"/>
