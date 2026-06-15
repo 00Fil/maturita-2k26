@@ -1068,7 +1068,7 @@ document.querySelectorAll('.win').forEach(w=>{ if(!w.classList.contains('maxi'))
 setInterval(syncFinderVisibility, 500);
 syncFinderVisibility();
 
-/* Maps Navigator — percorso animato con spiegazioni */
+/* Maps Navigator — percorso di vita animato, stile Apple Maps */
 (function(){
   const app=document.querySelector('[data-maps-navigator]');
   if(!app) return;
@@ -1077,44 +1077,43 @@ syncFinderVisibility();
   const progress=app.querySelector('#maps-route-progress');
   const stopsBox=app.querySelector('[data-maps-stops]');
   const dots=app.querySelector('[data-maps-dots]');
-  const recent=app.querySelector('[data-maps-recent]');
   const title=app.querySelector('[data-maps-title]');
   const kicker=app.querySelector('[data-maps-kicker]');
   const copy=app.querySelector('[data-maps-copy]');
   const icon=app.querySelector('[data-maps-icon]');
   const eta=app.querySelector('[data-maps-eta]');
   const sub=app.querySelector('[data-maps-sub]');
-  if(!cam||!stopsBox||!dots){return;} /* app navigatore svuotata: niente da inizializzare */
+  if(!cam||!stopsBox||!dots) return;
+
   const stops=[
-    {x:132,y:565,p:0,icon:'→',kicker:'Partenza',title:'FSL · PCTO',eta:'Inizio percorso',sub:'esperienza concreta · primo contatto col lavoro',copy:'Il viaggio parte dal PCTO: un’esperienza pratica che trasforma la scuola in metodo, responsabilità e contatto reale con il mondo professionale.',explain:'Prima tappa: lavoro, metodo, responsabilità.'},
-    {x:392,y:438,p:.33,icon:'↱',kicker:'Tra poco',title:'Diploma',eta:'Tappa di consolidamento',sub:'maturità · competenze · consapevolezza',copy:'Il diploma chiude il percorso scolastico e diventa il ponte: non solo un traguardo, ma la prova di aver costruito basi tecniche e personali.',explain:'Il diploma come passaggio verso scelte più grandi.'},
-    {x:636,y:272,p:.66,icon:'↑',kicker:'Prosegui',title:'Università a Brescia',eta:'Direzione Brescia',sub:'Ingegneria Informatica · basi solide',copy:'La prossima direzione è Ingegneria Informatica a Brescia: approfondire software, sistemi e progettazione per crescere con basi più solide.',explain:'Studio verticale per diventare più forte nel software.'},
-    {x:1015,y:62,p:1,icon:'✈',kicker:'Arrivo',title:'Opportunità all’estero',eta:'Sogno America',sub:'carriera internazionale · software',copy:'La meta più ambiziosa è spostarmi, cercare opportunità all’estero e costruire una carriera nel software in un contesto internazionale: il sogno è l’America.',explain:'Meta finale: America, lavoro e crescita internazionale.'}
+    {x:180,y:628,p:0,   icon:'→', kicker:'Partenza',   title:'FSL · PCTO',            eta:'Inizio percorso',      sub:'esperienza concreta', tag:'FSL',     copy:'Il viaggio parte dal PCTO: la prima esperienza concreta di lavoro, dove la scuola diventa metodo e responsabilità.'},
+    {x:470,y:486,p:.34, icon:'↱', kicker:'Tappa 2',     title:'Diploma',               eta:'Maturità conclusa',    sub:'basi solide',         tag:'Diploma', copy:'Il diploma chiude il percorso scolastico: un traguardo e allo stesso tempo il punto di partenza per le scelte successive.'},
+    {x:770,y:300,p:.67, icon:'↑', kicker:'Tappa 3',     title:'Università a Brescia',  eta:'Ingegneria Informatica', sub:'studio del software', tag:'Brescia', copy:'La direzione è Ingegneria Informatica a Brescia: approfondire software, sistemi e progettazione per crescere con basi più forti.'},
+    {x:1040,y:96,p:1,   icon:'⚑', kicker:'Arrivo',      title:'Carriera all’estero',   eta:'Sogno America',        sub:'contesto internazionale', tag:'Estero', copy:'La meta più ambiziosa: spostarmi e cercare opportunità nel software all’estero, con il sogno di arrivare in America.'}
   ];
+
   let current=0, zoom=1;
-  stopsBox.innerHTML=stops.map((s,i)=>`<button class="maps-stop-line ${i===0?'active':''}" data-maps-step="${i}" type="button"><span>${i===0?'●':i}</span><b>${s.title}</b></button>`).join('');
-  dots.innerHTML=stops.map((_,i)=>`<button class="maps-dot ${i===0?'on':''}" data-maps-step="${i}" type="button" aria-label="Tappa ${i+1}"></button>`).join('');
+  stopsBox.innerHTML=stops.map((s,i)=>`<button class="mw-step${i===0?' active':''}" data-maps-step="${i}" type="button"><span class="mw-step-num">${i+1}</span><span class="mw-step-txt"><b>${s.title}</b><small>${s.sub}</small></span></button>`).join('');
+  dots.innerHTML=stops.map((_,i)=>`<button class="mw-dot${i===0?' on':''}" data-maps-step="${i}" type="button" aria-label="Tappa ${i+1}"></button>`).join('');
+
   function render(){
     const s=stops[current];
-    const scale=1.07*zoom;
-    const dx=650-scale*s.x, dy=360-scale*s.y;
-    cam.style.transform=`translate(${dx.toFixed(1)}px,${dy.toFixed(1)}px) scale(${scale.toFixed(3)})`;
+    cam.style.transform=`scale(${zoom.toFixed(3)})`;
     puck.setAttribute('transform',`translate(${s.x} ${s.y})`);
     progress.style.strokeDashoffset=(1-s.p).toFixed(4);
-    title.textContent=s.title; kicker.textContent=s.kicker; copy.textContent=s.copy; icon.textContent=s.icon;
-    eta.textContent=s.eta; sub.textContent=s.sub; recent.textContent=s.title;
-    app.querySelectorAll('[data-maps-step]').forEach(el=>el.classList.toggle('on', +el.dataset.mapsStep===current));
-    app.querySelectorAll('.maps-stop-line').forEach((el,i)=>{el.classList.toggle('active',i===current);el.classList.toggle('done',i<current);});
-    app.querySelectorAll('.maps-dot').forEach((el,i)=>{el.classList.toggle('on',i===current);el.classList.toggle('done',i<current);});
-    app.querySelectorAll('.maps-marker').forEach((el,i)=>{el.classList.toggle('on',i===current);el.classList.toggle('done',i<current);});
+    title.textContent=s.title; kicker.textContent=s.kicker; copy.textContent=s.copy;
+    icon.textContent=s.icon; eta.textContent=s.eta; sub.textContent=s.sub;
+    app.querySelectorAll('.mw-step').forEach((el,i)=>{el.classList.toggle('active',i===current);el.classList.toggle('done',i<current);});
+    app.querySelectorAll('.mw-dot').forEach((el,i)=>{el.classList.toggle('on',i===current);el.classList.toggle('done',i<current);});
+    app.querySelectorAll('.mw-pin').forEach((el,i)=>{el.classList.toggle('on',i===current);el.classList.toggle('done',i<current);});
   }
-  function go(i){current=(i+stops.length)%stops.length; render(); try{sndOpen?.()}catch(e){} }
+  function go(i){ current=(i+stops.length)%stops.length; render(); try{sndOpen&&sndOpen();}catch(e){} }
+
   app.addEventListener('click',e=>{
-    const st=e.target.closest('[data-maps-step]'); if(st){go(+st.dataset.mapsStep); return;}
-    if(e.target.closest('[data-maps-next]')){go(current+1); return;}
-    const z=e.target.closest('[data-maps-zoom]'); if(z){zoom=Math.max(.82,Math.min(1.45,zoom+(z.dataset.mapsZoom==='in'?.14:-.14))); render(); return;}
-    if(e.target.closest('[data-maps-reset]')){zoom=1; render(); return;}
-    if(e.target.closest('.maps-map')) go(current+1);
+    const st=e.target.closest('[data-maps-step]'); if(st){ go(+st.dataset.mapsStep); return; }
+    if(e.target.closest('[data-maps-next]')){ go(current+1); return; }
+    const z=e.target.closest('[data-maps-zoom]'); if(z){ zoom=Math.max(1,Math.min(1.5, zoom+(z.dataset.mapsZoom==='in'?.12:-.12))); render(); return; }
+    if(e.target.closest('.mw-pin')){ const g=e.target.closest('.mw-pin'); go(+g.dataset.mapsStep); return; }
   });
   render();
 })();
