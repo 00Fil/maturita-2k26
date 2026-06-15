@@ -4,7 +4,7 @@ root = Path('/data/maturita-work/maturita-2k26-main')
 
 # Ensure icon is in project
 src = Path('/data/maturita-work/spotlight-new-icon.webp')
-dst = root/'assets/icons/spotlight.webp'
+dst = root/'assets/icons/spotlight.png'
 dst.parent.mkdir(parents=True, exist_ok=True)
 if src.exists():
     dst.write_bytes(src.read_bytes())
@@ -14,18 +14,18 @@ if src.exists():
 # ------------------------------------------------------------------
 php_path = root/'hub.php'
 ph = php_path.read_text()
-ph = ph.replace("<?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?>", "<?= appicon('spotlight.webp', '/src/apps/scalable/system-search.svg') ?>")
+ph = ph.replace("<?= appicon('safari.webp', '/src/apps/scalable/safari.svg') ?>", "<?= appicon('spotlight.png', '/src/apps/scalable/system-search.svg') ?>")
 
 spot_start = ph.index('<div id="spot" class="spot" aria-hidden="true">')
 spot_end = ph.index('<nav class="dock" id="dock">', spot_start)
 new_spot = '''<div id="spot" class="spot" aria-hidden="true">
   <div class="spot-shell" role="dialog" aria-label="Spotlight">
     <div class="spot-box">
-      <span class="spot-icon-wrap"><?= appicon('spotlight.webp', '/src/apps/scalable/system-search.svg') ?></span>
+      <span class="spot-icon-wrap"><?= appicon('spotlight.png', '/src/apps/scalable/system-search.svg') ?></span>
       <span class="spot-q"><span class="spot-type"></span><span class="spot-ghost">Cerca con Spotlight</span><span class="spot-cur"></span></span>
     </div>
     <div class="spot-result" aria-hidden="true">
-      <span class="spot-result-icon"><?= appicon('spotlight.webp', '/src/apps/scalable/system-search.svg') ?></span>
+      <span class="spot-result-icon"><?= appicon('spotlight.png', '/src/apps/scalable/system-search.svg') ?></span>
       <span><b>Conclusione</b><small>L'ultima parola prima delle domande</small></span>
       <em>Invio</em>
     </div>
