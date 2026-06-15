@@ -1,3 +1,115 @@
+/* ============================================================
+   Performance guard — rende il desktop stabile anche su hardware ignoto.
+   Strategia: misuro il device, precarico/decodifico gli asset pesanti durante
+   il boot e applico classi CSS progressive se il frame-rate reale è basso.
+   ============================================================ */
+const PERF = (() => {
+  const nav = navigator || {};
+  const conn = nav.connection || nav.mozConnection || nav.webkitConnection;
+  const cores = nav.hardwareConcurrency || 4;
+  const mem = nav.deviceMemory || 4;
+  const saveData = !!(conn && conn.saveData);
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarse = matchMedia('(pointer: coarse)').matches;
+  const low = reduced || saveData || cores <= 2 || mem <= 2;
+  const mid = !low && (cores <= 4 || mem <= 4 || coarse);
+  document.documentElement.classList.toggle('perf-low', low);
+  document.documentElement.classList.toggle('perf-mid', mid);
+  document.documentElement.classList.toggle('perf-coarse', coarse);
+  return { low, mid, reduced, saveData, coarse };
+})();
+
+const CRITICAL_ASSETS = [
+  'assets/iisc-logo.png',
+  'assets/optimized/bg.webp',
+  'assets/optimized/profile.webp',
+  'assets/icons/finder.webp',
+  'assets/icons/maps.webp',
+  'assets/icons/notes.png',
+  'assets/icons/spotlight.png',
+  'assets/icons/pdf.svg',
+  'assets/notes/optimized/curriculum-cover.webp',
+  'assets/notes/optimized/curriculum-page-1.webp',
+  'assets/notes/optimized/pcto-cs-metal.webp',
+  'assets/notes/optimized/sportly.webp',
+  'assets/notes/optimized/violoncello.webp',
+  'assets/notes/optimized/animatore-educatore.webp',
+  'assets/notes/optimized/volontariato-festa-sorriso.webp',
+  'assets/notes/optimized/volo-tra-le-righe.webp',
+  'assets/spotlight-gallery/optimized/bg.webp',
+  'assets/spotlight-gallery/optimized/center.webp',
+  'assets/spotlight-gallery/optimized/img-1.webp',
+  'assets/spotlight-gallery/optimized/img-2.webp',
+  'assets/spotlight-gallery/optimized/img-3.webp',
+  'assets/spotlight-gallery/optimized/img-4.webp',
+  'assets/spotlight-gallery/optimized/img-5.webp'
+];
+
+let criticalAssetsReady = Promise.resolve();
+if (document.body.classList.contains('booting')) {
+  criticalAssetsReady = preloadCriticalAssets(CRITICAL_ASSETS, { timeout: PERF.low ? 14000 : 10000 });
+} else {
+  requestIdle(() => preloadCriticalAssets(CRITICAL_ASSETS, { timeout: 1 }).catch(() => {}));
+}
+
+function requestIdle(fn, timeout = 900) {
+  if ('requestIdleCallback' in window) return requestIdleCallback(fn, { timeout });
+  return setTimeout(fn, Math.min(timeout, 120));
+}
+
+function preloadCriticalAssets(urls, opts = {}) {
+  const timeout = opts.timeout ?? 10000;
+  const unique = [...new Set(urls)].filter(Boolean);
+  let done = 0;
+  const update = () => {
+    const fill = document.querySelector('#boot .bbar span');
+    if (fill && unique.length) fill.style.width = Math.max(parseFloat(fill.style.width) || 0, (done / unique.length) * 96).toFixed(2) + '%';
+  };
+  const loadOne = src => new Promise(resolve => {
+    const img = new Image();
+    let finished = false;
+    const finish = async () => {
+      if (finished) return;
+      finished = true;
+      try { if (img.decode) await img.decode(); } catch (e) {}
+      done += 1;
+      update();
+      resolve();
+    };
+    img.decoding = 'async';
+    img.loading = 'eager';
+    img.onload = finish;
+    img.onerror = finish;
+    img.src = src;
+    if (img.complete) finish();
+  });
+  const all = Promise.all(unique.map(loadOne));
+  const cap = new Promise(resolve => setTimeout(resolve, timeout));
+  return Promise.race([all, cap]);
+}
+
+function startFrameWatchdog() {
+  if (PERF.reduced) return;
+  let last = performance.now();
+  let slow = 0;
+  let samples = 0;
+  function step(now) {
+    const dt = now - last;
+    last = now;
+    samples += 1;
+    if (dt > 38) slow += 1;
+    if (samples >= 90) {
+      document.documentElement.classList.toggle('perf-low', slow >= 12 || PERF.low);
+      document.documentElement.classList.toggle('perf-mid', slow >= 6 || PERF.mid);
+      samples = 0;
+      slow = 0;
+    }
+    requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+requestIdle(startFrameWatchdog, 1200);
+
 const clockEl = document.getElementById('clock');
 
 /* Timer presentazione: 10 minuti che partono dal Centro di Controllo.
@@ -67,11 +179,14 @@ if (boot) {
     shown += (target - shown) * 0.14;
     if (target >= 100 && shown > 99.4) shown = 100;
     fill.style.width = shown.toFixed(2) + '%';
-    if (shown < 100) { requestAnimationFrame(frame); return; }
-    boot.classList.add('done');
-    document.body.classList.remove('booting');
-    sndStart();
-    setTimeout(() => boot.remove(), 750);
+    if ((shown < 100 || !ready) && el < MAXWAIT) { requestAnimationFrame(frame); return; }
+    criticalAssetsReady.then(() => {
+      fill.style.width = '100%';
+      boot.classList.add('done');
+      document.body.classList.remove('booting');
+      sndStart();
+      setTimeout(() => boot.remove(), 750);
+    });
   };
   requestAnimationFrame(frame);
 }
@@ -235,12 +350,24 @@ document.querySelectorAll('.sidebar [data-tag]').forEach(b => {
 
 const dock = document.getElementById('dock');
 const dockIcons = Array.from(dock.querySelectorAll('.dapp .ai'));
-const DOCK_GROW = 0.8;
-const DOCK_RANGE = 160;
-const LERP = 0.25;
+const DOCK_GROW = PERF.low ? 0.28 : (PERF.mid ? 0.52 : 0.8);
+const DOCK_RANGE = PERF.low ? 96 : (PERF.mid ? 128 : 160);
+const LERP = PERF.low ? 0.42 : 0.25;
 let targetS = dockIcons.map(() => 1);
 let currentS = dockIcons.map(() => 1);
+let dockCenters = [];
 let rafOn = false;
+let dockPointerX = null;
+let dockMovePending = false;
+
+function measureDock() {
+  dockCenters = dockIcons.map(ic => {
+    const r = ic.getBoundingClientRect();
+    return r.left + r.width / 2;
+  });
+}
+measureDock();
+window.addEventListener('resize', measureDock, { passive: true });
 
 function dockFrame() {
   let still = true;
@@ -256,19 +383,30 @@ function dockFrame() {
   requestAnimationFrame(dockFrame);
 }
 function wakeDock() { if (!rafOn) { rafOn = true; requestAnimationFrame(dockFrame); } }
-
-dock.addEventListener('pointermove', e => {
-  dockIcons.forEach((ic, i) => {
-    const r = ic.getBoundingClientRect();
-    const d = Math.abs(e.clientX - (r.left + r.width / 2));
+function updateDockTargets(x) {
+  if (PERF.reduced) return;
+  dockCenters.forEach((center, i) => {
+    const d = Math.abs(x - center);
     targetS[i] = d < DOCK_RANGE ? 1 + DOCK_GROW * (0.5 + 0.5 * Math.cos(Math.PI * d / DOCK_RANGE)) : 1;
   });
   wakeDock();
-});
+}
+
+dock.addEventListener('pointerenter', measureDock, { passive: true });
+dock.addEventListener('pointermove', e => {
+  dockPointerX = e.clientX;
+  if (dockMovePending) return;
+  dockMovePending = true;
+  requestAnimationFrame(() => {
+    dockMovePending = false;
+    if (dockPointerX != null) updateDockTargets(dockPointerX);
+  });
+}, { passive: true });
 dock.addEventListener('pointerleave', () => {
+  dockPointerX = null;
   targetS = targetS.map(() => 1);
   wakeDock();
-});
+}, { passive: true });
 
 // Auto-hide del dock in stile macOS: resta nascosto e riappare avvicinandosi al bordo inferiore.
 const dockCss = document.createElement('style');
@@ -282,11 +420,19 @@ let dockGrace = 0;
 function dockShow() { dock.classList.remove('autohide'); }
 function dockHide() { if (typeof hasFullscreenApp === 'function' && !hasFullscreenApp()) { dockShow(); return; } if (!dockHot && performance.now() >= dockGrace) dock.classList.add('autohide'); }
 function dockWake(ms) { dockShow(); dockGrace = performance.now() + (ms || 1500); }
+let dockAutoPending = false;
+let dockAutoY = 0;
 document.addEventListener('pointermove', e => {
-  if (e.clientY >= window.innerHeight - 80) dockShow();
-  else if (typeof hasFullscreenApp === 'function' && hasFullscreenApp() && e.clientY < window.innerHeight - 110) dockHide();
-  else dockShow();
-});
+  dockAutoY = e.clientY;
+  if (dockAutoPending) return;
+  dockAutoPending = true;
+  requestAnimationFrame(() => {
+    dockAutoPending = false;
+    if (dockAutoY >= window.innerHeight - 80) dockShow();
+    else if (typeof hasFullscreenApp === 'function' && hasFullscreenApp() && dockAutoY < window.innerHeight - 110) dockHide();
+    else dockShow();
+  });
+}, { passive: true });
 dock.addEventListener('pointerenter', () => { dockHot = true; dockShow(); });
 dock.addEventListener('pointerleave', () => { dockHot = false; dockHide(); });
 setTimeout(() => { if (typeof hasFullscreenApp === 'function' && hasFullscreenApp()) dock.classList.add('autohide'); else dockShow(); }, 2800);
@@ -302,13 +448,22 @@ dock.querySelectorAll('.dapp').forEach(d => {
   });
 });
 
+let glassMovePending = false;
+let glassMoveEvent = null;
 document.addEventListener('pointermove', e => {
-  const card = e.target.closest('.lgcard');
-  if (!card) return;
-  const r = card.getBoundingClientRect();
-  card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
-  card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
-});
+  glassMoveEvent = e;
+  if (glassMovePending) return;
+  glassMovePending = true;
+  requestAnimationFrame(() => {
+    glassMovePending = false;
+    const ev = glassMoveEvent;
+    const card = ev && ev.target && ev.target.closest ? ev.target.closest('.lgcard') : null;
+    if (!card || PERF.low) return;
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((ev.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+    card.style.setProperty('--my', ((ev.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+  });
+}, { passive: true });
 
 document.querySelectorAll('.favcard[data-say]').forEach(card => {
   const frasi = card.dataset.say.split('|').filter(Boolean);
@@ -808,43 +963,43 @@ if (rebBtn) {
   const notes=[
     {
       id:'curriculum', filter:'curriculum', tags:['scuola'], title:'Curriculum', meta:'Documento', label:'Percorso personale',
-      image:'assets/notes/curriculum-cover.png', kind:'polaroid', caption:'Curriculum dello studente',
+      image:'assets/notes/optimized/curriculum-cover.webp', kind:'polaroid', caption:'Curriculum dello studente',
       body:['Documento sintetico del percorso scolastico e delle attività svolte fuori dall’aula.', 'Raccoglie formazione, PCTO, competenze di indirizzo e attività extrascolastiche senza trasformarle in racconto celebrativo.'],
       chips:['Tecnico - Informatica','ITIS “Cerebotani” - Lonato','In lavorazione']
     },
     {
       id:'pcto', filter:'pcto', tags:['scuola'], title:'CS Metal Europe', meta:'PCTO', label:'Formazione scuola-lavoro',
-      image:'assets/notes/pcto-cs-metal.png', kind:'polaroid pcto', caption:'CS Metal Europe',
+      image:'assets/notes/optimized/pcto-cs-metal.webp', kind:'polaroid pcto', caption:'CS Metal Europe',
       body:['Esperienza svolta presso CS METAL EUROPE S.R.L. come attività realizzata in ambiente lavorativo.', 'Il valore della nota è preciso: scuola e azienda entrano in contatto, e le competenze tecniche vengono osservate nel contesto reale di una struttura produttiva.'],
       chips:['CS METAL EUROPE S.R.L.','Ambiente lavorativo','Scuola-lavoro']
     },
     {
       id:'sportly', filter:'projects', tags:['oratorio'], title:'Sportly', meta:'Book. Play. Connect.', label:'Concept digitale',
-      image:'assets/notes/sportly.png', kind:'polaroid wide', caption:'Identità progetto', link:'https://gpoi.denuvo.studio', linkLabel:'Apri progetto GPOI',
+      image:'assets/notes/optimized/sportly.webp', kind:'polaroid wide', caption:'Identità progetto', link:'https://gpoi.denuvo.studio', linkLabel:'Apri progetto GPOI',
       body:['Concept visivo e digitale collegato al mondo dello sport e della prenotazione.', 'La nota resta breve: un supporto creativo per mostrare attenzione a identità, interfaccia e presentazione del progetto.'],
       chips:['Book','Play','Connect']
     },
     {
       id:'cello', filter:'extra', tags:['arte'], title:'Violoncello', meta:'Musica', label:'Attività musicale',
-      image:'assets/notes/violoncello.png', kind:'photo-note cello', caption:'Scuola di Musica “Elia Marini”',
+      image:'assets/notes/optimized/violoncello.webp', kind:'photo-note cello', caption:'Scuola di Musica “Elia Marini”',
       body:['Corso di Violoncello presso la Banda Musicale - Scuola di Musica “Elia Marini” di Calcinato.', 'Nel curriculum questa attività descrive un percorso musicale continuativo, legato a studio, ascolto, esercizio e disciplina dello strumento.'],
       chips:['Violoncello','Calcinato','Scuola di musica']
     },
     {
       id:'educatore', filter:'extra', tags:['oratorio'], title:'Animatore ed educatore', meta:'Oratorio', label:'Cittadinanza attiva',
-      image:'assets/notes/animatore-educatore.png', kind:'photo-note group', caption:'Attività con i ragazzi',
+      image:'assets/notes/optimized/animatore-educatore.webp', kind:'photo-note group', caption:'Attività con i ragazzi',
       body:['Attività di animatore ed educatore presso l’Oratorio di Bedizzole.', 'Consiste nel partecipare alla vita dell’oratorio con responsabilità educative, organizzative e relazionali verso bambini e ragazzi.'],
       chips:['Oratorio di Bedizzole','Educazione','Gruppo']
     },
     {
       id:'volontariato', filter:'extra', tags:['oratorio'], title:'Festa del Sorriso', meta:'Volontariato', label:'Tornei dei Roncai',
-      image:'assets/notes/volontariato-festa-sorriso.png', kind:'polaroid volontariato', caption:'Volontariato',
+      image:'assets/notes/optimized/volontariato-festa-sorriso.webp', kind:'polaroid volontariato', caption:'Volontariato',
       body:['Volontariato presso la Festa del Sorriso e i Tornei dei Roncai, collegato alle attività dell’Oratorio di Bedizzole.', 'L’esperienza riguarda il supporto pratico e organizzativo durante iniziative locali, con presenza nei periodi indicati dal curriculum.'],
       chips:['Festa del Sorriso','Tornei dei Roncai','Volontariato']
     },
     {
       id:'concorso', filter:'culture', tags:['arte'], title:'Volo tra le Righe', meta:'Contest', label:'Concorso letterario',
-      image:'assets/notes/volo-tra-le-righe.png', kind:'polaroid poster', caption:'Giovani lettori', link:'https://volo.denuvo.studio', linkLabel:'Apri Volo tra le Righe',
+      image:'assets/notes/optimized/volo-tra-le-righe.webp', kind:'polaroid poster', caption:'Giovani lettori', link:'https://volo.denuvo.studio', linkLabel:'Apri Volo tra le Righe',
       body:['Partecipazione al contest letterario “Volo tra le Righe 3.0”.', 'Il curriculum riporta l’acquisizione dell’attestato di partecipazione: una nota culturale, legata a lettura, scrittura e confronto creativo.'],
       chips:['Letterario','Attestato','Biblioteca']
     }
@@ -880,7 +1035,7 @@ if (rebBtn) {
     const act=e.target.closest('[data-note-action]'); if(act){const a=act.dataset.noteAction; if(a==='font') large=!large; if(a==='check') showPoints=!showPoints; if(a==='focus') app.classList.toggle('focus'); render(); sndClick?.(); return;}
     const prev=e.target.closest('[data-note-prev]'); if(prev){const rows=visible(); const i=rows.findIndex(n=>n.id===current); current=rows[(i-1+rows.length)%rows.length]?.id||current; render(); sndClick?.();}
   });
-  render();
+  requestIdle(render, 500);
 })();
 
 
@@ -962,7 +1117,7 @@ if (rebBtn) {
     const ev=e.target.closest('[data-event]'); if(ev){activeEvent=ev.dataset.event; sync(); sndOpen?.(); return;}
     if(e.target.closest('[data-pcto-prev]')||e.target.closest('[data-pcto-next]')){current=current==='2024'?'2025':'2024'; activeEvent=null; sync(); sndClick?.();}
   });
-  sync();
+  requestIdle(sync, 500);
 })();
 
 /* Finder dark: tooltip flottante sopra a tutto e azioni reali */

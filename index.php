@@ -6,6 +6,7 @@
 <title>PCTO — Maturità 2026</title>
 <!-- precarica il logo della scuola: serve subito al loader -->
 <link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high">
+<link rel="preload" href="assets/optimized/bg.webp" as="image" fetchpriority="high">
 <link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
 </head>
 <body class="login-screen">
@@ -17,8 +18,8 @@
 </div>
 
 <!-- SFONDO VIDEO (poster di fallback: bg.png) -->
-<video class="wallpaper" id="bgVideo" autoplay muted loop playsinline preload="auto" poster="assets/bg.png">
-  <source src="assets/lock.mp4" type="video/mp4">
+<video class="wallpaper" id="bgVideo" autoplay muted loop playsinline preload="metadata" poster="assets/optimized/bg.webp">
+  <source src="assets/optimized/lock-lite.mp4" type="video/mp4">
 </video>
 <div class="scrim"></div>
 
@@ -46,7 +47,7 @@
 
   <div class="user">
     <div class="avatar" id="avatar">
-      <img class="avatar-img" id="avatarImg" src="assets/profile.jpg" alt="Filippo Corsini" decoding="async">
+      <img class="avatar-img" id="avatarImg" src="assets/optimized/profile.webp" alt="Filippo Corsini" decoding="async">
       <span class="avatar-mono" id="avatarMono">FC</span>
     </div>
 

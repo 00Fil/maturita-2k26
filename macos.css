@@ -67,14 +67,14 @@ img { -webkit-user-drag: none; }
 .bg {
   position: fixed; inset: 0; z-index: -1; overflow: hidden;
   background:
-    url("assets/bg.png") center / cover no-repeat,
+    url("assets/optimized/bg.webp") center / cover no-repeat,
     linear-gradient(165deg, #1B4FA0 0%, #5A39A8 52%, #C8527E 100%);
 }
 .bg .blob { display: none; }
 @media (prefers-color-scheme: dark) {
   .bg {
     background:
-      url("assets/bg.png") center / cover no-repeat,
+      url("assets/optimized/bg.webp") center / cover no-repeat,
       linear-gradient(165deg, #0C1F42 0%, #221647 52%, #43203A 100%);
   }
 }
@@ -830,7 +830,7 @@ input, textarea { cursor: url("assets/cursors/text.svg") 14 14, text; }
 }
 /* ============================================================
    index.php — SCHERMATA DI BLOCCO IN STILE macOS
-   - sfondo video (assets/lock.mp4, poster bg.png)
+   - sfondo video (assets/optimized/lock-lite.mp4, poster bg.png)
    - orologio live, utente "Filippo Corsini" con foto
    - preloader col logo della scuola: blocca finché gli asset
      non sono caricati completamente
@@ -2044,9 +2044,98 @@ body.spot-gallery-active .dock{opacity:0;pointer-events:none;transform:translate
 body.spot-gallery-active .bg{
   background:
     linear-gradient(180deg,rgba(0,0,0,.16),rgba(0,0,0,.20)),
-    url("assets/spotlight-gallery/bg.png") center / cover no-repeat,
+    url("assets/spotlight-gallery/optimized/bg.webp") center / cover no-repeat,
     #08090b!important;
   filter:saturate(.92) contrast(1.04) brightness(.72);
 }
 body.spot-gallery-active .menubar{background:rgba(10,10,12,.32);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2)}
 /* /George Orwell Spotlight wallpaper */
+
+
+/* ============================================================
+   Performance Safety Layer — hardware sconosciuto
+   Mantiene la grafica coerente, ma scala blur/ombre/motion quando il device
+   reale non regge 60 FPS. La classe viene decisa da hub.js/login.js.
+   ============================================================ */
+html { background:#000; }
+.win, .dock, .menubar, .ccpanel, .lgcard, .mw-banner, .mw-zoom, .mw-hint, .sg-window {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+.win, .sg-window, .ccpanel { contain: layout paint style; }
+.wbody, .main, .finder-main, .nr-screen, .maps-app, .mw-map-wrap { contain: layout paint; }
+.fitem, .favcard, .crow, .evt, .stop, .aprow, .cstat, .nr-row, .pcto-day { content-visibility: auto; contain-intrinsic-size: 120px; }
+.dock .ai { will-change: width, height; }
+.win.open, .win.closing, .sg-window.open, .sg-window.closing { will-change: transform, opacity; }
+#maps-cam, #maps-puck, #maps-route-progress, .mw-pin-rot { will-change: transform; }
+
+html.perf-mid .win,
+html.perf-mid .dock,
+html.perf-mid .menubar,
+html.perf-mid .ccpanel,
+html.perf-mid .lgcard,
+html.perf-mid .mw-banner,
+html.perf-mid .mw-zoom,
+html.perf-mid .mw-hint,
+html.perf-mid .sg-window {
+  backdrop-filter: blur(10px) saturate(1.35);
+  -webkit-backdrop-filter: blur(10px) saturate(1.35);
+}
+html.perf-mid .win { box-shadow: 0 22px 56px -24px rgba(0,0,0,.55), inset 0 1px 0 var(--hairline), inset 0 0 0 1px rgba(255,255,255,.10); }
+html.perf-mid .win.open .as-hero,
+html.perf-mid .win.open .crow,
+html.perf-mid .win.open .evt,
+html.perf-mid .win.open .stop,
+html.perf-mid .win.open .aprow,
+html.perf-mid .win.open .as-duo>*,
+html.perf-mid .win.open .cstat,
+html.perf-mid .win.open .favcard,
+html.perf-mid .win.open .cnote,
+html.perf-mid .win.open .eta,
+html.perf-mid .win.open .sf-note { animation-duration:.28s; animation-delay:0s!important; }
+
+html.perf-low *,
+html.perf-low *::before,
+html.perf-low *::after {
+  animation-duration: .001s !important;
+  animation-delay: 0s !important;
+  transition-duration: .001s !important;
+  scroll-behavior: auto !important;
+}
+html.perf-low .win,
+html.perf-low .dock,
+html.perf-low .menubar,
+html.perf-low .ccpanel,
+html.perf-low .lgcard,
+html.perf-low .mw-banner,
+html.perf-low .mw-zoom,
+html.perf-low .mw-hint,
+html.perf-low .sg-window,
+html.perf-low #pwrdlg .box {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+html.perf-low .win,
+html.perf-low .sg-window {
+  background: rgba(32,33,38,.94) !important;
+  box-shadow: 0 14px 36px rgba(0,0,0,.38), inset 0 0 0 1px rgba(255,255,255,.09) !important;
+}
+html.perf-low .menubar,
+html.perf-low .dock,
+html.perf-low .ccpanel { background: rgba(24,24,28,.92) !important; }
+html.perf-low .lgcard::after,
+html.perf-low .puck-halo,
+html.perf-low .pin-halo,
+html.perf-low .mw-hint { display:none !important; }
+html.perf-low .dock .ai img,
+html.perf-low .dicon .fico img,
+html.perf-low #maps-route,
+html.perf-low .pin-stem,
+html.perf-low .mw-caption { filter:none !important; }
+html.perf-low body.login-screen .wallpaper { transform:none; filter:none; }
+
+@supports not (backdrop-filter: blur(1px)) {
+  .win, .dock, .menubar, .ccpanel, .lgcard, .mw-banner, .mw-zoom, .mw-hint, .sg-window {
+    background: rgba(32,33,38,.92);
+  }
+}

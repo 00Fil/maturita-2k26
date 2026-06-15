@@ -8,7 +8,7 @@ $_SESSION['booted'] = true;
 $RAW = 'https://raw.githubusercontent.com/vinceliuice/WhiteSur-icon-theme/3cc051a4709e67921a9d47cd2a3e0111bbe5e2bd';
 function appicon(string $file, string $remote): string {
   global $RAW;
-  return '<img src="assets/icons/' . $file . '" alt="" draggable="false" onerror="this.onerror=null;this.src=\'' . $RAW . $remote . '\'">';
+  return '<img src="assets/icons/' . $file . '" alt="" draggable="false" loading="eager" decoding="async">';
 }
 ?>
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ function appicon(string $file, string $remote): string {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desktop · Maturità 2026</title>
 <link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
-<?php if ($boot): ?><link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high"><?php endif; ?>
+<?php if ($boot): ?><link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high"><link rel="preload" href="assets/optimized/bg.webp" as="image" fetchpriority="high"><?php endif; ?>
 </head>
 <body<?= $boot ? ' class="booting"' : '' ?>>
 
@@ -93,8 +93,8 @@ function appicon(string $file, string $remote): string {
 </div>
 
 <div class="deskicons">
-  <button class="dicon" data-open="w-fsl"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false"></span><span>Diario di bordo.pdf</span></button>
-  <button class="dicon" data-open="w-io"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false"></span><span>Curriculum dello studente.pdf</span></button>
+  <button class="dicon" data-open="w-fsl"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false" decoding="async"></span><span>Diario di bordo.pdf</span></button>
+  <button class="dicon" data-open="w-io"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false" decoding="async"></span><span>Curriculum dello studente.pdf</span></button>
 </div>
 
 <section class="win open a-blue finder-window" id="w-pres" style="left:5.5%;top:6%;width:980px">
@@ -343,7 +343,7 @@ function appicon(string $file, string $remote): string {
       <span class="spot-q"><span class="spot-type"></span><span class="spot-ghost">Cerca con Spotlight</span><span class="spot-cur"></span></span>
     </div>
     <div class="spot-result" aria-hidden="true">
-      <span class="spot-result-icon"><img src="assets/spotlight-gallery/center.png" alt="" draggable="false"></span>
+      <span class="spot-result-icon"><img src="assets/spotlight-gallery/optimized/center.webp" alt="" draggable="false" loading="lazy" decoding="async"></span>
       <span><b>Conclusione</b><small>L'ultima parola prima delle domande</small></span>
       <em>Invio</em>
     </div>
@@ -360,37 +360,37 @@ function appicon(string $file, string $remote): string {
 <section class="win sg-window sg-center-win" id="sg-center" style="left:calc(50% - 319px);top:calc(50% - 201px);width:638px" data-spot-gallery-window data-spot-center>
   <div class="titlebar sg-titlebar"><span class="wt">George Orwell — centro</span></div>
   <div class="wbody sg-body">
-    <img src="assets/spotlight-gallery/center.png" alt="George Orwell — centro" draggable="false" data-natural-width="638" data-natural-height="359">
+    <img src="assets/spotlight-gallery/optimized/center.webp" alt="George Orwell — centro" draggable="false" loading="lazy" decoding="async" data-natural-width="638" data-natural-height="359">
   </div>
 </section>
 <section class="win sg-window" id="sg-img-1" style="left:4.5%;top:9%;width:330px" data-spot-gallery-window>
   <div class="titlebar sg-titlebar"><span class="wt">Img 1</span></div>
   <div class="wbody sg-body">
-    <img src="assets/spotlight-gallery/img-1.png" alt="Img 1" draggable="false" data-natural-width="1122" data-natural-height="1402">
+    <img src="assets/spotlight-gallery/optimized/img-1.webp" alt="Img 1" draggable="false" loading="lazy" decoding="async" data-natural-width="1122" data-natural-height="1402">
   </div>
 </section>
 <section class="win sg-window" id="sg-img-2" style="left:58%;top:8%;width:360px" data-spot-gallery-window>
   <div class="titlebar sg-titlebar"><span class="wt">Img 2</span></div>
   <div class="wbody sg-body">
-    <img src="assets/spotlight-gallery/img-2.png" alt="Img 2" draggable="false" data-natural-width="1122" data-natural-height="1402">
+    <img src="assets/spotlight-gallery/optimized/img-2.webp" alt="Img 2" draggable="false" loading="lazy" decoding="async" data-natural-width="1122" data-natural-height="1402">
   </div>
 </section>
 <section class="win sg-window" id="sg-img-3" style="left:8%;top:46%;width:340px" data-spot-gallery-window>
   <div class="titlebar sg-titlebar"><span class="wt">Img 3</span></div>
   <div class="wbody sg-body">
-    <img src="assets/spotlight-gallery/img-3.png" alt="Img 3" draggable="false" data-natural-width="1122" data-natural-height="1402">
+    <img src="assets/spotlight-gallery/optimized/img-3.webp" alt="Img 3" draggable="false" loading="lazy" decoding="async" data-natural-width="1122" data-natural-height="1402">
   </div>
 </section>
 <section class="win sg-window" id="sg-img-4" style="left:64%;top:42%;width:380px" data-spot-gallery-window>
   <div class="titlebar sg-titlebar"><span class="wt">Img 4</span></div>
   <div class="wbody sg-body">
-    <img src="assets/spotlight-gallery/img-4.png" alt="Img 4" draggable="false" data-natural-width="1122" data-natural-height="1402">
+    <img src="assets/spotlight-gallery/optimized/img-4.webp" alt="Img 4" draggable="false" loading="lazy" decoding="async" data-natural-width="1122" data-natural-height="1402">
   </div>
 </section>
 <section class="win sg-window" id="sg-img-5" style="left:31%;top:10%;width:320px" data-spot-gallery-window>
   <div class="titlebar sg-titlebar"><span class="wt">Img 5</span></div>
   <div class="wbody sg-body">
-    <img src="assets/spotlight-gallery/img-5.png" alt="Img 5" draggable="false" data-natural-width="1122" data-natural-height="1402">
+    <img src="assets/spotlight-gallery/optimized/img-5.webp" alt="Img 5" draggable="false" loading="lazy" decoding="async" data-natural-width="1122" data-natural-height="1402">
   </div>
 </section>
 <!-- /Spotlight image gallery windows -->

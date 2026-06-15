@@ -1,3 +1,11 @@
+const LOGIN_PERF = (() => {
+  const nav = navigator || {};
+  const conn = nav.connection || nav.mozConnection || nav.webkitConnection;
+  const low = matchMedia('(prefers-reduced-motion: reduce)').matches || (conn && conn.saveData) || (nav.hardwareConcurrency || 4) <= 2 || (nav.deviceMemory || 4) <= 2;
+  document.documentElement.classList.toggle('perf-low', !!low);
+  return { low: !!low };
+})();
+
 /* ============================================================
    login.js — comportamento della lock screen macOS
    - orologio live
@@ -140,7 +148,7 @@ demoEnter.addEventListener('click', () => {
       ? document.fonts.ready.catch(() => {})
       : Promise.resolve()
   );
-  ['assets/iisc-logo.png', 'assets/profile.jpg', 'assets/bg.png'].forEach((src) => {
+  ['assets/iisc-logo.png', 'assets/optimized/profile.webp', 'assets/optimized/bg.webp'].forEach((src) => {
     tasks.push(new Promise((res) => {
       const im = new Image();
       im.onload = im.onerror = () => res();
@@ -161,7 +169,7 @@ demoEnter.addEventListener('click', () => {
     video.addEventListener('error', fine, { once: true });
     const source = video.querySelector('source');
     if (source) source.addEventListener('error', fine, { once: true });
-    setTimeout(fine, 3000);
+    setTimeout(fine, LOGIN_PERF.low ? 900 : 2200);
     try { video.load(); } catch (e) {}
   }));
 
@@ -191,7 +199,7 @@ demoEnter.addEventListener('click', () => {
   const minimo = new Promise((res) => setTimeout(res, 650));
   Promise.all([Promise.all(tasks), minimo]).then(completa).catch(completa);
   // rete di sicurezza dura: il sito si sblocca comunque entro 5s
-  setTimeout(completa, 5000);
+  setTimeout(completa, LOGIN_PERF.low ? 2600 : 4200);
 })();
 
 /* ============================================================
