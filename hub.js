@@ -1118,7 +1118,7 @@ syncFinderVisibility();
       const v=seq[vi];
       const rot=heading(v.x,v.y,v.tx,v.ty), S=1.95, cx=600, cy=548;
       cam.style.transform=`translate(${cx}px, ${cy}px) rotate(${rot}deg) scale(${S}) translate(${-v.x}px, ${-v.y}px)`;
-      pins.forEach((g,i)=>{ const r=g.querySelector('.mw-pin-rot'); let t=`rotate(${-rot})`; if(i===v.active) t+=' scale(1.18)'; r.setAttribute('transform',t); });
+      pins.forEach((g,i)=>{ const r=g.querySelector('.mw-pin-rot'); let t=`rotate(${-rot})`; if(i===v.active) t+=' scale(1.08)'; r.setAttribute('transform',t); });
       if(puckRot) puckRot.setAttribute('transform',`rotate(${-rot})`);
       puck.setAttribute('transform',`translate(${v.x} ${v.y})`);
       progress.style.strokeDashoffset=(1-v.p).toFixed(4);
