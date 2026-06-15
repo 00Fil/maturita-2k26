@@ -1085,6 +1085,7 @@ syncFinderVisibility();
   const icon=app.querySelector('[data-maps-icon]');
   const eta=app.querySelector('[data-maps-eta]');
   const sub=app.querySelector('[data-maps-sub]');
+  if(!cam||!stopsBox||!dots){return;} /* app navigatore svuotata: niente da inizializzare */
   const stops=[
     {x:90,y:565,p:0,icon:'→',kicker:'Partenza',title:'Maturità al Cerebotani',eta:'Inizio percorso',sub:'diploma · competenze tecniche',copy:'Il punto da cui parte tutto: scuola, informatica, metodo e capacità di trasformare un problema in una soluzione concreta.',explain:'Base tecnica: programmazione, logica, metodo, responsabilità.'},
     {x:432,y:406,p:.34,icon:'↱',kicker:'Tra 300 m',title:'CS Metal Europe · PCTO',eta:'Prima sosta importante',sub:'azienda · dati · comunicazione',copy:'Il tirocinio diventa una tappa reale: Excel, WordPress, contenuti aziendali, magazzino e ufficio commerciale mostrano come lavora un’azienda.',explain:'Qui collego scuola e lavoro: dati, sito, comunicazione e gestione.'},
