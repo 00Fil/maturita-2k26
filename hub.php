@@ -264,10 +264,105 @@ function appicon(string $file, string $remote): string {
 <section class="win a-blue maps-window" id="w-fine" style="left:9%;top:7%;width:1040px">
   <div class="titlebar maps-titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
   <div class="maps-app" data-maps-navigator>
-    <div class="maps-app-empty" style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:10px;color:#9aa3ad;font:600 14px/1.5 -apple-system,system-ui,sans-serif;text-align:center;padding:32px">
-      <div style="font-size:34px;opacity:.5">🗺️</div>
-      <div>App Navigatore temporaneamente svuotata<br>per ottimizzare le performance.</div>
-    </div>
+    <aside class="maps-side" aria-label="Indicazioni percorso futuro">
+      <div class="maps-search" role="search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+        <input value="Il mio percorso" aria-label="Cerca in Mappe" readonly>
+        <button type="button" aria-label="Cancella">×</button>
+      </div>
+
+      <span class="maps-label">Guide</span>
+      <button class="maps-side-row on" data-maps-step="0" type="button">
+        <span class="maps-row-ico green">1</span><b>FSL · PCTO</b><small>Prima esperienza concreta</small>
+      </button>
+      <button class="maps-side-row" data-maps-step="1" type="button">
+        <span class="maps-row-ico blue">2</span><b>Diploma</b><small>Conclusione della maturità</small>
+      </button>
+      <button class="maps-side-row" data-maps-step="2" type="button">
+        <span class="maps-row-ico gray">3</span><b>Università a Brescia</b><small>Ingegneria Informatica</small>
+      </button>
+      <button class="maps-side-row" data-maps-step="3" type="button">
+        <span class="maps-row-ico red">4</span><b>America / estero</b><small>Opportunità di carriera</small>
+      </button>
+
+      <div class="maps-route-card">
+        <div class="maps-mode-tabs" aria-label="Modalità percorso">
+          <button class="active" type="button">🚗</button><button type="button">🚶</button><button type="button">🎓</button><button type="button">✈️</button>
+        </div>
+        <div class="maps-route-stops" data-maps-stops aria-label="Tappe del percorso"></div>
+        <button class="maps-add-stop" data-maps-next type="button">Prossima tappa</button>
+      </div>
+
+      <div class="maps-recent">
+        <span>Selezionata</span>
+        <b data-maps-recent>FSL · PCTO</b>
+        <small>clicca sulla mappa o sulle tappe per avanzare</small>
+      </div>
+    </aside>
+
+    <main class="maps-main" aria-label="Mappa animata del percorso futuro">
+      <svg class="maps-map" viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Percorso: FSL, Diploma, Università a Brescia, America">
+        <defs>
+          <linearGradient id="maps-water" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#15345c"/><stop offset="1" stop-color="#071d38"/></linearGradient>
+          <linearGradient id="maps-land" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#163427"/><stop offset=".58" stop-color="#183622"/><stop offset="1" stop-color="#11291e"/></linearGradient>
+          <filter id="maps-soft-shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000" flood-opacity=".25"/></filter>
+        </defs>
+        <rect width="1200" height="720" fill="url(#maps-land)"/>
+        <path d="M760-40 C910 110 830 210 955 340 C1045 435 1115 470 1240 442 L1240-40Z" fill="url(#maps-water)" opacity=".92"/>
+        <path d="M820 60 C930 180 865 235 970 335 C1060 420 1125 440 1208 410" fill="none" stroke="#245b91" stroke-width="2" opacity=".45"/>
+        <path d="M-30 610 C120 520 208 568 322 470 C460 350 510 435 660 326 C780 238 862 250 980 122" fill="none" stroke="#234d3a" stroke-width="120" opacity=".36"/>
+        <g opacity=".62" stroke-linecap="round" fill="none">
+          <path d="M0 590 C180 528 236 546 365 475 C500 402 585 348 720 305 C850 265 975 250 1200 190" stroke="#6d7f86" stroke-width="7"/>
+          <path d="M-20 505 C122 468 248 423 380 382 C540 332 685 310 870 270 C990 244 1080 210 1220 160" stroke="#51666d" stroke-width="4"/>
+          <path d="M85 180 C215 255 335 232 456 280 C590 333 646 405 790 410 C890 415 1010 365 1160 330" stroke="#405b62" stroke-width="4"/>
+          <path d="M250 685 C315 580 368 510 430 440 C510 348 570 290 610 190 C642 105 697 40 742-30" stroke="#526870" stroke-width="5"/>
+          <path d="M520 730 C565 612 610 518 700 430 C790 342 820 260 812 150 C806 80 842 20 895-30" stroke="#415a62" stroke-width="4"/>
+        </g>
+        <g opacity=".45" stroke="#1a77b7" stroke-width="3" fill="none">
+          <path d="M0 350 C160 310 250 330 380 300 C520 268 640 210 760 195"/>
+          <path d="M80 690 C180 620 255 612 350 555 C470 482 540 430 650 392"/>
+        </g>
+        <g opacity=".16" stroke="#fff" stroke-width="1">
+          <path d="M0 120H1200M0 240H1200M0 360H1200M0 480H1200M0 600H1200"/>
+          <path d="M120 0V720M240 0V720M360 0V720M480 0V720M600 0V720M720 0V720M840 0V720M960 0V720M1080 0V720"/>
+        </g>
+        <g class="maps-city">
+          <text x="130" y="610">PCTO</text><text x="390" y="420">Diploma</text><text x="650" y="262">Brescia</text><text x="955" y="95">America</text>
+        </g>
+
+        <g id="maps-cam">
+          <path id="maps-route-base" d="M132 565 C230 502 305 498 392 438 C490 370 548 324 636 272 C748 207 858 132 1015 62" fill="none" stroke="rgba(15,105,210,.35)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+          <path id="maps-route" d="M132 565 C230 502 305 498 392 438 C490 370 548 324 636 272 C748 207 858 132 1015 62" fill="none" stroke="#178bff" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" filter="url(#maps-soft-shadow)"/>
+          <path id="maps-route-progress" pathLength="1" d="M132 565 C230 502 305 498 392 438 C490 370 548 324 636 272 C748 207 858 132 1015 62" fill="none" stroke="#34c759" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1" stroke-dashoffset="1"/>
+
+          <g class="maps-marker" data-maps-step="0" transform="translate(132 565)"><circle r="22" fill="#34c759"/><circle r="12" fill="#fff" opacity=".22"/><text class="num" x="0" y="4" text-anchor="middle">1</text><text x="-52" y="-34">FSL</text></g>
+          <g class="maps-marker" data-maps-step="1" transform="translate(392 438)"><circle r="22" fill="#0a84ff"/><text class="num" x="0" y="4" text-anchor="middle">2</text><text x="-62" y="-34">Diploma</text></g>
+          <g class="maps-marker" data-maps-step="2" transform="translate(636 272)"><circle r="22" fill="#5856d6"/><text class="num" x="0" y="4" text-anchor="middle">3</text><text x="-86" y="-34">Uni Brescia</text></g>
+          <g class="maps-marker" data-maps-step="3" transform="translate(1015 62)"><circle r="24" fill="#ff3b30"/><text class="num" x="0" y="4" text-anchor="middle">4</text><text x="-62" y="48">America</text></g>
+
+          <g id="maps-puck" transform="translate(132 565)">
+            <circle r="18" fill="#0a84ff" stroke="#fff" stroke-width="5" filter="url(#maps-soft-shadow)"/>
+            <circle r="5" fill="#fff"/>
+          </g>
+        </g>
+      </svg>
+
+      <section class="maps-top-card" aria-live="polite">
+        <div class="maps-turn-icon" data-maps-icon>→</div>
+        <div><span data-maps-kicker>Partenza</span><b data-maps-title>FSL · PCTO</b><p data-maps-copy>Il primo punto del viaggio: esperienza concreta, responsabilità e contatto con il mondo del lavoro.</p></div>
+      </section>
+
+      <div class="maps-controls" aria-label="Controlli mappa">
+        <button data-maps-zoom="in" type="button" aria-label="Zoom avanti">+</button><span></span><button data-maps-zoom="out" type="button" aria-label="Zoom indietro">−</button>
+      </div>
+      <button class="maps-compass" data-maps-reset type="button" aria-label="Ricentra mappa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 7 21l5-3 5 3z" fill="#ff3b30"/><path d="M12 3v15" stroke="#fff" opacity=".8"/></svg></button>
+
+      <section class="maps-bottom-sheet">
+        <div><b data-maps-eta>Inizio percorso</b><small data-maps-sub>FSL / PCTO · esperienza concreta</small></div>
+        <div class="maps-dots" data-maps-dots aria-label="Avanzamento percorso"></div>
+        <button class="maps-go" data-maps-next type="button">Avanti</button>
+      </section>
+    </main>
   </div>
 </section>
 

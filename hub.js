@@ -1075,7 +1075,6 @@ syncFinderVisibility();
   const cam=app.querySelector('#maps-cam');
   const puck=app.querySelector('#maps-puck');
   const progress=app.querySelector('#maps-route-progress');
-  const rows=[...app.querySelectorAll('[data-maps-step]')];
   const stopsBox=app.querySelector('[data-maps-stops]');
   const dots=app.querySelector('[data-maps-dots]');
   const recent=app.querySelector('[data-maps-recent]');
@@ -1087,10 +1086,10 @@ syncFinderVisibility();
   const sub=app.querySelector('[data-maps-sub]');
   if(!cam||!stopsBox||!dots){return;} /* app navigatore svuotata: niente da inizializzare */
   const stops=[
-    {x:90,y:565,p:0,icon:'→',kicker:'Partenza',title:'Maturità al Cerebotani',eta:'Inizio percorso',sub:'diploma · competenze tecniche',copy:'Il punto da cui parte tutto: scuola, informatica, metodo e capacità di trasformare un problema in una soluzione concreta.',explain:'Base tecnica: programmazione, logica, metodo, responsabilità.'},
-    {x:432,y:406,p:.34,icon:'↱',kicker:'Tra 300 m',title:'CS Metal Europe · PCTO',eta:'Prima sosta importante',sub:'azienda · dati · comunicazione',copy:'Il tirocinio diventa una tappa reale: Excel, WordPress, contenuti aziendali, magazzino e ufficio commerciale mostrano come lavora un’azienda.',explain:'Qui collego scuola e lavoro: dati, sito, comunicazione e gestione.'},
-    {x:708,y:238,p:.67,icon:'↑',kicker:'Prosegui',title:'Università · Informatica',eta:'Tappa successiva',sub:'studio · basi solide · software',copy:'La direzione è continuare con informatica: approfondire algoritmi, sistemi e progettazione per costruire software con più consapevolezza.',explain:'Studio più verticale per rendere solide le competenze.'},
-    {x:1015,y:62,p:1,icon:'⌖',kicker:'Arrivo',title:'Lavoro software all’estero',eta:'Meta finale',sub:'ambiente internazionale',copy:'Obiettivo finale: lavorare nel software in un contesto internazionale, portando metodo, creatività e capacità di apprendere velocemente.',explain:'Meta: crescere in un contesto più grande e internazionale.'}
+    {x:132,y:565,p:0,icon:'→',kicker:'Partenza',title:'FSL · PCTO',eta:'Inizio percorso',sub:'esperienza concreta · primo contatto col lavoro',copy:'Il viaggio parte dal PCTO: un’esperienza pratica che trasforma la scuola in metodo, responsabilità e contatto reale con il mondo professionale.',explain:'Prima tappa: lavoro, metodo, responsabilità.'},
+    {x:392,y:438,p:.33,icon:'↱',kicker:'Tra poco',title:'Diploma',eta:'Tappa di consolidamento',sub:'maturità · competenze · consapevolezza',copy:'Il diploma chiude il percorso scolastico e diventa il ponte: non solo un traguardo, ma la prova di aver costruito basi tecniche e personali.',explain:'Il diploma come passaggio verso scelte più grandi.'},
+    {x:636,y:272,p:.66,icon:'↑',kicker:'Prosegui',title:'Università a Brescia',eta:'Direzione Brescia',sub:'Ingegneria Informatica · basi solide',copy:'La prossima direzione è Ingegneria Informatica a Brescia: approfondire software, sistemi e progettazione per crescere con basi più solide.',explain:'Studio verticale per diventare più forte nel software.'},
+    {x:1015,y:62,p:1,icon:'✈',kicker:'Arrivo',title:'Opportunità all’estero',eta:'Sogno America',sub:'carriera internazionale · software',copy:'La meta più ambiziosa è spostarmi, cercare opportunità all’estero e costruire una carriera nel software in un contesto internazionale: il sogno è l’America.',explain:'Meta finale: America, lavoro e crescita internazionale.'}
   ];
   let current=0, zoom=1;
   stopsBox.innerHTML=stops.map((s,i)=>`<button class="maps-stop-line ${i===0?'active':''}" data-maps-step="${i}" type="button"><span>${i===0?'●':i}</span><b>${s.title}</b></button>`).join('');
