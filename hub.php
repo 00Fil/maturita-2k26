@@ -288,39 +288,36 @@ function appicon(string $file, string $remote): string {
     </aside>
 
     <main class="mw-map-wrap" aria-label="Mappa del percorso">
-      <svg class="maps-map mw-map" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Percorso: FSL, Diploma, Università a Brescia, estero">
+      <svg class="maps-map mw-map" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Percorso: FSL, Diploma, Università a Brescia, estero">
         <defs>
-          <linearGradient id="mw-water" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#17324e"/><stop offset="1" stop-color="#0d2236"/></linearGradient>
-          <filter id="mw-pin-sh" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity=".35"/></filter>
+          <linearGradient id="mw-water" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16334e"/><stop offset="1" stop-color="#102739"/></linearGradient>
+          <filter id="mw-pin-sh" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity=".35"/></filter>
         </defs>
 
+        <rect class="mw-bg" x="-600" y="-600" width="2400" height="1960" fill="#23262c"/>
         <g id="maps-cam">
-          <rect x="-200" y="-200" width="1600" height="1160" fill="#23262c"/>
-          <path d="M0 150 C220 120 420 175 600 150 C820 120 1010 60 1200 90 L1200 -60 L0 -60 Z" fill="url(#mw-water)"/>
-          <path d="M150 760 C150 600 250 560 300 470 C360 360 300 300 360 210" fill="none" stroke="#2c4d33" stroke-width="150" stroke-linecap="round" opacity=".5"/>
-          <path d="M820 760 C880 640 980 600 1080 560 C1180 520 1220 470 1240 420" fill="none" stroke="#2c4d33" stroke-width="130" stroke-linecap="round" opacity=".45"/>
+          <path d="M-600 150 C220 120 420 175 600 150 C820 120 1010 60 1800 90 L1800 -600 L-600 -600 Z" fill="url(#mw-water)"/>
+          <path d="M120 760 C140 600 250 560 300 470 C360 360 300 300 360 210" fill="none" stroke="#2b4a32" stroke-width="150" stroke-linecap="round" opacity=".5"/>
+          <path d="M860 760 C900 640 1000 600 1100 560 C1200 520 1260 470 1320 420" fill="none" stroke="#2b4a32" stroke-width="130" stroke-linecap="round" opacity=".45"/>
           <g stroke-linecap="round" fill="none">
-            <path d="M-40 520 C220 470 360 430 520 360 C700 282 860 250 1240 170" stroke="#3a3e45" stroke-width="9"/>
-            <path d="M40 700 C260 600 380 560 520 470 C700 360 880 320 1240 250" stroke="#33373d" stroke-width="6"/>
-            <path d="M260 760 C300 600 420 470 540 400 C660 330 720 250 760 120" stroke="#33373d" stroke-width="6"/>
-            <path d="M700 760 C760 600 820 470 900 380 C980 290 1040 220 1080 120" stroke="#2f333a" stroke-width="5"/>
+            <path d="M-200 540 C200 480 360 440 520 360 C720 262 880 230 1400 150" stroke="#3a3e45" stroke-width="9"/>
+            <path d="M40 760 C260 600 380 560 540 460 C720 350 900 300 1400 230" stroke="#33373d" stroke-width="6"/>
+            <path d="M300 760 C340 600 460 470 580 400 C700 330 760 250 800 120" stroke="#33373d" stroke-width="5"/>
           </g>
-          <path id="maps-route-base" d="M180 628 C300 560 360 548 470 486 C600 414 660 372 770 300 C880 228 980 150 1040 96" fill="none" stroke="#0a4da8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
-          <path id="maps-route" d="M180 628 C300 560 360 548 470 486 C600 414 660 372 770 300 C880 228 980 150 1040 96" fill="none" stroke="#0a84ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-          <path id="maps-route-progress" pathLength="1" d="M180 628 C300 560 360 548 470 486 C600 414 660 372 770 300 C880 228 980 150 1040 96" fill="none" stroke="#34c759" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1" stroke-dashoffset="1"/>
 
-          <g class="mw-pin" data-maps-step="0" transform="translate(180 628)"><path class="pin-body" d="M0 6 C-13 6 -22 -3 -22 -15 C-22 -27 -12 -36 0 -36 C12 -36 22 -27 22 -15 C22 -3 13 6 0 6 Z" fill="#34c759" filter="url(#mw-pin-sh)"/><circle cx="0" cy="-15" r="9" fill="#fff"/><text x="0" y="-11" text-anchor="middle" class="pin-num">1</text></g>
-          <g class="mw-pin" data-maps-step="1" transform="translate(470 486)"><path class="pin-body" d="M0 6 C-13 6 -22 -3 -22 -15 C-22 -27 -12 -36 0 -36 C12 -36 22 -27 22 -15 C22 -3 13 6 0 6 Z" fill="#0a84ff" filter="url(#mw-pin-sh)"/><circle cx="0" cy="-15" r="9" fill="#fff"/><text x="0" y="-11" text-anchor="middle" class="pin-num">2</text></g>
-          <g class="mw-pin" data-maps-step="2" transform="translate(770 300)"><path class="pin-body" d="M0 6 C-13 6 -22 -3 -22 -15 C-22 -27 -12 -36 0 -36 C12 -36 22 -27 22 -15 C22 -3 13 6 0 6 Z" fill="#5856d6" filter="url(#mw-pin-sh)"/><circle cx="0" cy="-15" r="9" fill="#fff"/><text x="0" y="-11" text-anchor="middle" class="pin-num">3</text></g>
-          <g class="mw-pin" data-maps-step="3" transform="translate(1040 96)"><path class="pin-body" d="M0 6 C-13 6 -22 -3 -22 -15 C-22 -27 -12 -36 0 -36 C12 -36 22 -27 22 -15 C22 -3 13 6 0 6 Z" fill="#ff453a" filter="url(#mw-pin-sh)"/><circle cx="0" cy="-15" r="9" fill="#fff"/><text x="0" y="-11" text-anchor="middle" class="pin-num">4</text></g>
+          <path id="maps-route-base" d="M185 605 C320 540 360 530 470 470 C600 400 660 370 770 300 C880 230 960 170 1015 120" fill="none" stroke="#0a4da8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+          <path id="maps-route" d="M185 605 C320 540 360 530 470 470 C600 400 660 370 770 300 C880 230 960 170 1015 120" fill="none" stroke="#0a84ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+          <path id="maps-route-progress" pathLength="1" d="M185 605 C320 540 360 530 470 470 C600 400 660 370 770 300 C880 230 960 170 1015 120" fill="none" stroke="#64b5ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1" stroke-dashoffset="1"/>
 
-          <g id="maps-puck" transform="translate(180 628)"><circle r="15" fill="#0a84ff" opacity=".18"/><circle r="8" fill="#0a84ff" stroke="#fff" stroke-width="3"/></g>
+          <g class="mw-pin" data-maps-step="0" transform="translate(185 605)"><g class="mw-pin-rot"><ellipse class="pin-shadow" cx="0" cy="2" rx="9" ry="3.5"/><path class="pin-body" d="M0 0 C-7 -13 -16 -19 -16 -31 A16 16 0 1 1 16 -31 C16 -19 7 -13 0 0 Z"/><circle class="pin-dot" cx="0" cy="-31" r="10"/><text class="pin-num" x="0" y="-27" text-anchor="middle">1</text></g><g class="mw-label"><g transform="translate(26 -31)"><rect x="0" y="-13" width="116" height="26" rx="8"/><text x="12" y="5" text-anchor="start">FSL · PCTO</text></g></g></g> <g class="mw-pin" data-maps-step="1" transform="translate(470 470)"><g class="mw-pin-rot"><ellipse class="pin-shadow" cx="0" cy="2" rx="9" ry="3.5"/><path class="pin-body" d="M0 0 C-7 -13 -16 -19 -16 -31 A16 16 0 1 1 16 -31 C16 -19 7 -13 0 0 Z"/><circle class="pin-dot" cx="0" cy="-31" r="10"/><text class="pin-num" x="0" y="-27" text-anchor="middle">2</text></g><g class="mw-label"><g transform="translate(26 -31)"><rect x="0" y="-13" width="86" height="26" rx="8"/><text x="12" y="5" text-anchor="start">Diploma</text></g></g></g> <g class="mw-pin" data-maps-step="2" transform="translate(770 300)"><g class="mw-pin-rot"><ellipse class="pin-shadow" cx="0" cy="2" rx="9" ry="3.5"/><path class="pin-body" d="M0 0 C-7 -13 -16 -19 -16 -31 A16 16 0 1 1 16 -31 C16 -19 7 -13 0 0 Z"/><circle class="pin-dot" cx="0" cy="-31" r="10"/><text class="pin-num" x="0" y="-27" text-anchor="middle">3</text></g><g class="mw-label"><g transform="translate(26 -31)"><rect x="0" y="-13" width="184" height="26" rx="8"/><text x="12" y="5" text-anchor="start">Università — Brescia</text></g></g></g> <g class="mw-pin" data-maps-step="3" transform="translate(1015 120)"><g class="mw-pin-rot"><ellipse class="pin-shadow" cx="0" cy="2" rx="9" ry="3.5"/><path class="pin-body" d="M0 0 C-7 -13 -16 -19 -16 -31 A16 16 0 1 1 16 -31 C16 -19 7 -13 0 0 Z"/><circle class="pin-dot" cx="0" cy="-31" r="10"/><text class="pin-num" x="0" y="-27" text-anchor="middle">4</text></g><g class="mw-label"><g transform="translate(-26 -31)"><rect x="-158" y="-13" width="158" height="26" rx="8"/><text x="-12" y="5" text-anchor="end">Estero — America</text></g></g></g>
+
+          <g id="maps-puck" transform="translate(185 605)"><g class="puck-rot"><circle class="puck-halo" r="22"/><circle class="puck-dot" r="9"/><path class="puck-arrow" d="M0 -17 L10 7 L0 1 L-10 7 Z"/></g></g>
         </g>
       </svg>
 
       <div class="mw-banner" aria-live="polite">
-        <div class="mw-banner-icon" data-maps-icon>→</div>
-        <div class="mw-banner-text"><span data-maps-kicker>Partenza</span><b data-maps-title>FSL · PCTO</b><p data-maps-copy>Il primo punto del viaggio.</p></div>
+        <div class="mw-banner-icon" data-maps-icon>↗</div>
+        <div class="mw-banner-text"><span data-maps-kicker>Panoramica</span><b data-maps-title>Il mio percorso</b><p data-maps-copy>Tocca una tappa o premi Vai per iniziare.</p></div>
       </div>
 
       <div class="mw-zoom" aria-label="Zoom mappa">
@@ -330,9 +327,9 @@ function appicon(string $file, string $remote): string {
       </div>
 
       <div class="mw-sheet">
-        <div class="mw-sheet-text"><b data-maps-eta>Inizio percorso</b><small data-maps-sub>FSL / PCTO</small></div>
+        <div class="mw-sheet-text"><b data-maps-eta>Il mio percorso</b><small data-maps-sub>4 tappe</small></div>
         <div class="mw-dots" data-maps-dots aria-label="Avanzamento"></div>
-        <button class="mw-go" data-maps-next type="button">Avanti</button>
+        <button class="mw-go go-start" data-maps-go type="button">Vai</button>
       </div>
     </main>
 
