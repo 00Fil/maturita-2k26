@@ -1076,90 +1076,78 @@ syncFinderVisibility();
   const puck=app.querySelector('#maps-puck');
   const puckRot=app.querySelector('#maps-puck .puck-rot');
   const progress=app.querySelector('#maps-route-progress');
-  const stopsBox=app.querySelector('[data-maps-stops]');
-  const dots=app.querySelector('[data-maps-dots]');
+  const stage=app.querySelector('[data-maps-stage]');
   const title=app.querySelector('[data-maps-title]');
   const kicker=app.querySelector('[data-maps-kicker]');
   const copy=app.querySelector('[data-maps-copy]');
   const icon=app.querySelector('[data-maps-icon]');
-  const eta=app.querySelector('[data-maps-eta]');
-  const sub=app.querySelector('[data-maps-sub]');
-  const goBtn=app.querySelector('[data-maps-go]');
-  if(!cam||!stopsBox||!dots) return;
+  const bannerText=app.querySelector('[data-maps-bannertext]');
+  const hint=app.querySelector('[data-maps-hint]');
+  const pins=Array.from(app.querySelectorAll('.mw-pin'));
+  if(!cam||!stage) return;
 
+  // tappe reali (p = avanzamento lungo il percorso 0..1)
   const stops=[
-    {x:185,y:605,p:0,   kicker:'Partenza', title:'FSL · PCTO',           eta:'FSL · PCTO',           sub:'2025 · Esperienza sul campo', copy:'Il viaggio parte dal PCTO: la prima esperienza concreta di lavoro, dove la scuola diventa metodo e responsabilità.'},
-    {x:470,y:470,p:.34, kicker:'Tappa 2',  title:'Diploma',              eta:'Diploma',              sub:'2026 · Maturità',            copy:'Il diploma chiude il percorso scolastico: un traguardo e allo stesso tempo il punto di partenza per le scelte successive.'},
-    {x:770,y:300,p:.67, title:'Università a Brescia',  kicker:'Tappa 3', eta:'Università a Brescia', sub:'Ingegneria Informatica',     copy:'La direzione è Ingegneria Informatica a Brescia: approfondire software, sistemi e progettazione per crescere con basi più solide.'},
-    {x:1015,y:120,p:1,  kicker:'Arrivo',   title:'Carriera all’estero',  eta:'Estero · America',     sub:'Il sogno: contesto internazionale', copy:'La meta più ambiziosa: spostarmi e cercare opportunità nel software all’estero, con il sogno di arrivare in America.'}
+    {x:150,y:650,p:0},
+    {x:360,y:560,p:.17},
+    {x:560,y:430,p:.42},
+    {x:790,y:280,p:.70},
+    {x:1020,y:130,p:1}
   ];
 
-  let current=0, navMode=false, userZoom=1;
-  const last=stops.length-1;
+  // viste di navigazione: si parte poco PRIMA del Diploma (punto virtuale)
+  const seq=[
+    {x:505,y:462,p:.36, tx:560,ty:430, active:2, icon:'↑', kicker:'Tra poco',        title:'Diploma',                copy:'Tra poche centinaia di metri raggiungi il Diploma, il primo grande traguardo del percorso.'},
+    {x:560,y:430,p:.42, tx:790,ty:280, active:2, icon:'◉', kicker:'Tappa raggiunta',  title:'Diploma',                copy:'Maturità conseguita. Prosegui dritto verso l’Università di Brescia.'},
+    {x:790,y:280,p:.70, tx:1020,ty:130,active:3, icon:'↑', kicker:'Prosegui dritto',  title:'Università · Brescia',   copy:'Ingegneria Informatica: qui costruisci basi solide nel software e nei sistemi.'},
+    {x:1020,y:130,p:1,  tx:1250,ty:-20, active:4, icon:'⚑', kicker:'Sei arrivato',     title:'Estero · America',       copy:'Destinazione raggiunta: una carriera all’estero, con il sogno America.'}
+  ];
 
-  stopsBox.innerHTML=stops.map((s,i)=>`<button class="mw-step${i===0?' active':''}" data-maps-step="${i}" type="button"><span class="mw-step-num">${i+1}</span><span class="mw-step-txt"><b>${s.title}</b><small>${s.sub}</small></span></button>`).join('');
-  dots.innerHTML=stops.map((_,i)=>`<button class="mw-dot${i===0?' on':''}" data-maps-step="${i}" type="button" aria-label="Tappa ${i+1}"></button>`).join('');
+  let vi=-1;            // -1 = panoramica; 0..3 = navigazione
+  let userZoom=1;
+  const last=seq.length-1;
 
-  function headingDeg(i){
-    // angolo della direzione di marcia: dal punto corrente al successivo (ultimo: segmento precedente)
-    let a=stops[i], b;
-    if(i<last){ b=stops[i+1]; } else { b=stops[i]; a=stops[i-1]; }
-    const ang=Math.atan2(b.y-a.y, b.x-a.x)*180/Math.PI;
-    return -90-ang; // ruota la scena così che la direzione punti in alto
-  }
+  function heading(x,y,tx,ty){ return -90 - Math.atan2(ty-y, tx-x)*180/Math.PI; }
+  function flash(el){ if(!el) return; el.classList.remove('mw-flash'); void el.offsetWidth; el.classList.add('mw-flash'); }
 
   function render(){
-    const s=stops[current];
+    const navMode = vi>=0;
     app.classList.toggle('nav', navMode);
 
     if(navMode){
-      const rot=headingDeg(current), S=1.95, cx=600, cy=545;
-      cam.style.transform=`translate(${cx}px, ${cy}px) rotate(${rot}deg) scale(${S}) translate(${-s.x}px, ${-s.y}px)`;
-      app.querySelectorAll('.mw-pin-rot').forEach(g=>g.setAttribute('transform',`rotate(${-rot})`));
+      const v=seq[vi];
+      const rot=heading(v.x,v.y,v.tx,v.ty), S=1.95, cx=600, cy=548;
+      cam.style.transform=`translate(${cx}px, ${cy}px) rotate(${rot}deg) scale(${S}) translate(${-v.x}px, ${-v.y}px)`;
+      pins.forEach((g,i)=>{ const r=g.querySelector('.mw-pin-rot'); let t=`rotate(${-rot})`; if(i===v.active) t+=' scale(1.18)'; r.setAttribute('transform',t); });
       if(puckRot) puckRot.setAttribute('transform',`rotate(${-rot})`);
+      puck.setAttribute('transform',`translate(${v.x} ${v.y})`);
+      progress.style.strokeDashoffset=(1-v.p).toFixed(4);
+      kicker.textContent=v.kicker; title.textContent=v.title; copy.textContent=v.copy; icon.textContent=v.icon;
+      pins.forEach((g,i)=>{ g.classList.toggle('on', i===v.active); g.classList.toggle('done', stops[i].p < v.p-0.02 && i!==v.active); });
+      hint.textContent = vi<last ? 'Tocca per proseguire' : 'Tocca per rivedere la panoramica';
     } else {
       cam.style.transform=`translate(600px,380px) scale(${userZoom}) translate(-600px,-380px)`;
-      app.querySelectorAll('.mw-pin-rot').forEach(g=>g.setAttribute('transform',''));
+      pins.forEach(g=>{ g.querySelector('.mw-pin-rot').setAttribute('transform',''); g.classList.remove('on','done'); });
       if(puckRot) puckRot.setAttribute('transform','');
+      puck.setAttribute('transform',`translate(${stops[0].x} ${stops[0].y})`);
+      progress.style.strokeDashoffset='1';
+      kicker.textContent='Percorso'; title.textContent='5 anni di crescita'; copy.textContent='Tocca la mappa per avviare la navigazione.'; icon.textContent='↗';
+      hint.textContent='Tocca la mappa per iniziare';
     }
-
-    puck.setAttribute('transform',`translate(${s.x} ${s.y})`);
-    progress.style.strokeDashoffset=(1-s.p).toFixed(4);
-
-    // testi banner
-    if(navMode){
-      if(current<last){ kicker.textContent='In direzione di'; title.textContent=stops[current+1].title; copy.textContent='Prosegui verso la prossima tappa del percorso.'; icon.textContent='↑'; }
-      else { kicker.textContent='Arrivo'; title.textContent=s.title; copy.textContent='Sei arrivato a destinazione.'; icon.textContent='◉'; }
-    } else {
-      kicker.textContent=s.kicker; title.textContent=s.title; copy.textContent=s.copy; icon.textContent='↗';
-    }
-    eta.textContent=s.eta; sub.textContent=s.sub;
-
-    // pulsante: Vai (verde) / Avanti (blu) / Fine (rosso)
-    goBtn.classList.remove('go-start','go-next','go-end');
-    if(!navMode){ goBtn.textContent='Vai'; goBtn.classList.add('go-start'); }
-    else if(current<last){ goBtn.textContent='Avanti'; goBtn.classList.add('go-next'); }
-    else { goBtn.textContent='Fine'; goBtn.classList.add('go-end'); }
-
-    app.querySelectorAll('.mw-step').forEach((el,i)=>{el.classList.toggle('active',i===current);el.classList.toggle('done',i<current);});
-    app.querySelectorAll('.mw-dot').forEach((el,i)=>{el.classList.toggle('on',i===current);el.classList.toggle('done',i<current);});
-    app.querySelectorAll('.mw-pin').forEach((el,i)=>{el.classList.toggle('on',i===current);el.classList.toggle('done',i<current);});
+    flash(bannerText); flash(hint);
   }
 
-  function go(i){ current=Math.max(0,Math.min(last,i)); render(); try{sndOpen&&sndOpen();}catch(e){} }
-
-  goBtn.addEventListener('click',()=>{
-    if(!navMode){ navMode=true; current=0; }
-    else if(current<last){ current++; }
-    else { navMode=false; current=0; userZoom=1; }
+  function advance(){
+    if(vi>=last) { vi=-1; userZoom=1; }
+    else vi++;
     render();
-  });
+  }
 
-  app.addEventListener('click',e=>{
-    if(e.target.closest('[data-maps-go]')) return;
-    const st=e.target.closest('[data-maps-step]'); if(st){ go(+st.dataset.mapsStep); return; }
-    const z=e.target.closest('[data-maps-zoom]'); if(z){ if(!navMode){ userZoom=Math.max(1,Math.min(1.6, userZoom+(z.dataset.mapsZoom==='in'?.14:-.14))); render(); } return; }
-    const pin=e.target.closest('.mw-pin'); if(pin){ go(+pin.dataset.mapsStep); return; }
+  stage.addEventListener('click', e=>{
+    const z=e.target.closest('[data-maps-zoom]');
+    if(z){ if(vi<0){ userZoom=Math.max(1, Math.min(1.6, userZoom+(z.dataset.mapsZoom==='in'?.14:-.14))); render(); } return; }
+    advance();
+    try{ sndOpen&&sndOpen(); }catch(err){}
   });
 
   render();

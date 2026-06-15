@@ -279,19 +279,25 @@ function appicon(string $file, string $remote): string {
 
       <div class="mw-route">
         <div class="mw-route-line"></div>
-        <div class="mw-endpoint"><span class="mw-pt start"></span><div><small>Da</small><b>Oggi · Maturità</b></div></div>
+        <div class="mw-endpoint"><span class="mw-pt start"></span><div><small>Da</small><b>Cerebotani · Lonato</b></div></div>
         <div class="mw-endpoint"><span class="mw-pt end"></span><div><small>A</small><b>Estero · America</b></div></div>
       </div>
 
-      <div class="mw-steps-head">Passaggi</div>
-      <div class="mw-steps" data-maps-stops aria-label="Tappe del percorso"></div>
+      <div class="mw-routecard" aria-label="Durata del percorso">
+        <div class="mw-rc-main">
+          <b>5 anni</b>
+          <span>Arrivo previsto · 2031 · obiettivo America</span>
+          <em>Percorso più ambizioso</em>
+        </div>
+        <div class="mw-rc-info" aria-hidden="true">i</div>
+      </div>
     </aside>
 
-    <main class="mw-map-wrap" aria-label="Mappa del percorso">
-      <svg class="maps-map mw-map" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Percorso: FSL, Diploma, Università a Brescia, estero">
+    <main class="mw-map-wrap" data-maps-stage aria-label="Mappa del percorso — tocca per proseguire">
+      <svg class="maps-map mw-map" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Percorso di vita">
         <defs>
           <linearGradient id="mw-water" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16334e"/><stop offset="1" stop-color="#102739"/></linearGradient>
-          <filter id="mw-pin-sh" x="-60%" y="-60%" width="220%" height="220%"><feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity=".35"/></filter>
+          <filter id="mw-pin-sh" x="-70%" y="-70%" width="240%" height="240%"><feDropShadow dx="0" dy="4" stdDeviation="3.5" flood-color="#000" flood-opacity=".4"/></filter>
         </defs>
 
         <rect class="mw-bg" x="-600" y="-600" width="2400" height="1960" fill="#23262c"/>
@@ -305,19 +311,19 @@ function appicon(string $file, string $remote): string {
             <path d="M300 760 C340 600 460 470 580 400 C700 330 760 250 800 120" stroke="#33373d" stroke-width="5"/>
           </g>
 
-          <path id="maps-route-base" d="M185 605 C320 540 360 530 470 470 C600 400 660 370 770 300 C880 230 960 170 1015 120" fill="none" stroke="#0a4da8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
-          <path id="maps-route" d="M185 605 C320 540 360 530 470 470 C600 400 660 370 770 300 C880 230 960 170 1015 120" fill="none" stroke="#0a84ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-          <path id="maps-route-progress" pathLength="1" d="M185 605 C320 540 360 530 470 470 C600 400 660 370 770 300 C880 230 960 170 1015 120" fill="none" stroke="#64b5ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <path id="maps-route-base" d="M150 650 C250 605 300 595 360 560 C440 525 470 500 560 430 C650 360 700 340 790 280 C880 220 960 175 1020 130" fill="none" stroke="#0a4da8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
+          <path id="maps-route" d="M150 650 C250 605 300 595 360 560 C440 525 470 500 560 430 C650 360 700 340 790 280 C880 220 960 175 1020 130" fill="none" stroke="#0a84ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+          <path id="maps-route-progress" pathLength="1" d="M150 650 C250 605 300 595 360 560 C440 525 470 500 560 430 C650 360 700 340 790 280 C880 220 960 175 1020 130" fill="none" stroke="#7cc4ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1" stroke-dashoffset="1"/>
 
-          <g class="mw-pin" data-maps-step="0" transform="translate(185 605)"><g class="mw-pin-rot"><ellipse class="pin-shadow" cx="0" cy="2" rx="9" ry="3.5"/><path class="pin-body" d="M0 0 C-7 -13 -16 -19 -16 -31 A16 16 0 1 1 16 -31 C16 -19 7 -13 0 0 Z"/><circle class="pin-dot" cx="0" cy="-31" r="10"/><text class="pin-num" x="0" y="-27" text-anchor="middle">1</text></g><g class="mw-label"><g transform="translate(26 -31)"><rect x="0" y="-13" width="116" height="26" rx="8"/><text x="12" y="5" text-anchor="start">FSL · PCTO</text></g></g></g> <g class="mw-pin" data-maps-step="1" transform="translate(470 470)"><g class="mw-pin-rot"><ellipse class="pin-shadow" cx="0" cy="2" rx="9" ry="3.5"/><path class="pin-body" d="M0 0 C-7 -13 -16 -19 -16 -31 A16 16 0 1 1 16 -31 C16 -19 7 -13 0 0 Z"/><circle class="pin-dot" cx="0" cy="-31" r="10"/><text class="pin-num" x="0" y="-27" text-anchor="middle">2</text></g><g class="mw-label"><g transform="translate(26 -31)"><rect x="0" y="-13" width="86" height="26" rx="8"/><text x="12" y="5" text-anchor="start">Diploma</text></g></g></g> <g class="mw-pin" data-maps-step="2" transform="translate(770 300)"><g class="mw-pin-rot"><ellipse class="pin-shadow" cx="0" cy="2" rx="9" ry="3.5"/><path class="pin-body" d="M0 0 C-7 -13 -16 -19 -16 -31 A16 16 0 1 1 16 -31 C16 -19 7 -13 0 0 Z"/><circle class="pin-dot" cx="0" cy="-31" r="10"/><text class="pin-num" x="0" y="-27" text-anchor="middle">3</text></g><g class="mw-label"><g transform="translate(26 -31)"><rect x="0" y="-13" width="184" height="26" rx="8"/><text x="12" y="5" text-anchor="start">Università — Brescia</text></g></g></g> <g class="mw-pin" data-maps-step="3" transform="translate(1015 120)"><g class="mw-pin-rot"><ellipse class="pin-shadow" cx="0" cy="2" rx="9" ry="3.5"/><path class="pin-body" d="M0 0 C-7 -13 -16 -19 -16 -31 A16 16 0 1 1 16 -31 C16 -19 7 -13 0 0 Z"/><circle class="pin-dot" cx="0" cy="-31" r="10"/><text class="pin-num" x="0" y="-27" text-anchor="middle">4</text></g><g class="mw-label"><g transform="translate(-26 -31)"><rect x="-158" y="-13" width="158" height="26" rx="8"/><text x="-12" y="5" text-anchor="end">Estero — America</text></g></g></g>
+          <g class="mw-pin" data-step-pin="0" transform="translate(150 650)"><g class="mw-pin-drop" style="animation-delay:0.00s"><g class="mw-pin-rot"><ellipse class="pin-ground" cx="0" cy="1" rx="7" ry="2.6"/><circle class="pin-halo" cx="0" cy="-33" r="19"/><path class="pin-body" d="M0 0 C-5 -16 -15 -20 -15 -33 A15 15 0 1 1 15 -33 C15 -20 5 -16 0 0 Z"/><circle class="pin-core" cx="0" cy="-33" r="8"/><text class="pin-num" x="0" y="-29" text-anchor="middle">1</text></g></g><g class="mw-label"><g transform="translate(24 -33)"><rect x="0" y="-15" width="150" height="30" rx="10"/><circle class="lbl-dot" cx="15" cy="0" r="3.2"/><text x="28" y="5" text-anchor="start">Cerebotani</text></g></g></g><g class="mw-pin" data-step-pin="1" transform="translate(360 560)"><g class="mw-pin-drop" style="animation-delay:0.07s"><g class="mw-pin-rot"><ellipse class="pin-ground" cx="0" cy="1" rx="7" ry="2.6"/><circle class="pin-halo" cx="0" cy="-33" r="19"/><path class="pin-body" d="M0 0 C-5 -16 -15 -20 -15 -33 A15 15 0 1 1 15 -33 C15 -20 5 -16 0 0 Z"/><circle class="pin-core" cx="0" cy="-33" r="8"/><text class="pin-num" x="0" y="-29" text-anchor="middle">2</text></g></g><g class="mw-label"><g transform="translate(24 -33)"><rect x="0" y="-15" width="132" height="30" rx="10"/><circle class="lbl-dot" cx="15" cy="0" r="3.2"/><text x="28" y="5" text-anchor="start">FSL · PCTO</text></g></g></g><g class="mw-pin" data-step-pin="2" transform="translate(560 430)"><g class="mw-pin-drop" style="animation-delay:0.14s"><g class="mw-pin-rot"><ellipse class="pin-ground" cx="0" cy="1" rx="7" ry="2.6"/><circle class="pin-halo" cx="0" cy="-33" r="19"/><path class="pin-body" d="M0 0 C-5 -16 -15 -20 -15 -33 A15 15 0 1 1 15 -33 C15 -20 5 -16 0 0 Z"/><circle class="pin-core" cx="0" cy="-33" r="8"/><text class="pin-num" x="0" y="-29" text-anchor="middle">3</text></g></g><g class="mw-label"><g transform="translate(24 -33)"><rect x="0" y="-15" width="112" height="30" rx="10"/><circle class="lbl-dot" cx="15" cy="0" r="3.2"/><text x="28" y="5" text-anchor="start">Diploma</text></g></g></g><g class="mw-pin" data-step-pin="3" transform="translate(790 280)"><g class="mw-pin-drop" style="animation-delay:0.21s"><g class="mw-pin-rot"><ellipse class="pin-ground" cx="0" cy="1" rx="7" ry="2.6"/><circle class="pin-halo" cx="0" cy="-33" r="19"/><path class="pin-body" d="M0 0 C-5 -16 -15 -20 -15 -33 A15 15 0 1 1 15 -33 C15 -20 5 -16 0 0 Z"/><circle class="pin-core" cx="0" cy="-33" r="8"/><text class="pin-num" x="0" y="-29" text-anchor="middle">4</text></g></g><g class="mw-label"><g transform="translate(24 -33)"><rect x="0" y="-15" width="210" height="30" rx="10"/><circle class="lbl-dot" cx="15" cy="0" r="3.2"/><text x="28" y="5" text-anchor="start">Università · Brescia</text></g></g></g><g class="mw-pin" data-step-pin="4" transform="translate(1020 130)"><g class="mw-pin-drop" style="animation-delay:0.28s"><g class="mw-pin-rot"><ellipse class="pin-ground" cx="0" cy="1" rx="7" ry="2.6"/><circle class="pin-halo" cx="0" cy="-33" r="19"/><path class="pin-body" d="M0 0 C-5 -16 -15 -20 -15 -33 A15 15 0 1 1 15 -33 C15 -20 5 -16 0 0 Z"/><circle class="pin-core" cx="0" cy="-33" r="8"/><text class="pin-num" x="0" y="-29" text-anchor="middle">5</text></g></g><g class="mw-label"><g transform="translate(-24 -33)"><rect x="-188" y="-15" width="188" height="30" rx="10"/><circle class="lbl-dot" cx="-15" cy="0" r="3.2"/><text x="-28" y="5" text-anchor="end">Estero · America</text></g></g></g>
 
-          <g id="maps-puck" transform="translate(185 605)"><g class="puck-rot"><circle class="puck-halo" r="22"/><circle class="puck-dot" r="9"/><path class="puck-arrow" d="M0 -17 L10 7 L0 1 L-10 7 Z"/></g></g>
+          <g id="maps-puck" transform="translate(150 650)"><g class="puck-rot"><circle class="puck-halo" r="22"/><circle class="puck-dot" r="9"/><path class="puck-arrow" d="M0 -17 L10 7 L0 1 L-10 7 Z"/></g></g>
         </g>
       </svg>
 
-      <div class="mw-banner" aria-live="polite">
+      <div class="mw-banner" data-maps-banner aria-live="polite">
         <div class="mw-banner-icon" data-maps-icon>↗</div>
-        <div class="mw-banner-text"><span data-maps-kicker>Panoramica</span><b data-maps-title>Il mio percorso</b><p data-maps-copy>Tocca una tappa o premi Vai per iniziare.</p></div>
+        <div class="mw-banner-text" data-maps-bannertext><span data-maps-kicker>Percorso</span><b data-maps-title>5 anni di crescita</b><p data-maps-copy>Tocca la mappa per avviare la navigazione.</p></div>
       </div>
 
       <div class="mw-zoom" aria-label="Zoom mappa">
@@ -326,11 +332,7 @@ function appicon(string $file, string $remote): string {
         <button data-maps-zoom="out" type="button" aria-label="Allontana">−</button>
       </div>
 
-      <div class="mw-sheet">
-        <div class="mw-sheet-text"><b data-maps-eta>Il mio percorso</b><small data-maps-sub>4 tappe</small></div>
-        <div class="mw-dots" data-maps-dots aria-label="Avanzamento"></div>
-        <button class="mw-go go-start" data-maps-go type="button">Vai</button>
-      </div>
+      <div class="mw-hint" data-maps-hint>Tocca la mappa per iniziare</div>
     </main>
 
   </div>
