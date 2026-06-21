@@ -1,25 +1,23 @@
 # ============================================
-# PCTO · Maturità 2026 — stack completo
-# app (PHP+Apache) + db (MySQL 8.4)
-# Pronto per DokPloy (tipo progetto: Compose)
+# PCTO · Maturità 2026 — stack per Dokploy + Traefik
 # ============================================
 services:
   app:
     build: .
     restart: unless-stopped
-    ports:
-      - "8080:80"
     environment:
       DB_HOST: db
       DB_NAME: pcto
       DB_USER: pcto
       DB_PASS: ${DB_PASS:-pcto_password}
       CODICE_ACCESSO: ${CODICE_ACCESSO:-maturita2026}
-      # Consigliato in produzione: l'hash bcrypt del codice (password_hash)
       CODICE_ACCESSO_HASH: ${CODICE_ACCESSO_HASH:-}
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - dokploy-network   # <-- così Traefik lo raggiunge
+      - default           # <-- così parla col db
 
   db:
     image: mysql:8.4
@@ -31,13 +29,19 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS:-cambia_questa_root}
     volumes:
       - db_data:/var/lib/mysql
-      # setup.sql viene eseguito automaticamente al primo avvio
       - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
       timeout: 5s
       retries: 20
+    networks:
+      - default           # <-- il DB resta isolato, NON su dokploy-network
 
 volumes:
   db_data:
+
+networks:
+  dokploy-network:
+    external: true
+  default:
