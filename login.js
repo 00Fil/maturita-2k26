@@ -20,7 +20,9 @@ const dateEl = document.getElementById('date');
 const timeEl = document.getElementById('time');
 function tickClock() {
   const now = new Date();
-  timeEl.textContent = now.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+  const timeText = now.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+  timeEl.textContent = timeText;
+  timeEl.dataset.time = timeText;
   let d = now.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
   dateEl.textContent = d.charAt(0).toUpperCase() + d.slice(1);
 }

@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#05070d">
 <title>PCTO — Maturità 2026</title>
 <!-- precarica il logo della scuola: serve subito al loader -->
 <link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high">
@@ -21,10 +22,15 @@
 <video class="wallpaper" id="bgVideo" autoplay muted loop playsinline preload="metadata" poster="assets/optimized/bg.webp">
   <source src="assets/optimized/lock-lite.mp4" type="video/mp4">
 </video>
+<div class="tahoe-light-field" aria-hidden="true">
+  <span class="tl tl-a"></span>
+  <span class="tl tl-b"></span>
+  <span class="tl tl-c"></span>
+</div>
 <div class="scrim"></div>
 
 <!-- MENU BAR -->
-<div class="menubar">
+<div class="menubar" aria-label="Barra di stato macOS Tahoe">
   <span class="mb-item lang">IT</span>
   <span class="mb-item" aria-label="Centro di Controllo">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="6.5" width="18" height="4.2" rx="2.1"/><rect x="3" y="13.3" width="18" height="4.2" rx="2.1"/><circle cx="8" cy="8.6" r="1.1" fill="currentColor" stroke="none"/><circle cx="16" cy="15.4" r="1.1" fill="currentColor" stroke="none"/></svg>
@@ -40,9 +46,9 @@
 <!-- LOCK SCREEN -->
 <div class="lock" id="lock">
 
-  <div class="clock">
+  <div class="clock" aria-label="Orologio schermata di blocco">
     <div class="date" id="date">—</div>
-    <div class="time" id="time">—</div>
+    <div class="time" id="time" data-time="--:--">—</div>
   </div>
 
   <div class="user">
