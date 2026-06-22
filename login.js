@@ -7,7 +7,7 @@ const LOGIN_PERF = (() => {
 })();
 
 /* ============================================================
-   login — comportamento della lock screen macOS
+   login.js — comportamento della lock screen macOS
    - orologio live
    - input password / feedback
    - chiamata fetch a login.php
