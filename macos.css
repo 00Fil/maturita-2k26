@@ -2,7 +2,7 @@
    macos.css — Design System unico del progetto PCTO · Maturità 2026
    Obiettivo: linguaggio universale ispirato a macOS (vetro, hairline,
    dock, finestre, centro di controllo, motion coerente).
-   Questo è l'unico CSS caricato da login e desktop.s
+   Questo è l'unico CSS caricato da login e desktop.ss
    ============================================================ */
 @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SFPRODISPLAYREGULAR.OTF") format("opentype"); font-weight: 100 450; font-display: swap; }
 @font-face { font-family: "SF Pro Display"; src: url("assets/fonts/SFPRODISPLAYMEDIUM.OTF") format("opentype"); font-weight: 451 650; font-display: swap; }
