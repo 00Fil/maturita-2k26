@@ -3473,3 +3473,52 @@ body.login-screen.unlock .wallpaper {
 @media (prefers-reduced-motion:reduce){
   .nr-ambient,.nr-note.switching,.nr-note-copy > *{ animation:none !important; }
 }
+
+
+/* ============================================================
+   NOTES — FIX SELEZIONE LISTA STILE macOS NOTES
+   Selezione neutra, satinata e non decorativa: niente glow/card custom.
+   ============================================================ */
+.nr-row{
+  border-radius:10px;
+  transform:none !important;
+  transition:background .16s ease, color .16s ease;
+}
+.nr-row:hover{
+  background:rgba(255,255,255,.055) !important;
+  transform:none !important;
+  box-shadow:none !important;
+}
+.nr-row.active{
+  background:rgba(255,255,255,.118) !important;
+  box-shadow:none !important;
+  outline:1px solid rgba(255,255,255,.045);
+  outline-offset:-1px;
+}
+.nr-row.active:hover{
+  background:rgba(255,255,255,.135) !important;
+}
+.nr-row.active b{
+  color:rgba(255,255,255,.96) !important;
+  font-weight:760;
+}
+.nr-row.active span{
+  color:rgba(245,245,247,.54) !important;
+}
+.nr-row.active p{
+  color:rgba(245,245,247,.68) !important;
+}
+.nr-row + .nr-row::before{
+  left:14px;
+  right:14px;
+  background:rgba(255,255,255,.04) !important;
+}
+.nr-row.active::before,
+.nr-row.active + .nr-row::before{
+  opacity:0 !important;
+}
+
+/* quando la finestra non e' attiva/hover, resta una selezione soft come macOS */
+.nr-list:not(:hover) .nr-row.active{
+  background:rgba(255,255,255,.095) !important;
+}
