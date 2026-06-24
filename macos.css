@@ -1572,6 +1572,205 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 .nr-visual.volontariato img { object-position:center; }
 
 /* ============================================================
+   NOTES — RESA IMMERSIVA (vale anche a finestra normale)
+   Da' profondita' all'editor, incornicia la nota come un documento e
+   rende la foto piu' viva, cosi' non sembra piu' "default e spoglio".
+   ============================================================ */
+
+/* Editor con profondita': alone caldo in alto + accento freddo in basso */
+.nr-editor{
+  background:
+    radial-gradient(120% 82% at 84% -8%, rgba(242,178,0,.12) 0%, rgba(242,178,0,0) 48%),
+    radial-gradient(92% 72% at 4% 110%, rgba(118,108,255,.10) 0%, rgba(118,108,255,0) 54%),
+    #15151a;
+}
+
+/* La nota e' un "documento" su una superficie definita, non testo nel vuoto */
+.nr-note-layout{
+  position:relative;
+  padding:22px 24px 26px;
+  background:linear-gradient(165deg, rgba(255,255,255,.052), rgba(255,255,255,.018));
+  border-radius:22px;
+  box-shadow:0 26px 56px -30px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.06), inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+/* Foto con alone colorato (immersivo) che si raddrizza al passaggio del mouse */
+.nr-visual{
+  box-shadow:0 18px 46px -12px rgba(0,0,0,.5), 0 0 64px -8px rgba(242,178,0,.26);
+  transition:transform .45s var(--spring-soft), box-shadow .45s ease;
+}
+.nr-visual:hover{
+  transform:rotate(0deg) scale(1.02);
+  box-shadow:0 26px 58px -12px rgba(0,0,0,.55), 0 0 88px -6px rgba(242,178,0,.36);
+}
+
+/* Etichetta della nota come pill accentata */
+.nr-note-label{
+  padding:5px 11px; border-radius:999px;
+  background:rgba(242,178,0,.14); box-shadow:inset 0 0 0 1px rgba(242,178,0,.26);
+}
+
+/* ============================================================
+   NOTES — MODALITA' PRESENTAZIONE (finestra massimizzata / schermo intero)
+   Riempie lo spazio vuoto, centra il contenuto come un documento e rende
+   l'esposizione piu' fluida, restando nello stile macOS.
+   ============================================================ */
+
+/* 1) La app riempie tutta la finestra: niente piu' vuoto sotto i 650px */
+.win.maxi .notes-real-app{
+  height:100%;
+  grid-template-columns:252px 332px minmax(0,1fr);
+}
+
+/* 2) Sidebar ed elenco piu' ariosi per bilanciare l'editor ampio */
+.win.maxi .nr-sidebar{ padding:16px 13px 20px; }
+.win.maxi .nr-folder{ height:38px; }
+.win.maxi .nr-folder b{ font-size:13.5px; }
+.win.maxi .nr-list{ padding:16px 14px; }
+.win.maxi .nr-list-head{ height:62px; }
+.win.maxi .nr-list-head h2{ font-size:22px; }
+.win.maxi .nr-list-head span{ font-size:12.5px; }
+.win.maxi .nr-items{ gap:8px; }
+.win.maxi .nr-row{ min-height:86px; padding:13px 15px; border-radius:12px; }
+.win.maxi .nr-row b{ font-size:14px; }
+.win.maxi .nr-row span{ font-size:11.5px; }
+.win.maxi .nr-row p{ font-size:12.6px; line-height:1.38; }
+
+/* 3) Editor: profondita' ambientale cosi' l'area scura non sembra vuota */
+.win.maxi .nr-editor{
+  background:
+    radial-gradient(115% 85% at 88% -5%, rgba(242,178,0,.10) 0%, rgba(242,178,0,0) 46%),
+    radial-gradient(95% 80% at 4% 105%, rgba(96,124,255,.11) 0%, rgba(96,124,255,0) 52%),
+    #16161a;
+}
+.win.maxi .nr-editor-toolbar{ height:48px; background:rgba(22,22,26,.7); backdrop-filter:blur(12px); }
+
+/* 4) La nota si centra nello spazio ampio invece di galleggiare in alto a sx */
+.win.maxi .nr-note{
+  padding:42px clamp(28px,5vw,90px) 56px;
+  overflow:auto;
+  display:flex;
+  flex-direction:column;
+  justify-content:safe center;
+  align-items:center;
+}
+.win.maxi .nr-note-date{
+  width:100%; max-width:1180px; text-align:center;
+  font-size:12.5px; letter-spacing:.05em; text-transform:uppercase;
+  color:rgba(245,245,247,.42); margin:0 0 22px;
+}
+
+/* 5) Il contenuto diventa un "documento" definito, centrato e ben distribuito */
+.win.maxi .nr-note-layout{
+  width:100%;
+  max-width:1180px;
+  margin:0 auto;
+  grid-template-columns:minmax(300px,400px) minmax(0,1fr);
+  gap:clamp(40px,4vw,68px);
+  align-items:center;
+  padding:clamp(30px,3vw,48px);
+  background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.022));
+  border-radius:28px;
+  box-shadow:0 36px 80px -34px rgba(0,0,0,.62), inset 0 0 0 1px rgba(255,255,255,.07), inset 0 1px 0 rgba(255,255,255,.06);
+}
+
+/* 6) Visual piu' grande e presente */
+.win.maxi .nr-visual{ transform:rotate(-1.6deg); }
+.win.maxi .nr-visual img{ height:clamp(300px,34vh,420px); }
+.win.maxi .nr-visual.polaroid:not(.wide) img{ height:clamp(330px,40vh,470px); }
+.win.maxi .nr-visual.polaroid.wide img{ height:clamp(240px,28vh,320px); }
+.win.maxi .nr-visual figcaption{ font-size:14.5px; min-height:48px; }
+
+/* 7) Tipografia in scala da presentazione */
+.win.maxi .nr-note-label{ font-size:12.5px; letter-spacing:.09em; margin-bottom:14px; }
+.win.maxi .nr-note h2{ font-size:clamp(34px,3.3vw,46px); margin-bottom:20px; line-height:1.02; }
+.win.maxi .nr-note-body{ max-width:none; gap:16px; }
+.win.maxi .nr-note-body p{ font-size:clamp(15px,1.1vw,18px); line-height:1.62; color:rgba(245,245,247,.85); }
+.win.maxi .nr-note.large .nr-note-body p{ font-size:clamp(17px,1.25vw,20px); }
+
+/* 8) Chips → schede informative che riempiono la larghezza */
+.win.maxi .nr-points{ gap:10px; margin-top:26px; }
+.win.maxi .nr-points div{
+  padding:10px 15px; font-size:13px; border-radius:13px;
+  background:rgba(242,178,0,.13);
+  box-shadow:inset 0 0 0 1px rgba(242,178,0,.22);
+}
+.win.maxi .nr-project-link{ margin-top:24px; padding:11px 18px; font-size:14px; }
+
+/* 9) Comportamento responsivo della modalita' massimizzata */
+@media (max-width:1100px){
+  .win.maxi .notes-real-app{ grid-template-columns:236px minmax(0,1fr); }
+  .win.maxi .nr-sidebar{ display:none; }
+  .win.maxi .nr-note-layout{ grid-template-columns:1fr; }
+  .win.maxi .nr-visual{ max-width:360px; justify-self:center; }
+}
+@media (max-width:760px){
+  .win.maxi .notes-real-app{ grid-template-columns:1fr; }
+  .win.maxi .nr-list{ display:none; }
+  .win.maxi .nr-note{ padding:28px 22px; justify-content:flex-start; }
+}
+
+/* 10) Entrata morbida e scaglionata degli elementi della nota (smooth) */
+.nr-note-copy > *{ animation:nrRise .5s var(--ease-apple, cubic-bezier(.2,.8,.2,1)) both; }
+.nr-visual{ animation:nrFade .55s var(--ease-apple, cubic-bezier(.2,.8,.2,1)) .02s both; }
+@keyframes nrFade{ from{ opacity:0; } to{ opacity:1; } }
+.nr-note-copy > *:nth-child(1){ animation-delay:.06s; }
+.nr-note-copy > *:nth-child(2){ animation-delay:.12s; }
+.nr-note-copy > *:nth-child(3){ animation-delay:.18s; }
+.nr-note-copy > *:nth-child(4){ animation-delay:.24s; }
+.nr-note-copy > *:nth-child(5){ animation-delay:.30s; }
+@keyframes nrRise{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:none; } }
+
+/* 11) Hover piu' vivo sulle righe dell'elenco e cartelle */
+.nr-row{ transition:background .2s ease, transform .25s var(--spring-soft); }
+.nr-row:hover{ transform:translateX(2px); }
+.nr-folder{ transition:background .2s ease, transform .25s var(--spring-soft); }
+.nr-tags button{ transition:background .2s ease, transform .2s var(--spring-soft); }
+.nr-tags button:hover{ transform:translateY(-1px); }
+
+/* 12) Rispetto delle preferenze di movimento ridotto */
+@media (prefers-reduced-motion:reduce){
+  .nr-note.switching, .nr-visual, .nr-note-copy > *{ animation:none !important; }
+  .nr-row:hover, .nr-tags button:hover{ transform:none; }
+}
+
+/* ============================================================
+   NOTES — RIFINITURE macOS (lista stile Note, accenti, micro-interazioni)
+   ============================================================ */
+
+/* Pannelli con materiale piu' profondo, gerarchia chiara come su macOS */
+.nr-sidebar{ background:linear-gradient(180deg, rgba(36,36,40,.97), rgba(30,30,34,.97)); }
+.nr-list{ background:linear-gradient(180deg, rgba(28,28,32,.98), rgba(24,24,28,.98)); }
+
+/* Righe note come macOS Notes: separatori hairline + selezione calda */
+.nr-row{ position:relative; }
+.nr-row + .nr-row::before{
+  content:""; position:absolute; top:-3px; left:13px; right:13px; height:1px;
+  background:rgba(255,255,255,.05);
+}
+.nr-row.active{
+  background:rgba(242,178,0,.16);
+  box-shadow:inset 0 0 0 1px rgba(242,178,0,.22);
+}
+.nr-row.active b{ color:#ffe7a3; }
+.nr-row.active::before, .nr-row.active + .nr-row::before{ opacity:0; }
+
+/* Cartella e tag selezionati con ombra calda morbida (accento Note) */
+.nr-folder.selected{ box-shadow:0 6px 16px -7px rgba(242,178,0,.55); }
+.nr-tags button.selected{ box-shadow:0 4px 12px -5px rgba(242,178,0,.5); }
+
+/* Micro-interazioni dei pulsanti della toolbar (feedback tattile macOS) */
+.nr-editor-toolbar button{ transition:background .18s ease, transform .18s var(--spring-soft), color .18s ease; }
+.nr-editor-toolbar button:active{ transform:scale(.9); }
+
+/* Titolo dell'elenco con leggera sfumatura SF, piu' raffinato */
+.nr-list-head h2{
+  background:linear-gradient(180deg,#ffffff,#d7d7dd);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+/* ============================================================
    FINDER DARK — Applications grid ispirato alla reference macOS
    ============================================================ */
 .finder-window {
@@ -2852,198 +3051,425 @@ body.login-screen.unlock .wallpaper {
 
 
 /* ============================================================
-   NOTES — KEYNOTE (reset pulito)
-   Immagine protagonista mai tagliata, tipografia ampia, fondo a tinta
-   tenue per sezione. Stile macOS, sobrio e presentabile.
+   NOTES — APPLE IMMERSIVE FINAL OVERRIDE
+   Materiale macOS, composizione dinamica, niente effetto troppo decorativo.
    ============================================================ */
-
-/* Variabili palette (impostate via JS per ogni nota) */
-.notes-real-app{ --nr-a:#8a8a90; --nr-b:#3a3a42; --nr-c:#d6d6dc; --nr-ratio:1.3333; --nr-maxh:54vh; }
-
-/* Selezione lista: pulita, stile macOS (sostituisce il grigio piatto) */
-.nr-row.active{ background:rgba(255,255,255,.10); }
-.nr-row.active b{ color:#fff; }
-.nr-row.active span{ color:rgba(245,245,247,.5); }
-
-/* Editor: scuro con un velo tenue della tinta di sezione */
-.nr-editor{
-  background:linear-gradient(180deg,
-    color-mix(in srgb, var(--nr-a) 9%, #1b1b1f),
-    color-mix(in srgb, var(--nr-b) 7%, #161619)) !important;
+.notes-real-window{
+  border-radius:24px !important;
+  background:rgba(28,28,32,.78) !important;
+  backdrop-filter:blur(26px) saturate(1.45) !important;
+  -webkit-backdrop-filter:blur(26px) saturate(1.45) !important;
+  box-shadow:0 34px 90px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.14), inset 0 0 0 1px rgba(255,255,255,.09) !important;
 }
-
-/* Area nota: ampia, centrata, ariosa */
-.nr-note{ padding:34px clamp(30px,5vw,68px) 40px; overflow:auto; }
-.nr-note-date{ display:none; }
-.nr-note.switching{ animation:nrKeynote .42s cubic-bezier(.22,1,.36,1) both; }
-@keyframes nrKeynote{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:none; } }
-
-/* Layout Keynote: immagine + testo, allineati e centrati */
-.nr-note-layout{
-  display:grid;
-  grid-template-columns:minmax(0,52%) minmax(0,1fr);
-  gap:clamp(30px,4vw,58px);
-  align-items:center;
-  max-width:1180px;
-  margin:0 auto;
+.notes-real-titlebar{
+  height:46px;
+  background:linear-gradient(180deg,rgba(52,52,58,.62),rgba(33,33,38,.56));
+  border-bottom:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(22px) saturate(1.35);
+  -webkit-backdrop-filter:blur(22px) saturate(1.35);
 }
-.nr-note.portrait .nr-note-layout{ grid-template-columns:minmax(0,40%) minmax(0,1fr); }
-.nr-note.wide .nr-note-layout{ grid-template-columns:minmax(0,56%) minmax(0,1fr); }
-
-/* Immagine protagonista: ratio reale, mai tagliata, cornice pulita */
-.nr-visual,
-.nr-visual.polaroid, .nr-visual.photo-note,
-.nr-visual.polaroid.wide, .nr-visual.polaroid:not(.wide){
-  position:relative;
-  margin:0 auto;
-  width:min(100%, calc(var(--nr-maxh) * var(--nr-ratio)));
-  max-width:100%;
-  padding:0;
-  border-radius:18px;
+.notes-real-titlebar .wt{
+  color:rgba(245,245,247,.76);
+  font-size:13px;
+  font-weight:650;
+  letter-spacing:-.015em;
+}
+.notes-real-app{
+  height:min(690px,calc(100vh - 118px));
+  grid-template-columns:218px 304px minmax(0,1fr);
+  background:#141418;
+}
+.nr-sidebar{
+  background:linear-gradient(180deg,rgba(40,40,45,.86),rgba(27,27,31,.92));
+  border-right:1px solid rgba(255,255,255,.075);
+  backdrop-filter:blur(20px) saturate(1.3);
+  -webkit-backdrop-filter:blur(20px) saturate(1.3);
+  padding:13px 11px 16px;
+}
+.nr-folder{
+  height:34px;
+  border-radius:9px;
+  color:rgba(245,245,247,.78);
+}
+.nr-folder:hover{ background:rgba(255,255,255,.07); transform:none; }
+.nr-folder.selected{
+  background:rgba(255,255,255,.13);
+  color:#fff;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+}
+.nr-tags button{
+  border-radius:999px;
+  background:rgba(255,255,255,.075);
+  color:rgba(245,245,247,.66);
+}
+.nr-tags button.selected{
+  background:rgba(255,214,10,.18);
+  color:#ffe58f;
+  box-shadow:inset 0 0 0 1px rgba(255,214,10,.20);
+}
+.nr-list{
+  background:linear-gradient(180deg,rgba(31,31,36,.96),rgba(23,23,28,.98));
+  border-right:1px solid rgba(255,255,255,.075);
+  padding:14px 12px;
+}
+.nr-list-head{ height:58px; padding:0 6px; }
+.nr-list-head h2{
+  color:#f5f5f7;
+  -webkit-text-fill-color:initial;
+  background:none;
+  font-size:21px;
+  font-weight:780;
+  letter-spacing:-.045em;
+}
+.nr-list-head span{ color:rgba(245,245,247,.44); }
+.nr-items{ gap:4px; }
+.nr-row{
+  min-height:82px;
+  border-radius:12px;
+  padding:12px 13px;
   background:transparent;
-  transform:none;
-  filter:none;
-  box-shadow:none;
-  transition:transform .4s var(--spring-soft, cubic-bezier(.22,1,.36,1)), box-shadow .4s ease;
+  transition:background .18s ease, box-shadow .18s ease, transform .24s var(--spring-soft);
 }
-.nr-visual-frame{
+.nr-row:hover{ background:rgba(255,255,255,.06); transform:none; }
+.nr-row.active{
+  background:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.085));
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.105);
+}
+.nr-row.active b{ color:#fff; }
+.nr-row b{ font-size:13.5px; font-weight:720; }
+.nr-row span{ color:rgba(245,245,247,.42); }
+.nr-row p{ color:rgba(245,245,247,.58); font-size:12.2px; line-height:1.36; }
+.nr-row + .nr-row::before{ background:rgba(255,255,255,.045); }
+.nr-editor{
   position:relative;
-  width:100%;
-  aspect-ratio:var(--nr-ratio);
-  border-radius:18px;
+  background:
+    radial-gradient(90% 75% at 78% -12%,rgba(120,145,255,.16),transparent 52%),
+    radial-gradient(82% 72% at 8% 112%,rgba(255,214,10,.10),transparent 56%),
+    linear-gradient(180deg,#17171c,#111116);
   overflow:hidden;
+}
+.nr-editor-toolbar{
+  height:46px;
+  background:rgba(22,22,27,.62);
+  border-bottom:1px solid rgba(255,255,255,.07);
+  backdrop-filter:blur(18px) saturate(1.3);
+  -webkit-backdrop-filter:blur(18px) saturate(1.3);
+}
+.nr-editor-toolbar button{
+  color:rgba(245,245,247,.58);
+  border-radius:9px;
+}
+.nr-editor-toolbar button:hover,
+.nr-editor-toolbar button.active{
+  background:rgba(255,255,255,.10);
+  color:#f5f5f7;
+}
+.nr-note{
+  position:relative;
+  flex:1;
+  min-height:0;
+  overflow:hidden;
+  padding:18px 28px 22px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.nr-ambient{
+  position:absolute;
+  inset:-24%;
+  background-size:cover;
+  background-position:center;
+  filter:blur(54px) saturate(1.18);
+  opacity:.20;
+  transform:scale(1.06);
+  pointer-events:none;
+  animation:nrAmbientDrift 14s ease-in-out infinite alternate;
+}
+.nr-note::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:radial-gradient(circle at 50% 0%,rgba(255,255,255,.08),transparent 42%);
+}
+.nr-note-top{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  color:rgba(245,245,247,.46);
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.nr-dots{ display:flex; align-items:center; gap:7px; }
+.nr-dot{
+  width:16px;
+  height:16px;
+  padding:0;
+  border:0;
+  border-radius:999px;
+  background:transparent;
   display:grid;
   place-items:center;
-  background:color-mix(in srgb, var(--nr-b) 16%, #0e0e11);
-  box-shadow:0 30px 64px -34px rgba(0,0,0,.72), inset 0 0 0 1px rgba(255,255,255,.06);
 }
+.nr-dot span{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:rgba(245,245,247,.34);
+  transition:width .25s var(--spring-soft), background .2s ease;
+}
+.nr-dot.active span{
+  width:16px;
+  border-radius:999px;
+  background:rgba(255,214,10,.86);
+}
+.nr-progress{
+  position:relative;
+  z-index:2;
+  height:3px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.075);
+}
+.nr-progress i{
+  display:block;
+  height:100%;
+  border-radius:inherit;
+  background:linear-gradient(90deg,#ffd60a,#ff9f0a);
+  transition:width .42s var(--spring-soft);
+}
+.nr-note-date{ display:none; }
+.nr-note-layout.nr-immersive-card{
+  position:relative;
+  z-index:2;
+  flex:1;
+  min-height:0;
+  width:100%;
+  max-width:none;
+  margin:0;
+  display:grid;
+  grid-template-columns:minmax(270px,38%) minmax(0,1fr);
+  gap:28px;
+  align-items:stretch;
+  padding:22px;
+  border-radius:28px;
+  background:linear-gradient(145deg,rgba(255,255,255,.135),rgba(255,255,255,.045));
+  box-shadow:0 26px 74px -34px rgba(0,0,0,.65), inset 0 0 0 1px rgba(255,255,255,.12), inset 0 1px 0 rgba(255,255,255,.16);
+  backdrop-filter:blur(28px) saturate(1.32);
+  -webkit-backdrop-filter:blur(28px) saturate(1.32);
+  overflow:hidden;
+}
+.nr-note-layout.nr-immersive-card::before{
+  content:"";
+  position:absolute;
+  inset:1px;
+  border-radius:27px;
+  pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.11),transparent 34%,rgba(255,255,255,.035));
+}
+.nr-visual{
+  position:relative;
+  z-index:1;
+  margin:0;
+  width:100%;
+  height:100%;
+  min-height:330px;
+  border-radius:24px;
+  transform:none !important;
+  filter:none;
+  box-shadow:0 26px 56px -28px rgba(0,0,0,.78);
+  overflow:hidden;
+  background:rgba(255,255,255,.06);
+  transition:transform .45s var(--spring-soft), box-shadow .45s ease;
+}
+.nr-visual:hover{ transform:translateY(-2px) scale(1.012) !important; box-shadow:0 34px 70px -30px rgba(0,0,0,.82); }
+.nr-visual-frame{ position:relative; width:100%; height:100%; min-height:inherit; overflow:hidden; border-radius:inherit; }
 .nr-visual img,
 .nr-visual.polaroid:not(.wide) img,
 .nr-visual.polaroid.wide img{
   width:100%;
   height:100%;
-  min-height:0;
-  object-fit:contain;
+  min-height:330px;
+  object-fit:cover;
   object-position:center;
   border-radius:0;
-  background:transparent;
-  transform:none;
+  transform:scale(1.01);
+  transition:transform .65s var(--spring-soft), filter .65s ease;
 }
-.nr-visual:hover{ transform:translateY(-2px); box-shadow:0 38px 74px -34px rgba(0,0,0,.6); }
+.nr-visual:hover img{ transform:scale(1.055); filter:saturate(1.04) contrast(1.02); }
+.nr-image-shine{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.20),transparent 32%,transparent 64%,rgba(255,255,255,.06));
+  mix-blend-mode:screen;
+  pointer-events:none;
+}
 .nr-visual figcaption{
-  margin-top:13px;
+  position:absolute;
+  left:14px;
+  bottom:14px;
   min-height:0;
-  padding:0;
-  background:transparent;
-  text-align:center;
-  color:rgba(245,245,247,.5);
-  font-family:"SF Pro Display", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
-  font-size:12.5px;
-  font-weight:600;
-  letter-spacing:-.01em;
+  padding:7px 11px;
+  border-radius:999px;
+  background:rgba(22,22,27,.62);
+  color:rgba(245,245,247,.88);
+  font-family:"SF Pro Display",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+  font-size:12px;
+  font-weight:650;
+  letter-spacing:-.015em;
+  backdrop-filter:blur(16px) saturate(1.25);
+  -webkit-backdrop-filter:blur(16px) saturate(1.25);
 }
-
-/* Testo Keynote: ampio e leggibile */
-.nr-note-copy{ min-width:0; }
+.nr-visual.polaroid,
+.nr-visual.photo-note{ padding:0; background:rgba(255,255,255,.06); }
+.nr-note-copy{
+  position:relative;
+  z-index:1;
+  min-width:0;
+  align-self:center;
+  padding:8px 4px 8px 0;
+}
 .nr-note-label{
   display:inline-flex;
-  margin:0 0 14px;
-  padding:5px 11px;
+  align-items:center;
+  margin-bottom:13px;
+  padding:5px 10px;
   border-radius:999px;
-  color:color-mix(in srgb, var(--nr-c) 74%, #fff);
-  background:color-mix(in srgb, var(--nr-a) 20%, rgba(255,255,255,.06));
-  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--nr-c) 16%, transparent);
-  font-size:11.5px;
+  color:rgba(255,214,10,.92);
+  background:rgba(255,214,10,.13);
+  box-shadow:inset 0 0 0 1px rgba(255,214,10,.18);
+  font-size:11px;
   font-weight:760;
-  letter-spacing:.06em;
-  text-transform:uppercase;
+  letter-spacing:.075em;
 }
 .nr-note h2{
-  margin:0 0 18px;
-  color:#f5f5f7;
-  font-size:clamp(30px,3vw,40px);
-  line-height:1.04;
-  font-weight:800;
-  letter-spacing:-.04em;
+  margin:0 0 15px;
+  color:#fff;
+  font-size:clamp(30px,3.2vw,42px);
+  font-weight:790;
+  letter-spacing:-.055em;
+  line-height:1.02;
 }
-.nr-note-body{ max-width:560px; display:grid; gap:13px; }
+.nr-note-body{ max-width:680px; gap:13px; }
 .nr-note-body p{
-  margin:0;
-  color:rgba(245,245,247,.76);
-  font-size:15.5px;
-  line-height:1.6;
-  font-weight:440;
-  letter-spacing:-.011em;
+  color:rgba(245,245,247,.78);
+  font-size:15px;
+  line-height:1.58;
+  letter-spacing:-.012em;
 }
-.nr-note.large .nr-note-body p{ font-size:17px; }
-
-/* Chips puliti */
-.nr-points{ display:none; flex-wrap:wrap; gap:8px; margin-top:22px; padding:0; background:transparent; box-shadow:none; }
+.nr-points{
+  margin-top:21px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+}
 .nr-points.show{ display:flex; }
 .nr-points div{
-  display:flex; align-items:center; gap:7px;
-  padding:7px 12px; border-radius:999px;
-  background:rgba(255,255,255,.07);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);
-  color:rgba(245,245,247,.8); font-size:12.5px; font-weight:520;
+  min-height:36px;
+  padding:8px 12px 8px 9px;
+  border-radius:999px;
+  background:rgba(255,255,255,.08);
+  color:rgba(245,245,247,.82);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+  font-size:12.5px;
+  font-weight:620;
 }
 .nr-points div span{
-  display:inline; width:auto; height:auto; margin:0; border-radius:0; background:transparent;
-  color:color-mix(in srgb, var(--nr-c) 70%, #fff); font-size:11px; font-weight:780;
+  display:inline-flex;
+  width:22px;
+  height:22px;
+  align-items:center;
+  justify-content:center;
+  margin-right:2px;
+  border-radius:50%;
+  background:rgba(255,214,10,.16);
+  color:#ffd60a;
+  font-size:10px;
+  font-weight:760;
 }
-
-/* Link progetto */
-.nr-project-link{ margin:18px 0 0; }
-
-/* Collegamento Calendario stile macOS (in CS Metal) */
-.nr-os-link{
-  display:inline-flex; align-items:center; gap:11px;
-  margin:18px 0 0; padding:9px 14px 9px 9px;
-  border:0; border-radius:13px; cursor:pointer;
-  color:rgba(245,245,247,.92); text-align:left;
-  background:rgba(255,255,255,.075);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.09);
-  transition:background .18s ease, transform .2s var(--spring-soft, cubic-bezier(.22,1,.36,1));
+.nr-project-link{
+  color:#111;
+  background:linear-gradient(180deg,#ffe27a,#ffd60a);
+  box-shadow:0 10px 22px -14px rgba(255,214,10,.6), inset 0 1px 0 rgba(255,255,255,.6);
 }
-.nr-os-link:hover{ background:rgba(255,255,255,.115); transform:translateY(-1px); }
-.nr-os-link:active{ transform:scale(.98); }
-.nr-os-icon{
-  width:34px; height:34px; flex:none; border-radius:9px;
-  display:grid; place-items:end center; padding-bottom:5px;
-  background:linear-gradient(180deg,#ff453a 0 30%, #fff 30% 100%);
-  color:#1a1a1a; font-size:13px; font-weight:850; letter-spacing:-.03em;
-  box-shadow:0 6px 14px -8px rgba(0,0,0,.7), inset 0 0 0 1px rgba(0,0,0,.06);
+.nr-preview-rail{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:9px;
 }
-.nr-os-icon i{ font-style:normal; }
-.nr-os-text{ min-width:0; }
-.nr-os-link b{ display:block; font-size:13px; font-weight:700; letter-spacing:-.02em; }
-.nr-os-link em{ display:block; margin-top:1px; font-style:normal; font-size:11.5px; color:rgba(245,245,247,.5); }
-.nr-os-link strong{ margin-left:6px; color:rgba(245,245,247,.34); font-size:11.5px; font-weight:700; }
-
-/* Massimizzato / schermo intero: piu' grande, piu' Keynote */
-.win.maxi .notes-real-app{ height:100%; grid-template-columns:240px 320px minmax(0,1fr); --nr-maxh:64vh; }
-.win.maxi .nr-note{ padding:48px clamp(40px,6vw,100px) 56px; display:flex; flex-direction:column; justify-content:center; }
-.win.maxi .nr-note-layout{ max-width:1320px; gap:clamp(46px,5vw,84px); width:100%; }
-.win.maxi .nr-note h2{ font-size:clamp(40px,3.6vw,56px); margin-bottom:22px; }
-.win.maxi .nr-note-body{ max-width:640px; gap:16px; }
-.win.maxi .nr-note-body p{ font-size:clamp(16px,1.2vw,19px); }
-.win.maxi .nr-note.large .nr-note-body p{ font-size:clamp(18px,1.35vw,21px); }
-
-/* Responsivo: impilato, immagine sempre intera e centrata */
+.nr-preview{
+  min-width:0;
+  height:42px;
+  border:0;
+  border-radius:14px;
+  padding:0 11px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,.065);
+  color:rgba(245,245,247,.62);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.055);
+  backdrop-filter:blur(16px) saturate(1.2);
+  -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  transition:background .18s ease, transform .25s var(--spring-soft), color .18s ease;
+}
+.nr-preview:hover{ transform:translateY(-1px); background:rgba(255,255,255,.10); color:#fff; }
+.nr-preview.active{
+  background:rgba(255,255,255,.14);
+  color:#fff;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
+}
+.nr-preview span{
+  color:rgba(255,214,10,.78);
+  font-size:10px;
+  font-weight:800;
+}
+.nr-preview b{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:12px;
+  font-weight:680;
+  letter-spacing:-.02em;
+}
+.nr-note.switching{ animation:nrCardSwitch .38s var(--spring-soft) both; }
+.nr-note-copy > *{ animation:nrTextIn .55s var(--spring-soft) both; }
+.nr-note-copy > *:nth-child(1){ animation-delay:.04s; }
+.nr-note-copy > *:nth-child(2){ animation-delay:.09s; }
+.nr-note-copy > *:nth-child(3){ animation-delay:.14s; }
+.nr-note-copy > *:nth-child(4){ animation-delay:.18s; }
+.nr-note-copy > *:nth-child(5){ animation-delay:.22s; }
+@keyframes nrCardSwitch{ from{ opacity:.82; transform:translateY(8px) scale(.992); filter:blur(2px); } to{ opacity:1; transform:none; filter:none; } }
+@keyframes nrTextIn{ from{ opacity:0; transform:translateY(12px); } to{ opacity:1; transform:none; } }
+@keyframes nrAmbientDrift{ from{ transform:scale(1.06) translate3d(-1.5%,0,0); } to{ transform:scale(1.10) translate3d(1.5%,1%,0); } }
+.win.maxi .notes-real-app{ height:100%; grid-template-columns:236px 318px minmax(0,1fr); }
+.win.maxi .nr-note{ padding:24px clamp(32px,4vw,72px) 28px; }
+.win.maxi .nr-note-layout.nr-immersive-card{ max-width:1280px; margin:0 auto; grid-template-columns:minmax(360px,42%) minmax(0,1fr); padding:28px; }
+.win.maxi .nr-visual{ min-height:clamp(420px,58vh,620px); }
+.win.maxi .nr-visual img{ min-height:inherit; }
+.win.maxi .nr-note h2{ font-size:clamp(40px,4vw,58px); }
+.win.maxi .nr-note-body p{ font-size:clamp(16px,1.25vw,19px); }
+.win.maxi .nr-preview-rail{ max-width:1280px; width:100%; margin:0 auto; grid-template-columns:repeat(7,minmax(0,1fr)); }
 @media (max-width:1100px){
-  .nr-note-layout,
-  .nr-note.portrait .nr-note-layout,
-  .nr-note.wide .nr-note-layout{ grid-template-columns:1fr; gap:26px; }
-  .nr-visual,
-  .nr-visual.polaroid, .nr-visual.photo-note{ --nr-maxh:40vh; width:min(100%, calc(40vh * var(--nr-ratio))); }
-  .nr-note-body{ max-width:none; }
+  .notes-real-app,.win.maxi .notes-real-app{ grid-template-columns:292px minmax(0,1fr); }
+  .nr-sidebar,.win.maxi .nr-sidebar{ display:none; }
+  .nr-note-layout.nr-immersive-card,.win.maxi .nr-note-layout.nr-immersive-card{ grid-template-columns:1fr; overflow:auto; }
+  .nr-visual,.win.maxi .nr-visual{ min-height:300px; max-height:380px; }
+  .nr-preview-rail,.win.maxi .nr-preview-rail{ grid-template-columns:repeat(3,minmax(0,1fr)); }
 }
 @media (max-width:760px){
-  .nr-note{ padding:24px 22px 30px; }
-  .nr-visual,
-  .nr-visual.polaroid, .nr-visual.photo-note{ width:100%; }
+  .notes-real-app,.win.maxi .notes-real-app{ grid-template-columns:1fr; }
+  .nr-list{ display:none; }
+  .nr-note{ padding:16px; }
+  .nr-preview-rail{ grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
 @media (prefers-reduced-motion:reduce){
-  .nr-note.switching{ animation:none; }
-  .nr-visual:hover{ transform:none; }
+  .nr-ambient,.nr-note.switching,.nr-note-copy > *{ animation:none !important; }
 }
