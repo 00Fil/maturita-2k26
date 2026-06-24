@@ -1572,6 +1572,45 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 .nr-visual.volontariato img { object-position:center; }
 
 /* ============================================================
+   NOTES — RESA IMMERSIVA (vale anche a finestra normale)
+   Da' profondita' all'editor, incornicia la nota come un documento e
+   rende la foto piu' viva, cosi' non sembra piu' "default e spoglio".
+   ============================================================ */
+
+/* Editor con profondita': alone caldo in alto + accento freddo in basso */
+.nr-editor{
+  background:
+    radial-gradient(120% 82% at 84% -8%, rgba(242,178,0,.12) 0%, rgba(242,178,0,0) 48%),
+    radial-gradient(92% 72% at 4% 110%, rgba(118,108,255,.10) 0%, rgba(118,108,255,0) 54%),
+    #15151a;
+}
+
+/* La nota e' un "documento" su una superficie definita, non testo nel vuoto */
+.nr-note-layout{
+  position:relative;
+  padding:22px 24px 26px;
+  background:linear-gradient(165deg, rgba(255,255,255,.052), rgba(255,255,255,.018));
+  border-radius:22px;
+  box-shadow:0 26px 56px -30px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.06), inset 0 1px 0 rgba(255,255,255,.05);
+}
+
+/* Foto con alone colorato (immersivo) che si raddrizza al passaggio del mouse */
+.nr-visual{
+  box-shadow:0 18px 46px -12px rgba(0,0,0,.5), 0 0 64px -8px rgba(242,178,0,.26);
+  transition:transform .45s var(--spring-soft), box-shadow .45s ease;
+}
+.nr-visual:hover{
+  transform:rotate(0deg) scale(1.02);
+  box-shadow:0 26px 58px -12px rgba(0,0,0,.55), 0 0 88px -6px rgba(242,178,0,.36);
+}
+
+/* Etichetta della nota come pill accentata */
+.nr-note-label{
+  padding:5px 11px; border-radius:999px;
+  background:rgba(242,178,0,.14); box-shadow:inset 0 0 0 1px rgba(242,178,0,.26);
+}
+
+/* ============================================================
    NOTES — MODALITA' PRESENTAZIONE (finestra massimizzata / schermo intero)
    Riempie lo spazio vuoto, centra il contenuto come un documento e rende
    l'esposizione piu' fluida, restando nello stile macOS.
@@ -1672,9 +1711,9 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 }
 
 /* 10) Entrata morbida e scaglionata degli elementi della nota (smooth) */
-.nr-visual,
 .nr-note-copy > *{ animation:nrRise .5s var(--ease-apple, cubic-bezier(.2,.8,.2,1)) both; }
-.nr-visual{ animation-delay:.02s; }
+.nr-visual{ animation:nrFade .55s var(--ease-apple, cubic-bezier(.2,.8,.2,1)) .02s both; }
+@keyframes nrFade{ from{ opacity:0; } to{ opacity:1; } }
 .nr-note-copy > *:nth-child(1){ animation-delay:.06s; }
 .nr-note-copy > *:nth-child(2){ animation-delay:.12s; }
 .nr-note-copy > *:nth-child(3){ animation-delay:.18s; }
@@ -1693,6 +1732,42 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 @media (prefers-reduced-motion:reduce){
   .nr-note.switching, .nr-visual, .nr-note-copy > *{ animation:none !important; }
   .nr-row:hover, .nr-tags button:hover{ transform:none; }
+}
+
+/* ============================================================
+   NOTES — RIFINITURE macOS (lista stile Note, accenti, micro-interazioni)
+   ============================================================ */
+
+/* Pannelli con materiale piu' profondo, gerarchia chiara come su macOS */
+.nr-sidebar{ background:linear-gradient(180deg, rgba(36,36,40,.97), rgba(30,30,34,.97)); }
+.nr-list{ background:linear-gradient(180deg, rgba(28,28,32,.98), rgba(24,24,28,.98)); }
+
+/* Righe note come macOS Notes: separatori hairline + selezione calda */
+.nr-row{ position:relative; }
+.nr-row + .nr-row::before{
+  content:""; position:absolute; top:-3px; left:13px; right:13px; height:1px;
+  background:rgba(255,255,255,.05);
+}
+.nr-row.active{
+  background:rgba(242,178,0,.16);
+  box-shadow:inset 0 0 0 1px rgba(242,178,0,.22);
+}
+.nr-row.active b{ color:#ffe7a3; }
+.nr-row.active::before, .nr-row.active + .nr-row::before{ opacity:0; }
+
+/* Cartella e tag selezionati con ombra calda morbida (accento Note) */
+.nr-folder.selected{ box-shadow:0 6px 16px -7px rgba(242,178,0,.55); }
+.nr-tags button.selected{ box-shadow:0 4px 12px -5px rgba(242,178,0,.5); }
+
+/* Micro-interazioni dei pulsanti della toolbar (feedback tattile macOS) */
+.nr-editor-toolbar button{ transition:background .18s ease, transform .18s var(--spring-soft), color .18s ease; }
+.nr-editor-toolbar button:active{ transform:scale(.9); }
+
+/* Titolo dell'elenco con leggera sfumatura SF, piu' raffinato */
+.nr-list-head h2{
+  background:linear-gradient(180deg,#ffffff,#d7d7dd);
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
 
 /* ============================================================
