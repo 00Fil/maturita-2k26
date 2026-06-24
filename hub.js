@@ -1013,8 +1013,8 @@ if (rebBtn) {
   function visible(){return notes.filter(n=>filter==='all'||n.filter===filter||n.tags.includes(filter));}
   function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
   function visual(n){
-    if(n.image) return `<figure class="nr-visual ${esc(n.kind)}" data-missing="Immagine da inserire"><img src="${esc(n.image)}" alt="${esc(n.caption)}" onerror="this.closest('figure').classList.add('image-missing');this.remove();"><div class="nr-visual-art nr-fallback"><span>${esc(n.caption)}</span></div><figcaption>${esc(n.caption)}</figcaption></figure>`;
-    return `<figure class="nr-visual ${esc(n.kind)}"><div class="nr-visual-art"><span>${esc(n.caption)}</span></div><figcaption>${esc(n.caption)}</figcaption></figure>`;
+    if(n.image) return `<figure class="nr-visual ${esc(n.kind)}" data-missing="Immagine da inserire"><div class="nr-visual-frame"><img src="${esc(n.image)}" alt="${esc(n.caption)}" onerror="this.closest('figure').classList.add('image-missing');this.remove();"><div class="nr-image-shine"></div><div class="nr-visual-art nr-fallback"><span>${esc(n.caption)}</span></div></div><figcaption>${esc(n.caption)}</figcaption></figure>`;
+    return `<figure class="nr-visual ${esc(n.kind)}"><div class="nr-visual-frame"><div class="nr-visual-art"><span>${esc(n.caption)}</span></div><div class="nr-image-shine"></div></div><figcaption>${esc(n.caption)}</figcaption></figure>`;
   }
   function renderList(){
     const rows=visible(); if(!rows.some(n=>n.id===current)) current=rows[0]?.id||notes[0].id;
@@ -1023,9 +1023,15 @@ if (rebBtn) {
   }
   function renderNote(){
     const n=notes.find(x=>x.id===current)||notes[0];
+    const rows=visible();
+    const activeIndex=Math.max(0,rows.findIndex(x=>x.id===n.id));
     screen.classList.remove('switching'); void screen.offsetWidth; screen.classList.add('switching');
     screen.classList.toggle('large', large);
-    screen.innerHTML=`<div class="nr-note-date">${esc(n.meta)}</div><div class="nr-note-layout">${visual(n)}<section class="nr-note-copy"><span class="nr-note-label">${esc(n.label)}</span><h2>${esc(n.title)}</h2><div class="nr-note-body">${n.body.map(p=>`<p>${esc(p)}</p>`).join('')}</div>${n.link?`<a class="nr-project-link" href="${esc(n.link)}" target="_blank" rel="noopener">${esc(n.linkLabel||'Apri progetto')}</a>`:''}<div class="nr-points ${showPoints?'show':''}">${n.chips.map(p=>`<div><span></span>${esc(p)}</div>`).join('')}</div></section></div>`;
+    const progress=((activeIndex+1)/Math.max(rows.length,1))*100;
+    const ambient=n.image?`<div class="nr-ambient" style="background-image:url('${esc(n.image)}')"></div>`:'';
+    const dots=rows.map((x,i)=>`<button class="nr-dot ${x.id===n.id?'active':''}" data-note="${esc(x.id)}" type="button" aria-label="Apri ${esc(x.title)}"><span></span></button>`).join('');
+    const preview=rows.map((x,i)=>`<button class="nr-preview ${x.id===n.id?'active':''}" data-note="${esc(x.id)}" type="button"><span>${String(i+1).padStart(2,'0')}</span><b>${esc(x.title)}</b></button>`).join('');
+    screen.innerHTML=`${ambient}<div class="nr-note-top"><span>${String(activeIndex+1).padStart(2,'0')} / ${String(rows.length).padStart(2,'0')}</span><div class="nr-dots">${dots}</div></div><div class="nr-progress"><i style="width:${progress}%"></i></div><div class="nr-note-layout nr-immersive-card">${visual(n)}<section class="nr-note-copy"><span class="nr-note-label">${esc(n.label)}</span><h2>${esc(n.title)}</h2><div class="nr-note-body">${n.body.map(p=>`<p>${esc(p)}</p>`).join('')}</div>${n.link?`<a class="nr-project-link" href="${esc(n.link)}" target="_blank" rel="noopener">${esc(n.linkLabel||'Apri progetto')}</a>`:''}<div class="nr-points ${showPoints?'show':''}">${n.chips.map((p,i)=>`<div><span>${String(i+1).padStart(2,'0')}</span>${esc(p)}</div>`).join('')}</div></section></div><div class="nr-preview-rail">${preview}</div>`;
   }
   function sync(){app.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('selected',b.dataset.filter===filter)); app.querySelector('[data-note-action="font"]')?.classList.toggle('active',large); app.querySelector('[data-note-action="check"]')?.classList.toggle('active',showPoints); app.querySelector('[data-note-action="focus"]')?.classList.toggle('active',app.classList.contains('focus'));}
   function render(){renderList(); renderNote(); sync();}
