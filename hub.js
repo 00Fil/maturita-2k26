@@ -555,6 +555,7 @@ fullBtn.addEventListener('click', () => {
 });
 document.addEventListener('fullscreenchange', () => {
   fullBtn.classList.toggle('on', !!document.fullscreenElement);
+  stabilizeMaximizedWindows();
 });
 
 document.getElementById('cc-pres').addEventListener('click', () => {
@@ -1203,6 +1204,28 @@ function isFinder(win){ return !!win && win.id === FINDER_ID; }
 function hasFullscreenApp(){
   return Array.from(document.querySelectorAll('.win.open.maxi')).some(w => !isFinder(w));
 }
+function isNotesWin(win){
+  return !!win && win.classList && win.classList.contains('notes-real-window');
+}
+function noteResizeLock(win, on){
+  if(!isNotesWin(win)) return;
+  win.classList.toggle('notes-resizing', !!on);
+}
+function stabilizeMaximizedWindows(){
+  const wins = Array.from(document.querySelectorAll('.win.open.maxi'));
+  if(!wins.length) return;
+  const apply = () => wins.forEach(w => {
+    if(!w.classList.contains('open') || !w.classList.contains('maxi')) return;
+    setWinBox(w, maxiBounds(), false);
+    if(isNotesWin(w)){
+      noteResizeLock(w, true);
+      requestAnimationFrame(() => requestAnimationFrame(() => noteResizeLock(w, false)));
+    }
+  });
+  requestAnimationFrame(apply);
+  setTimeout(apply, 120);
+  setTimeout(apply, 360);
+}
 function rectFromElement(win){
   const r = win.getBoundingClientRect();
   return {
@@ -1297,6 +1320,7 @@ function toggleMax(win){
   const goMax = !win.classList.contains('maxi');
   const start = rectFromElement(win);
   win._mxBusy = true;
+  noteResizeLock(win, true);
   setWinBox(win, start, false);
   void win.offsetWidth;
   let target;
@@ -1319,14 +1343,17 @@ function toggleMax(win){
       setWinBox(win, target, false);
       win.style.transition='';
       captureNormal(win);
+    } else {
+      setWinBox(win, maxiBounds(), false);
     }
+    requestAnimationFrame(()=>requestAnimationFrame(()=>noteResizeLock(win, false)));
     win._mxBusy=false;
     syncDock();
     syncFinderVisibility();
-  },430);
+  },390);
 }
 window.addEventListener('resize',()=>{
-  document.querySelectorAll('.win.maxi').forEach(w=>setWinBox(w, maxiBounds(), false));
+  stabilizeMaximizedWindows();
   syncFinderVisibility();
 });
 document.querySelectorAll('.win').forEach(w=>{ if(!w.classList.contains('maxi')) captureNormal(w); });

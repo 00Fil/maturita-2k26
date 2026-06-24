@@ -3029,6 +3029,20 @@ body.login-screen.unlock .wallpaper {
 .win.maxi .nr-note-body p{ font-size:clamp(16px,1.2vw,19px); }
 .win.maxi .nr-note.large .nr-note-body p{ font-size:clamp(18px,1.35vw,21px); }
 
+/* Stabilizzazione Note durante resize/fullscreen browser:
+   blocca animazioni e transizioni interne mentre la finestra cambia dimensione,
+   evitando il riassestamento lento/buggato del testo. */
+.notes-real-window.notes-resizing .notes-real-app,
+.notes-real-window.notes-resizing .notes-real-app *,
+.notes-real-window.notes-resizing .nr-note.switching,
+.notes-real-window.notes-resizing .nr-visual{
+  animation:none !important;
+  transition:none !important;
+}
+.notes-real-window.notes-resizing .nr-note{
+  contain:layout paint;
+}
+
 /* Responsivo: impilato, immagine sempre intera e centrata */
 @media (max-width:1100px){
   .nr-note-layout,
