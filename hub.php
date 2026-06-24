@@ -158,7 +158,7 @@ function appicon(string $file, string $remote): string {
   </div>
 </section>
 
-<section class="win a-orange notes-real-window" id="w-io" style="left:6%;top:6%;width:1180px">
+<section class="win a-orange notes-real-window" id="w-io" style="left:4%;top:5%;width:1320px">
   <div class="titlebar notes-real-titlebar"><span class="wt">Su di me — Note</span></div>
   <div class="wbody notes-real-app" data-notes-app>
     <aside class="nr-sidebar" aria-label="Cartelle Note">

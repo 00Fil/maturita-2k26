@@ -1452,9 +1452,9 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 .notes-real-titlebar { height:44px; background:rgba(38,38,42,.66); border-bottom:1px solid rgba(255,255,255,.08); box-shadow:none; }
 .notes-real-titlebar .wt { color:rgba(245,245,247,.72); font-size:13px; font-weight:700; }
 .notes-real-app {
-  height:min(650px, calc(100vh - 120px));
+  height:min(680px, calc(100vh - 112px));
   display:grid;
-  grid-template-columns: 210px 276px minmax(0,1fr);
+  grid-template-columns: 190px 250px minmax(0,1fr);
   padding:0;
   overflow:hidden;
   background:#18181c;
@@ -1506,8 +1506,10 @@ body.login-screen.unlock .wallpaper { transform: scale(1.055); filter: brightnes
 .nr-points h3 { margin:0 0 2px; color:rgba(245,245,247,.92); font-size:14px; font-weight:800; letter-spacing:-.02em; }
 .nr-points div { display:flex; align-items:center; gap:9px; color:rgba(245,245,247,.70); font-size:13px; font-weight:560; }
 .nr-points span { width:7px; height:7px; border-radius:50%; background:#f2b200; flex:none; }
-.notes-real-app.focus { grid-template-columns:1fr; }
+.notes-real-app.focus { grid-template-columns:minmax(0,1fr); }
 .notes-real-app.focus .nr-sidebar, .notes-real-app.focus .nr-list { display:none; }
+.notes-real-app.focus .nr-editor { min-width:0; }
+.notes-real-app.focus .nr-note { overflow:auto; }
 @media (max-width:900px){ .notes-real-app{grid-template-columns:230px minmax(0,1fr)} .nr-sidebar{display:none} }
 @media (max-width:760px){ .notes-real-app{grid-template-columns:1fr}.nr-list{display:none}.nr-note{padding:26px 24px} }
 
@@ -2888,7 +2890,7 @@ body.login-screen.unlock .wallpaper {
   margin:0 auto;
 }
 .nr-note.portrait .nr-note-layout{ grid-template-columns:minmax(0,40%) minmax(0,1fr); }
-.nr-note.wide .nr-note-layout{ grid-template-columns:minmax(0,56%) minmax(0,1fr); }
+.nr-note.wide .nr-note-layout{ grid-template-columns:minmax(0,48%) minmax(0,1fr); }
 
 /* Immagine protagonista: ratio reale, mai tagliata, cornice pulita */
 .nr-visual,
@@ -3021,13 +3023,22 @@ body.login-screen.unlock .wallpaper {
 .nr-os-link strong{ margin-left:6px; color:rgba(245,245,247,.34); font-size:11.5px; font-weight:700; }
 
 /* Massimizzato / schermo intero: piu' grande, piu' Keynote */
-.win.maxi .notes-real-app{ height:100%; grid-template-columns:240px 320px minmax(0,1fr); --nr-maxh:64vh; }
+.win.maxi .notes-real-app{ height:100%; grid-template-columns:220px 300px minmax(0,1fr); --nr-maxh:64vh; }
 .win.maxi .nr-note{ padding:48px clamp(40px,6vw,100px) 56px; display:flex; flex-direction:column; justify-content:center; }
 .win.maxi .nr-note-layout{ max-width:1320px; gap:clamp(46px,5vw,84px); width:100%; }
 .win.maxi .nr-note h2{ font-size:clamp(40px,3.6vw,56px); margin-bottom:22px; }
 .win.maxi .nr-note-body{ max-width:640px; gap:16px; }
 .win.maxi .nr-note-body p{ font-size:clamp(16px,1.2vw,19px); }
 .win.maxi .nr-note.large .nr-note-body p{ font-size:clamp(18px,1.35vw,21px); }
+.win.maxi .notes-real-app.focus{ grid-template-columns:minmax(0,1fr); }
+.win.maxi .notes-real-app.focus .nr-sidebar,
+.win.maxi .notes-real-app.focus .nr-list{ display:none; }
+.win.maxi .notes-real-app.focus .nr-editor{ min-width:0; }
+.win.maxi .notes-real-app.focus .nr-note{ padding:56px clamp(46px,7vw,120px); overflow:auto; }
+.win.maxi .notes-real-app.focus .nr-note-layout{ max-width:1180px; grid-template-columns:minmax(0,50%) minmax(0,1fr); gap:clamp(42px,5vw,72px); align-items:center; }
+.win.maxi .notes-real-app.focus .nr-note.portrait .nr-note-layout{ grid-template-columns:minmax(0,38%) minmax(0,1fr); }
+.win.maxi .notes-real-app.focus .nr-note.wide .nr-note-layout{ grid-template-columns:minmax(0,46%) minmax(0,1fr); }
+.win.maxi .notes-real-app.focus .nr-note-body{ max-width:620px; }
 
 /* Stabilizzazione Note durante resize/fullscreen browser:
    blocca animazioni e transizioni interne mentre la finestra cambia dimensione,
