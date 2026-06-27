@@ -302,6 +302,12 @@ function appicon(string $file, string $remote): string {
       <div class="map-stage">
         <div class="map-tilt" id="mapTilt">
           <svg id="mapSvg" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="mapGrid" patternUnits="userSpaceOnUse" width="128" height="128">
+                <rect width="128" height="128" fill="#2d2e32" />
+                <path d="M128 0H0V128" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.8" />
+              </pattern>
+            </defs>
             <rect class="land" x="-1400" y="-900" width="7200" height="2900" />
 
             <!-- Percorso principale -->
