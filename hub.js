@@ -1365,7 +1365,7 @@ syncFinderVisibility();
   const totalLength=routePath.getTotalLength();
   const WORLD={x:-1400,y:-900,width:7200,height:2900};
   const CAMERA_WIDTH=1585;
-  const PANORAMA={x:-180,y:-360,width:2900,height:1630};
+  const PANORAMA={x:-420,y:-460,width:3300,height:1855};
   const PHOTO_SLOW_SIGMA=.10, PHOTO_SLOW_STRENGTH=.50;
   const stops=[
     {x:180,y:650,id:'ring-0',title:'Lonato',sub:'Inizio del percorso presso l’I.S.S. L. Cerebotani'},
@@ -1418,7 +1418,7 @@ syncFinderVisibility();
     if(isRunning)return;isRunning=true;finalPanoramaDone=false;
     shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');mapTilt.classList.add('navigation');
     if(cue)cue.textContent='La strada continua…';updateSidebar(currentStop,'Brescia · UniBS','Proseguimento degli studi: ingegneria informatica presso UniBS.');
-    const fromProgress=currentProgress,playerEnd=Math.min(fromProgress+.16,.96),cameraEnd=Math.min(fromProgress+.09,.92),duration=4300,t0=performance.now(),prev=new Set(triggeredCheckpoints);
+    const fromProgress=currentProgress,playerEnd=Math.min(fromProgress+.36,.82),cameraEnd=Math.min(fromProgress+.165,.58),duration=5700,t0=performance.now(),prev=new Set(triggeredCheckpoints);
     cancelAnimationFrame(raf);
     const tick=now=>{
       const raw=Math.min((now-t0)/duration,1);
