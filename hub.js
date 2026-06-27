@@ -1365,7 +1365,7 @@ syncFinderVisibility();
   const totalLength=routePath.getTotalLength();
   const WORLD={x:-1400,y:-900,width:7200,height:2900};
   const CAMERA_WIDTH=1585;
-  const PANORAMA={x:-420,y:-460,width:3520,height:1980};
+  const PANORAMA={x:-760,y:-520,width:4300,height:2420};
   const PHOTO_SLOW_SIGMA=.10, PHOTO_SLOW_STRENGTH=.50;
   const stops=[
     {x:180,y:650,id:'ring-0',title:'Lonato',sub:'Inizio del percorso presso l’I.S.S. L. Cerebotani'},
