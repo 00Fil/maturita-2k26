@@ -1419,23 +1419,34 @@ syncFinderVisibility();
     shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');mapTilt.classList.add('navigation');
     if(cue)cue.textContent='La strada continua…';updateSidebar(currentStop,'Brescia · UniBS','Proseguimento degli studi: ingegneria informatica presso UniBS.');
     const fromProgress=currentProgress;
-    const playerEnd=Math.min(fromProgress+.34,.94);
-    const cameraEnd=Math.min(fromProgress+.155,.78);
-    const escapeDuration=3300;
+    const routeEndProgress=.995;
+    const cameraEnd=Math.min(fromProgress+.055,.93);
+    const escapeDuration=3800;
     const panoramaDuration=1850;
     const t0=performance.now(),prev=new Set(triggeredCheckpoints);
     cancelAnimationFrame(raf);
     const escapeTick=now=>{
       const raw=Math.min((now-t0)/escapeDuration,1);
-      const playerLocal=easeInQuart(raw);
       const cameraLocal=easeOutCubic(raw);
-      currentProgress=lerp(fromProgress,playerEnd,playerLocal);
       const cameraProgress=lerp(fromProgress,cameraEnd,cameraLocal);
-      const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+4,totalLength));
-      moveCar(pt,getAngle(pt,next));
-      updateProgress(distance);
       centerCameraOnProgress(cameraProgress,true);
-      updatePhotoPinsByDistance(distance);updateCheckpoints(currentProgress,prev);updateFloatingPhotoPositions();
+      const routeLocal=clamp(raw/.72,0,1);
+      currentProgress=lerp(fromProgress,routeEndProgress,easeInQuart(routeLocal));
+      const distance=currentProgress*totalLength;
+      const routePt=routePath.getPointAtLength(Math.min(distance,totalLength));
+      const routeNext=routePath.getPointAtLength(Math.min(distance+4,totalLength));
+      if(raw>.72){
+        const exitLocal=easeInCubic((raw-.72)/.28);
+        const exitX=camera.x+camera.width+180;
+        const exitY=routePt.y;
+        const pt={x:lerp(routePt.x,exitX,exitLocal),y:lerp(routePt.y,exitY,exitLocal)};
+        const next={x:pt.x+16,y:pt.y};
+        moveCar(pt,getAngle(pt,next));
+      }else{
+        moveCar(routePt,getAngle(routePt,routeNext));
+      }
+      updateProgress(Math.min(distance,totalLength));
+      updatePhotoPinsByDistance(Math.min(distance,totalLength));updateCheckpoints(currentProgress,prev);updateFloatingPhotoPositions();
       if(raw<1)raf=requestAnimationFrame(escapeTick);else{animateFinalPanoramaFromHere();}
     };
     const animateFinalPanoramaFromHere=()=>{
