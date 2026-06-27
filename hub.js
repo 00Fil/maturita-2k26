@@ -1365,7 +1365,7 @@ syncFinderVisibility();
   const totalLength=routePath.getTotalLength();
   const WORLD={x:-1400,y:-900,width:7200,height:2900};
   const CAMERA_WIDTH=1585;
-  const PANORAMA={x:-160,y:-120,width:2680,height:1510};
+  const PANORAMA={x:-360,y:-760,width:6500,height:3650};
   const PHOTO_SLOW_SIGMA=.10, PHOTO_SLOW_STRENGTH=.50;
   const stops=[
     {x:180,y:650,id:'ring-0',title:'Lonato',sub:'Inizio del percorso presso l’I.S.S. L. Cerebotani'},
@@ -1437,7 +1437,7 @@ syncFinderVisibility();
     if(cue)cue.textContent='Ritorno alla panoramica…';updateSidebar(stops.length-1,'Sintesi conclusiva','Dal percorso scolastico alla scelta universitaria.');
     const start={...camera},duration=2200,t0=performance.now();
     cancelAnimationFrame(raf);
-    const tick=now=>{const raw=Math.min((now-t0)/duration,1),t=smootherstep(raw);camera={x:lerp(start.x,PANORAMA.x,t),y:lerp(start.y,PANORAMA.y,t),width:lerp(start.width,PANORAMA.width,t),height:lerp(start.height,PANORAMA.height,t)};applyCamera(camera);updateFloatingPhotoPositions();if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;finalPanoramaDone=true;shell.classList.remove('maps-moving','maps-final-wait');shell.classList.add('maps-panorama-return');if(cue)cue.textContent='Tocca per resettare';updateSidebar(stops.length-1,'Percorso futuro','Ingegneria informatica come naturale prosecuzione del percorso.');nextButtons.forEach(btn=>btn.textContent='Reset');updateStepStates(stops.length-1);}};
+    const tick=now=>{const raw=Math.min((now-t0)/duration,1),t=smootherstep(raw);camera={x:lerp(start.x,PANORAMA.x,t),y:lerp(start.y,PANORAMA.y,t),width:lerp(start.width,PANORAMA.width,t),height:lerp(start.height,PANORAMA.height,t)};applyCamera(camera);updateFloatingPhotoPositions();if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;finalPanoramaDone=true;shell.classList.remove('maps-moving','maps-final-wait');shell.classList.add('maps-panorama-return');if(cue)cue.textContent='Tocca per resettare';updateSidebar(stops.length-1,'Panoramica completa','Vista completa del percorso: da Lonato al proseguimento dopo UniBS.');nextButtons.forEach(btn=>btn.textContent='Reset');updateStepStates(stops.length-1);}};
     raf=requestAnimationFrame(tick);
   }
   function renderMovingPoint(previous,followCamera){const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+4,totalLength));moveCar(pt,getAngle(pt,next));updateProgress(distance);if(followCamera)centerCameraOnPoint(pt,true);updatePhotoPinsByDistance(distance);updateCheckpoints(currentProgress,previous);updateFloatingPhotoPositions();}

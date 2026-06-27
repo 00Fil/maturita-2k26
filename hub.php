@@ -18,7 +18,7 @@ function appicon(string $file, string $remote): string {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desktop · Maturità 2026</title>
 <link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
-<?php if ($boot): ?><link rel="preload" href="assets/maps-media/step-03-lonato-maturita-03.webp" as="image" fetchpriority="high"><link rel="preload" href="assets/optimized/bg.webp" as="image" fetchpriority="high"><?php endif; ?>
+<?php if ($boot): ?><link rel="preload" href="assets/optimized/bg.webp" as="image" fetchpriority="high"><?php endif; ?>
 </head>
 <body<?= $boot ? ' class="booting"' : '' ?>>
 
@@ -30,7 +30,7 @@ function appicon(string $file, string $remote): string {
 </defs></svg>
 
 <?php if ($boot): ?>
-<div id="boot" aria-hidden="true"><img src="assets/maps-media/step-03-lonato-maturita-03.webp" alt="" fetchpriority="high" decoding="async"><div class="bbar"><span></span></div></div>
+<div id="boot" aria-hidden="true"><img src="assets/optimized/bg.webp" alt="" fetchpriority="high" decoding="async"><div class="bbar"><span></span></div></div>
 <?php endif; ?>
 
 <div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
