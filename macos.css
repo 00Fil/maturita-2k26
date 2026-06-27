@@ -4123,106 +4123,33 @@ body.login-screen.video-loading::after{
 .maps-ref .floating-photo-pin.visible .photo-marker{animation:premiumPhotoPinIn .62s cubic-bezier(.2,.78,.22,1) forwards;}
 
 /* ============================================================
-   Maps full-cover fixed grid + exact photo anchors
+   Maps fixed scene player-only motion
    ------------------------------------------------------------
-   - La superficie inclinata è più grande e copre sempre tutta la visuale.
-   - La griglia è uno sfondo grande/fisso del layer mappa: non segue il player
-     e non dipende dal viewBox/camera del percorso.
-   - Il punto di aggancio dei pin coincide con la punta del fumetto, centrata
-     sulla linea del percorso.
+   Sfondo, griglia, percorso, tappe e immagini sono fissi.
+   L'unico elemento che si muove durante la navigazione è il player.
    ============================================================ */
 .maps-ref{
-  background:#17231d!important;
+  background:#2d2e32!important;
   overflow:hidden!important;
 }
 .maps-ref .map-stage{
-  inset:-78%!important;
+  inset:-38%!important;
   overflow:hidden!important;
-  background:#17231d!important;
+  background:#2d2e32!important;
   background-image:none!important;
-  transform-style:preserve-3d!important;
+  transform:none!important;
 }
-.maps-ref .map-tilt{
+.maps-ref .map-tilt,
+.maps-ref .map-tilt.navigation{
   position:relative!important;
   width:100%!important;
   height:100%!important;
-  background:transparent!important;
-  background-image:none!important;
+  transform:scale(1.10) rotateX(52deg) rotateZ(-19deg) translateY(64px)!important;
   transform-origin:center center!important;
-  will-change:transform,filter!important;
-}
-.maps-ref .map-tilt::before{
-  content:"";
-  position:absolute;
-  inset:-95%;
-  z-index:0;
-  pointer-events:none;
-  background-color:#17231d;
-  background-image:
-    linear-gradient(rgba(143,188,157,.18) 1.5px, transparent 1.5px),
-    linear-gradient(90deg, rgba(143,188,157,.18) 1.5px, transparent 1.5px);
-  background-size:128px 128px;
-  background-position:center center;
-  transform:translateZ(-1px);
-}
-.maps-ref .map-tilt.navigation{
-  transform:scale(1.34) rotateX(52deg) rotateZ(-19deg) translateY(50px)!important;
-}
-.maps-ref svg{
-  position:relative!important;
-  z-index:1!important;
-  background:transparent!important;
-}
-.maps-ref .land{
-  fill:transparent!important;
-}
-.maps-ref .green-blob,
-.maps-ref .green-blob-soft{
-  display:none!important;
-}
-.maps-ref .floating-photo-layer{
-  z-index:12!important;
-  overflow:visible!important;
-}
-.maps-ref .floating-photo-pin{
-  /* SVG pin tip: y=218 on viewBox 226 => 96.46%. This anchors the tip exactly on the route centerline. */
-  transform:translate(-50%,-96.5%)!important;
-  transform-origin:50% 96.5%!important;
-  will-change:left,top,opacity!important;
-}
-.maps-ref .photo-marker{
-  left:0!important;
-  bottom:0!important;
-  transform-origin:50% 96.5%!important;
-}
-@media(max-width:980px){
-  .maps-ref .map-stage{inset:-86%!important;}
-  .maps-ref .map-tilt.navigation{transform:scale(1.38) rotateX(50deg) rotateZ(-18deg) translateY(44px)!important;}
-}
-@media(max-width:760px){
-  .maps-ref .map-stage{inset:-92%!important;}
-  .maps-ref .map-tilt.navigation{transform:scale(1.42) rotateX(46deg) rotateZ(-16deg) translateY(48px)!important;}
-}
-
-/* ============================================================
-   Maps restored grey grid + slight cover + feature preservation
-   ============================================================ */
-.maps-ref{
-  background:#2d2e32!important;
-  overflow:hidden!important;
-}
-.maps-ref .map-stage{
-  inset:-36%!important;
-  overflow:hidden!important;
-  transform-style:preserve-3d!important;
-  background:#2d2e32!important;
-  background-image:none!important;
-}
-.maps-ref .map-tilt{
+  transition:none!important;
   background:transparent!important;
   background-image:none!important;
-  transform-origin:center center!important;
-  will-change:transform,filter!important;
+  filter:saturate(1) contrast(1.02)!important;
 }
 .maps-ref .map-tilt::before{
   content:"";
@@ -4237,9 +4164,30 @@ body.login-screen.video-loading::after{
   background-size:118px 118px;
   background-position:center center;
 }
-.maps-ref .map-tilt.navigation{
-  transform:scale(1.14) rotateX(52deg) rotateZ(-19deg) translateY(68px)!important;
+.maps-ref svg{position:relative!important;z-index:1!important;background:transparent!important;}
+.maps-ref .land{fill:transparent!important;}
+.maps-ref .green-blob,.maps-ref .green-blob-soft{display:none!important;}
+.maps-ref .floating-photo-pin{
+  transform:translate(-50%,-96.5%)!important;
+  transform-origin:50% 96.5%!important;
 }
+@media(max-width:980px){
+  .maps-ref .map-stage{inset:-42%!important;}
+  .maps-ref .map-tilt,.maps-ref .map-tilt.navigation{transform:scale(1.12) rotateX(50deg) rotateZ(-18deg) translateY(60px)!important;}
+}
+@media(max-width:760px){
+  .maps-ref .map-stage{inset:-46%!important;}
+  .maps-ref .map-tilt,.maps-ref .map-tilt.navigation{transform:scale(1.14) rotateX(46deg) rotateZ(-16deg) translateY(54px)!important;}
+}
+
+/* ============================================================
+   Maps final fixed background player-only
+   ============================================================ */
+.maps-ref{background:#2d2e32!important;overflow:hidden!important;}
+.maps-ref .map-stage{inset:-38%!important;overflow:hidden!important;background:#2d2e32!important;background-image:none!important;transform:none!important;}
+.maps-ref .map-tilt,
+.maps-ref .map-tilt.navigation{position:relative!important;width:100%!important;height:100%!important;transform:scale(1.10) rotateX(52deg) rotateZ(-19deg) translateY(64px)!important;transform-origin:center center!important;transition:none!important;background:transparent!important;background-image:none!important;filter:saturate(1) contrast(1.02)!important;}
+.maps-ref .map-tilt::before{content:"";position:absolute;inset:-62%;z-index:0;pointer-events:none;background-color:#2d2e32;background-image:linear-gradient(rgba(255,255,255,.16) 1.4px,transparent 1.4px),linear-gradient(90deg,rgba(255,255,255,.16) 1.4px,transparent 1.4px);background-size:118px 118px;background-position:center center;}
 .maps-ref svg{position:relative!important;z-index:1!important;background:transparent!important;}
 .maps-ref .land{fill:transparent!important;}
 .maps-ref .green-blob,.maps-ref .green-blob-soft{display:none!important;}
@@ -4248,14 +4196,9 @@ body.login-screen.video-loading::after{
 .maps-ref .route-progress{stroke:#64d2ff!important;stroke-width:10!important;filter:drop-shadow(0 0 8px rgba(100,210,255,.42))!important;}
 .maps-ref .city-label{stroke:rgba(45,46,50,.88)!important;fill:rgba(245,245,247,.72)!important;}
 .maps-ref .pin-circle{fill:#3a3b40!important;stroke:rgba(255,255,255,.22)!important;}
-.maps-ref .floating-photo-layer{z-index:12!important;overflow:visible!important;}
-.maps-ref .floating-photo-pin{
-  transform:translate(-50%,-96.5%)!important;
-  transform-origin:50% 96.5%!important;
-  transition:opacity 1.15s ease!important;
-}
+.maps-ref .floating-photo-pin{transform:translate(-50%,-96.5%)!important;transform-origin:50% 96.5%!important;transition:opacity 1.15s ease!important;}
 .maps-ref .floating-photo-pin.fading{opacity:0!important;}
 .maps-ref .photo-marker{left:0!important;bottom:0!important;transform-origin:50% 96.5%!important;filter:drop-shadow(0 22px 42px rgba(0,0,0,.34)) drop-shadow(0 0 18px rgba(10,132,255,.10))!important;}
 .maps-reference-shell.maps-final-wait .maps-click-cue{animation:mwHintPulse 1.8s ease-in-out infinite;opacity:.96;}
-@media(max-width:980px){.maps-ref .map-stage{inset:-42%!important}.maps-ref .map-tilt.navigation{transform:scale(1.18) rotateX(50deg) rotateZ(-18deg) translateY(62px)!important;}}
-@media(max-width:760px){.maps-ref .map-stage{inset:-46%!important}.maps-ref .map-tilt.navigation{transform:scale(1.20) rotateX(46deg) rotateZ(-16deg) translateY(56px)!important;}}
+@media(max-width:980px){.maps-ref .map-stage{inset:-42%!important}.maps-ref .map-tilt,.maps-ref .map-tilt.navigation{transform:scale(1.12) rotateX(50deg) rotateZ(-18deg) translateY(60px)!important;}}
+@media(max-width:760px){.maps-ref .map-stage{inset:-46%!important}.maps-ref .map-tilt,.maps-ref .map-tilt.navigation{transform:scale(1.14) rotateX(46deg) rotateZ(-16deg) translateY(54px)!important;}}
