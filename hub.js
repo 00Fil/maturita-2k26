@@ -1406,15 +1406,23 @@ syncFinderVisibility();
   function flash(el){ /* niente micro-flash ripetuti: movimento più pulito stile Apple */ }
   function setProgress(p){ progress.style.strokeDashoffset=(1-Math.max(0,Math.min(1,p))).toFixed(4); }
 
+  let renderTimer=0;
+  function beginSmoothMove(){
+    app.classList.add('maps-moving');
+    clearTimeout(renderTimer);
+    renderTimer=setTimeout(()=>app.classList.remove('maps-moving'), PERF.low ? 40 : 1740);
+  }
+
   function render(){
     const navMode=vi>=0;
     app.classList.toggle('nav', navMode);
+    beginSmoothMove();
 
     if(navMode){
       const v=seq[vi];
       const pos=pt(v.p);
       const rot=headingFromPath(v.p, v.targetP);
-      const S=1.95, cx=600, cy=548;
+      const S=1.78, cx=600, cy=532;
 
       // Camera, cursore e tratto completato condividono la stessa p sul path.
       cam.style.transform=`translate(${cx}px, ${cy}px) rotate(${rot}deg) scale(${S}) translate(${-pos.x}px, ${-pos.y}px)`;

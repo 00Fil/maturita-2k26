@@ -3168,3 +3168,150 @@ body.login-screen.unlock .wallpaper {
 @media (prefers-reduced-motion: reduce){
   #maps-cam,#maps-puck,#maps-puck .puck-rot,#maps-route-progress,.mw-pin-rot{ transition-duration:.001s!important; }
 }
+
+
+/* ============================================================
+   Global Smooth Motion Pass — Apple Maps reference
+   ------------------------------------------------------------
+   Obiettivo: motion meno “rimbalzoso”, più fluido e continuo su tutta l’app.
+   ============================================================ */
+:root{
+  --ease-apple: cubic-bezier(.22, 1, .36, 1);
+  --ease-apple-long: cubic-bezier(.16, 1, .30, 1);
+  --ease-apple-map: cubic-bezier(.20, .82, .12, 1);
+  --spring: cubic-bezier(.22, 1, .36, 1);
+  --spring-soft: cubic-bezier(.22, 1, .36, 1);
+  --spring-pop: cubic-bezier(.22, 1, .36, 1);
+  --dur: .68s;
+}
+
+/* Finestre e cards: entrata morbida, niente overshoot/cartoon. */
+@keyframes winIn{
+  0%{opacity:0;transform:scale(.965) translateY(18px);filter:blur(8px)}
+  65%{opacity:1;filter:blur(0)}
+  100%{opacity:1;transform:scale(1) translateY(0);filter:blur(0)}
+}
+@keyframes winOut{
+  from{opacity:1;transform:scale(1);filter:blur(0)}
+  to{opacity:0;transform:scale(.975) translateY(10px);filter:blur(5px)}
+}
+.win.open{animation:winIn .62s var(--ease-apple-long) both!important}
+.win.closing{animation:winOut .30s var(--ease-apple) both!important}
+
+@keyframes tileIn{from{opacity:0;transform:translateY(9px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@keyframes dIn{from{opacity:0;transform:translateY(-7px) scale(.985);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
+@keyframes riseIn{from{opacity:0;transform:translateY(8px);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
+@keyframes badgePop{from{transform:scale(.92);opacity:0;filter:blur(4px)}to{transform:scale(1);opacity:1;filter:none}}
+@keyframes pinDrop{from{opacity:0;transform:translate(-50%,-108%);filter:blur(4px)}to{opacity:1;transform:translate(-50%,-100%);filter:none}}
+
+.win.open .fbadge,
+.win.open .apic,
+.win.open .pin,
+.win.open .favico{animation:badgePop .46s var(--ease-apple) .06s both!important}
+.win.open .mpin{animation:pinDrop .48s var(--ease-apple) .08s both!important}
+.win.open .as-hero,
+.win.open .crow,
+.win.open .evt,
+.win.open .stop,
+.win.open .aprow,
+.win.open .as-duo>*,
+.win.open .cstat,
+.win.open .favcard,
+.win.open .cnote,
+.win.open .eta,
+.win.open .sf-note{animation-timing-function:var(--ease-apple)!important;animation-duration:.48s!important}
+
+/* Interazioni comuni: press più breve e meno elastico. */
+button,
+.dicon,
+.fitem,
+.favcard,
+.crow,
+.evt,
+.stop,
+.aprow,
+.cstat,
+.nr-row,
+.pcto-year-card,
+.pcto-day,
+.finder-nav button,
+.finder-viewbar button,
+.finder-actions button,
+.mw-back,
+.mw-modes button,
+.mw-zoom button,
+.ccrow,
+.ccmini,
+.ccfocus,
+.cact,
+.getb,
+.xchips span{
+  transition-timing-function:var(--ease-apple)!important;
+}
+
+/* Dock: feedback più Apple, meno salto. */
+.dock{animation:dockIn .66s var(--ease-apple-long) .08s both!important}
+.dock .ai.bounce{animation:dockSoftBounce .52s var(--ease-apple)!important}
+@keyframes bounce{0%,100%{translate:0 0}42%{translate:0 -12px}72%{translate:0 -3px}}
+@keyframes dockSoftBounce{0%,100%{translate:0 0}44%{translate:0 -12px}74%{translate:0 -3px}}
+.dapp .tip{transition:opacity .18s ease,transform .30s var(--ease-apple)!important}
+
+/* Spotlight / gallery: eliminato l’overshoot visibile. */
+.spot-shell{transition:transform .46s var(--ease-apple-long),opacity .24s ease,filter .34s ease!important}
+.spot-result{transition:opacity .26s ease,transform .38s var(--ease-apple),filter .26s ease!important}
+.sg-window.open{animation:sgWinIn .52s var(--ease-apple-long) both!important}
+.sg-center-win.open{animation:sgCenterIn .56s var(--ease-apple-long) both!important}
+@keyframes sgWinIn{from{opacity:0;transform:translateY(18px) scale(.94);filter:blur(8px)}to{opacity:1;transform:translateY(0) scale(1);filter:none}}
+@keyframes sgCenterIn{from{opacity:0;transform:translateY(14px) scale(.94);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+
+/* Maps: camera più fluida e continua, come Apple Maps reference. */
+.maps-app{
+  --maps-ease: var(--ease-apple);
+  --maps-ease-long: var(--ease-apple-map);
+}
+#maps-cam{
+  transform-box:view-box!important;
+  transform-origin:0 0!important;
+  transition:transform 1.72s var(--ease-apple-map)!important;
+  will-change:transform;
+}
+#maps-puck{
+  transition:transform 1.54s var(--ease-apple-map)!important;
+  will-change:transform;
+}
+#maps-puck .puck-rot,
+.mw-pin-rot{
+  transition:transform 1.54s var(--ease-apple-map)!important;
+}
+#maps-route-progress{
+  transition:stroke-dashoffset 1.62s var(--ease-apple-map)!important;
+}
+.mw-banner,
+.mw-hint,
+.mw-zoom{
+  transition-timing-function:var(--ease-apple)!important;
+}
+.mw-banner{transition:background .42s ease,box-shadow .42s ease,transform .42s var(--ease-apple),opacity .24s ease!important}
+.mw-banner-text b,
+.mw-banner-text p,
+.mw-banner-text span{transition:opacity .24s ease,transform .34s var(--ease-apple)}
+.mw-hint{transition:opacity .32s ease,transform .42s var(--ease-apple)!important}
+
+/* Map details: il puck resta vetroso, pin e label reagiscono senza pulsazioni. */
+.puck-soft{transition:opacity .45s ease,filter .45s ease}
+.maps-app.nav .puck-soft{opacity:.18;filter:blur(2px)}
+.mw-pin{transition:opacity .36s ease,filter .36s ease}
+.mw-pin.on .pin-stem,
+.mw-pin.on .pin-face{transition:filter .42s ease,fill .42s ease,opacity .42s ease}
+.mw-pin.done .pin-stem,
+.mw-pin.done .pin-face{transition:fill .42s ease,opacity .42s ease}
+
+/* Vecchio navigatore legacy, se presente: stesso easing. */
+#mv-cam,#w-fine #nav-cam{transition:transform 1.62s var(--ease-apple-map)!important}
+#mv-puck,#mv-trav,#w-fine #nav-puck,#w-fine #nav-route-done{transition-duration:1.50s!important;transition-timing-function:var(--ease-apple-map)!important}
+.mk,#w-fine .mk{transition-timing-function:var(--ease-apple)!important}
+
+/* Mantiene accessibilità e performance. */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001s!important;animation-delay:0s!important;transition-duration:.001s!important;scroll-behavior:auto!important}
+}
