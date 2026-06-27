@@ -1360,98 +1360,86 @@ document.querySelectorAll('.win').forEach(w=>{ if(!w.classList.contains('maxi'))
 setInterval(syncFinderVisibility, 500);
 syncFinderVisibility();
 
-/* Maps Navigator — exact reference implementation */
+/* Maps Navigator — sidebar + stop automatico a ogni tappa */
 (function(){
+  const shell = document.querySelector('[data-maps-navigator]');
   const root = document.querySelector('[data-maps-reference]');
-  if(!root) return;
+  if(!shell || !root) return;
 
-  const startBtn = root.querySelector("#startBtn");
-  const resetBtn = root.querySelector("#resetBtn");
-  const app = root;
-  const mapTilt = root.querySelector("#mapTilt");
-  const mapSvg = root.querySelector("#mapSvg");
-  const overviewPanel = root.querySelector("#overviewPanel");
-  const topCard = root.querySelector("#topCard");
-  const speedPill = root.querySelector("#speedPill");
-  const checkpointBanner = root.querySelector("#checkpointBanner");
-  const routePath = root.querySelector("#routePath");
-  const progressPath = root.querySelector("#progressPath");
-  const car = root.querySelector("#car");
-  const instruction = root.querySelector("#instruction");
-  const subInstruction = root.querySelector("#subInstruction");
-  const turnIcon = root.querySelector("#turnIcon");
-  const speedValue = root.querySelector("#speedValue");
+  const mapTilt = root.querySelector('#mapTilt');
+  const mapSvg = root.querySelector('#mapSvg');
+  const routePath = root.querySelector('#routePath');
+  const progressPath = root.querySelector('#progressPath');
+  const car = root.querySelector('#car');
+  const cue = root.querySelector('[data-maps-click-cue]');
+  const nextButtons = Array.from(shell.querySelectorAll('[data-maps-next]'));
+  const resetButtons = Array.from(shell.querySelectorAll('[data-maps-reset]'));
+  const sideSteps = Array.from(shell.querySelectorAll('[data-maps-step]'));
+  const sideTitle = shell.querySelector('[data-maps-side-title]');
+  const sideSub = shell.querySelector('[data-maps-side-sub]');
 
-  if(!startBtn||!resetBtn||!mapTilt||!mapSvg||!routePath||!progressPath||!car) return;
+  if(!mapTilt || !mapSvg || !routePath || !progressPath || !car) return;
 
   const totalLength = routePath.getTotalLength();
-
-  let animationFrame = null;
-  let startTime = null;
-  let isRunning = false;
-
-  const duration = 14500;
-  const cameraIntroDuration = 1300;
-
-  const triggeredCheckpoints = new Set();
-  const triggeredPhotoPins = new Set();
-
   const WORLD = { x: -1200, y: -900, width: 3900, height: 2900 };
   const OVERVIEW_CAMERA_WIDTH = 1800;
   const NAV_CAMERA_WIDTH_DESKTOP = 1500;
   const NAV_CAMERA_WIDTH_MOBILE = 1520;
   const TARGET_VX = 0.50;
   const TARGET_VY = 0.63;
-  const CAMERA_SMOOTHNESS = 0.085;
+  const CAMERA_SMOOTHNESS = 0.11;
 
-  let camera = { x: 0, y: 0, width: 1400, height: 900 };
-
-  const instructions = [
-    { at: 0, icon: "↑", title: "Procedi verso Bedizzole", sub: "Partenza da IIS Luigi Cerebotani" },
-    { at: 0.22, icon: "↗", title: "Mantieni la destra", sub: "Continua verso CS Metal Europe" },
-    { at: 0.42, icon: "●", title: "Arrivo a CS Metal Europe", sub: "Tappa intermedia raggiunta" },
-    { at: 0.52, icon: "↖", title: "Riparti verso Brescia", sub: "Segui la direzione UniBS" },
-    { at: 0.74, icon: "↑", title: "Prosegui verso UniBS", sub: "Arrivo tra pochi minuti" },
-    { at: 0.95, icon: "✓", title: "Arrivo a UniBS", sub: "Destinazione raggiunta" }
-  ];
-
-  const checkpoints = [
-    { at: 0, id: "ring-0", text: "Partenza da IIS Luigi Cerebotani" },
-    { at: 0.42, id: "ring-1", text: "CS Metal Europe raggiunta" },
-    { at: 0.95, id: "ring-2", text: "Arrivo a UniBS" }
+  const stops = [
+    { p:0, id:'ring-0', title:'Cerebotani', sub:'Partenza da IIS Luigi Cerebotani', banner:'Pronto per partire', speed:52 },
+    { p:.42, id:'ring-1', title:'CS Metal Europe', sub:'Tappa intermedia raggiunta. Clicca per proseguire.', banner:'CS Metal Europe raggiunta', speed:18 },
+    { p:1, id:'ring-2', title:'UniBS', sub:'Destinazione raggiunta', banner:'Arrivo a UniBS', speed:0 }
   ];
 
   const photoPins = [
-    { at: 0.18, id: "photoPin-0" },
-    { at: 0.42, id: "photoPin-1" },
-    { at: 0.66, id: "photoPin-2" },
-    { at: 0.95, id: "photoPin-3" }
+    { at: 0.18, id: 'photoPin-0' },
+    { at: 0.42, id: 'photoPin-1' },
+    { at: 0.66, id: 'photoPin-2' },
+    { at: 0.95, id: 'photoPin-3' }
   ];
+
+  let camera = { x:0, y:0, width:1400, height:900 };
+  let currentStop = 0;
+  let currentProgress = 0;
+  let isRunning = false;
+  let raf = null;
+  let triggeredCheckpoints = new Set();
+  let triggeredPhotoPins = new Set();
 
   prepareRoute();
   attachPhotoPinsToRoute();
-  resetCameraToOverview();
+  resetToStop(0, false);
   updateFloatingPhotoPositions();
 
-  startBtn.addEventListener("click", startNavigation);
-  resetBtn.addEventListener("click", resetNavigation);
-
-  window.addEventListener("resize", () => {
-    if (isRunning) applyCamera(camera);
-    else resetCameraToOverview();
+  window.addEventListener('resize', () => {
+    const point = routePath.getPointAtLength(currentProgress * totalLength);
+    camera = getTargetCamera(point, 1);
+    applyCamera(camera);
     requestAnimationFrame(updateFloatingPhotoPositions);
   });
 
-  function prepareRoute() {
-    routePath.classList.add("visible");
+  root.addEventListener('click', () => advance());
+  nextButtons.forEach(btn => btn.addEventListener('click', e => { e.stopPropagation(); advance(); }));
+  resetButtons.forEach(btn => btn.addEventListener('click', e => { e.stopPropagation(); resetNavigation(); }));
+  sideSteps.forEach(btn => btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const target = Number(btn.dataset.mapsStep || 0);
+    if(target === currentStop || isRunning) return;
+    animateToStop(target);
+  }));
+
+  function prepareRoute(){
+    routePath.classList.add('visible');
     progressPath.style.strokeDasharray = `0 ${totalLength}`;
-    progressPath.style.strokeDashoffset = "0";
-    const firstPoint = routePath.getPointAtLength(0);
-    moveCar(firstPoint, 0);
+    progressPath.style.strokeDashoffset = '0';
   }
 
-  function attachPhotoPinsToRoute() {
-    for (const pin of photoPins) {
+  function attachPhotoPinsToRoute(){
+    for(const pin of photoPins){
       const point = routePath.getPointAtLength(pin.at * totalLength);
       pin.x = point.x;
       pin.y = point.y;
@@ -1459,69 +1447,161 @@ syncFinderVisibility();
     }
   }
 
-  function startNavigation() {
-    if (isRunning) return;
-    isRunning = true;
-    startTime = null;
-    triggeredCheckpoints.clear();
-    triggeredPhotoPins.clear();
-
-    root.querySelectorAll(".floating-photo-pin").forEach(pin => pin.classList.remove("visible"));
-
-    const firstPoint = routePath.getPointAtLength(0);
-    camera = getTargetCamera(firstPoint, 0);
-    applyCamera(camera);
-    updateFloatingPhotoPositions();
-
-    overviewPanel.classList.add("hidden");
-    topCard.classList.add("visible");
-    speedPill.classList.add("visible");
-    mapTilt.classList.add("navigation");
-
-    requestAnimationFrame(() => {
-      updateFloatingPhotoPositions();
-      animationFrame = requestAnimationFrame(animate);
-    });
-    try{ sndOpen&&sndOpen(); }catch(err){}
+  function advance(){
+    if(isRunning) return;
+    if(currentStop >= stops.length - 1){ resetNavigation(); return; }
+    animateToStop(currentStop + 1);
+    try{ sndOpen && sndOpen(); }catch(err){}
   }
 
-  function animate(timestamp) {
-    if (!startTime) startTime = timestamp;
-    const elapsed = timestamp - startTime;
-    const rawProgress = Math.min(elapsed / duration, 1);
-    const progress = easeInOutCubic(rawProgress);
-    const distance = progress * totalLength;
+  function animateToStop(targetStop){
+    if(isRunning) return;
+    targetStop = Math.max(0, Math.min(stops.length - 1, targetStop));
+    const fromProgress = currentProgress;
+    const toProgress = stops[targetStop].p;
+    const delta = Math.abs(toProgress - fromProgress);
+    if(delta < .001){ resetToStop(targetStop, true); return; }
+
+    isRunning = true;
+    shell.classList.add('nav','maps-moving');
+    shell.classList.remove('maps-paused','at-goal');
+    mapTilt.classList.add('navigation');
+    if(cue) cue.textContent = 'Navigazione in corso…';
+    updateSidebar(currentStop, 'In movimento', targetStop === 1 ? 'Verso CS Metal Europe' : 'Verso UniBS');
+
+    const segmentDuration = Math.max(2600, Math.min(7600, 14500 * delta * 1.28));
+    const startTimeRef = performance.now();
+    const startCamera = {...camera};
+    const triggeredBefore = new Set(triggeredCheckpoints);
+
+    const tick = now => {
+      const raw = Math.min((now - startTimeRef) / segmentDuration, 1);
+      // smootherstep: partenza morbida e stop graduale alla tappa.
+      const eased = raw * raw * raw * (raw * (raw * 6 - 15) + 10);
+      currentProgress = lerp(fromProgress, toProgress, eased);
+      const distance = currentProgress * totalLength;
+      const point = routePath.getPointAtLength(distance);
+      const nextPoint = routePath.getPointAtLength(Math.min(distance + 3, totalLength));
+      const angle = getAngle(point, nextPoint);
+
+      moveCar(point, angle);
+      updateProgress(distance);
+      updateCamera(point, raw, startCamera);
+      updatePhotoPinsByDistance(distance);
+      updateFloatingPhotoPositions();
+      updateCheckpoints(currentProgress, triggeredBefore);
+
+      if(raw < 1){
+        raf = requestAnimationFrame(tick);
+      }else{
+        isRunning = false;
+        currentStop = targetStop;
+        currentProgress = toProgress;
+        resetToStop(targetStop, true);
+      }
+    };
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(tick);
+  }
+
+  function resetToStop(index, paused){
+    currentStop = index;
+    currentProgress = stops[index].p;
+    const distance = currentProgress * totalLength;
     const point = routePath.getPointAtLength(distance);
     const nextPoint = routePath.getPointAtLength(Math.min(distance + 3, totalLength));
-    const angle = getAngle(point, nextPoint);
-
-    moveCar(point, angle);
+    moveCar(point, getAngle(point, nextPoint));
     updateProgress(distance);
-    updateCamera(point, elapsed);
-    updateInstruction(progress);
-    updateSpeed(progress);
-    updateCheckpoints(progress);
-    updatePhotoPinsByDistance(distance);
+    camera = getTargetCamera(point, index === 0 ? 0 : 1);
+    applyCamera(camera);
     updateFloatingPhotoPositions();
+    updateSidebar(index);
+    updateStepStates(index);
 
-    if (rawProgress < 1) animationFrame = requestAnimationFrame(animate);
-    else { isRunning = false; updateFloatingPhotoPositions(); }
+    if(index === 0){
+      shell.classList.remove('nav','maps-paused','maps-moving','at-goal');
+      mapTilt.classList.remove('navigation','checkpoint-flash');
+      if(cue) cue.textContent = 'Tocca la mappa per partire';
+    }else{
+      shell.classList.add('nav','maps-paused');
+      shell.classList.remove('maps-moving');
+      mapTilt.classList.add('navigation');
+      triggerCheckpoint(stops[index].id);
+      if(cue) cue.textContent = index >= stops.length - 1 ? 'Tocca per resettare' : 'Tocca per proseguire';
+    }
+    if(index >= stops.length - 1){ shell.classList.add('at-goal'); }
+    nextButtons.forEach(btn => btn.textContent = index >= stops.length - 1 ? 'Rivedi' : (index === 0 ? 'Avvia' : 'Prosegui'));
   }
 
-  function getTargetCamera(point, elapsed) {
-    const rect = app.getBoundingClientRect();
+  function resetNavigation(){
+    cancelAnimationFrame(raf);
+    isRunning = false;
+    triggeredCheckpoints.clear();
+    triggeredPhotoPins.clear();
+    root.querySelectorAll('.checkpoint-ring').forEach(ring => ring.classList.remove('active'));
+    root.querySelectorAll('.floating-photo-pin').forEach(pin => pin.classList.remove('visible'));
+    progressPath.style.strokeDasharray = `0 ${totalLength}`;
+    resetToStop(0, false);
+    try{ sndClick && sndClick(); }catch(err){}
+  }
+
+  function updateSidebar(index, titleOverride, subOverride){
+    const stop = stops[index];
+    if(sideTitle) sideTitle.textContent = titleOverride || stop.title;
+    if(sideSub) sideSub.textContent = subOverride || stop.sub;
+    updateStepStates(index);
+  }
+
+  function updateStepStates(index){
+    sideSteps.forEach((btn, i) => {
+      btn.classList.toggle('active', i === index);
+      btn.classList.toggle('done', i < index);
+    });
+  }
+
+  function updateCheckpoints(progress, previous){
+    stops.forEach(stop => {
+      if(progress >= stop.p - .002 && stop.id && !triggeredCheckpoints.has(stop.id) && !previous.has(stop.id)){
+        triggerCheckpoint(stop.id);
+      }
+    });
+  }
+
+  function triggerCheckpoint(ringId){
+    if(!ringId || triggeredCheckpoints.has(ringId)) return;
+    triggeredCheckpoints.add(ringId);
+    const ring = root.querySelector(`#${ringId}`);
+    if(ring){
+      ring.classList.remove('active');
+      void ring.getBoundingClientRect();
+      ring.classList.add('active');
+    }
+    mapTilt.classList.add('checkpoint-flash');
+    setTimeout(() => mapTilt.classList.remove('checkpoint-flash'), 450);
+  }
+
+  function getTargetCamera(point, intro){
+    const rect = root.getBoundingClientRect();
     const aspect = rect.width / Math.max(1, rect.height);
     const navWidth = rect.width < 760 ? NAV_CAMERA_WIDTH_MOBILE : NAV_CAMERA_WIDTH_DESKTOP;
-    const intro = easeInOutCubic(Math.min(elapsed / cameraIntroDuration, 1));
-    const targetWidth = lerp(OVERVIEW_CAMERA_WIDTH, navWidth, intro);
+    const smoothIntro = easeInOutCubic(Math.max(0, Math.min(1, intro)));
+    const targetWidth = lerp(OVERVIEW_CAMERA_WIDTH, navWidth, smoothIntro);
     const targetHeight = targetWidth / aspect;
-    const targetX = point.x - targetWidth * TARGET_VX;
-    const targetY = point.y - targetHeight * TARGET_VY;
-    return clampViewBox({ x: targetX, y: targetY, width: targetWidth, height: targetHeight });
+    return clampViewBox({
+      x: point.x - targetWidth * TARGET_VX,
+      y: point.y - targetHeight * TARGET_VY,
+      width: targetWidth,
+      height: targetHeight
+    });
   }
 
-  function updateCamera(point, elapsed) {
-    const target = getTargetCamera(point, elapsed);
+  function updateCamera(point, raw, startCamera){
+    const target = getTargetCamera(point, raw);
+    camera.x = lerp(startCamera.x, target.x, Math.min(1, raw + CAMERA_SMOOTHNESS));
+    camera.y = lerp(startCamera.y, target.y, Math.min(1, raw + CAMERA_SMOOTHNESS));
+    camera.width = lerp(startCamera.width, target.width, Math.min(1, raw + CAMERA_SMOOTHNESS));
+    camera.height = lerp(startCamera.height, target.height, Math.min(1, raw + CAMERA_SMOOTHNESS));
+    // Aggiunta di smoothing locale per evitare scatti nelle finestre piccole.
     camera.x = lerp(camera.x, target.x, CAMERA_SMOOTHNESS);
     camera.y = lerp(camera.y, target.y, CAMERA_SMOOTHNESS);
     camera.width = lerp(camera.width, target.width, CAMERA_SMOOTHNESS);
@@ -1529,136 +1609,55 @@ syncFinderVisibility();
     applyCamera(camera);
   }
 
-  function resetCameraToOverview() {
-    const rect = app.getBoundingClientRect();
-    const aspect = rect.width / Math.max(1, rect.height);
-    const width = OVERVIEW_CAMERA_WIDTH;
-    const height = width / aspect;
-    const centerX = 700;
-    const centerY = 450;
-    camera = clampViewBox({ x: centerX - width / 2, y: centerY - height / 2, width, height });
-    applyCamera(camera);
-  }
+  function applyCamera(view){ mapSvg.setAttribute('viewBox', `${view.x} ${view.y} ${view.width} ${view.height}`); }
 
-  function applyCamera(view) { mapSvg.setAttribute("viewBox", `${view.x} ${view.y} ${view.width} ${view.height}`); }
-
-  function clampViewBox(view) {
+  function clampViewBox(view){
     const width = Math.min(view.width, WORLD.width);
     const height = Math.min(view.height, WORLD.height);
-    const minX = WORLD.x;
-    const minY = WORLD.y;
-    const maxX = WORLD.x + WORLD.width - width;
-    const maxY = WORLD.y + WORLD.height - height;
-    return { x: clamp(view.x, minX, maxX), y: clamp(view.y, minY, maxY), width, height };
+    return {
+      x: clamp(view.x, WORLD.x, WORLD.x + WORLD.width - width),
+      y: clamp(view.y, WORLD.y, WORLD.y + WORLD.height - height),
+      width,
+      height
+    };
   }
 
-  function moveCar(point, angle) { car.setAttribute("transform", `translate(${point.x} ${point.y}) rotate(${angle})`); }
-  function updateProgress(distance) { progressPath.style.strokeDasharray = `${distance} ${totalLength}`; }
+  function moveCar(point, angle){ car.setAttribute('transform', `translate(${point.x} ${point.y}) rotate(${angle})`); }
+  function updateProgress(distance){ progressPath.style.strokeDasharray = `${distance} ${totalLength}`; }
 
-  function updateInstruction(progress) {
-    let current = instructions[0];
-    for (const item of instructions) if (progress >= item.at) current = item;
-    instruction.textContent = current.title;
-    subInstruction.textContent = current.sub;
-    turnIcon.textContent = current.icon;
-  }
-
-  function updateCheckpoints(progress) {
-    for (const checkpoint of checkpoints) {
-      if (progress >= checkpoint.at && !triggeredCheckpoints.has(checkpoint.id)) {
-        triggeredCheckpoints.add(checkpoint.id);
-        triggerCheckpoint(checkpoint.id, checkpoint.text);
-      }
-    }
-  }
-
-  function updatePhotoPinsByDistance(distance) {
-    for (const pin of photoPins) {
-      if (distance >= pin.distance && !triggeredPhotoPins.has(pin.id)) {
+  function updatePhotoPinsByDistance(distance){
+    for(const pin of photoPins){
+      if(distance >= pin.distance && !triggeredPhotoPins.has(pin.id)){
         triggeredPhotoPins.add(pin.id);
         const element = root.querySelector(`#${pin.id}`);
-        if (element) {
-          element.classList.remove("visible");
-          void element.offsetWidth;
-          element.classList.add("visible");
-        }
+        if(element){ element.classList.remove('visible'); void element.offsetWidth; element.classList.add('visible'); }
       }
     }
   }
 
-  function updateFloatingPhotoPositions() {
-    const appRect = app.getBoundingClientRect();
+  function updateFloatingPhotoPositions(){
+    const appRect = root.getBoundingClientRect();
     const matrix = mapSvg.getScreenCTM();
-    if (!matrix) return;
-    for (const pin of photoPins) {
+    if(!matrix) return;
+    for(const pin of photoPins){
       const element = root.querySelector(`#${pin.id}`);
-      if (!element) continue;
+      if(!element) continue;
       const projected = svgPointToScreen(pin.x, pin.y, matrix);
       element.style.left = `${projected.x - appRect.left}px`;
       element.style.top = `${projected.y - appRect.top}px`;
     }
   }
 
-  function svgPointToScreen(x, y, matrix) {
+  function svgPointToScreen(x, y, matrix){
     const point = mapSvg.createSVGPoint();
-    point.x = x;
-    point.y = y;
+    point.x = x; point.y = y;
     const transformed = point.matrixTransform(matrix);
     return { x: transformed.x, y: transformed.y };
   }
 
-  function triggerCheckpoint(ringId, text) {
-    const ring = root.querySelector(`#${ringId}`);
-    if (ring) {
-      ring.classList.remove("active");
-      void ring.getBoundingClientRect();
-      ring.classList.add("active");
-    }
-    checkpointBanner.textContent = text;
-    checkpointBanner.classList.remove("visible");
-    void checkpointBanner.offsetWidth;
-    checkpointBanner.classList.add("visible");
-    mapTilt.classList.add("checkpoint-flash");
-    setTimeout(() => mapTilt.classList.remove("checkpoint-flash"), 450);
-  }
-
-  function updateSpeed(progress) {
-    const base = 48;
-    const variation = Math.sin(progress * Math.PI * 5) * 10;
-    const slowNearStops = progress > 0.38 && progress < 0.48 ? -28 : progress > 0.9 ? -32 : 0;
-    const speed = Math.max(12, Math.round(base + variation + slowNearStops));
-    speedValue.textContent = speed;
-  }
-
-  function resetNavigation() {
-    if (animationFrame) cancelAnimationFrame(animationFrame);
-    isRunning = false;
-    startTime = null;
-    triggeredCheckpoints.clear();
-    triggeredPhotoPins.clear();
-    mapTilt.classList.remove("navigation");
-    mapTilt.classList.remove("checkpoint-flash");
-    overviewPanel.classList.remove("hidden");
-    topCard.classList.remove("visible");
-    speedPill.classList.remove("visible");
-    checkpointBanner.classList.remove("visible");
-    progressPath.style.strokeDasharray = `0 ${totalLength}`;
-    const firstPoint = routePath.getPointAtLength(0);
-    moveCar(firstPoint, 0);
-    instruction.textContent = "Procedi verso Bedizzole";
-    subInstruction.textContent = "Prossima tappa: CS Metal Europe";
-    turnIcon.textContent = "↑";
-    speedValue.textContent = "52";
-    root.querySelectorAll(".checkpoint-ring").forEach(ring => ring.classList.remove("active"));
-    root.querySelectorAll(".floating-photo-pin").forEach(pin => pin.classList.remove("visible"));
-    resetCameraToOverview();
-    requestAnimationFrame(updateFloatingPhotoPositions);
-    try{ sndClick&&sndClick(); }catch(err){}
-  }
-
-  function getAngle(p1, p2) { return Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI + 90; }
-  function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
-  function lerp(a, b, t) { return a + (b - a) * t; }
-  function clamp(value, min, max) { return Math.min(Math.max(value, min), max); }
+  function getAngle(p1, p2){ return Math.atan2(p2.y - p1.y, p2.x - p1.x) * 180 / Math.PI + 90; }
+  function easeInOutCubic(t){ return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+  function lerp(a,b,t){ return a + (b - a) * t; }
+  function clamp(value,min,max){ return Math.min(Math.max(value,min),max); }
 })();
 

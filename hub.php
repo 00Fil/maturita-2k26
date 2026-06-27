@@ -264,6 +264,39 @@ function appicon(string $file, string $remote): string {
 <section class="win a-blue maps-window" id="w-fine" style="left:9%;top:6.5%;width:1020px">
   <div class="titlebar maps-titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
   <div class="maps-app maps-reference-shell" data-maps-navigator>
+    <aside class="mw-side maps-ref-side" aria-label="Indicazioni del percorso">
+      <div class="mw-side-head">
+        <button class="mw-back" data-maps-reset type="button" aria-label="Reset percorso"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button>
+        <h2>Indicazioni</h2>
+      </div>
+
+      <div class="mw-modes" role="tablist" aria-label="Tipo di percorso">
+        <button class="active" type="button" aria-label="In auto"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M5 11h14v5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H8v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z"/><circle cx="7.5" cy="14" r="1"/><circle cx="16.5" cy="14" r="1"/></svg></button>
+        <button type="button" aria-label="A piedi"><svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.8"/><path d="M11 9l-2 4 2 1 1 5M13 9l1 3 3 1M11 9h2l1.5 1"/></svg></button>
+        <button type="button" aria-label="Mezzi pubblici"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="13" rx="3"/><path d="M6 12h12M9 20l-1.5 2M15 20l1.5 2"/><circle cx="9" cy="15" r="1"/><circle cx="15" cy="15" r="1"/></svg></button>
+      </div>
+
+      <div class="mw-route" aria-label="Tappe del percorso">
+        <div class="mw-route-line"></div>
+        <button class="mw-endpoint route-start active" data-maps-step="0" type="button"><span class="mw-pt start"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Partenza</small><b>Cerebotani</b><em>IIS Luigi Cerebotani · Lonato</em></div></button>
+        <button class="mw-endpoint route-stop" data-maps-step="1" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>CS Metal Europe</b><em>Tappa intermedia a Bedizzole</em></div></button>
+        <button class="mw-endpoint route-end" data-maps-step="2" type="button"><span class="mw-pt end"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Arrivo</small><b>UniBS</b><em>Università degli Studi di Brescia</em></div></button>
+      </div>
+
+      <div class="mw-routecard maps-progress-card" aria-label="Stato navigazione">
+        <div class="mw-rc-main">
+          <b data-maps-side-title>Pronto</b>
+          <span data-maps-side-sub>Tocca Prosegui o la mappa per partire.</span>
+        </div>
+        <div class="mw-rc-info" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8a9.2 9.2 0 1 0 0 18.4 9.2 9.2 0 0 0 0-18.4Zm.8 4.2v5.1l3.5 2.1-.9 1.5-4.4-2.6V7h1.8Z"/></svg></div>
+      </div>
+
+      <div class="maps-side-actions">
+        <button class="maps-side-primary" data-maps-next type="button">Prosegui</button>
+        <button class="maps-side-secondary" data-maps-reset type="button">Reset</button>
+      </div>
+    </aside>
+
     <div class="maps-ref" id="mapsRefApp" data-maps-reference>
       <div class="map-stage">
         <div class="map-tilt" id="mapTilt">
@@ -318,22 +351,7 @@ function appicon(string $file, string $remote): string {
         </div>
       </div>
 
-      <div class="top-card" id="topCard">
-        <div class="instruction-row"><div class="turn-icon" id="turnIcon">↑</div><div><div class="instruction" id="instruction">Procedi verso Bedizzole</div><div class="sub-instruction" id="subInstruction">Prossima tappa: CS Metal Europe</div></div></div>
-      </div>
-      <div class="checkpoint-banner" id="checkpointBanner">Checkpoint raggiunto</div>
-      <aside class="overview-panel" id="overviewPanel">
-        <p class="eyebrow">Demo navigazione</p>
-        <h1>Cerebotani → CS Metal Europe → UniBS</h1>
-        <p class="description">Navigazione con sfondo neutro, chiazze verde scuro smooth e immagini che appaiono quando il player passa sul punto.</p>
-        <div class="route-list">
-          <div class="stop"><div class="stop-dot">1</div><div><div class="stop-title">IIS Luigi Cerebotani</div><div class="stop-sub">Partenza da Lonato</div></div></div>
-          <div class="stop"><div class="stop-dot">2</div><div><div class="stop-title">CS Metal Europe</div><div class="stop-sub">Tappa intermedia a Bedizzole</div></div></div>
-          <div class="stop"><div class="stop-dot">3</div><div><div class="stop-title">UniBS</div><div class="stop-sub">Arrivo a Brescia</div></div></div>
-        </div>
-        <div class="actions"><button class="primary" id="startBtn" type="button">Avvia navigazione</button><button class="secondary" id="resetBtn" type="button">Reset</button></div>
-      </aside>
-      <div class="speed-pill" id="speedPill"><div><div class="speed-value" id="speedValue">52</div><div class="speed-unit">km/h</div></div></div>
+      <div class="maps-click-cue" data-maps-click-cue>Tocca la mappa per proseguire</div>
     </div>
   </div>
 </section>
