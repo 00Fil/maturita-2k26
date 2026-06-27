@@ -1374,6 +1374,7 @@ syncFinderVisibility();
   const kicker=app.querySelector('[data-maps-kicker]');
   const copy=app.querySelector('[data-maps-copy]');
   const icon=app.querySelector('[data-maps-icon]');
+  const iconPath=app.querySelector('[data-maps-maneuver-path]');
   const bannerText=app.querySelector('[data-maps-bannertext]');
   const hint=app.querySelector('[data-maps-hint]');
   const pins=Array.from(app.querySelectorAll('.mw-pin'));
@@ -1382,10 +1383,10 @@ syncFinderVisibility();
   // Percentuali lungo il path reale. Puck e progresso usano questi stessi valori.
   const stopP=[0,.17,.42,.70,1];
   const seq=[
-    {p:.36, targetP:.42, active:2, icon:'↑', kicker:'Tra poco',       title:'Diploma',              copy:'Tra poche centinaia di metri raggiungi il Diploma, il primo grande traguardo del percorso.'},
-    {p:.42, targetP:.58, active:2, icon:'◉', kicker:'Tappa raggiunta', title:'Diploma',              copy:'Maturità conseguita. Prosegui dritto verso l’Università di Brescia.'},
-    {p:.70, targetP:.86, active:3, icon:'↑', kicker:'Prosegui dritto', title:'Università · Brescia', copy:'Ingegneria Informatica: qui costruisci basi solide nel software e nei sistemi.'},
-    {p:1,   targetP:1,   active:4, icon:'⚑', kicker:'Sei arrivato',    title:'Estero · America',     copy:'Destinazione raggiunta: una carriera all’estero, con il sogno America.'}
+    {p:.36, targetP:.42, active:2, icon:'straight', kicker:'Tra poco',       title:'Diploma',              copy:'Tra poche centinaia di metri raggiungi il Diploma, il primo grande traguardo del percorso.'},
+    {p:.42, targetP:.58, active:2, icon:'arrived', kicker:'Tappa raggiunta', title:'Diploma',              copy:'Maturità conseguita. Prosegui dritto verso l’Università di Brescia.'},
+    {p:.70, targetP:.86, active:3, icon:'straight', kicker:'Prosegui dritto', title:'Università · Brescia', copy:'Ingegneria Informatica: qui costruisci basi solide nel software e nei sistemi.'},
+    {p:1,   targetP:1,   active:4, icon:'arrived', kicker:'Sei arrivato',    title:'Estero · America',     copy:'Destinazione raggiunta: una carriera all’estero, con il sogno America.'}
   ];
 
   let vi=-1;
@@ -1405,6 +1406,17 @@ syncFinderVisibility();
   }
   function flash(el){ /* niente micro-flash ripetuti: movimento più pulito stile Apple */ }
   function setProgress(p){ progress.style.strokeDashoffset=(1-Math.max(0,Math.min(1,p))).toFixed(4); }
+
+  const maneuverPaths={
+    overview:'M16 4 L25 19 L18.5 16 L18.5 28 L13.5 28 L13.5 16 L7 19 Z',
+    straight:'M16 3.5 L25 18.8 L18.4 15.9 L18.4 28.5 L13.6 28.5 L13.6 15.9 L7 18.8 Z',
+    arrived:'M16 4.5 C9.7 4.5 4.6 9.6 4.6 15.9 C4.6 22.2 9.7 27.3 16 27.3 C22.3 27.3 27.4 22.2 27.4 15.9 C27.4 9.6 22.3 4.5 16 4.5 Z M14.6 20.2 L9.9 15.5 L12.1 13.3 L14.6 15.8 L20.2 10.2 L22.4 12.4 Z'
+  };
+  function setManeuverIcon(name){
+    const key=maneuverPaths[name] ? name : 'overview';
+    if(iconPath) iconPath.setAttribute('d', maneuverPaths[key]);
+    if(icon) icon.dataset.icon=key;
+  }
 
   let renderTimer=0;
   function beginSmoothMove(){
@@ -1439,7 +1451,7 @@ syncFinderVisibility();
       });
       if(puckRot) puckRot.setAttribute('transform',`rotate(${-rot})`);
 
-      kicker.textContent=v.kicker; title.textContent=v.title; copy.textContent=v.copy; icon.textContent=v.icon;
+      kicker.textContent=v.kicker; title.textContent=v.title; copy.textContent=v.copy; setManeuverIcon(v.icon);
       hint.textContent=vi<last ? 'Tocca per proseguire' : 'Tocca per rivedere la panoramica';
     } else {
       cam.style.transform=`translate(600px,380px) scale(${userZoom}) translate(-600px,-380px)`;
@@ -1448,7 +1460,7 @@ syncFinderVisibility();
       const start=pt(0);
       puck.setAttribute('transform',`translate(${start.x.toFixed(2)} ${start.y.toFixed(2)})`);
       setProgress(0);
-      kicker.textContent='Percorso'; title.textContent='5 anni di crescita'; copy.textContent='Tocca la mappa per avviare la navigazione.'; icon.textContent='↗';
+      kicker.textContent='Percorso'; title.textContent='5 anni di crescita'; copy.textContent='Tocca la mappa per avviare la navigazione.'; setManeuverIcon('overview');
       hint.textContent='Tocca la mappa per iniziare';
     }
     flash(bannerText); flash(hint);
