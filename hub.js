@@ -1365,7 +1365,7 @@ syncFinderVisibility();
   const totalLength=routePath.getTotalLength();
   const WORLD={x:-1400,y:-900,width:7200,height:2900};
   const CAMERA_WIDTH=1585;
-  const PANORAMA={x:-360,y:-760,width:6500,height:3650};
+  const PANORAMA={x:-180,y:-360,width:2900,height:1630};
   const PHOTO_SLOW_SIGMA=.10, PHOTO_SLOW_STRENGTH=.50;
   const stops=[
     {x:180,y:650,id:'ring-0',title:'Lonato',sub:'Inizio del percorso presso l’I.S.S. L. Cerebotani'},
@@ -1379,7 +1379,7 @@ syncFinderVisibility();
     {x:960,y:192,id:'photoPin-2'},
     {x:448,y:832,id:'photoPin-3'},
     {x:832,y:832,id:'photoPin-4'},
-    {x:1088,y:192,id:'photoPin-5'},
+    {x:1216,y:320,id:'photoPin-5'},
     {x:1472,y:64,id:'photoPin-6'},
     {x:1216,y:704,id:'photoPin-7'},
     {x:1600,y:576,id:'photoPin-8'},
@@ -1418,7 +1418,7 @@ syncFinderVisibility();
     if(isRunning)return;isRunning=true;finalPanoramaDone=false;
     shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');mapTilt.classList.add('navigation');
     if(cue)cue.textContent='La strada continua…';updateSidebar(currentStop,'Brescia · UniBS','Proseguimento degli studi: ingegneria informatica presso UniBS.');
-    const fromProgress=currentProgress,playerEnd=Math.min(fromProgress+.36,.82),cameraEnd=Math.min(fromProgress+.165,.58),duration=5700,t0=performance.now(),prev=new Set(triggeredCheckpoints);
+    const fromProgress=currentProgress,playerEnd=Math.min(fromProgress+.16,.96),cameraEnd=Math.min(fromProgress+.09,.92),duration=4300,t0=performance.now(),prev=new Set(triggeredCheckpoints);
     cancelAnimationFrame(raf);
     const tick=now=>{
       const raw=Math.min((now-t0)/duration,1);

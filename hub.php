@@ -312,7 +312,7 @@ function appicon(string $file, string $remote): string {
               <clipPath id="tileClip-2"><rect x="896" y="128" width="128" height="128" /></clipPath>
               <clipPath id="tileClip-3"><rect x="384" y="768" width="128" height="128" /></clipPath>
               <clipPath id="tileClip-4"><rect x="768" y="768" width="128" height="128" /></clipPath>
-              <clipPath id="tileClip-5"><rect x="1024" y="128" width="128" height="128" /></clipPath>
+              <clipPath id="tileClip-5"><rect x="1152" y="256" width="128" height="128" /></clipPath>
               <clipPath id="tileClip-6"><rect x="1408" y="0" width="128" height="128" /></clipPath>
               <clipPath id="tileClip-7"><rect x="1152" y="640" width="128" height="128" /></clipPath>
               <clipPath id="tileClip-8"><rect x="1536" y="512" width="128" height="128" /></clipPath>
@@ -326,7 +326,7 @@ function appicon(string $file, string $remote): string {
               <g id="photoPin-2" class="map-photo-tile" data-tile-index="2"><image href="assets/maps-media/step-02-bedizzole-csmetal-02.webp" x="896" y="128" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-2)" /></g>
               <g id="photoPin-3" class="map-photo-tile" data-tile-index="3"><image href="assets/maps-media/step-02-bedizzole-csmetal-03.webp" x="384" y="768" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-3)" /></g>
               <g id="photoPin-4" class="map-photo-tile" data-tile-index="4"><image href="assets/maps-media/step-02-bedizzole-csmetal-04.webp" x="768" y="768" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-4)" /></g>
-              <g id="photoPin-5" class="map-photo-tile" data-tile-index="5"><image href="assets/maps-media/step-03-lonato-maturita-01.webp" x="1024" y="128" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-5)" /></g>
+              <g id="photoPin-5" class="map-photo-tile" data-tile-index="5"><image href="assets/maps-media/step-03-lonato-maturita-01.webp" x="1152" y="256" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-5)" /></g>
               <g id="photoPin-6" class="map-photo-tile" data-tile-index="6"><image href="assets/maps-media/step-03-lonato-maturita-02.webp" x="1408" y="0" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-6)" /></g>
               <g id="photoPin-7" class="map-photo-tile" data-tile-index="7"><image href="assets/maps-media/step-03-lonato-maturita-03.webp" x="1152" y="640" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-7)" /></g>
               <g id="photoPin-8" class="map-photo-tile" data-tile-index="8"><image href="assets/maps-media/step-03-lonato-maturita-04.webp" x="1536" y="512" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-8)" /></g>
@@ -334,9 +334,9 @@ function appicon(string $file, string $remote): string {
             </g>
 
             <!-- Percorso principale -->
-            <path class="route-glow" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L5600 220" />
-            <path id="routePath" class="route" pathLength="1" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L5600 220" />
-            <path id="progressPath" class="route-progress" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L5600 220" />
+            <path class="route-glow" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L2320 220" />
+            <path id="routePath" class="route" pathLength="1" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L2320 220" />
+            <path id="progressPath" class="route-progress" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L2320 220" />
 
             <g class="map-place-label label-below-route">
               <text class="city-label" x="180" y="735">Lonato</text>
