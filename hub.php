@@ -263,122 +263,78 @@ function appicon(string $file, string $remote): string {
 
 <section class="win a-blue maps-window" id="w-fine" style="left:9%;top:6.5%;width:1020px">
   <div class="titlebar maps-titlebar"><span class="wt">Dove voglio andare — Mappe</span></div>
-  <div class="maps-app" data-maps-navigator>
+  <div class="maps-app maps-reference-shell" data-maps-navigator>
+    <div class="maps-ref" id="mapsRefApp" data-maps-reference>
+      <div class="map-stage">
+        <div class="map-tilt" id="mapTilt">
+          <svg id="mapSvg" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice">
+            <rect class="land" x="-1200" y="-900" width="3900" height="2900" />
 
-    <aside class="mw-side" aria-label="Indicazioni del percorso">
-      <div class="mw-side-head">
-        <button class="mw-back" type="button" aria-label="Indietro"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button>
-        <h2>Indicazioni</h2>
-      </div>
+            <!-- Chiazze verde scuro: semplici, smooth, lineari, non sovrapposte -->
+            <path class="green-blob" d="M-260 120 C-40 10 210 50 300 210 C390 370 250 530 20 520 C-210 510 -430 330 -260 120Z" />
+            <path class="green-blob-soft" d="M720 20 C940 -80 1240 -20 1340 170 C1440 360 1260 500 1010 470 C760 440 560 220 720 20Z" />
+            <path class="green-blob" d="M150 650 C360 540 620 590 690 760 C760 930 540 1050 300 980 C60 910 -80 760 150 650Z" />
+            <path class="green-blob-soft" d="M930 650 C1140 520 1450 600 1540 790 C1630 980 1400 1120 1140 1040 C880 960 740 780 930 650Z" />
+            <path class="green-blob" d="M-420 840 C-230 720 40 770 120 930 C200 1090 -10 1240 -260 1180 C-510 1120 -640 980 -420 840Z" />
 
-      <div class="mw-modes" role="tablist" aria-label="Tipo di percorso">
-        <button class="active" type="button" aria-label="In auto"><svg viewBox="0 0 24 24"><path d="M5 11l1.5-4.5A2 2 0 0 1 8.4 5h7.2a2 2 0 0 1 1.9 1.5L19 11M5 11h14v5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H8v1a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1z"/><circle cx="7.5" cy="14" r="1"/><circle cx="16.5" cy="14" r="1"/></svg></button>
-        <button type="button" aria-label="A piedi"><svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.8"/><path d="M11 9l-2 4 2 1 1 5M13 9l1 3 3 1M11 9h2l1.5 1"/></svg></button>
-        <button type="button" aria-label="Mezzi pubblici"><svg viewBox="0 0 24 24"><rect x="6" y="4" width="12" height="13" rx="3"/><path d="M6 12h12M9 20l-1.5 2M15 20l1.5 2"/><circle cx="9" cy="15" r="1"/><circle cx="15" cy="15" r="1"/></svg></button>
-      </div>
+            <!-- Percorso principale -->
+            <path class="route-glow" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250" />
+            <path id="routePath" class="route" pathLength="1" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250" />
+            <path id="progressPath" class="route-progress" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250" />
 
-      <div class="mw-route" aria-label="Tappe del percorso">
-        <div class="mw-route-line"></div>
-        <div class="mw-endpoint route-start"><span class="mw-pt start"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Partenza</small><b>Cerebotani</b><em>Inizio del percorso di studi</em></div></div>
-        <div class="mw-endpoint route-stop"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>FSL · PCTO</b><em>Esperienza sul campo</em></div></div>
-        <div class="mw-endpoint route-stop"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>Diploma</b><em>Maturità e primo traguardo</em></div></div>
-        <div class="mw-endpoint route-stop"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>Università · Brescia</b><em>Ingegneria Informatica</em></div></div>
-        <div class="mw-endpoint route-end"><span class="mw-pt end"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Arrivo</small><b>Estero · America</b><em>Opportunità di carriera</em></div></div>
-      </div>
+            <text class="city-label" x="130" y="705">Lonato</text>
+            <text class="city-label" x="610" y="545">Bedizzole</text>
+            <text class="city-label" x="1160" y="210">Brescia</text>
 
-      <div class="mw-routecard" aria-label="Durata del percorso">
-        <div class="mw-rc-main">
-          <b>5 anni</b>
-          <span>2026 → 2031 · Diploma, Università, Estero</span>
-        </div>
-        <div class="mw-rc-info" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8a9.2 9.2 0 1 0 0 18.4 9.2 9.2 0 0 0 0-18.4Zm.8 4.2v5.1l3.5 2.1-.9 1.5-4.4-2.6V7h1.8Z"/></svg></div>
-      </div>
-    </aside>
+            <circle id="ring-0" class="checkpoint-ring" cx="180" cy="650" r="30" />
+            <circle id="ring-1" class="checkpoint-ring" cx="680" cy="490" r="30" />
+            <circle id="ring-2" class="checkpoint-ring" cx="1220" cy="250" r="30" />
 
-    <main class="mw-map-wrap" data-maps-stage aria-label="Mappa del percorso — tocca per proseguire">
-      <svg class="maps-map mw-map" id="maps-svg" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Percorso di vita">
-        <defs>
-          <radialGradient id="mw-puck-glass" cx="32%" cy="22%" r="76%">
-            <stop offset="0" stop-color="#ffffff" stop-opacity=".88"/>
-            <stop offset=".34" stop-color="#d9f0ff" stop-opacity=".36"/>
-            <stop offset=".68" stop-color="#0a84ff" stop-opacity=".88"/>
-            <stop offset="1" stop-color="#0057d9" stop-opacity=".96"/>
-          </radialGradient>
-          <filter id="mw-puck-refract" x="-90%" y="-90%" width="280%" height="280%">
-            <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#001326" flood-opacity=".34"/>
-            <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#fff" flood-opacity=".45"/>
-          </filter>
-          <filter id="maps-route-shadow" x="-40%" y="-40%" width="180%" height="180%">
-            <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#0a84ff" flood-opacity=".34"/>
-          </filter>
-          <filter id="maps-caption-shadow" x="-50%" y="-100%" width="200%" height="300%">
-            <feDropShadow dx="0" dy="1.4" stdDeviation="1.6" flood-color="#000" flood-opacity=".82"/>
-          </filter>
-        </defs>
+            <g class="poi-pin"><circle class="pin-circle" cx="180" cy="650" r="24" /><text class="pin-number" x="180" y="650">1</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="680" cy="490" r="24" /><text class="pin-number" x="680" y="490">2</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="1220" cy="250" r="24" /><text class="pin-number" x="1220" y="250">3</text></g>
 
-        <rect class="mw-land" x="-600" y="-600" width="2400" height="1960"/>
-        <g id="maps-cam">
-          <path class="mw-green-blob" d="M-210 115 C-20 18 196 48 276 190 C356 334 232 478 28 468 C-176 459 -358 300 -210 115Z"/>
-          <path class="mw-green-blob soft" d="M610 12 C806 -80 1074 -22 1162 152 C1252 326 1090 454 862 430 C634 406 468 198 610 12Z"/>
-          <path class="mw-green-blob" d="M88 598 C278 498 514 542 578 696 C642 852 444 960 226 898 C8 836 -120 700 88 598Z"/>
-          <path class="mw-green-blob soft" d="M770 592 C960 474 1240 544 1320 716 C1402 890 1194 1018 960 946 C726 874 598 710 770 592Z"/>
-          <path class="mw-green-blob" d="M-344 774 C-172 666 72 710 144 854 C216 998 28 1132 -198 1078 C-424 1024 -542 902 -344 774Z"/>
-
-          <path class="mw-soft-road" d="M-80 730 C80 650 155 646 270 590 C330 560 380 535 430 510 C565 435 660 360 760 300 C870 235 960 178 1130 92"/>
-          <path class="mw-soft-road thin" d="M120 760 C148 610 250 560 300 470 C360 360 300 300 360 210"/>
-          <path class="mw-soft-road thin" d="M760 760 C840 624 990 596 1100 560 C1200 520 1260 470 1320 420"/>
-
-          <path id="maps-route-base" class="mw-route-glow" d="M145 650 C210 620 238 607 270 590 C330 560 380 535 430 510 C565 435 660 360 760 300 C870 235 960 178 1042 132"/>
-          <path id="maps-route" class="mw-route" d="M145 650 C210 620 238 607 270 590 C330 560 380 535 430 510 C565 435 660 360 760 300 C870 235 960 178 1042 132"/>
-          <path id="maps-route-progress" class="mw-route-progress" d="M145 650 C210 620 238 607 270 590 C330 560 380 535 430 510 C565 435 660 360 760 300 C870 235 960 178 1042 132"/>
-
-          <text class="mw-city-label" x="92" y="704">Cerebotani</text>
-          <text class="mw-city-label" x="218" y="566">FSL · PCTO</text>
-          <text class="mw-city-label" x="390" y="486">Diploma</text>
-          <text class="mw-city-label" x="708" y="274">UniBS</text>
-          <text class="mw-city-label" x="990" y="104">America</text>
-
-          <circle id="maps-ring-0" class="mw-checkpoint-ring" cx="145" cy="650" r="29"/>
-          <circle id="maps-ring-1" class="mw-checkpoint-ring" cx="270" cy="590" r="29"/>
-          <circle id="maps-ring-2" class="mw-checkpoint-ring" cx="430" cy="510" r="29"/>
-          <circle id="maps-ring-3" class="mw-checkpoint-ring" cx="760" cy="300" r="29"/>
-          <circle id="maps-ring-4" class="mw-checkpoint-ring" cx="1042" cy="132" r="34"/>
-
-          <g class="maps-poi" data-step-pin="0" transform="translate(145 650)"><circle class="maps-poi-circle" r="22"/><text class="maps-poi-number" y="1">1</text></g>
-          <g class="maps-poi" data-step-pin="1" transform="translate(270 590)"><circle class="maps-poi-circle" r="20"/><text class="maps-poi-number" y="1">2</text></g>
-          <g class="maps-poi" data-step-pin="2" transform="translate(430 510)"><circle class="maps-poi-circle" r="20"/><text class="maps-poi-number" y="1">3</text></g>
-          <g class="maps-poi" data-step-pin="3" transform="translate(760 300)"><circle class="maps-poi-circle" r="20"/><text class="maps-poi-number" y="1">4</text></g>
-          <g class="maps-poi dest" data-step-pin="4" transform="translate(1042 132)"><circle class="maps-poi-circle" r="24"/><text class="maps-poi-number" y="1">5</text></g>
-
-          <g id="maps-puck" transform="translate(145 650)">
-            <g class="puck-rot">
-              <circle class="puck-cast" r="22"/>
-              <circle class="puck-white" r="19"/>
-              <circle class="puck-blue" r="14.6"/>
-              <circle class="puck-blue-highlight" r="14.6"/>
-              <path class="puck-arrow" d="M0 -8.2 L5.65 7.3 C5.98 8.18 4.98 8.9 4.2 8.3 L0 4.98 L-4.2 8.3 C-4.98 8.9 -5.98 8.18 -5.65 7.3 Z"/>
-              <path class="puck-arrow-shine" d="M-3 4.95 L0 -6.35 L3 4.95 L0 2.45 Z"/>
+            <g id="car" class="car" transform="translate(180 650)">
+              <circle class="car-body" cx="0" cy="0" r="22" />
+              <path class="car-arrow" d="M0 -12 L10 12 L0 7 L-10 12 Z" />
             </g>
-          </g>
-        </g>
-      </svg>
-
-      <div class="mw-banner" data-maps-banner aria-live="polite">
-        <div class="mw-banner-icon" data-maps-icon aria-hidden="true">
-          <svg viewBox="0 0 32 32" focusable="false"><path data-maps-maneuver-path d="M16 4 L25 19 L18.5 16 L18.5 28 L13.5 28 L13.5 16 L7 19 Z"/></svg>
+          </svg>
         </div>
-        <div class="mw-banner-text" data-maps-bannertext><span data-maps-kicker>Percorso</span><b data-maps-title>5 anni di crescita</b><p data-maps-copy>Tocca la mappa per avviare la navigazione.</p>
-          </div></div>
-
-      <div class="mw-zoom" aria-label="Zoom mappa">
-        <button data-maps-zoom="in" type="button" aria-label="Avvicina">+</button>
-        <span></span>
-        <button data-maps-zoom="out" type="button" aria-label="Allontana">−</button>
       </div>
 
-      <div class="mw-hint" data-maps-hint>Tocca la mappa per iniziare</div>
-    </main>
+      <!-- Pin fuori dall'SVG: restano verticali, ma agganciati al percorso -->
+      <div class="floating-photo-layer" id="floatingPhotoLayer">
+        <div class="floating-photo-pin" id="photoPin-0">
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Lonato" /><div class="photo-label">Lonato</div></div></div>
+        </div>
+        <div class="floating-photo-pin" id="photoPin-1">
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=85" alt="CS Metal Europe" /><div class="photo-label">CS Metal Europe</div></div></div>
+        </div>
+        <div class="floating-photo-pin" id="photoPin-2">
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=85" alt="Verso Brescia" /><div class="photo-label">Verso Brescia</div></div></div>
+        </div>
+        <div class="floating-photo-pin" id="photoPin-3">
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=85" alt="UniBS" /><div class="photo-label">UniBS</div></div></div>
+        </div>
+      </div>
 
+      <div class="top-card" id="topCard">
+        <div class="instruction-row"><div class="turn-icon" id="turnIcon">↑</div><div><div class="instruction" id="instruction">Procedi verso Bedizzole</div><div class="sub-instruction" id="subInstruction">Prossima tappa: CS Metal Europe</div></div></div>
+      </div>
+      <div class="checkpoint-banner" id="checkpointBanner">Checkpoint raggiunto</div>
+      <aside class="overview-panel" id="overviewPanel">
+        <p class="eyebrow">Demo navigazione</p>
+        <h1>Cerebotani → CS Metal Europe → UniBS</h1>
+        <p class="description">Navigazione con sfondo neutro, chiazze verde scuro smooth e immagini che appaiono quando il player passa sul punto.</p>
+        <div class="route-list">
+          <div class="stop"><div class="stop-dot">1</div><div><div class="stop-title">IIS Luigi Cerebotani</div><div class="stop-sub">Partenza da Lonato</div></div></div>
+          <div class="stop"><div class="stop-dot">2</div><div><div class="stop-title">CS Metal Europe</div><div class="stop-sub">Tappa intermedia a Bedizzole</div></div></div>
+          <div class="stop"><div class="stop-dot">3</div><div><div class="stop-title">UniBS</div><div class="stop-sub">Arrivo a Brescia</div></div></div>
+        </div>
+        <div class="actions"><button class="primary" id="startBtn" type="button">Avvia navigazione</button><button class="secondary" id="resetBtn" type="button">Reset</button></div>
+      </aside>
+      <div class="speed-pill" id="speedPill"><div><div class="speed-value" id="speedValue">52</div><div class="speed-unit">km/h</div></div></div>
+    </div>
   </div>
 </section>
 
