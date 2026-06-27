@@ -18,7 +18,7 @@ function appicon(string $file, string $remote): string {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desktop · Maturità 2026</title>
 <link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
-<?php if ($boot): ?><link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high"><link rel="preload" href="assets/optimized/bg.webp" as="image" fetchpriority="high"><?php endif; ?>
+<?php if ($boot): ?><link rel="preload" href="assets/maps-media/step-03-lonato-maturita-03.webp" as="image" fetchpriority="high"><link rel="preload" href="assets/optimized/bg.webp" as="image" fetchpriority="high"><?php endif; ?>
 </head>
 <body<?= $boot ? ' class="booting"' : '' ?>>
 
@@ -30,7 +30,7 @@ function appicon(string $file, string $remote): string {
 </defs></svg>
 
 <?php if ($boot): ?>
-<div id="boot" aria-hidden="true"><img src="assets/iisc-logo.png" alt="" fetchpriority="high" decoding="async"><div class="bbar"><span></span></div></div>
+<div id="boot" aria-hidden="true"><img src="assets/maps-media/step-03-lonato-maturita-03.webp" alt="" fetchpriority="high" decoding="async"><div class="bbar"><span></span></div></div>
 <?php endif; ?>
 
 <div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
@@ -337,34 +337,10 @@ function appicon(string $file, string $remote): string {
             <circle id="ring-2" class="checkpoint-ring" cx="1320" cy="360" r="30" />
             <circle id="ring-3" class="checkpoint-ring" cx="1900" cy="220" r="30" />
 
-            <g class="poi-pin poi-pin-3d" transform="translate(180 650)">
-              <ellipse class="pin-bowl-shadow" cx="0" cy="16" rx="43" ry="16" />
-              <circle class="pin-bowl-base" cx="0" cy="9" r="34" />
-              <circle class="pin-rim" cx="0" cy="0" r="34" />
-              <circle class="pin-inner-well" cx="0" cy="0" r="20" />
-              <text class="pin-number pin-number-3d" x="0" y="0">1</text>
-            </g>
-            <g class="poi-pin poi-pin-3d" transform="translate(760 520)">
-              <ellipse class="pin-bowl-shadow" cx="0" cy="16" rx="43" ry="16" />
-              <circle class="pin-bowl-base" cx="0" cy="9" r="34" />
-              <circle class="pin-rim" cx="0" cy="0" r="34" />
-              <circle class="pin-inner-well" cx="0" cy="0" r="20" />
-              <text class="pin-number pin-number-3d" x="0" y="0">2</text>
-            </g>
-            <g class="poi-pin poi-pin-3d" transform="translate(1320 360)">
-              <ellipse class="pin-bowl-shadow" cx="0" cy="16" rx="43" ry="16" />
-              <circle class="pin-bowl-base" cx="0" cy="9" r="34" />
-              <circle class="pin-rim" cx="0" cy="0" r="34" />
-              <circle class="pin-inner-well" cx="0" cy="0" r="20" />
-              <text class="pin-number pin-number-3d" x="0" y="0">3</text>
-            </g>
-            <g class="poi-pin poi-pin-3d" transform="translate(1900 220)">
-              <ellipse class="pin-bowl-shadow" cx="0" cy="16" rx="43" ry="16" />
-              <circle class="pin-bowl-base" cx="0" cy="9" r="34" />
-              <circle class="pin-rim" cx="0" cy="0" r="34" />
-              <circle class="pin-inner-well" cx="0" cy="0" r="20" />
-              <text class="pin-number pin-number-3d" x="0" y="0">4</text>
-            </g>
+            <g class="poi-pin"><circle class="pin-circle" cx="180" cy="650" r="24" /><text class="pin-number" x="180" y="650">1</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="760" cy="520" r="24" /><text class="pin-number" x="760" y="520">2</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="1320" cy="360" r="24" /><text class="pin-number" x="1320" y="360">3</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="1900" cy="220" r="24" /><text class="pin-number" x="1900" y="220">4</text></g>
 
             <g id="car" class="car" transform="translate(180 650)">
               <circle class="car-body" cx="0" cy="0" r="22" />
@@ -377,16 +353,16 @@ function appicon(string $file, string $remote): string {
       <!-- Pin fuori dall'SVG: restano verticali, ma agganciati al percorso -->
       <div class="floating-photo-layer" id="floatingPhotoLayer">
         <div class="floating-photo-pin" id="photoPin-0">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Lonato" /><div class="photo-label">I.S.S. L. Cerebotani</div></div></div>
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="assets/maps-media/step-01-lonato-cerebotani.webp" alt="Lonato" /><div class="photo-label">I.S.S. L. Cerebotani</div></div></div>
         </div>
         <div class="floating-photo-pin collage-pin collage-pin-large" id="photoPin-1">
-          <div class="photo-marker collage-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 320 278" aria-hidden="true"><path class="pin-body-path" d="M64 2 H256 C294 2 318 29 318 69 V160 C318 198 292 224 254 224 H190 C181 224 174 230 170 239 L160 270 L150 239 C146 230 139 224 130 224 H64 C26 224 2 198 2 160 V69 C2 29 26 2 64 2 Z" /><path class="pin-body-highlight" d="M68 10 H252 C286 10 310 34 310 70" /></svg><div class="photo-window collage-window"><div class="collage-grid"><img src="assets/notes/optimized/pcto-cs-metal.webp" alt="FSL CS Metal Europe 1" /><img src="assets/notes/try-cs-metal.png" alt="FSL CS Metal Europe 2" /><img src="assets/notes/optimized/curriculum-cover.webp" alt="FSL CS Metal Europe 3" /><img src="assets/notes/optimized/sportly.webp" alt="FSL CS Metal Europe 4" /></div><div class="photo-label">FSL · CS Metal Europe</div></div></div>
+          <div class="photo-marker collage-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 320 278" aria-hidden="true"><path class="pin-body-path" d="M64 2 H256 C294 2 318 29 318 69 V160 C318 198 292 224 254 224 H190 C181 224 174 230 170 239 L160 270 L150 239 C146 230 139 224 130 224 H64 C26 224 2 198 2 160 V69 C2 29 26 2 64 2 Z" /><path class="pin-body-highlight" d="M68 10 H252 C286 10 310 34 310 70" /></svg><div class="photo-window collage-window"><div class="collage-grid"><img src="assets/maps-media/step-02-bedizzole-csmetal-01.webp" alt="FSL CS Metal Europe 1" /><img src="assets/maps-media/step-02-bedizzole-csmetal-02.webp" alt="FSL CS Metal Europe 2" /><img src="assets/maps-media/step-02-bedizzole-csmetal-03.webp" alt="FSL CS Metal Europe 3" /><img src="assets/maps-media/step-02-bedizzole-csmetal-04.webp" alt="FSL CS Metal Europe 4" /></div><div class="photo-label">FSL · CS Metal Europe</div></div></div>
         </div>
         <div class="floating-photo-pin collage-pin collage-pin-large" id="photoPin-2">
-          <div class="photo-marker collage-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 320 278" aria-hidden="true"><path class="pin-body-path" d="M64 2 H256 C294 2 318 29 318 69 V160 C318 198 292 224 254 224 H190 C181 224 174 230 170 239 L160 270 L150 239 C146 230 139 224 130 224 H64 C26 224 2 198 2 160 V69 C2 29 26 2 64 2 Z" /><path class="pin-body-highlight" d="M68 10 H252 C286 10 310 34 310 70" /></svg><div class="photo-window collage-window"><div class="collage-grid"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=700&q=85" alt="Esame di Maturità 1" /><img src="assets/notes/optimized/curriculum-page-1.webp" alt="Esame di Maturità 2" /><img src="assets/iisc-logo.png" alt="Esame di Maturità 3" /><img src="assets/notes/optimized/volo-tra-le-righe.webp" alt="Esame di Maturità 4" /></div><div class="photo-label">Esame di Maturità</div></div></div>
+          <div class="photo-marker collage-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 320 278" aria-hidden="true"><path class="pin-body-path" d="M64 2 H256 C294 2 318 29 318 69 V160 C318 198 292 224 254 224 H190 C181 224 174 230 170 239 L160 270 L150 239 C146 230 139 224 130 224 H64 C26 224 2 198 2 160 V69 C2 29 26 2 64 2 Z" /><path class="pin-body-highlight" d="M68 10 H252 C286 10 310 34 310 70" /></svg><div class="photo-window collage-window"><div class="collage-grid"><img src="assets/maps-media/step-03-lonato-maturita-01.webp" alt="Esame di Maturità 1" /><img src="assets/maps-media/step-03-lonato-maturita-02.webp" alt="Esame di Maturità 2" /><img src="assets/maps-media/step-03-lonato-maturita-03.webp" alt="Esame di Maturità 3" /><img src="assets/maps-media/step-03-lonato-maturita-04.webp" alt="Esame di Maturità 4" /></div><div class="photo-label">Esame di Maturità</div></div></div>
         </div>
         <div class="floating-photo-pin" id="photoPin-3">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=85" alt="UniBS" /><div class="photo-label">UniBS</div></div></div>
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="assets/maps-media/step-04-brescia-unibs.webp" alt="UniBS" /><div class="photo-label">UniBS</div></div></div>
         </div>
       </div>
 

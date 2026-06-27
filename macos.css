@@ -4277,3 +4277,10 @@ body.login-screen.video-loading::after{
 .maps-ref .poi-pin-3d:nth-of-type(3) .pin-rim{stroke:#ff9f0a!important;}
 .maps-ref .poi-pin-3d:nth-of-type(4) .pin-rim{stroke:#bf5af2!important;}
 .maps-ref .checkpoint-ring{stroke-width:5!important;opacity:.62!important;}
+
+
+/* Maps revert flat pins + unified media folder */
+.maps-ref .poi-pin{filter:drop-shadow(0 12px 16px rgba(0,0,0,.30));}
+.maps-ref .pin-circle{fill:#3a3b40!important;stroke:rgba(255,255,255,.22)!important;stroke-width:2!important;filter:none!important;}
+.maps-ref .pin-number{font-size:20px!important;font-weight:850!important;text-anchor:middle!important;dominant-baseline:central!important;fill:#f5f5f7!important;stroke:none!important;paint-order:normal!important;letter-spacing:-.02em;}
+.maps-ref .pin-bowl-shadow,.maps-ref .pin-bowl-base,.maps-ref .pin-rim,.maps-ref .pin-inner-well,.maps-ref .pin-number-3d{display:none!important;}
