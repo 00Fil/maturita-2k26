@@ -279,8 +279,8 @@ function appicon(string $file, string $remote): string {
       <div class="mw-route" aria-label="Tappe del percorso">
         <div class="mw-route-line"></div>
         <button class="mw-endpoint route-start active" data-maps-step="0" type="button"><span class="mw-pt start"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Partenza</small><b>Cerebotani</b><em>IIS Luigi Cerebotani · Lonato</em></div></button>
-        <button class="mw-endpoint route-stop" data-maps-step="1" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>CS Metal Europe</b><em>Tappa intermedia a Bedizzole</em></div></button>
-        <button class="mw-endpoint route-stop" data-maps-step="2" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>Diploma</b><em>Di nuovo a Lonato</em></div></button>
+        <button class="mw-endpoint route-stop" data-maps-step="1" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>CS Metal Europe</b><em>Tappa a Bedizzole</em></div></button>
+        <button class="mw-endpoint route-stop" data-maps-step="2" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>Diploma</b><em>Tappa simbolica verso Brescia</em></div></button>
         <button class="mw-endpoint route-stop" data-maps-step="3" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>UniBS</b><em>La strada prosegue oltre l’università</em></div></button>
       </div>
 
@@ -312,23 +312,23 @@ function appicon(string $file, string $remote): string {
             <path class="green-blob" d="M-420 840 C-230 720 40 770 120 930 C200 1090 -10 1240 -260 1180 C-510 1120 -640 980 -420 840Z" />
 
             <!-- Percorso principale -->
-            <path class="route-glow" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C610 545 500 610 330 640 C520 620 720 450 900 300 C1030 260 1120 330 1220 250 C1500 115 1900 30 2640 -80" />
-            <path id="routePath" class="route" pathLength="1" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C610 545 500 610 330 640 C520 620 720 450 900 300 C1030 260 1120 330 1220 250 C1500 115 1900 30 2640 -80" />
-            <path id="progressPath" class="route-progress" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C610 545 500 610 330 640 C520 620 720 450 900 300 C1030 260 1120 330 1220 250 C1500 115 1900 30 2640 -80" />
+            <path class="route-glow" d="M180 650 C300 610 425 565 560 525 C650 495 760 455 870 390 C980 325 1100 280 1220 250 C1450 205 1740 120 2640 -80" />
+            <path id="routePath" class="route" pathLength="1" d="M180 650 C300 610 425 565 560 525 C650 495 760 455 870 390 C980 325 1100 280 1220 250 C1450 205 1740 120 2640 -80" />
+            <path id="progressPath" class="route-progress" d="M180 650 C300 610 425 565 560 525 C650 495 760 455 870 390 C980 325 1100 280 1220 250 C1450 205 1740 120 2640 -80" />
 
             <text class="city-label" x="130" y="705">Lonato</text>
-            <text class="city-label" x="610" y="545">Bedizzole</text>
-            <text class="city-label" x="272" y="698">Diploma</text>
+            <text class="city-label" x="500" y="585">Bedizzole</text>
+            <text class="city-label" x="820" y="350">Diploma</text>
             <text class="city-label" x="1160" y="210">Brescia</text>
 
             <circle id="ring-0" class="checkpoint-ring" cx="180" cy="650" r="30" />
-            <circle id="ring-1" class="checkpoint-ring" cx="680" cy="490" r="30" />
-            <circle id="ring-2" class="checkpoint-ring" cx="330" cy="640" r="30" />
+            <circle id="ring-1" class="checkpoint-ring" cx="560" cy="525" r="30" />
+            <circle id="ring-2" class="checkpoint-ring" cx="870" cy="390" r="30" />
             <circle id="ring-3" class="checkpoint-ring" cx="1220" cy="250" r="30" />
 
             <g class="poi-pin"><circle class="pin-circle" cx="180" cy="650" r="24" /><text class="pin-number" x="180" y="650">1</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="680" cy="490" r="24" /><text class="pin-number" x="680" y="490">2</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="330" cy="640" r="24" /><text class="pin-number" x="330" y="640">3</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="560" cy="525" r="24" /><text class="pin-number" x="560" y="525">2</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="870" cy="390" r="24" /><text class="pin-number" x="870" y="390">3</text></g>
             <g class="poi-pin"><circle class="pin-circle" cx="1220" cy="250" r="24" /><text class="pin-number" x="1220" y="250">4</text></g>
 
             <g id="car" class="car" transform="translate(180 650)">

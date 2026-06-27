@@ -4107,3 +4107,17 @@ body.login-screen.video-loading::after{
 .maps-ref #photoPin-3{z-index:13;}
 .maps-ref #photoPin-3 .photo-marker{filter:drop-shadow(0 30px 52px rgba(0,0,0,.48)) drop-shadow(0 0 26px rgba(100,210,255,.16));}
 .maps-ref .route,.maps-ref .route-glow,.maps-ref .route-progress{stroke-linejoin:round!important;stroke-linecap:round!important;}
+
+/* ============================================================
+   Maps linear route no overlap polish
+   ============================================================ */
+.maps-ref #photoPin-3{z-index:12!important;}
+.maps-ref .floating-photo-pin{transform:translate(-50%,-104%)!important;}
+.maps-ref .route,.maps-ref .route-glow,.maps-ref .route-progress{stroke-linejoin:round!important;stroke-linecap:round!important;}
+
+/* ============================================================
+   Maps final linear separated photos
+   ============================================================ */
+.maps-ref #photoPin-3{z-index:12!important;}
+.maps-ref .floating-photo-pin{transform:translate(-50%,-104%)!important;}
+.maps-ref .floating-photo-pin.visible .photo-marker{animation:premiumPhotoPinIn .62s cubic-bezier(.2,.78,.22,1) forwards;}
