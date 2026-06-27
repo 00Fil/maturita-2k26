@@ -3710,58 +3710,21 @@ button,
 
 
 /* ============================================================
-   Lock screen stability fix — fallback sfondo + top bar non nera
+   MP4 direct playback fix — niente falso fallback con assets/lock.mp4
    ============================================================ */
-/* Fallback sempre presente sotto al video: evita frame neri se il video tarda,
-   si interrompe o il browser decide di non decodificarlo subito. */
-body.login-screen::before{
+body.login-screen.video-loading .wallpaper,
+body.login-screen.video-ok .wallpaper{
+  opacity:1!important;
+}
+body.login-screen.video-error .wallpaper{
+  opacity:0!important;
+}
+body.login-screen.video-loading::after{
   content:"";
   position:fixed;
   inset:0;
   z-index:0;
   pointer-events:none;
-  background:
-    url("assets/optimized/bg.webp") center / cover no-repeat,
-    linear-gradient(160deg,#071321 0%,#13365c 46%,#0d1526 100%);
-  transform:scale(1.012);
-  filter:saturate(1.04) contrast(1.005) brightness(.94);
-}
-body.login-screen .wallpaper{
-  opacity:0;
-  background:
-    url("assets/optimized/bg.webp") center / cover no-repeat,
-    linear-gradient(160deg,#071321 0%,#13365c 46%,#0d1526 100%)!important;
-  transition:opacity .42s ease, transform 1.1s var(--ease), filter .9s var(--ease)!important;
-}
-body.login-screen.video-ok .wallpaper{opacity:1;}
-body.login-screen.video-fallback .wallpaper{opacity:0!important;}
-
-/* La top bar della lock screen non deve mai ereditare il fallback nero della
-   performance layer o di @supports: resta trasparente/gradiente anche in perf-low. */
-body.login-screen .menubar,
-html.perf-low body.login-screen .menubar,
-html.perf-mid body.login-screen .menubar{
-  background:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,0))!important;
-  -webkit-backdrop-filter:none!important;
-  backdrop-filter:none!important;
-  box-shadow:none!important;
-  color:rgba(255,255,255,.92)!important;
-  text-shadow:0 1px 3px rgba(0,0,0,.24)!important;
-  filter:none!important;
-}
-html.perf-low body.login-screen .menubar,
-html.perf-low body.login-screen .menubar *{
-  transition-duration:.001s!important;
-}
-body.login-screen .menubar svg,
-html.perf-low body.login-screen .menubar svg{
-  filter:none!important;
-  opacity:.96!important;
-}
-@supports not (backdrop-filter: blur(1px)){
-  body.login-screen .menubar,
-  html.perf-low body.login-screen .menubar,
-  html.perf-mid body.login-screen .menubar{
-    background:linear-gradient(180deg,rgba(0,0,0,.10),rgba(0,0,0,0))!important;
-  }
+  background:url("assets/optimized/bg.webp") center / cover no-repeat;
+  opacity:.28;
 }

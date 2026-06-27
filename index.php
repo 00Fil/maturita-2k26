@@ -19,7 +19,7 @@
   <div class="bbar"><span id="bbarFill"></span></div>
 </div>
 
-<!-- SFONDO VIDEO MP4 1080p: viene scaricato/cache-ato interamente prima della fine del boot -->
+<!-- SFONDO VIDEO (poster di fallback: bg.png) -->
 <video class="wallpaper" id="bgVideo" autoplay muted loop playsinline preload="auto" poster="assets/optimized/bg.webp" data-video-src="assets/lock.mp4">
   <source src="assets/lock.mp4" type="video/mp4">
 </video>
