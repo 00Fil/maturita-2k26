@@ -1381,12 +1381,12 @@ syncFinderVisibility();
   if(!cam||!stage||!route||!progress||!puck) return;
 
   // Percentuali lungo il path reale. Puck e progresso usano questi stessi valori.
-  const stopP=[0,.17,.42,.70,1];
+  const stopP=[0,.08,.16,.76,1];
   const seq=[
-    {p:.36, targetP:.42, active:2, icon:'straight', kicker:'Tra poco',       title:'Diploma',              copy:'Tra poche centinaia di metri raggiungi il Diploma, il primo grande traguardo del percorso.'},
-    {p:.42, targetP:.58, active:2, icon:'arrived', kicker:'Tappa raggiunta', title:'Diploma',              copy:'Maturità conseguita. Prosegui dritto verso l’Università di Brescia.'},
-    {p:.70, targetP:.86, active:3, icon:'slightRight', kicker:'Prosegui dritto', title:'Università · Brescia', copy:'Ingegneria Informatica: qui costruisci basi solide nel software e nei sistemi.'},
-    {p:1,   targetP:1,   active:4, icon:'destination', kicker:'Sei arrivato',    title:'Estero · America',     copy:'Destinazione raggiunta: una carriera all’estero, con il sogno America.'}
+    {p:.13, targetP:.16, active:2, icon:'straight', kicker:'Tra poco',       title:'Diploma',              copy:'Le tappe scolastiche sono ravvicinate: il Diploma arriva subito dopo PCTO e quinto anno.'},
+    {p:.16, targetP:.76, active:2, icon:'arrived', kicker:'Tappa raggiunta', title:'Diploma',              copy:'Maturità conseguita. Ora inizia il tratto più lungo: tre anni di Università a Brescia.'},
+    {p:.76, targetP:.92, active:3, icon:'slightRight', kicker:'Tratto principale', title:'Università · Brescia', copy:'La distanza più grande è qui: formazione, progetti e competenze costruite nel tempo.'},
+    {p:1,   targetP:1,   active:4, icon:'destination', kicker:'Sei arrivato',    title:'Estero · America',     copy:'Dopo il percorso universitario, la traiettoria si apre verso opportunità all’estero.'}
   ];
 
   let vi=-1;
@@ -1436,7 +1436,7 @@ syncFinderVisibility();
       const v=seq[vi];
       const pos=pt(v.p);
       const rot=headingFromPath(v.p, v.targetP);
-      const S=1.78, cx=600, cy=532;
+      const S=1.58, cx=600, cy=520;
 
       // Camera, cursore e tratto completato condividono la stessa p sul path.
       cam.style.transform=`translate(${cx}px, ${cy}px) rotate(${rot}deg) scale(${S}) translate(${-pos.x}px, ${-pos.y}px)`;
