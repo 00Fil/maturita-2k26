@@ -1500,7 +1500,7 @@ syncFinderVisibility();
     const fromProgress=currentProgress,toProgress=1;
     const startCamera={...camera};
     const overview=getOverviewCamera();
-    const duration=5200, releaseAt=.34, t0=performance.now();
+    const duration=8600, releaseAt=.22, holdAfterRelease=.18, t0=performance.now();
     cancelAnimationFrame(raf);
     const tick=now=>{
       const raw=Math.min((now-t0)/duration,1);
@@ -1513,10 +1513,15 @@ syncFinderVisibility();
       updateProgress(distance);
       updatePhotoPinsByDistance(distance);
       if(raw<releaseAt){
+        // Breve accompagnamento fuori da UniBS.
         updateCameraFollow(point,raw/releaseAt,startCamera);
+      }else if(raw<releaseAt+holdAfterRelease){
+        // La visuale si ferma: il player continua e sparisce progressivamente dal frame.
+        applyCamera(camera);
       }else{
-        const t=smootherstep((raw-releaseAt)/(1-releaseAt));
-        const k=.045+t*.035;
+        // Solo dopo che il player è uscito, ritorno lento e cinematografico alla panoramica.
+        const t=smootherstep((raw-releaseAt-holdAfterRelease)/(1-releaseAt-holdAfterRelease));
+        const k=.018+t*.030;
         camera.x=lerp(camera.x,overview.x,k);
         camera.y=lerp(camera.y,overview.y,k);
         camera.width=lerp(camera.width,overview.width,k);
