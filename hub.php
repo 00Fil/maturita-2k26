@@ -347,12 +347,6 @@ function appicon(string $file, string $remote): string {
           <svg viewBox="0 0 32 32" focusable="false"><path data-maps-maneuver-path d="M16 4 L25 19 L18.5 16 L18.5 28 L13.5 28 L13.5 16 L7 19 Z"/></svg>
         </div>
         <div class="mw-banner-text" data-maps-bannertext><span data-maps-kicker>Percorso</span><b data-maps-title>5 anni di crescita</b><p data-maps-copy>Tocca la mappa per avviare la navigazione.</p>
-          <div class="mw-banner-flow" aria-hidden="true">
-            <span><svg viewBox="0 0 24 24"><path d="M12 3 4 7.2l8 4.4 8-4.4L12 3Zm-5 8v3.4c0 1.7 2.2 3.2 5 3.2s5-1.5 5-3.2V11l-5 2.8L7 11Z"/></svg>Diploma</span>
-            <i>→</i>
-            <span><svg viewBox="0 0 24 24"><path d="M4 19h16v2H4v-2Zm1-9 7-5 7 5v8h-4v-5H9v5H5v-8Z"/></svg>Università</span>
-            <i>→</i>
-            <span><svg viewBox="0 0 24 24"><path d="M12 3C7.9 3 4.6 6.3 4.6 10.4 4.6 16 12 21 12 21s7.4-5 7.4-10.6C19.4 6.3 16.1 3 12 3Zm0 10.1a2.7 2.7 0 1 1 0-5.4 2.7 2.7 0 0 1 0 5.4Z"/></svg>Estero</span>
           </div></div>
       </div>
 

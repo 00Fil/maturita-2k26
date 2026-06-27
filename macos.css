@@ -3658,3 +3658,52 @@ button,
   box-shadow:0 12px 30px rgba(8,82,30,.24), inset 0 1px 0 rgba(255,255,255,.26), inset 0 0 0 1px rgba(255,255,255,.10)!important;
 }
 .maps-app.at-stop .mw-banner-icon{background:rgba(255,255,255,.14)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)!important}
+
+
+/* ============================================================
+   Correct order + objective state + green card simplified
+   ============================================================ */
+/* Card verde: solo descrizione, nessuna guida percorso sotto. */
+.mw-banner-flow{display:none!important}
+.maps-app.nav .mw-banner{padding-bottom:14px!important}
+.mw-banner{align-items:flex-start!important}
+.mw-banner-icon{
+  width:54px!important;height:54px!important;border-radius:15px!important;flex:0 0 54px!important;
+  background:rgba(255,255,255,.18)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.30), inset 0 0 0 1px rgba(255,255,255,.14)!important;
+}
+.mw-banner-icon svg{width:38px!important;height:38px!important;display:block!important;overflow:visible!important}
+.mw-banner-icon path{fill:#fff!important;filter:none!important;transform-origin:50% 50%}
+.mw-banner-icon[data-icon="straight"] path,
+.mw-banner-icon[data-icon="overview"] path{transform:scale(1.08)}
+.mw-banner-icon[data-icon="slightRight"] path{transform:scale(.98) translateX(-1px)}
+.mw-banner-icon[data-icon="arrived"] path{transform:scale(1.02)}
+.mw-banner-icon[data-icon="destination"] path{transform:scale(1.03)}
+
+/* Ordine visivo: FSL prima, Diploma vicino ma dietro/successivo. */
+.mw-pin[data-step-pin="1"]{opacity:1;z-index:2}
+.mw-pin[data-step-pin="2"]{opacity:.95;z-index:1}
+.mw-pin[data-step-pin="1"] .mw-caption{transform:translate(-10px,7px)!important}
+.mw-pin[data-step-pin="2"] .mw-pin-drop{transform:translate(5px,-3px)!important}
+.mw-pin[data-step-pin="2"] .mw-caption{transform:translate(20px,13px)!important}
+.mw-pin[data-step-pin="2"] .pin-stem,.mw-pin[data-step-pin="2"] .pin-face{fill:#0a84ff!important}
+
+/* Stato sopra tappa ancora più clean. */
+.maps-app.at-stop .mw-pin.on .pin-stem,
+.maps-app.at-stop .mw-pin.on .pin-face{filter:none!important;stroke:#fff!important;stroke-width:1.6!important}
+.maps-app.at-stop .mw-pin.on .pin-halo{display:none!important}
+.maps-app.at-stop .mw-pin.on .mw-caption text{stroke:rgba(0,0,0,.68)!important;stroke-width:2.6px!important}
+.maps-app.at-stop #maps-puck{opacity:.96!important}
+
+/* Stato obiettivo: destinazione chiara, senza animazioni sporche. */
+.maps-app.at-goal .mw-banner{
+  background:linear-gradient(180deg,rgba(52,199,89,.96),rgba(21,150,62,.96))!important;
+  box-shadow:0 14px 32px rgba(8,82,30,.24), inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 1px rgba(255,255,255,.12)!important;
+}
+.maps-app.at-goal .mw-banner-icon{background:rgba(255,255,255,.20)!important}
+.maps-app.at-goal .mw-pin.is-dest .pin-stem,
+.maps-app.at-goal .mw-pin.is-dest .pin-face{fill:#ff453a!important;stroke:#fff!important;stroke-width:1.8!important;filter:none!important}
+.maps-app.at-goal .mw-pin.is-dest .pin-dot-dest{fill:#fff!important;opacity:.95!important}
+.maps-app.at-goal .mw-pin.is-dest .mw-caption text{font-size:16px!important;font-weight:860!important;stroke-width:3px!important}
+.maps-app.at-goal #maps-puck{opacity:.92!important;filter:none!important}
+.maps-app.at-goal .puck-blue{fill:#0A84FF!important}

@@ -1383,12 +1383,12 @@ syncFinderVisibility();
   // Percentuali lungo il path reale. Puck e progresso usano questi stessi valori.
   const stopP=[0,.145,.326,.719,1];
   const seq=[
-    {p:.285, targetP:.326, active:2, icon:'straight', stop:false, kicker:'Tra poco',       title:'Diploma',              copy:'Il Diploma è subito dopo FSL · PCTO: resta vicino, visibile dietro la tappa precedente.'},
-    {p:.326, targetP:.719, active:2, icon:'arrived', stop:true, kicker:'Tappa raggiunta', title:'Diploma',              copy:'Sei sopra la tappa Diploma: stato pulito, senza glow o rimbalzi inutili.'},
-    {p:.719, targetP:.92, active:3, icon:'slightRight', stop:true, kicker:'Tratto principale', title:'Università · Brescia', copy:'La parte universitaria è il segmento più lungo prima dell’obiettivo finale.'},
-    {p:1,   targetP:1,   active:4, icon:'destination', stop:true, kicker:'Sei arrivato',    title:'Estero · America',     copy:'Dopo la formazione, la traiettoria porta verso opportunità all’estero.'}
+    {p:.145, targetP:.326, active:1, icon:'straight', stop:true, kicker:'Prima tappa', title:'FSL · PCTO', copy:'Prima tappa del percorso: esperienza sul campo prima del traguardo finale della scuola.'},
+    {p:.285, targetP:.326, active:2, icon:'straight', stop:false, kicker:'Tra poco', title:'Diploma', copy:'Il Diploma è subito dopo FSL · PCTO: vicino, in ordine, visibile dietro alla tappa precedente.'},
+    {p:.326, targetP:.719, active:2, icon:'arrived', stop:true, kicker:'Tappa raggiunta', title:'Diploma', copy:'Maturità conseguita. Ora il percorso si apre verso l’Università di Brescia.'},
+    {p:.719, targetP:.90, active:3, icon:'slightRight', stop:true, kicker:'Tratto principale', title:'Università · Brescia', copy:'La parte universitaria è il segmento più lungo prima dell’obiettivo finale.'},
+    {p:1, targetP:1, active:4, icon:'destination', stop:true, goal:true, kicker:'Obiettivo raggiunto', title:'Estero · America', copy:'Obiettivo finale: portare il percorso costruito verso opportunità all’estero.'}
   ];
-
   let vi=-1;
   let userZoom=1;
   const last=seq.length-1;
@@ -1408,13 +1408,12 @@ syncFinderVisibility();
   function setProgress(p){ progress.style.strokeDashoffset=(1-Math.max(0,Math.min(1,p))).toFixed(4); }
 
   const maneuverPaths={
-    overview:'M16 3.8 L25.2 18.9 L18.5 16.1 L18.5 28.2 L13.5 28.2 L13.5 16.1 L6.8 18.9 Z',
-    straight:'M16 3.4 L24.3 17.8 L18.3 15.3 L18.3 28.6 L13.7 28.6 L13.7 15.3 L7.7 17.8 Z',
-    slightRight:'M11.3 27.8 V14.6 C11.3 10.9 14.2 8.1 17.75 8.1 H20.6 L17.4 3.2 L20.9 1 L27.2 10.55 L20.9 20.1 L17.4 17.9 L20.6 13 H17.75 C16.9 13 16.2 13.7 16.2 14.6 V27.8 Z',
-    arrived:'M16 4.2 C9.55 4.2 4.3 9.45 4.3 15.9 C4.3 22.35 9.55 27.6 16 27.6 C22.45 27.6 27.7 22.35 27.7 15.9 C27.7 9.45 22.45 4.2 16 4.2 Z M14.45 20.45 L9.65 15.65 L12.05 13.25 L14.45 15.65 L20.1 10 L22.5 12.4 Z',
-    destination:'M16 3.8 C11.1 3.8 7.1 7.75 7.1 12.65 C7.1 19.25 16 28.4 16 28.4 C16 28.4 24.9 19.25 24.9 12.65 C24.9 7.75 20.9 3.8 16 3.8 Z M16 15.75 C14.2 15.75 12.75 14.3 12.75 12.5 C12.75 10.7 14.2 9.25 16 9.25 C17.8 9.25 19.25 10.7 19.25 12.5 C19.25 14.3 17.8 15.75 16 15.75 Z'
-  };
-  function setManeuverIcon(name){
+    overview:'M16 3.2 L25.8 18.2 L18.7 15.4 L18.7 28.8 L13.3 28.8 L13.3 15.4 L6.2 18.2 Z',
+    straight:'M16 2.4 L26.8 17.9 L19.2 14.9 L19.2 29.6 L12.8 29.6 L12.8 14.9 L5.2 17.9 Z',
+    slightRight:'M10.6 29.2 V15.1 C10.6 10.5 14.1 7.1 18.7 7.1 H21.1 L17.9 2.4 L22 0 L29 10.6 L22 21.2 L17.9 18.8 L21.1 14.1 H18.7 C18.1 14.1 17.6 14.6 17.6 15.2 V29.2 Z',
+    arrived:'M16 3.6 C9.15 3.6 3.6 9.15 3.6 16 C3.6 22.85 9.15 28.4 16 28.4 C22.85 28.4 28.4 22.85 28.4 16 C28.4 9.15 22.85 3.6 16 3.6 Z M14.25 21.1 L8.95 15.8 L11.55 13.2 L14.25 15.9 L20.7 9.45 L23.3 12.05 Z',
+    destination:'M16 2.6 C10.35 2.6 5.8 7.15 5.8 12.8 C5.8 20.15 16 29.6 16 29.6 C16 29.6 26.2 20.15 26.2 12.8 C26.2 7.15 21.65 2.6 16 2.6 Z M16 16.55 C13.9 16.55 12.2 14.85 12.2 12.75 C12.2 10.65 13.9 8.95 16 8.95 C18.1 8.95 19.8 10.65 19.8 12.75 C19.8 14.85 18.1 16.55 16 16.55 Z'
+  };  function setManeuverIcon(name){
     const key=maneuverPaths[name] ? name : 'overview';
     if(iconPath) iconPath.setAttribute('d', maneuverPaths[key]);
     if(icon) icon.dataset.icon=key;
@@ -1435,6 +1434,7 @@ syncFinderVisibility();
     if(navMode){
       const v=seq[vi];
       app.classList.toggle('at-stop', !!v.stop);
+      app.classList.toggle('at-goal', !!v.goal);
       const pos=pt(v.p);
       const rot=headingFromPath(v.p, v.targetP);
       const S=1.68, cx=600, cy=525;
@@ -1447,7 +1447,7 @@ syncFinderVisibility();
       pins.forEach((g,i)=>{
         const r=g.querySelector('.mw-pin-rot');
         let t=`rotate(${-rot})`;
-        if(i===v.active && !v.stop) t+=' scale(1.04)';
+        if(i===v.active && !v.stop) t+=' scale(1.02)';
         if(r) r.setAttribute('transform',t);
         g.classList.toggle('on', i===v.active);
         g.classList.toggle('at-stop', !!v.stop && i===v.active);
@@ -1458,7 +1458,7 @@ syncFinderVisibility();
       kicker.textContent=v.kicker; title.textContent=v.title; copy.textContent=v.copy; setManeuverIcon(v.icon);
       hint.textContent=vi<last ? 'Tocca per proseguire' : 'Tocca per rivedere la panoramica';
     } else {
-      app.classList.remove('at-stop');
+      app.classList.remove('at-stop','at-goal');
       cam.style.transform=`translate(600px,380px) scale(${userZoom}) translate(-600px,-380px)`;
       pins.forEach(g=>{ const r=g.querySelector('.mw-pin-rot'); if(r) r.setAttribute('transform',''); g.classList.remove('on','done','at-stop'); });
       if(puckRot) puckRot.setAttribute('transform','');
