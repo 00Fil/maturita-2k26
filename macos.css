@@ -4180,3 +4180,66 @@ body.login-screen.video-loading::after{
   filter:drop-shadow(0 22px 42px rgba(0,0,0,.34)) drop-shadow(0 0 18px rgba(10,132,255,.10))!important;
 }
 .finder-window.closing{pointer-events:none!important;}
+
+/* ============================================================
+   Maps tilted big-square Apple grid
+   ------------------------------------------------------------
+   La griglia ora vive dentro .map-tilt, quindi segue la stessa
+   inclinazione/trasformazione della vecchia mappa. Rimane volutamente
+   semplice: solo quadratoni, niente micro-griglia.
+   ============================================================ */
+.maps-ref .map-stage{
+  background:#2b2c30!important;
+  background-image:none!important;
+}
+.maps-ref .map-tilt{
+  background-color:#2b2c30!important;
+  background-image:
+    linear-gradient(rgba(255,255,255,.13) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(255,255,255,.13) 1.5px, transparent 1.5px)!important;
+  background-size:112px 112px!important;
+  background-position:center center!important;
+  overflow:hidden!important;
+}
+.maps-ref .map-tilt.navigation{
+  background-size:112px 112px!important;
+}
+.maps-ref svg{
+  background:transparent!important;
+}
+.maps-ref .land{
+  fill:transparent!important;
+}
+.maps-ref .green-blob,
+.maps-ref .green-blob-soft{
+  display:none!important;
+}
+
+/* ============================================================
+   Maps dark green tilted grid
+   ============================================================ */
+.maps-ref{
+  background:#17231d!important;
+}
+.maps-ref .map-stage{
+  background:#17231d!important;
+  background-image:none!important;
+}
+.maps-ref .map-tilt{
+  background-color:#17231d!important;
+  background-image:
+    linear-gradient(rgba(143,188,157,.18) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(143,188,157,.18) 1.5px, transparent 1.5px)!important;
+  background-size:112px 112px!important;
+  background-position:center center!important;
+}
+.maps-ref .route-glow{
+  stroke:rgba(10,132,255,.20)!important;
+}
+.maps-ref .city-label{
+  stroke:rgba(23,35,29,.88)!important;
+}
+.maps-ref .pin-circle{
+  fill:#203329!important;
+  stroke:rgba(205,235,214,.22)!important;
+}
