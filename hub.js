@@ -1381,13 +1381,12 @@ syncFinderVisibility();
   if(!cam||!stage||!route||!progress||!puck) return;
 
   // Percentuali lungo il path reale. Puck e progresso usano questi stessi valori.
-  const stopP=[0,.145,.326,.719,1];
+  const stopP=[0,0.1607,0.2365,0.6839,1];
   const seq=[
-    {p:.145, targetP:.326, active:1, icon:'straight', stop:true, kicker:'Prima tappa', title:'FSL · PCTO', copy:'Prima tappa del percorso: esperienza sul campo prima del traguardo finale della scuola.'},
-    {p:.285, targetP:.326, active:2, icon:'straight', stop:false, kicker:'Tra poco', title:'Diploma', copy:'Il Diploma è subito dopo FSL · PCTO: vicino, in ordine, visibile dietro alla tappa precedente.'},
-    {p:.326, targetP:.719, active:2, icon:'arrived', stop:true, kicker:'Tappa raggiunta', title:'Diploma', copy:'Maturità conseguita. Ora il percorso si apre verso l’Università di Brescia.'},
-    {p:.719, targetP:.90, active:3, icon:'slightRight', stop:true, kicker:'Tratto principale', title:'Università · Brescia', copy:'La parte universitaria è il segmento più lungo prima dell’obiettivo finale.'},
-    {p:1, targetP:1, active:4, icon:'destination', stop:true, goal:true, kicker:'Obiettivo raggiunto', title:'Estero · America', copy:'Obiettivo finale: portare il percorso costruito verso opportunità all’estero.'}
+    {p:0.2199, targetP:0.2365, active:2, icon:'straight', stop:false, kicker:'Tra poco', title:'Diploma', copy:'Sei tra FSL · PCTO e Diploma: quasi arrivato, ma ancora in tragitto.'},
+    {p:0.2365, targetP:0.6839, active:2, icon:'arrived', stop:true, kicker:'Tappa raggiunta', title:'Diploma', copy:'Diploma raggiunto: da qui il percorso si apre verso l’Università di Brescia.'},
+    {p:0.6839, targetP:.90, active:3, icon:'slightRight', stop:true, kicker:'Tratto principale', title:'Università · Brescia', copy:'Il segmento universitario è la parte più lunga e strutturata del percorso.'},
+    {p:1, targetP:1, active:4, icon:'destination', stop:true, goal:true, kicker:'Obiettivo raggiunto', title:'Estero · America', copy:'Obiettivo finale: portare le competenze costruite verso opportunità all’estero.'}
   ];
   let vi=-1;
   let userZoom=1;
@@ -1408,11 +1407,11 @@ syncFinderVisibility();
   function setProgress(p){ progress.style.strokeDashoffset=(1-Math.max(0,Math.min(1,p))).toFixed(4); }
 
   const maneuverPaths={
-    overview:'M16 3.2 L25.8 18.2 L18.7 15.4 L18.7 28.8 L13.3 28.8 L13.3 15.4 L6.2 18.2 Z',
-    straight:'M16 2.4 L26.8 17.9 L19.2 14.9 L19.2 29.6 L12.8 29.6 L12.8 14.9 L5.2 17.9 Z',
-    slightRight:'M10.6 29.2 V15.1 C10.6 10.5 14.1 7.1 18.7 7.1 H21.1 L17.9 2.4 L22 0 L29 10.6 L22 21.2 L17.9 18.8 L21.1 14.1 H18.7 C18.1 14.1 17.6 14.6 17.6 15.2 V29.2 Z',
-    arrived:'M16 3.6 C9.15 3.6 3.6 9.15 3.6 16 C3.6 22.85 9.15 28.4 16 28.4 C22.85 28.4 28.4 22.85 28.4 16 C28.4 9.15 22.85 3.6 16 3.6 Z M14.25 21.1 L8.95 15.8 L11.55 13.2 L14.25 15.9 L20.7 9.45 L23.3 12.05 Z',
-    destination:'M16 2.6 C10.35 2.6 5.8 7.15 5.8 12.8 C5.8 20.15 16 29.6 16 29.6 C16 29.6 26.2 20.15 26.2 12.8 C26.2 7.15 21.65 2.6 16 2.6 Z M16 16.55 C13.9 16.55 12.2 14.85 12.2 12.75 C12.2 10.65 13.9 8.95 16 8.95 C18.1 8.95 19.8 10.65 19.8 12.75 C19.8 14.85 18.1 16.55 16 16.55 Z'
+    overview:'M16 3.4 C16.6 3.4 17.1 3.75 17.4 4.25 L25.7 19.45 C26.15 20.3 25.25 21.15 24.4 20.7 L18.75 17.8 V28.1 C18.75 28.95 18.1 29.6 17.25 29.6 H14.75 C13.9 29.6 13.25 28.95 13.25 28.1 V17.8 L7.6 20.7 C6.75 21.15 5.85 20.3 6.3 19.45 L14.6 4.25 C14.9 3.75 15.4 3.4 16 3.4 Z',
+    straight:'M16 2.8 C16.62 2.8 17.16 3.15 17.48 3.68 L26.35 18.85 C26.85 19.7 25.9 20.62 25.05 20.12 L19.15 16.98 V28.45 C19.15 29.35 18.5 30 17.6 30 H14.4 C13.5 30 12.85 29.35 12.85 28.45 V16.98 L6.95 20.12 C6.1 20.62 5.15 19.7 5.65 18.85 L14.52 3.68 C14.84 3.15 15.38 2.8 16 2.8 Z',
+    slightRight:'M10.5 29.2 C9.6 29.2 9 28.6 9 27.7 V15.6 C9 10.5 13.1 6.4 18.2 6.4 H20.25 L18.05 3.35 C17.5 2.58 18.38 1.62 19.22 2.1 L28.15 7.2 C28.98 7.68 28.98 8.88 28.15 9.36 L19.22 14.46 C18.38 14.94 17.5 13.98 18.05 13.2 L20.25 10.15 H18.2 C15.15 10.15 12.75 12.55 12.75 15.6 V27.7 C12.75 28.6 12.15 29.2 11.25 29.2 Z',
+    arrived:'M16 3.2 C8.95 3.2 3.2 8.95 3.2 16 C3.2 23.05 8.95 28.8 16 28.8 C23.05 28.8 28.8 23.05 28.8 16 C28.8 8.95 23.05 3.2 16 3.2 Z M14.45 21.35 C14.05 21.35 13.68 21.2 13.4 20.9 L8.8 16.3 C8.22 15.72 8.22 14.78 8.8 14.2 C9.38 13.62 10.32 13.62 10.9 14.2 L14.45 17.75 L21.1 11.1 C21.68 10.52 22.62 10.52 23.2 11.1 C23.78 11.68 23.78 12.62 23.2 13.2 L15.5 20.9 C15.22 21.2 14.85 21.35 14.45 21.35 Z',
+    destination:'M16 2.8 C10.25 2.8 5.6 7.45 5.6 13.2 C5.6 20.65 15.05 29.2 15.45 29.55 C15.76 29.82 16.24 29.82 16.55 29.55 C16.95 29.2 26.4 20.65 26.4 13.2 C26.4 7.45 21.75 2.8 16 2.8 Z M16 16.7 C13.9 16.7 12.2 15 12.2 12.9 C12.2 10.8 13.9 9.1 16 9.1 C18.1 9.1 19.8 10.8 19.8 12.9 C19.8 15 18.1 16.7 16 16.7 Z'
   };  function setManeuverIcon(name){
     const key=maneuverPaths[name] ? name : 'overview';
     if(iconPath) iconPath.setAttribute('d', maneuverPaths[key]);
@@ -1437,7 +1436,7 @@ syncFinderVisibility();
       app.classList.toggle('at-goal', !!v.goal);
       const pos=pt(v.p);
       const rot=headingFromPath(v.p, v.targetP);
-      const S=1.68, cx=600, cy=525;
+      const S=1.62, cx=600, cy=520;
 
       // Camera, cursore e tratto completato condividono la stessa p sul path.
       cam.style.transform=`translate(${cx}px, ${cy}px) rotate(${rot}deg) scale(${S}) translate(${-pos.x}px, ${-pos.y}px)`;
