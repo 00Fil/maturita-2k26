@@ -1360,7 +1360,7 @@ document.querySelectorAll('.win').forEach(w=>{ if(!w.classList.contains('maxi'))
 setInterval(syncFinderVisibility, 500);
 syncFinderVisibility();
 
-/* Maps Navigator — diploma stop + fixed linear continuation + custom photo pins */
+/* Maps Navigator — gaussian photo slowdown + fading pins + click panorama return */
 (function(){
   const shell=document.querySelector('[data-maps-navigator]');
   const root=document.querySelector('[data-maps-reference]');
@@ -1384,6 +1384,8 @@ syncFinderVisibility();
   const NAV_CAMERA_WIDTH_DESKTOP=1500;
   const NAV_CAMERA_WIDTH_MOBILE=1520;
   const TARGET_VX=.50, TARGET_VY=.63, CAMERA_SMOOTHNESS=.11;
+  const PHOTO_SLOW_SIGMA=.055;
+  const PHOTO_SLOW_STRENGTH=.72;
   const stops=[
     {x:180,y:650,id:'ring-0',title:'Cerebotani',sub:'Partenza da IIS Luigi Cerebotani'},
     {x:560,y:525,id:'ring-1',title:'CS Metal Europe',sub:'Tappa a Bedizzole raggiunta. Clicca per proseguire.'},
@@ -1399,25 +1401,145 @@ syncFinderVisibility();
     {x:1365,y:222,id:'photoPin-5'}
   ];
   let camera={x:0,y:0,width:1400,height:900};
-  let currentStop=0,currentProgress=0,isRunning=false,finalPanoramaDone=false,raf=null;
-  const triggeredCheckpoints=new Set(), triggeredPhotoPins=new Set();
+  let currentStop=0,currentProgress=0,isRunning=false,finalPanoramaDone=false,finalOutPending=false,raf=null;
+  const triggeredCheckpoints=new Set(), triggeredPhotoPins=new Set(), fadeTimers=new Map();
 
   prepareRoute(); resolveStopProgress(); attachPhotoPinsToRoute(); resetToStop(0); updateFloatingPhotoPositions();
   window.addEventListener('resize',()=>{ if(isRunning) return; camera=finalPanoramaDone?getOverviewCamera():getTargetCamera(routePath.getPointAtLength(currentProgress*totalLength),currentProgress>0?1:0); applyCamera(camera); requestAnimationFrame(updateFloatingPhotoPositions); });
   root.addEventListener('click',()=>advance());
   nextButtons.forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();advance();}));
   resetButtons.forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();resetNavigation();}));
-  sideSteps.forEach(btn=>btn.addEventListener('click',e=>{ e.stopPropagation(); const target=Number(btn.dataset.mapsStep||0); if(target===currentStop||isRunning) return; finalPanoramaDone=false; animateToStop(target); }));
+  sideSteps.forEach(btn=>btn.addEventListener('click',e=>{ e.stopPropagation(); const target=Number(btn.dataset.mapsStep||0); if(target===currentStop||isRunning) return; finalPanoramaDone=false; finalOutPending=false; animateToStop(target); }));
 
   function prepareRoute(){routePath.classList.add('visible');progressPath.style.strokeDasharray=`0 ${totalLength}`;progressPath.style.strokeDashoffset='0';}
   function nearestProgress(x,y){let bestP=0,bestD=Infinity;for(let i=0;i<=1400;i++){const p=i/1400,pt=routePath.getPointAtLength(p*totalLength),d=Math.hypot(pt.x-x,pt.y-y);if(d<bestD){bestD=d;bestP=p;}}return bestP;}
   function resolveStopProgress(){stops.forEach(stop=>{stop.p=nearestProgress(stop.x,stop.y);});stops[0].p=0;}
   function attachPhotoPinsToRoute(){for(const pin of photoPins){pin.p=nearestProgress(pin.x,pin.y);const pt=routePath.getPointAtLength(pin.p*totalLength);pin.x=pt.x;pin.y=pt.y;pin.distance=pin.p*totalLength;}}
-  function advance(){if(isRunning)return;if(finalPanoramaDone){resetNavigation();return;}if(currentStop>=stops.length-1){animateBeyondUniBsToPanorama();return;}animateToStop(currentStop+1);try{sndOpen&&sndOpen();}catch(err){}}
-  function animateToStop(targetStop){if(isRunning)return;targetStop=Math.max(0,Math.min(stops.length-1,targetStop));const fromProgress=currentProgress,toProgress=stops[targetStop].p,delta=Math.abs(toProgress-fromProgress);if(delta<.001){resetToStop(targetStop);return;}isRunning=true;finalPanoramaDone=false;shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return');mapTilt.classList.add('navigation');if(cue)cue.textContent='Navigazione in corso…';updateSidebar(currentStop,'In movimento',`Verso ${stops[targetStop].title}`);const segmentDuration=Math.max(2600,Math.min(7800,14500*delta*1.30));const t0=performance.now(),startCamera={...camera},prev=new Set(triggeredCheckpoints);cancelAnimationFrame(raf);const tick=now=>{const raw=Math.min((now-t0)/segmentDuration,1),e=smootherstep(raw);currentProgress=lerp(fromProgress,toProgress,e);const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+3,totalLength));moveCar(pt,getAngle(pt,next));updateProgress(distance);updateCameraFollow(pt,raw,startCamera);updatePhotoPinsByDistance(distance);updateCheckpoints(currentProgress,prev);updateFloatingPhotoPositions();if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;currentStop=targetStop;currentProgress=toProgress;resetToStop(targetStop);}};raf=requestAnimationFrame(tick);}
-  function animateBeyondUniBsToPanorama(){if(isRunning)return;isRunning=true;shell.classList.add('nav','maps-moving','maps-panorama-return');shell.classList.remove('maps-paused','at-goal');if(cue)cue.textContent='La strada continua…';updateSidebar(currentStop,'La strada continua','Il punto avanza, la visuale torna alla panoramica.');const fromProgress=currentProgress,toProgress=1,startCamera={...camera},overview=getOverviewCamera(),duration=8800,releaseAt=.22,holdAfterRelease=.18,t0=performance.now();cancelAnimationFrame(raf);const tick=now=>{const raw=Math.min((now-t0)/duration,1),e=smootherstep(raw);currentProgress=lerp(fromProgress,toProgress,e);const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+3,totalLength));moveCar(pt,getAngle(pt,next));updateProgress(distance);updatePhotoPinsByDistance(distance);if(raw<releaseAt){updateCameraFollow(pt,raw/releaseAt,startCamera);}else if(raw<releaseAt+holdAfterRelease){applyCamera(camera);}else{const t=smootherstep((raw-releaseAt-holdAfterRelease)/(1-releaseAt-holdAfterRelease)),k=.018+t*.030;camera.x=lerp(camera.x,overview.x,k);camera.y=lerp(camera.y,overview.y,k);camera.width=lerp(camera.width,overview.width,k);camera.height=lerp(camera.height,overview.height,k);applyCamera(camera);}updateFloatingPhotoPositions();if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;finalPanoramaDone=true;currentProgress=1;camera=overview;applyCamera(camera);shell.classList.remove('maps-moving','maps-paused','at-goal');shell.classList.add('maps-panorama-return');mapTilt.classList.remove('navigation','checkpoint-flash');if(cue)cue.textContent='Tocca per resettare';updateSidebar(stops.length-1,'Percorso aperto','Dopo UniBS non c’è una destinazione: il tracciato continua.');nextButtons.forEach(btn=>btn.textContent='Reset');updateStepStates(stops.length-1);updateFloatingPhotoPositions();}};raf=requestAnimationFrame(tick);}
-  function resetToStop(index){currentStop=index;currentProgress=stops[index].p;finalPanoramaDone=false;const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+3,totalLength));moveCar(pt,getAngle(pt,next));updateProgress(distance);camera=getTargetCamera(pt,index===0?0:1);applyCamera(camera);updateFloatingPhotoPositions();updateSidebar(index);updateStepStates(index);if(index===0){shell.classList.remove('nav','maps-paused','maps-moving','at-goal','maps-panorama-return');mapTilt.classList.remove('navigation','checkpoint-flash');if(cue)cue.textContent='Tocca la mappa per partire';}else{shell.classList.add('nav','maps-paused');shell.classList.remove('maps-moving','maps-panorama-return');mapTilt.classList.add('navigation');triggerCheckpoint(stops[index].id);if(cue)cue.textContent=index>=stops.length-1?'Tocca per continuare oltre UniBS':'Tocca per proseguire';}nextButtons.forEach(btn=>btn.textContent=index>=stops.length-1?'Continua':(index===0?'Avvia':'Prosegui'));}
-  function resetNavigation(){cancelAnimationFrame(raf);isRunning=false;finalPanoramaDone=false;triggeredCheckpoints.clear();triggeredPhotoPins.clear();root.querySelectorAll('.checkpoint-ring').forEach(r=>r.classList.remove('active'));root.querySelectorAll('.floating-photo-pin').forEach(p=>p.classList.remove('visible'));progressPath.style.strokeDasharray=`0 ${totalLength}`;resetToStop(0);try{sndClick&&sndClick();}catch(err){}}
+  function advance(){
+    if(isRunning) return;
+    if(finalOutPending){animateReturnToPanorama();return;}
+    if(finalPanoramaDone){resetNavigation();return;}
+    if(currentStop>=stops.length-1){animateBeyondUniBsToOutOfView();return;}
+    animateToStop(currentStop+1);
+    try{sndOpen&&sndOpen();}catch(err){}
+  }
+  function animateToStop(targetStop){
+    if(isRunning)return;
+    targetStop=Math.max(0,Math.min(stops.length-1,targetStop));
+    const fromProgress=currentProgress,toProgress=stops[targetStop].p,delta=Math.abs(toProgress-fromProgress);
+    if(delta<.001){resetToStop(targetStop);return;}
+    isRunning=true;finalPanoramaDone=false;finalOutPending=false;
+    shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');
+    mapTilt.classList.add('navigation');
+    if(cue)cue.textContent='Navigazione in corso…';
+    updateSidebar(currentStop,'In movimento',`Verso ${stops[targetStop].title}`);
+    const segmentDuration=Math.max(3100,Math.min(8600,16000*delta*1.34));
+    const t0=performance.now(),startCamera={...camera},prev=new Set(triggeredCheckpoints);
+    cancelAnimationFrame(raf);
+    const tick=now=>{
+      const raw=Math.min((now-t0)/segmentDuration,1);
+      const local=gaussianPhotoProgress(raw,fromProgress,toProgress);
+      currentProgress=lerp(fromProgress,toProgress,local);
+      const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+3,totalLength));
+      moveCar(pt,getAngle(pt,next));
+      updateProgress(distance);
+      updateCameraFollow(pt,raw,startCamera);
+      updatePhotoPinsByDistance(distance);
+      updateCheckpoints(currentProgress,prev);
+      updateFloatingPhotoPositions();
+      if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;currentStop=targetStop;currentProgress=toProgress;resetToStop(targetStop);}
+    };
+    raf=requestAnimationFrame(tick);
+  }
+  function animateBeyondUniBsToOutOfView(){
+    if(isRunning)return;
+    isRunning=true; finalOutPending=false;
+    shell.classList.add('nav','maps-moving'); shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');
+    if(cue)cue.textContent='La strada continua…';
+    updateSidebar(currentStop,'La strada continua','Il player esce dalla visuale. Poi clicca per tornare alla panoramica.');
+    const fromProgress=currentProgress,toProgress=1,startCamera={...camera},duration=6200,releaseAt=.28,t0=performance.now();
+    cancelAnimationFrame(raf);
+    const tick=now=>{
+      const raw=Math.min((now-t0)/duration,1),local=gaussianPhotoProgress(raw,fromProgress,toProgress);
+      currentProgress=lerp(fromProgress,toProgress,local);
+      const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+3,totalLength));
+      moveCar(pt,getAngle(pt,next));
+      updateProgress(distance);
+      updatePhotoPinsByDistance(distance);
+      if(raw<releaseAt) updateCameraFollow(pt,raw/releaseAt,startCamera); else applyCamera(camera);
+      updateFloatingPhotoPositions();
+      if(raw<1)raf=requestAnimationFrame(tick);else{
+        isRunning=false; finalOutPending=true; currentProgress=1;
+        shell.classList.remove('maps-moving'); shell.classList.add('maps-final-wait');
+        if(cue)cue.textContent='Tocca per tornare alla panoramica';
+        updateSidebar(stops.length-1,'Fuori visuale','Clicca ancora per il ritorno smooth alla panoramica.');
+        nextButtons.forEach(btn=>btn.textContent='Panoramica');
+      }
+    };
+    raf=requestAnimationFrame(tick);
+  }
+  function animateReturnToPanorama(){
+    if(isRunning)return;
+    isRunning=true; finalOutPending=false;
+    shell.classList.add('nav','maps-moving','maps-panorama-return'); shell.classList.remove('maps-final-wait','maps-paused','at-goal');
+    if(cue)cue.textContent='Ritorno alla panoramica…';
+    updateSidebar(stops.length-1,'Ritorno panoramico','La visuale rientra lentamente sul percorso completo.');
+    const startCamera={...camera},overview=getOverviewCamera(),duration=3000,t0=performance.now();
+    cancelAnimationFrame(raf);
+    const tick=now=>{
+      const raw=Math.min((now-t0)/duration,1),e=smootherstep(raw);
+      camera.x=lerp(startCamera.x,overview.x,e); camera.y=lerp(startCamera.y,overview.y,e); camera.width=lerp(startCamera.width,overview.width,e); camera.height=lerp(startCamera.height,overview.height,e);
+      applyCamera(camera); updateFloatingPhotoPositions();
+      if(raw<1)raf=requestAnimationFrame(tick);else{
+        isRunning=false; finalPanoramaDone=true; currentProgress=1; camera=overview; applyCamera(camera);
+        shell.classList.remove('maps-moving','maps-paused','at-goal','maps-final-wait'); shell.classList.add('maps-panorama-return');
+        mapTilt.classList.remove('navigation','checkpoint-flash');
+        if(cue)cue.textContent='Tocca per resettare';
+        updateSidebar(stops.length-1,'Percorso aperto','Dopo UniBS non c’è una destinazione: il tracciato continua.');
+        nextButtons.forEach(btn=>btn.textContent='Reset');
+        updateStepStates(stops.length-1); updateFloatingPhotoPositions();
+      }
+    };
+    raf=requestAnimationFrame(tick);
+  }
+  function gaussianPhotoProgress(raw,fromProgress,toProgress){
+    const start=Math.min(fromProgress,toProgress),end=Math.max(fromProgress,toProgress),span=Math.max(.0001,end-start);
+    const centers=photoPins.map(p=>(p.p-start)/span).filter(c=>c>.035&&c<.965);
+    if(!centers.length) return smootherstep(raw);
+    const steps=90;
+    const speedAt=u=>{
+      let slow=0;
+      for(const c of centers) slow=Math.max(slow,Math.exp(-Math.pow((u-c)/PHOTO_SLOW_SIGMA,2)/2));
+      return Math.max(.22,1-PHOTO_SLOW_STRENGTH*slow);
+    };
+    let total=0,partial=0,prev=0,prevSpeed=speedAt(0);
+    for(let i=1;i<=steps;i++){
+      const u=i/steps,sp=speedAt(u),area=(prevSpeed+sp)*(u-prev)/2;
+      total+=area;
+      if(raw>=u) partial+=area;
+      else if(raw>prev){
+        const local=(raw-prev)/(u-prev),interp=prevSpeed+(sp-prevSpeed)*local;
+        partial+=(prevSpeed+interp)*(raw-prev)/2;
+      }
+      prev=u; prevSpeed=sp;
+    }
+    return Math.min(1,Math.max(0,partial/total));
+  }
+  function resetToStop(index){
+    currentStop=index;currentProgress=stops[index].p;finalPanoramaDone=false;finalOutPending=false;
+    const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+3,totalLength));
+    moveCar(pt,getAngle(pt,next));updateProgress(distance);camera=getTargetCamera(pt,index===0?0:1);applyCamera(camera);updateFloatingPhotoPositions();updateSidebar(index);updateStepStates(index);
+    if(index===0){shell.classList.remove('nav','maps-paused','maps-moving','at-goal','maps-panorama-return','maps-final-wait');mapTilt.classList.remove('navigation','checkpoint-flash');if(cue)cue.textContent='Tocca la mappa per partire';}
+    else{shell.classList.add('nav','maps-paused');shell.classList.remove('maps-moving','maps-panorama-return','maps-final-wait');mapTilt.classList.add('navigation');triggerCheckpoint(stops[index].id);if(cue)cue.textContent=index>=stops.length-1?'Tocca per far uscire il player':'Tocca per proseguire';}
+    nextButtons.forEach(btn=>btn.textContent=index>=stops.length-1?'Continua':(index===0?'Avvia':'Prosegui'));
+  }
+  function resetNavigation(){
+    cancelAnimationFrame(raf);isRunning=false;finalPanoramaDone=false;finalOutPending=false;triggeredCheckpoints.clear();triggeredPhotoPins.clear();
+    for(const timers of fadeTimers.values()) timers.forEach(t=>clearTimeout(t)); fadeTimers.clear();
+    root.querySelectorAll('.checkpoint-ring').forEach(r=>r.classList.remove('active'));
+    root.querySelectorAll('.floating-photo-pin').forEach(p=>p.classList.remove('visible','fading'));
+    progressPath.style.strokeDasharray=`0 ${totalLength}`;resetToStop(0);try{sndClick&&sndClick();}catch(err){}
+  }
   function updateSidebar(index,titleOverride,subOverride){const stop=stops[index];if(sideTitle)sideTitle.textContent=titleOverride||stop.title;if(sideSub)sideSub.textContent=subOverride||stop.sub;updateStepStates(index);}
   function updateStepStates(index){sideSteps.forEach((btn,i)=>{btn.classList.toggle('active',i===index&&!finalPanoramaDone);btn.classList.toggle('done',i<index||finalPanoramaDone);});}
   function updateCheckpoints(progress,previous){stops.forEach(stop=>{if(progress>=stop.p-.002&&stop.id&&!triggeredCheckpoints.has(stop.id)&&!previous.has(stop.id))triggerCheckpoint(stop.id);});}
@@ -1429,7 +1551,19 @@ syncFinderVisibility();
   function clampViewBox(view){const width=Math.min(view.width,WORLD.width),height=Math.min(view.height,WORLD.height);return{x:clamp(view.x,WORLD.x,WORLD.x+WORLD.width-width),y:clamp(view.y,WORLD.y,WORLD.y+WORLD.height-height),width,height};}
   function moveCar(point,angle){car.setAttribute('transform',`translate(${point.x} ${point.y}) rotate(${angle})`);}
   function updateProgress(distance){progressPath.style.strokeDasharray=`${distance} ${totalLength}`;}
-  function updatePhotoPinsByDistance(distance){for(const pin of photoPins){if(distance>=pin.distance&&!triggeredPhotoPins.has(pin.id)){triggeredPhotoPins.add(pin.id);const el=root.querySelector(`#${pin.id}`);if(el){el.classList.remove('visible');void el.offsetWidth;el.classList.add('visible');}}}}
+  function updatePhotoPinsByDistance(distance){
+    for(const pin of photoPins){
+      if(distance>=pin.distance&&!triggeredPhotoPins.has(pin.id)){
+        triggeredPhotoPins.add(pin.id);
+        const el=root.querySelector(`#${pin.id}`);
+        if(el){
+          el.classList.remove('visible','fading'); void el.offsetWidth; el.classList.add('visible');
+          const timers=[setTimeout(()=>el.classList.add('fading'),2600),setTimeout(()=>el.classList.remove('visible','fading'),3600)];
+          fadeTimers.set(pin.id,timers);
+        }
+      }
+    }
+  }
   function updateFloatingPhotoPositions(){const appRect=root.getBoundingClientRect(),matrix=mapSvg.getScreenCTM();if(!matrix)return;for(const pin of photoPins){const el=root.querySelector(`#${pin.id}`);if(!el)continue;const projected=svgPointToScreen(pin.x,pin.y,matrix);el.style.left=`${projected.x-appRect.left}px`;el.style.top=`${projected.y-appRect.top}px`;}}
   function svgPointToScreen(x,y,matrix){const point=mapSvg.createSVGPoint();point.x=x;point.y=y;const t=point.matrixTransform(matrix);return{x:t.x,y:t.y};}
   function getAngle(p1,p2){return Math.atan2(p2.y-p1.y,p2.x-p1.x)*180/Math.PI+90;}

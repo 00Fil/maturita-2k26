@@ -4121,3 +4121,11 @@ body.login-screen.video-loading::after{
 .maps-ref #photoPin-3{z-index:12!important;}
 .maps-ref .floating-photo-pin{transform:translate(-50%,-104%)!important;}
 .maps-ref .floating-photo-pin.visible .photo-marker{animation:premiumPhotoPinIn .62s cubic-bezier(.2,.78,.22,1) forwards;}
+
+/* ============================================================
+   Maps gaussian slowdown and fading photos
+   ============================================================ */
+.maps-ref .floating-photo-pin{transition:opacity .85s ease!important;}
+.maps-ref .floating-photo-pin.fading{opacity:0!important;}
+.maps-reference-shell.maps-final-wait .maps-click-cue{animation:mwHintPulse 1.8s ease-in-out infinite;opacity:.96;}
+.maps-reference-shell.maps-final-wait .maps-side-primary{filter:saturate(1.12) brightness(1.08);}
