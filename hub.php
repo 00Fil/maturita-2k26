@@ -334,9 +334,9 @@ function appicon(string $file, string $remote): string {
             </g>
 
             <!-- Percorso principale -->
-            <path class="route-glow" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L2320 220" />
-            <path id="routePath" class="route" pathLength="1" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L2320 220" />
-            <path id="progressPath" class="route-progress" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L2320 220" />
+            <path class="route-glow" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L3200 220" />
+            <path id="routePath" class="route" pathLength="1" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L3200 220" />
+            <path id="progressPath" class="route-progress" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L3200 220" />
 
             <g class="map-place-label label-below-route">
               <text class="city-label" x="180" y="735">Lonato</text>
