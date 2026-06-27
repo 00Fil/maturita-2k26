@@ -300,7 +300,22 @@ function appicon(string $file, string $remote): string {
       <svg class="maps-map mw-map" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Percorso di vita">
         <defs>
           <linearGradient id="mw-water" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16334e"/><stop offset="1" stop-color="#102739"/></linearGradient>
-          <filter id="mw-pin-sh" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="4" stdDeviation="3.2" flood-color="#000" flood-opacity=".42"/></filter>
+          <radialGradient id="mw-puck-glass" cx="32%" cy="22%" r="76%">
+            <stop offset="0" stop-color="#ffffff" stop-opacity=".88"/>
+            <stop offset=".34" stop-color="#d9f0ff" stop-opacity=".36"/>
+            <stop offset=".68" stop-color="#0a84ff" stop-opacity=".88"/>
+            <stop offset="1" stop-color="#0057d9" stop-opacity=".96"/>
+          </radialGradient>
+          <linearGradient id="mw-puck-rim" x1="-18" y1="-18" x2="18" y2="18">
+            <stop offset="0" stop-color="#ffffff" stop-opacity=".95"/>
+            <stop offset=".48" stop-color="#ffffff" stop-opacity=".22"/>
+            <stop offset="1" stop-color="#001f55" stop-opacity=".36"/>
+          </linearGradient>
+          <filter id="mw-puck-refract" x="-90%" y="-90%" width="280%" height="280%">
+            <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#001326" flood-opacity=".34"/>
+            <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#fff" flood-opacity=".45"/>
+          </filter>
+          <filter id="mw-pin-sh" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="3" stdDeviation="2.2" flood-color="#000" flood-opacity=".30"/></filter>
           <filter id="mw-caption-sh" x="-40%" y="-80%" width="180%" height="260%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.5" flood-color="#000" flood-opacity=".85"/></filter>
         </defs>
 
@@ -315,7 +330,15 @@ function appicon(string $file, string $remote): string {
 
           <g class="mw-pin is-stop" data-step-pin="0" transform="translate(150 650)"><g class="mw-pin-drop" style="animation-delay:0.00s"><g class="mw-pin-rot"><circle class="pin-halo" cx="0" cy="-24" r="18"/><ellipse class="pin-ground" cx="0" cy="2" rx="9" ry="3"/><path class="pin-stem" d="M0 2 C-4 -7 -13 -11 -13 -23 A13 13 0 1 1 13 -23 C13 -11 4 -7 0 2 Z"/><circle class="pin-face" cx="0" cy="-23" r="11.5"/><circle class="pin-dot" cx="0" cy="-23" r="3.2"/><g class="mw-caption"><text x="0" y="19" text-anchor="middle">Cerebotani</text></g></g></g></g><g class="mw-pin is-stop" data-step-pin="1" transform="translate(360 560)"><g class="mw-pin-drop" style="animation-delay:0.07s"><g class="mw-pin-rot"><circle class="pin-halo" cx="0" cy="-24" r="18"/><ellipse class="pin-ground" cx="0" cy="2" rx="9" ry="3"/><path class="pin-stem" d="M0 2 C-4 -7 -13 -11 -13 -23 A13 13 0 1 1 13 -23 C13 -11 4 -7 0 2 Z"/><circle class="pin-face" cx="0" cy="-23" r="11.5"/><circle class="pin-dot" cx="0" cy="-23" r="3.2"/><g class="mw-caption"><text x="0" y="19" text-anchor="middle">FSL · PCTO</text></g></g></g></g><g class="mw-pin is-stop" data-step-pin="2" transform="translate(560 430)"><g class="mw-pin-drop" style="animation-delay:0.13s"><g class="mw-pin-rot"><circle class="pin-halo" cx="0" cy="-24" r="18"/><ellipse class="pin-ground" cx="0" cy="2" rx="9" ry="3"/><path class="pin-stem" d="M0 2 C-4 -7 -13 -11 -13 -23 A13 13 0 1 1 13 -23 C13 -11 4 -7 0 2 Z"/><circle class="pin-face" cx="0" cy="-23" r="11.5"/><circle class="pin-dot" cx="0" cy="-23" r="3.2"/><g class="mw-caption"><text x="0" y="19" text-anchor="middle">Diploma</text></g></g></g></g><g class="mw-pin is-stop" data-step-pin="3" transform="translate(790 280)"><g class="mw-pin-drop" style="animation-delay:0.20s"><g class="mw-pin-rot"><circle class="pin-halo" cx="0" cy="-24" r="18"/><ellipse class="pin-ground" cx="0" cy="2" rx="9" ry="3"/><path class="pin-stem" d="M0 2 C-4 -7 -13 -11 -13 -23 A13 13 0 1 1 13 -23 C13 -11 4 -7 0 2 Z"/><circle class="pin-face" cx="0" cy="-23" r="11.5"/><circle class="pin-dot" cx="0" cy="-23" r="3.2"/><g class="mw-caption"><text x="0" y="19" text-anchor="middle">Università</text></g></g></g></g><g class="mw-pin is-dest" data-step-pin="4" transform="translate(1020 130)"><g class="mw-pin-drop" style="animation-delay:0.26s"><g class="mw-pin-rot"><circle class="pin-halo" cx="0" cy="-24" r="18"/><ellipse class="pin-ground" cx="0" cy="3" rx="16" ry="5"/><path class="pin-stem" d="M0 3 C-6 -8 -20 -13 -20 -31 A20 20 0 1 1 20 -31 C20 -13 6 -8 0 3 Z"/><circle class="pin-face" cx="0" cy="-31" r="18"/><text class="pin-i" x="0" y="-25" text-anchor="middle">i</text><g class="mw-caption"><text x="0" y="19" text-anchor="middle">America</text></g></g></g></g>
 
-          <g id="maps-puck" transform="translate(150 650)"><g class="puck-rot"><circle class="puck-halo" r="22"/><circle class="puck-dot" r="9"/><path class="puck-arrow" d="M0 -17 L10 7 L0 1 L-10 7 Z"/></g></g>
+          <g id="maps-puck" transform="translate(150 650)">
+            <g class="puck-rot">
+              <circle class="puck-soft" r="24"/>
+              <circle class="puck-shell" r="17"/>
+              <circle class="puck-rim" r="17"/>
+              <path class="puck-arrow" d="M0 -11 L7.3 8.5 L0 4.4 L-7.3 8.5 Z"/>
+              <path class="puck-glint" d="M-9 -7 C-4 -13 6 -13 11 -5"/>
+            </g>
+          </g>
         </g>
       </svg>
 

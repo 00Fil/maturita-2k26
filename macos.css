@@ -3072,3 +3072,99 @@ body.login-screen.unlock .wallpaper {
   .nr-note.switching{ animation:none; }
   .nr-visual:hover{ transform:none; }
 }
+
+
+/* ============================================================
+   Refinement Maps Navigator — motion Apple-like, vetro, pin puliti
+   ============================================================ */
+.maps-app{
+  --maps-ease: cubic-bezier(.22, 1, .36, 1);
+  --maps-ease-long: cubic-bezier(.32, .72, 0, 1);
+}
+#maps-cam,
+#maps-puck,
+#maps-puck .puck-rot,
+#maps-route-progress,
+.mw-pin-rot{
+  transition-duration:.86s!important;
+  transition-timing-function:var(--maps-ease-long)!important;
+}
+
+/* Le spillette non devono “cadere” o pulsare: entrano già presenti, con micro-stato attivo. */
+.mw-pin-drop{ animation:none!important; transform:none!important; opacity:1!important; }
+.pin-ground{ opacity:.18; }
+.pin-stem{ filter:url(#mw-pin-sh); stroke:rgba(255,255,255,.14); stroke-width:1; }
+.pin-face{ stroke:rgba(255,255,255,.24); stroke-width:1; }
+.pin-dot{ opacity:.52; }
+.pin-halo{ animation:none!important; opacity:0!important; }
+.mw-pin.on .pin-halo,
+.mw-pin.is-dest.on .pin-halo{ animation:none!important; opacity:0!important; }
+.mw-pin.on .pin-stem,
+.mw-pin.on .pin-face{
+  filter:url(#mw-pin-sh) drop-shadow(0 0 8px rgba(10,132,255,.18));
+}
+.mw-pin.on .pin-dot{ opacity:.85; fill:#f5f5f7; }
+.mw-pin.done .pin-stem,
+.mw-pin.done .pin-face{ fill:#5f646b; opacity:.82; }
+.mw-pin.is-stop .pin-stem,
+.mw-pin.is-stop .pin-face{ fill:#8f949b; }
+.mw-pin.is-dest .pin-stem,
+.mw-pin.is-dest .pin-face{ fill:#ff5f57; }
+
+/* Dot navigatore: capsula tonda in vetro refrattivo con freccia, non pallino pulsante. */
+.puck-soft{
+  fill:#0a84ff;
+  opacity:.14;
+  filter:blur(1.5px);
+}
+.puck-shell{
+  fill:url(#mw-puck-glass);
+  filter:url(#mw-puck-refract);
+}
+.puck-rim{
+  fill:none;
+  stroke:url(#mw-puck-rim);
+  stroke-width:1.6;
+  vector-effect:non-scaling-stroke;
+}
+.puck-arrow{
+  opacity:1!important;
+  fill:#fff;
+  stroke:rgba(0,42,110,.22);
+  stroke-width:1.25;
+  stroke-linejoin:round;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.22));
+}
+.puck-glint{
+  fill:none;
+  stroke:rgba(255,255,255,.72);
+  stroke-width:1.2;
+  stroke-linecap:round;
+  opacity:.72;
+}
+.maps-app.nav .puck-dot{ opacity:0!important; }
+.maps-app.nav .puck-arrow{ opacity:1!important; }
+
+/* Pannelli: niente flash ripetuti; feedback più sobrio e pulito. */
+.mw-flash{ animation:none!important; }
+.mw-hint{ animation:none!important; opacity:.86; }
+.mw-banner{
+  transition:background .34s ease, box-shadow .34s ease, transform .34s var(--maps-ease), opacity .24s ease;
+}
+.maps-app.nav .mw-banner{
+  background:linear-gradient(180deg,rgba(49,186,83,.94),rgba(21,155,60,.94));
+  box-shadow:0 16px 38px rgba(8,82,30,.32), inset 0 1px 0 rgba(255,255,255,.30), inset 0 0 0 1px rgba(255,255,255,.12);
+}
+.mw-banner-icon{ text-shadow:none; }
+.mw-zoom button,
+.mw-back,
+.mw-modes button{
+  transition:background .18s ease, color .18s ease, transform .18s var(--maps-ease)!important;
+}
+.mw-zoom button:active,
+.mw-back:active,
+.mw-modes button:active{ transform:scale(.96)!important; }
+
+@media (prefers-reduced-motion: reduce){
+  #maps-cam,#maps-puck,#maps-puck .puck-rot,#maps-route-progress,.mw-pin-rot{ transition-duration:.001s!important; }
+}

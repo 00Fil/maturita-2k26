@@ -1403,7 +1403,7 @@ syncFinderVisibility();
     const b=pt(Math.max(0, Math.min(1, targetP!=null ? targetP : p+.012)));
     return -90 - Math.atan2(b.y-a.y, b.x-a.x)*180/Math.PI;
   }
-  function flash(el){ if(!el) return; el.classList.remove('mw-flash'); void el.offsetWidth; el.classList.add('mw-flash'); }
+  function flash(el){ /* niente micro-flash ripetuti: movimento più pulito stile Apple */ }
   function setProgress(p){ progress.style.strokeDashoffset=(1-Math.max(0,Math.min(1,p))).toFixed(4); }
 
   function render(){
