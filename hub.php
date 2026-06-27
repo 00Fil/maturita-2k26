@@ -296,38 +296,59 @@ function appicon(string $file, string $remote): string {
     </aside>
 
     <main class="mw-map-wrap" data-maps-stage aria-label="Mappa del percorso — tocca per proseguire">
-      <svg class="maps-map mw-map" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Percorso di vita">
+      <svg class="maps-map mw-map" id="maps-svg" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Percorso di vita">
         <defs>
-          <linearGradient id="mw-water" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#16334e"/><stop offset="1" stop-color="#102739"/></linearGradient>
           <radialGradient id="mw-puck-glass" cx="32%" cy="22%" r="76%">
             <stop offset="0" stop-color="#ffffff" stop-opacity=".88"/>
             <stop offset=".34" stop-color="#d9f0ff" stop-opacity=".36"/>
             <stop offset=".68" stop-color="#0a84ff" stop-opacity=".88"/>
             <stop offset="1" stop-color="#0057d9" stop-opacity=".96"/>
           </radialGradient>
-          <linearGradient id="mw-puck-rim" x1="-18" y1="-18" x2="18" y2="18">
-            <stop offset="0" stop-color="#ffffff" stop-opacity=".95"/>
-            <stop offset=".48" stop-color="#ffffff" stop-opacity=".22"/>
-            <stop offset="1" stop-color="#001f55" stop-opacity=".36"/>
-          </linearGradient>
           <filter id="mw-puck-refract" x="-90%" y="-90%" width="280%" height="280%">
             <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#001326" flood-opacity=".34"/>
             <feDropShadow dx="0" dy="1" stdDeviation="1" flood-color="#fff" flood-opacity=".45"/>
           </filter>
-          <filter id="mw-pin-sh" x="-80%" y="-80%" width="260%" height="260%"><feDropShadow dx="0" dy="3" stdDeviation="2.2" flood-color="#000" flood-opacity=".30"/></filter>
-          <filter id="mw-caption-sh" x="-40%" y="-80%" width="180%" height="260%"><feDropShadow dx="0" dy="1.4" stdDeviation="1.5" flood-color="#000" flood-opacity=".85"/></filter>
+          <filter id="maps-route-shadow" x="-40%" y="-40%" width="180%" height="180%">
+            <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#0a84ff" flood-opacity=".34"/>
+          </filter>
+          <filter id="maps-caption-shadow" x="-50%" y="-100%" width="200%" height="300%">
+            <feDropShadow dx="0" dy="1.4" stdDeviation="1.6" flood-color="#000" flood-opacity=".82"/>
+          </filter>
         </defs>
 
-        <rect class="mw-bg" x="-600" y="-600" width="2400" height="1960" fill="#23262c"/>
+        <rect class="mw-land" x="-600" y="-600" width="2400" height="1960"/>
         <g id="maps-cam">
-          <path d="M-600 150 C220 120 420 175 600 150 C820 120 1010 60 1800 90 L1800 -600 L-600 -600 Z" fill="url(#mw-water)"/>
-          <path d="M120 760 C140 600 250 560 300 470 C360 360 300 300 360 210" fill="none" stroke="#2b4a32" stroke-width="150" stroke-linecap="round" opacity=".5"/>
-          <path d="M860 760 C900 640 1000 600 1100 560 C1200 520 1260 470 1320 420" fill="none" stroke="#2b4a32" stroke-width="130" stroke-linecap="round" opacity=".45"/>
-          <path id="maps-route-base" d="M145 650 C210 620 238 607 270 590 C330 560 380 535 430 510 C565 435 660 360 760 300 C870 235 960 178 1042 132" fill="none" stroke="#0a4da8" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
-          <path id="maps-route" d="M145 650 C210 620 238 607 270 590 C330 560 380 535 430 510 C565 435 660 360 760 300 C870 235 960 178 1042 132" fill="none" stroke="#0a84ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-          <path id="maps-route-progress" pathLength="1" d="M145 650 C210 620 238 607 270 590 C330 560 380 535 430 510 C565 435 660 360 760 300 C870 235 960 178 1042 132" fill="none" stroke="#7cc4ff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1" stroke-dashoffset="1"/>
+          <path class="mw-green-blob" d="M-210 115 C-20 18 196 48 276 190 C356 334 232 478 28 468 C-176 459 -358 300 -210 115Z"/>
+          <path class="mw-green-blob soft" d="M610 12 C806 -80 1074 -22 1162 152 C1252 326 1090 454 862 430 C634 406 468 198 610 12Z"/>
+          <path class="mw-green-blob" d="M88 598 C278 498 514 542 578 696 C642 852 444 960 226 898 C8 836 -120 700 88 598Z"/>
+          <path class="mw-green-blob soft" d="M770 592 C960 474 1240 544 1320 716 C1402 890 1194 1018 960 946 C726 874 598 710 770 592Z"/>
+          <path class="mw-green-blob" d="M-344 774 C-172 666 72 710 144 854 C216 998 28 1132 -198 1078 C-424 1024 -542 902 -344 774Z"/>
 
-          <g class="mw-pin is-stop" data-step-pin="0" transform="translate(145 650)"><g class="mw-pin-drop" style="animation-delay:0.00s"><g class="mw-pin-rot"><circle class="pin-halo" cx="0" cy="-24" r="18"/><ellipse class="pin-ground" cx="0" cy="2" rx="9" ry="3"/><path class="pin-stem" d="M0 2 C-4 -7 -13 -11 -13 -23 A13 13 0 1 1 13 -23 C13 -11 4 -7 0 2 Z"/><circle class="pin-face" cx="0" cy="-23" r="11.5"/><circle class="pin-dot" cx="0" cy="-23" r="3.2"/><g class="mw-caption"><text x="0" y="19" text-anchor="middle">Cerebotani</text></g></g></g></g><g class="mw-pin is-stop" data-step-pin="1" transform="translate(270 590)"><g class="mw-pin-drop" style="animation-delay:0.07s"><g class="mw-pin-rot"><circle class="pin-halo" cx="0" cy="-24" r="18"/><ellipse class="pin-ground" cx="0" cy="2" rx="9" ry="3"/><path class="pin-stem" d="M0 2 C-4 -7 -13 -11 -13 -23 A13 13 0 1 1 13 -23 C13 -11 4 -7 0 2 Z"/><circle class="pin-face" cx="0" cy="-23" r="11.5"/><circle class="pin-dot" cx="0" cy="-23" r="3.2"/><g class="mw-caption"><text x="0" y="19" text-anchor="middle">FSL · PCTO</text></g></g></g></g><g class="mw-pin is-stop" data-step-pin="2" transform="translate(430 510)"><g class="mw-pin-drop" style="animation-delay:0.13s"><g class="mw-pin-rot"><circle class="pin-halo" cx="0" cy="-24" r="18"/><ellipse class="pin-ground" cx="0" cy="2" rx="9" ry="3"/><path class="pin-stem" d="M0 2 C-4 -7 -13 -11 -13 -23 A13 13 0 1 1 13 -23 C13 -11 4 -7 0 2 Z"/><circle class="pin-face" cx="0" cy="-23" r="11.5"/><circle class="pin-dot" cx="0" cy="-23" r="3.2"/><g class="mw-caption"><text x="0" y="19" text-anchor="middle">Diploma</text></g></g></g></g><g class="mw-pin is-stop" data-step-pin="3" transform="translate(760 300)"><g class="mw-pin-drop" style="animation-delay:0.20s"><g class="mw-pin-rot"><circle class="pin-halo" cx="0" cy="-24" r="18"/><ellipse class="pin-ground" cx="0" cy="2" rx="9" ry="3"/><path class="pin-stem" d="M0 2 C-4 -7 -13 -11 -13 -23 A13 13 0 1 1 13 -23 C13 -11 4 -7 0 2 Z"/><circle class="pin-face" cx="0" cy="-23" r="11.5"/><circle class="pin-dot" cx="0" cy="-23" r="3.2"/><g class="mw-caption"><text x="0" y="19" text-anchor="middle">Università</text></g></g></g></g><g class="mw-pin is-dest" data-step-pin="4" transform="translate(1042 132)"><g class="mw-pin-drop" style="animation-delay:0.26s"><g class="mw-pin-rot"><circle class="pin-halo" cx="0" cy="-24" r="18"/><ellipse class="pin-ground" cx="0" cy="3" rx="16" ry="5"/><path class="pin-stem" d="M0 3 C-6 -8 -20 -13 -20 -31 A20 20 0 1 1 20 -31 C20 -13 6 -8 0 3 Z"/><circle class="pin-face" cx="0" cy="-31" r="18"/><circle class="pin-dot pin-dot-dest" cx="0" cy="-31" r="4.4"/><g class="mw-caption"><text x="0" y="19" text-anchor="middle">America</text></g></g></g></g>
+          <path class="mw-soft-road" d="M-80 730 C80 650 155 646 270 590 C330 560 380 535 430 510 C565 435 660 360 760 300 C870 235 960 178 1130 92"/>
+          <path class="mw-soft-road thin" d="M120 760 C148 610 250 560 300 470 C360 360 300 300 360 210"/>
+          <path class="mw-soft-road thin" d="M760 760 C840 624 990 596 1100 560 C1200 520 1260 470 1320 420"/>
+
+          <path id="maps-route-base" class="mw-route-glow" d="M145 650 C210 620 238 607 270 590 C330 560 380 535 430 510 C565 435 660 360 760 300 C870 235 960 178 1042 132"/>
+          <path id="maps-route" class="mw-route" d="M145 650 C210 620 238 607 270 590 C330 560 380 535 430 510 C565 435 660 360 760 300 C870 235 960 178 1042 132"/>
+          <path id="maps-route-progress" class="mw-route-progress" d="M145 650 C210 620 238 607 270 590 C330 560 380 535 430 510 C565 435 660 360 760 300 C870 235 960 178 1042 132"/>
+
+          <text class="mw-city-label" x="92" y="704">Cerebotani</text>
+          <text class="mw-city-label" x="218" y="566">FSL · PCTO</text>
+          <text class="mw-city-label" x="390" y="486">Diploma</text>
+          <text class="mw-city-label" x="708" y="274">UniBS</text>
+          <text class="mw-city-label" x="990" y="104">America</text>
+
+          <circle id="maps-ring-0" class="mw-checkpoint-ring" cx="145" cy="650" r="29"/>
+          <circle id="maps-ring-1" class="mw-checkpoint-ring" cx="270" cy="590" r="29"/>
+          <circle id="maps-ring-2" class="mw-checkpoint-ring" cx="430" cy="510" r="29"/>
+          <circle id="maps-ring-3" class="mw-checkpoint-ring" cx="760" cy="300" r="29"/>
+          <circle id="maps-ring-4" class="mw-checkpoint-ring" cx="1042" cy="132" r="34"/>
+
+          <g class="maps-poi" data-step-pin="0" transform="translate(145 650)"><circle class="maps-poi-circle" r="22"/><text class="maps-poi-number" y="1">1</text></g>
+          <g class="maps-poi" data-step-pin="1" transform="translate(270 590)"><circle class="maps-poi-circle" r="20"/><text class="maps-poi-number" y="1">2</text></g>
+          <g class="maps-poi" data-step-pin="2" transform="translate(430 510)"><circle class="maps-poi-circle" r="20"/><text class="maps-poi-number" y="1">3</text></g>
+          <g class="maps-poi" data-step-pin="3" transform="translate(760 300)"><circle class="maps-poi-circle" r="20"/><text class="maps-poi-number" y="1">4</text></g>
+          <g class="maps-poi dest" data-step-pin="4" transform="translate(1042 132)"><circle class="maps-poi-circle" r="24"/><text class="maps-poi-number" y="1">5</text></g>
 
           <g id="maps-puck" transform="translate(145 650)">
             <g class="puck-rot">
@@ -348,7 +369,6 @@ function appicon(string $file, string $remote): string {
         </div>
         <div class="mw-banner-text" data-maps-bannertext><span data-maps-kicker>Percorso</span><b data-maps-title>5 anni di crescita</b><p data-maps-copy>Tocca la mappa per avviare la navigazione.</p>
           </div></div>
-      </div>
 
       <div class="mw-zoom" aria-label="Zoom mappa">
         <button data-maps-zoom="in" type="button" aria-label="Avvicina">+</button>

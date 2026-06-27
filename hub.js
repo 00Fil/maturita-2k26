@@ -1360,52 +1360,50 @@ document.querySelectorAll('.win').forEach(w=>{ if(!w.classList.contains('maxi'))
 setInterval(syncFinderVisibility, 500);
 syncFinderVisibility();
 
-/* Maps Navigator — path-locked cursor/progress */
+/* Maps Navigator — continuous neutral dark animation, HUD invariato */
 (function(){
   const app=document.querySelector('[data-maps-navigator]');
   if(!app) return;
-  const cam=app.querySelector('#maps-cam');
+
+  const mapSvg=app.querySelector('#maps-svg') || app.querySelector('.maps-map');
+  const route=app.querySelector('#maps-route');
+  const progressPath=app.querySelector('#maps-route-progress');
   const puck=app.querySelector('#maps-puck');
   const puckRot=app.querySelector('#maps-puck .puck-rot');
-  const progress=app.querySelector('#maps-route-progress');
-  const route=app.querySelector('#maps-route');
   const stage=app.querySelector('[data-maps-stage]');
   const title=app.querySelector('[data-maps-title]');
   const kicker=app.querySelector('[data-maps-kicker]');
   const copy=app.querySelector('[data-maps-copy]');
   const icon=app.querySelector('[data-maps-icon]');
   const iconPath=app.querySelector('[data-maps-maneuver-path]');
-  const bannerText=app.querySelector('[data-maps-bannertext]');
   const hint=app.querySelector('[data-maps-hint]');
-  const pins=Array.from(app.querySelectorAll('.mw-pin'));
-  if(!cam||!stage||!route||!progress||!puck) return;
+  const pins=Array.from(app.querySelectorAll('[data-step-pin]'));
 
-  // Percentuali lungo il path reale. Puck e progresso usano questi stessi valori.
+  if(!mapSvg||!route||!progressPath||!puck||!stage) return;
+
+  const totalLength=route.getTotalLength();
+  const duration=14500;
+  const cameraIntroDuration=1250;
+  const CAMERA_SMOOTHNESS=.085;
+  const TARGET_VX=.50;
+  const TARGET_VY=.63;
+  const WORLD={x:-600,y:-600,width:2400,height:1960};
+  const OVERVIEW_CAMERA_WIDTH=1220;
+  const NAV_CAMERA_WIDTH_DESKTOP=760;
+  const NAV_CAMERA_WIDTH_MOBILE=920;
+
   const stopP=[0,.145,.326,.719,1];
-  const seq=[
-    {p:.145, targetP:.326, active:1, icon:'straight', stop:true, kicker:'Prima tappa', title:'FSL · PCTO', copy:'Prima tappa del percorso: esperienza sul campo prima del traguardo finale della scuola.'},
-    {p:.285, targetP:.326, active:2, icon:'straight', stop:false, kicker:'Tra poco', title:'Diploma', copy:'Il Diploma è subito dopo FSL · PCTO: vicino, in ordine, visibile dietro alla tappa precedente.'},
-    {p:.326, targetP:.719, active:2, icon:'arrived', stop:true, kicker:'Tappa raggiunta', title:'Diploma', copy:'Maturità conseguita. Ora il percorso si apre verso l’Università di Brescia.'},
-    {p:.719, targetP:.90, active:3, icon:'slightRight', stop:true, kicker:'Tratto principale', title:'Università · Brescia', copy:'La parte universitaria è il segmento più lungo prima dell’obiettivo finale.'},
-    {p:1, targetP:1, active:4, icon:'destination', stop:true, goal:true, kicker:'Obiettivo raggiunto', title:'Estero · America', copy:'Obiettivo finale: portare il percorso costruito verso opportunità all’estero.'}
+  const steps=[
+    {at:0, active:0, ring:'maps-ring-0', icon:'overview', kicker:'Percorso', title:'5 anni di crescita', copy:'Tocca la mappa per avviare la navigazione.', hint:'Tocca la mappa per iniziare'},
+    {at:.035, active:0, ring:null, icon:'straight', kicker:'Partenza', title:'Verso FSL · PCTO', copy:'Il percorso parte dal Cerebotani e si muove verso la prima esperienza concreta.', hint:'Navigazione in corso'},
+    {at:.145, active:1, ring:'maps-ring-1', icon:'arrived', kicker:'Prima tappa', title:'FSL · PCTO', copy:'Esperienza sul campo raggiunta: la linea percorsa resta agganciata al movimento.', hint:'Proseguo verso il diploma'},
+    {at:.245, active:2, ring:null, icon:'straight', kicker:'Tra poco', title:'Verso il Diploma', copy:'Il movimento continua senza scatti, con camera e cursore sincronizzati sul percorso.', hint:'Navigazione in corso'},
+    {at:.326, active:2, ring:'maps-ring-2', icon:'arrived', kicker:'Tappa raggiunta', title:'Diploma', copy:'Maturità conseguita: ora il percorso si apre verso l’Università di Brescia.', hint:'Proseguo verso UniBS'},
+    {at:.52, active:3, ring:null, icon:'slightRight', kicker:'Tratto principale', title:'Verso Università · Brescia', copy:'La camera segue il player in modo continuo, come nella nuova animazione.', hint:'Navigazione in corso'},
+    {at:.719, active:3, ring:'maps-ring-3', icon:'arrived', kicker:'Università', title:'Università · Brescia', copy:'Tappa formativa raggiunta: resta solo il tratto finale verso l’obiettivo estero.', hint:'Proseguo verso l’obiettivo finale'},
+    {at:.88, active:4, ring:null, icon:'straight', kicker:'Ultimo tratto', title:'Verso Estero · America', copy:'Il percorso avanza verso la destinazione finale mantenendo HUD e layout invariati.', hint:'Quasi arrivato'},
+    {at:1, active:4, ring:'maps-ring-4', icon:'destination', kicker:'Obiettivo raggiunto', title:'Estero · America', copy:'Obiettivo finale raggiunto: il percorso costruito si apre a opportunità internazionali.', hint:'Tocca per rivedere la panoramica'}
   ];
-  let vi=-1;
-  let userZoom=1;
-  const last=seq.length-1;
-
-  function total(){ return route.getTotalLength(); }
-  function pt(p){
-    const L=total();
-    const clamped=Math.max(0,Math.min(1,p));
-    return route.getPointAtLength(L*clamped);
-  }
-  function headingFromPath(p,targetP){
-    const a=pt(p);
-    const b=pt(Math.max(0, Math.min(1, targetP!=null ? targetP : p+.012)));
-    return -90 - Math.atan2(b.y-a.y, b.x-a.x)*180/Math.PI;
-  }
-  function flash(el){ /* niente micro-flash ripetuti: movimento più pulito stile Apple */ }
-  function setProgress(p){ progress.style.strokeDashoffset=(1-Math.max(0,Math.min(1,p))).toFixed(4); }
 
   const maneuverPaths={
     overview:'M16 3.2 L25.8 18.2 L18.7 15.4 L18.7 28.8 L13.3 28.8 L13.3 15.4 L6.2 18.2 Z',
@@ -1413,80 +1411,217 @@ syncFinderVisibility();
     slightRight:'M10.6 29.2 V15.1 C10.6 10.5 14.1 7.1 18.7 7.1 H21.1 L17.9 2.4 L22 0 L29 10.6 L22 21.2 L17.9 18.8 L21.1 14.1 H18.7 C18.1 14.1 17.6 14.6 17.6 15.2 V29.2 Z',
     arrived:'M16 3.6 C9.15 3.6 3.6 9.15 3.6 16 C3.6 22.85 9.15 28.4 16 28.4 C22.85 28.4 28.4 22.85 28.4 16 C28.4 9.15 22.85 3.6 16 3.6 Z M14.25 21.1 L8.95 15.8 L11.55 13.2 L14.25 15.9 L20.7 9.45 L23.3 12.05 Z',
     destination:'M16 2.6 C10.35 2.6 5.8 7.15 5.8 12.8 C5.8 20.15 16 29.6 16 29.6 C16 29.6 26.2 20.15 26.2 12.8 C26.2 7.15 21.65 2.6 16 2.6 Z M16 16.55 C13.9 16.55 12.2 14.85 12.2 12.75 C12.2 10.65 13.9 8.95 16 8.95 C18.1 8.95 19.8 10.65 19.8 12.75 C19.8 14.85 18.1 16.55 16 16.55 Z'
-  };  function setManeuverIcon(name){
+  };
+
+  let raf=0;
+  let startTime=0;
+  let running=false;
+  let finished=false;
+  let camera={x:0,y:0,width:1200,height:760};
+  let triggered=new Set();
+  let lastStep=-1;
+  let userZoom=1;
+
+  function setManeuverIcon(name){
     const key=maneuverPaths[name] ? name : 'overview';
     if(iconPath) iconPath.setAttribute('d', maneuverPaths[key]);
     if(icon) icon.dataset.icon=key;
   }
 
-  let renderTimer=0;
-  function beginSmoothMove(){
-    app.classList.add('maps-moving');
-    clearTimeout(renderTimer);
-    renderTimer=setTimeout(()=>app.classList.remove('maps-moving'), PERF.low ? 40 : 1740);
+  function pt(p){
+    return route.getPointAtLength(totalLength*Math.max(0,Math.min(1,p)));
   }
 
-  function render(){
-    const navMode=vi>=0;
-    app.classList.toggle('nav', navMode);
-    beginSmoothMove();
+  function getAngle(a,b){
+    return Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI+90;
+  }
 
-    if(navMode){
-      const v=seq[vi];
-      app.classList.toggle('at-stop', !!v.stop);
-      app.classList.toggle('at-goal', !!v.goal);
-      const pos=pt(v.p);
-      const rot=headingFromPath(v.p, v.targetP);
-      const S=1.68, cx=600, cy=525;
+  function movePuck(point, angle){
+    puck.setAttribute('transform',`translate(${point.x.toFixed(2)} ${point.y.toFixed(2)})`);
+    if(puckRot) puckRot.setAttribute('transform',`rotate(${angle.toFixed(2)})`);
+  }
 
-      // Camera, cursore e tratto completato condividono la stessa p sul path.
-      cam.style.transform=`translate(${cx}px, ${cy}px) rotate(${rot}deg) scale(${S}) translate(${-pos.x}px, ${-pos.y}px)`;
-      puck.setAttribute('transform',`translate(${pos.x.toFixed(2)} ${pos.y.toFixed(2)})`);
-      setProgress(v.p);
+  function setProgressByDistance(distance){
+    progressPath.style.strokeDasharray=`${Math.max(0,distance)} ${totalLength}`;
+    progressPath.style.strokeDashoffset='0';
+  }
 
-      pins.forEach((g,i)=>{
-        const r=g.querySelector('.mw-pin-rot');
-        let t=`rotate(${-rot})`;
-        if(i===v.active && !v.stop) t+=' scale(1.02)';
-        if(r) r.setAttribute('transform',t);
-        g.classList.toggle('on', i===v.active);
-        g.classList.toggle('at-stop', !!v.stop && i===v.active);
-        g.classList.toggle('done', stopP[i] < v.p-0.018 && i!==v.active);
-      });
-      if(puckRot) puckRot.setAttribute('transform',`rotate(${-rot})`);
-
-      kicker.textContent=v.kicker; title.textContent=v.title; copy.textContent=v.copy; setManeuverIcon(v.icon);
-      hint.textContent=vi<last ? 'Tocca per proseguire' : 'Tocca per rivedere la panoramica';
-    } else {
-      app.classList.remove('at-stop','at-goal');
-      cam.style.transform=`translate(600px,380px) scale(${userZoom}) translate(-600px,-380px)`;
-      pins.forEach(g=>{ const r=g.querySelector('.mw-pin-rot'); if(r) r.setAttribute('transform',''); g.classList.remove('on','done','at-stop'); });
-      if(puckRot) puckRot.setAttribute('transform','');
-      const start=pt(0);
-      puck.setAttribute('transform',`translate(${start.x.toFixed(2)} ${start.y.toFixed(2)})`);
-      setProgress(0);
-      kicker.textContent='Percorso'; title.textContent='5 anni di crescita'; copy.textContent='Tocca la mappa per avviare la navigazione.'; setManeuverIcon('overview');
-      hint.textContent='Tocca la mappa per iniziare';
+  function activeStep(progress){
+    let current=steps[0];
+    for(const step of steps){
+      if(progress>=step.at-.0001) current=step;
     }
-    flash(bannerText); flash(hint);
+    return current;
   }
 
-  function advance(){
-    if(vi>=last){ vi=-1; userZoom=1; }
-    else vi++;
-    render();
+  function renderText(step){
+    const index=steps.indexOf(step);
+    if(index===lastStep) return;
+    lastStep=index;
+    if(kicker) kicker.textContent=step.kicker;
+    if(title) title.textContent=step.title;
+    if(copy) copy.textContent=step.copy;
+    if(hint) hint.textContent=step.hint || (running ? 'Navigazione in corso' : 'Tocca la mappa per iniziare');
+    setManeuverIcon(step.icon);
+  }
+
+  function renderPins(activeIndex, progress){
+    pins.forEach((pin,i)=>{
+      pin.classList.toggle('on', i===activeIndex);
+      pin.classList.toggle('done', stopP[i] < progress-.018 && i!==activeIndex);
+    });
+  }
+
+  function triggerCheckpoint(step){
+    if(!step.ring || triggered.has(step.ring)) return;
+    triggered.add(step.ring);
+    const ring=document.getElementById(step.ring);
+    if(ring){
+      ring.classList.remove('active');
+      void ring.getBoundingClientRect();
+      ring.classList.add('active');
+    }
+    app.classList.add('maps-checkpoint');
+    clearTimeout(triggerCheckpoint.t);
+    triggerCheckpoint.t=setTimeout(()=>app.classList.remove('maps-checkpoint'),450);
+  }
+
+  function clamp(v,min,max){ return Math.min(Math.max(v,min),max); }
+  function lerp(a,b,t){ return a+(b-a)*t; }
+  function easeInOutCubic(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+
+  function clampView(view){
+    const width=Math.min(view.width,WORLD.width);
+    const height=Math.min(view.height,WORLD.height);
+    return {
+      x:clamp(view.x,WORLD.x,WORLD.x+WORLD.width-width),
+      y:clamp(view.y,WORLD.y,WORLD.y+WORLD.height-height),
+      width,
+      height
+    };
+  }
+
+  function getTargetCamera(point, elapsed){
+    const rect=stage.getBoundingClientRect();
+    const aspect=Math.max(.5, rect.width/Math.max(1,rect.height));
+    const navWidth=rect.width<620 ? NAV_CAMERA_WIDTH_MOBILE : NAV_CAMERA_WIDTH_DESKTOP;
+    const intro=easeInOutCubic(Math.min(elapsed/cameraIntroDuration,1));
+    const width=lerp(OVERVIEW_CAMERA_WIDTH/userZoom,navWidth,intro);
+    const height=width/aspect;
+    return clampView({
+      x:point.x-width*TARGET_VX,
+      y:point.y-height*TARGET_VY,
+      width,
+      height
+    });
+  }
+
+  function applyCamera(view){
+    mapSvg.setAttribute('viewBox',`${view.x.toFixed(2)} ${view.y.toFixed(2)} ${view.width.toFixed(2)} ${view.height.toFixed(2)}`);
+  }
+
+  function resetCameraToOverview(){
+    const rect=stage.getBoundingClientRect();
+    const aspect=Math.max(.5, rect.width/Math.max(1,rect.height));
+    const width=OVERVIEW_CAMERA_WIDTH/userZoom;
+    const height=width/aspect;
+    camera=clampView({x:600-width/2,y:380-height/2,width,height});
+    applyCamera(camera);
+  }
+
+  function resetOverview(){
+    cancelAnimationFrame(raf);
+    running=false;
+    finished=false;
+    startTime=0;
+    triggered.clear();
+    lastStep=-1;
+    app.classList.remove('nav','at-stop','at-goal','maps-checkpoint','maps-moving');
+    document.querySelectorAll('.mw-checkpoint-ring').forEach(r=>r.classList.remove('active'));
+    const start=pt(0);
+    movePuck(start, getAngle(start, pt(.01)));
+    setProgressByDistance(0);
+    resetCameraToOverview();
+    renderText(steps[0]);
+    renderPins(0,0);
+  }
+
+  function startNavigation(){
+    if(running) return;
+    if(finished){ resetOverview(); return; }
+    running=true;
+    startTime=0;
+    triggered.clear();
+    lastStep=-1;
+    app.classList.add('nav','maps-moving');
+    const start=pt(0);
+    camera=getTargetCamera(start,0);
+    applyCamera(camera);
+    raf=requestAnimationFrame(animate);
+  }
+
+  function animate(timestamp){
+    if(!startTime) startTime=timestamp;
+    const elapsed=timestamp-startTime;
+    const raw=Math.min(elapsed/duration,1);
+    const progress=easeInOutCubic(raw);
+    const distance=progress*totalLength;
+    const point=route.getPointAtLength(distance);
+    const next=route.getPointAtLength(Math.min(distance+3,totalLength));
+    const angle=getAngle(point,next);
+    const step=activeStep(progress);
+
+    movePuck(point,angle);
+    setProgressByDistance(distance);
+
+    const target=getTargetCamera(point,elapsed);
+    camera.x=lerp(camera.x,target.x,CAMERA_SMOOTHNESS);
+    camera.y=lerp(camera.y,target.y,CAMERA_SMOOTHNESS);
+    camera.width=lerp(camera.width,target.width,CAMERA_SMOOTHNESS);
+    camera.height=lerp(camera.height,target.height,CAMERA_SMOOTHNESS);
+    applyCamera(camera);
+
+    app.classList.toggle('at-stop', !!step.ring && progress>0);
+    app.classList.toggle('at-goal', progress>.985);
+    renderText(step);
+    renderPins(step.active,progress);
+    for(const item of steps){
+      if(progress>=item.at-.0001) triggerCheckpoint(item);
+    }
+
+    if(raw<1){
+      raf=requestAnimationFrame(animate);
+    }else{
+      running=false;
+      finished=true;
+      app.classList.remove('maps-moving');
+      app.classList.add('at-goal');
+      renderText(steps[steps.length-1]);
+      renderPins(4,1);
+      setProgressByDistance(totalLength);
+      if(hint) hint.textContent='Tocca per rivedere la panoramica';
+    }
   }
 
   stage.addEventListener('click', e=>{
-    const z=e.target.closest('[data-maps-zoom]');
-    if(z){
-      if(vi<0){ userZoom=Math.max(1,Math.min(1.6,userZoom+(z.dataset.mapsZoom==='in'?.14:-.14))); render(); }
+    const zoom=e.target.closest('[data-maps-zoom]');
+    if(zoom){
+      if(!running && !finished){
+        userZoom=Math.max(1,Math.min(1.6,userZoom+(zoom.dataset.mapsZoom==='in'?.14:-.14)));
+        resetCameraToOverview();
+      }
       return;
     }
-    advance();
+    startNavigation();
     try{ sndOpen&&sndOpen(); }catch(err){}
   });
 
-  render();
+  window.addEventListener('resize',()=>{
+    if(running) return;
+    resetCameraToOverview();
+  });
+
+  progressPath.style.strokeDasharray=`0 ${totalLength}`;
+  resetOverview();
 })();
 

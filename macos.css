@@ -3728,3 +3728,36 @@ body.login-screen.video-loading::after{
   background:url("assets/optimized/bg.webp") center / cover no-repeat;
   opacity:.28;
 }
+
+/* ============================================================
+   Maps animation v2 — neutral dark map, HUD esterno invariato
+   ============================================================ */
+.mw-map-wrap{
+  perspective:1200px;
+  background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.035),transparent 45%),linear-gradient(135deg,#0b0d10,#12151a 48%,#090b0e)!important;
+}
+.maps-map{
+  transform-origin:center center;
+  transform-style:preserve-3d;
+  transition:transform 1.35s cubic-bezier(.2,.9,.2,1),filter 1.35s ease!important;
+  filter:saturate(.98) contrast(1.02);
+  will-change:transform,filter;
+}
+.maps-app.nav .maps-map{
+  transform:scale(1.08) rotateX(52deg) rotateZ(-19deg) translateY(34px);
+  filter:saturate(1) contrast(1.04);
+}
+.maps-app.maps-checkpoint .maps-map{filter:saturate(1.05) contrast(1.08) brightness(1.07)}
+#maps-cam{transform:none!important;transition:none!important;will-change:auto!important}
+#maps-puck,#maps-puck .puck-rot,#maps-route-progress,.mw-pin-rot{transition:none!important;will-change:transform}
+.mw-land{fill:#171a1f}
+.mw-green-blob{fill:#17271f;opacity:.92}.mw-green-blob.soft{opacity:.62}
+.mw-soft-road{fill:none;stroke:rgba(255,255,255,.035);stroke-width:42;stroke-linecap:round;opacity:.62}.mw-soft-road.thin{stroke-width:24;opacity:.42}
+.mw-route-glow{fill:none;stroke:rgba(10,132,255,.24);stroke-width:28;stroke-linecap:round;stroke-linejoin:round;filter:url(#maps-route-shadow)}
+.mw-route{fill:none;stroke:#0a84ff;stroke-width:10;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(10,132,255,.48))}
+.mw-route-progress{fill:none;stroke:#64d2ff;stroke-width:12;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:0 99999;filter:drop-shadow(0 0 12px rgba(100,210,255,.58))}
+.mw-city-label{font-size:21px;font-weight:760;fill:rgba(245,245,247,.72);paint-order:stroke;stroke:rgba(11,13,16,.88);stroke-width:6px;stroke-linejoin:round;letter-spacing:-.02em;filter:url(#maps-caption-shadow)}
+.maps-poi{filter:drop-shadow(0 8px 16px rgba(0,0,0,.40));transition:opacity .3s ease,filter .3s ease}.maps-poi-circle{fill:#171c24;stroke:rgba(255,255,255,.16);stroke-width:2}.maps-poi-number{font-size:15px;font-weight:850;fill:#64d2ff;text-anchor:middle;dominant-baseline:central}.maps-poi.dest .maps-poi-circle{fill:#201b1d;stroke:rgba(255,95,87,.55)}.maps-poi.on .maps-poi-circle{stroke:#64d2ff;stroke-width:3}.maps-poi.done{opacity:.72}.maps-poi.done .maps-poi-number{fill:rgba(245,245,247,.54)}
+.mw-checkpoint-ring{fill:none;stroke:#64d2ff;stroke-width:5;opacity:0;transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 10px rgba(100,210,255,.68))}.mw-checkpoint-ring.active{animation:mapsCheckpointPulse 1.25s ease-out forwards}@keyframes mapsCheckpointPulse{0%{opacity:.82;transform:scale(.65)}100%{opacity:0;transform:scale(2.7)}}
+@media(max-width:860px){.maps-app.nav .maps-map{transform:scale(1.06) rotateX(46deg) rotateZ(-16deg) translateY(22px)}}
+@media(prefers-reduced-motion:reduce){.maps-map{transition-duration:.001s!important}.mw-checkpoint-ring.active{animation-duration:.001s!important}}
