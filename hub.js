@@ -1250,8 +1250,15 @@ function ensureNormalRect(win){
 }
 function syncFinderVisibility(){
   if(document.body.classList.contains('spot-gallery-active')) return;
-  if(typeof dockShow === 'function' && !hasFullscreenApp()) dockShow();
-  if(typeof syncDock === 'function') syncDock();
+  const finder = document.getElementById(FINDER_ID);
+  if(!finder) return;
+  if(!hasFullscreenApp()){
+    finder.classList.remove('closing');
+    if(!finder.classList.contains('open')) finder.classList.add('open');
+    if(!finder.style.zIndex) focusWin(finder);
+    syncDock();
+    if(typeof dockShow === 'function') dockShow();
+  }
 }
 function fitWin(win){
   if(!win || win.classList.contains('maxi')) return;
@@ -1278,6 +1285,14 @@ function openWin(id){
 }
 function closeWin(win){
   if(!win) return;
+  if(isFinder(win) && !hasFullscreenApp()){
+    win.classList.remove('closing');
+    win.classList.add('open');
+    focusWin(win);
+    syncDock();
+    if(typeof dockShow === 'function') dockShow();
+    return;
+  }
   sndClose();
   if(!win.classList.contains('maxi')) captureNormal(win);
   win.classList.add('closing');
@@ -1293,6 +1308,7 @@ function closeWin(win){
 }
 function closeAll(){
   document.querySelectorAll('.win.open').forEach((w,i)=>{
+    if(isFinder(w)) return;
     setTimeout(()=>closeWin(w), i*60);
   });
   setTimeout(syncFinderVisibility, 340);
@@ -1370,17 +1386,17 @@ syncFinderVisibility();
   const TARGET_VX=.50, TARGET_VY=.63, CAMERA_SMOOTHNESS=.11;
   const stops=[
     {x:180,y:650,id:'ring-0',title:'Cerebotani',sub:'Partenza da IIS Luigi Cerebotani'},
-    {x:760,y:520,id:'ring-1',title:'CS Metal Europe',sub:'Tappa a Bedizzole raggiunta. Clicca per proseguire.'},
-    {x:1320,y:360,id:'ring-2',title:'Diploma',sub:'Tappa Diploma raggiunta. Clicca per proseguire.'},
-    {x:1900,y:220,id:'ring-3',title:'UniBS',sub:'Tappa UniBS raggiunta. La strada continua oltre.'}
+    {x:560,y:525,id:'ring-1',title:'CS Metal Europe',sub:'Tappa a Bedizzole raggiunta. Clicca per proseguire.'},
+    {x:870,y:390,id:'ring-2',title:'Diploma',sub:'Tappa Diploma raggiunta. Clicca per proseguire.'},
+    {x:1220,y:250,id:'ring-3',title:'UniBS',sub:'Tappa UniBS raggiunta. La strada continua oltre.'}
   ];
   const photoPins=[
-    {x:320,y:626,id:'photoPin-0'},
-    {x:600,y:550,id:'photoPin-1'},
-    {x:850,y:495,id:'photoPin-2'},
-    {x:1080,y:430,id:'photoPin-3'},
-    {x:1240,y:382,id:'photoPin-4'},
-    {x:2100,y:176,id:'photoPin-5'}
+    {x:260,y:620,id:'photoPin-0'},
+    {x:470,y:555,id:'photoPin-1'},
+    {x:625,y:498,id:'photoPin-2'},
+    {x:805,y:428,id:'photoPin-3'},
+    {x:1035,y:305,id:'photoPin-4'},
+    {x:1365,y:222,id:'photoPin-5'}
   ];
   let camera={x:0,y:0,width:1400,height:900};
   let currentStop=0,currentProgress=0,isRunning=false,finalPanoramaDone=false,raf=null;
@@ -1414,7 +1430,7 @@ syncFinderVisibility();
   function moveCar(point,angle){car.setAttribute('transform',`translate(${point.x} ${point.y}) rotate(${angle})`);}
   function updateProgress(distance){progressPath.style.strokeDasharray=`${distance} ${totalLength}`;}
   function updatePhotoPinsByDistance(distance){for(const pin of photoPins){if(distance>=pin.distance&&!triggeredPhotoPins.has(pin.id)){triggeredPhotoPins.add(pin.id);const el=root.querySelector(`#${pin.id}`);if(el){el.classList.remove('visible');void el.offsetWidth;el.classList.add('visible');}}}}
-  function updateFloatingPhotoPositions(){const appRect=root.getBoundingClientRect(),matrix=mapSvg.getScreenCTM();if(!matrix)return;for(const pin of photoPins){const el=root.querySelector(`#${pin.id}`);if(!el)continue;const projected=svgPointToScreen(pin.x,pin.y,matrix);el.style.left=`${projected.x-appRect.left}px`;el.style.top=`${projected.y-appRect.top}px`;}}
+  function updateFloatingPhotoPositions(){const appRect=root.getBoundingClientRect(),matrix=mapSvg.getScreenCTM();if(!matrix)return;for(const pin of photoPins){const el=root.querySelector(`#${pin.id}`);if(!el)continue;const routePoint=routePath.getPointAtLength((pin.p||0)*totalLength);const projected=svgPointToScreen(routePoint.x,routePoint.y,matrix);el.style.left=`${projected.x-appRect.left}px`;el.style.top=`${projected.y-appRect.top}px`;}}
   function svgPointToScreen(x,y,matrix){const point=mapSvg.createSVGPoint();point.x=x;point.y=y;const t=point.matrixTransform(matrix);return{x:t.x,y:t.y};}
   function getAngle(p1,p2){return Math.atan2(p2.y-p1.y,p2.x-p1.x)*180/Math.PI+90;}
   function smootherstep(t){t=clamp(t,0,1);return t*t*t*(t*(t*6-15)+10);}
