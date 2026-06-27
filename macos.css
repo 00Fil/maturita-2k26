@@ -4381,3 +4381,41 @@ body.login-screen.video-loading::after{
   58%{opacity:1;transform:scale(1.01);filter:brightness(1.08) saturate(1.10)!important;}
   100%{opacity:1;transform:scale(1);filter:brightness(1) saturate(1.04)!important;}
 }
+
+
+/* Maps natural motion no state shift */
+.maps-reference-shell.nav .maps-ref,
+.maps-reference-shell.maps-moving .maps-ref,
+.maps-reference-shell.maps-paused .maps-ref,
+.maps-reference-shell.maps-panorama-return .maps-ref,
+.maps-ref{transform:none!important;}
+.maps-reference-shell.nav .maps-ref .map-stage,
+.maps-reference-shell.maps-moving .maps-ref .map-stage,
+.maps-reference-shell.maps-paused .maps-ref .map-stage,
+.maps-reference-shell.maps-panorama-return .maps-ref .map-stage,
+.maps-ref .map-stage{transform:none!important;transition:none!important;inset:-38%!important;}
+.maps-reference-shell.nav .map-tilt,
+.maps-reference-shell.maps-moving .map-tilt,
+.maps-reference-shell.maps-paused .map-tilt,
+.maps-reference-shell.maps-panorama-return .map-tilt,
+.maps-ref .map-tilt,
+.maps-ref .map-tilt.navigation{transform:scale(1.10) rotateX(52deg) rotateZ(-19deg) translateY(64px)!important;transition:none!important;transform-origin:center center!important;}
+.maps-reference-shell.maps-moving .maps-click-cue{opacity:.58!important;transition:opacity .42s ease!important;}
+.maps-reference-shell.maps-paused .maps-click-cue{opacity:.96!important;transition:opacity .42s ease!important;}
+
+
+/* Maps faster natural motion + restored arrival pulse */
+.maps-ref .checkpoint-ring{
+  fill:none!important;
+  stroke:#64d2ff!important;
+  stroke-width:5!important;
+  opacity:0!important;
+  transform-box:fill-box!important;
+  transform-origin:center!important;
+  filter:drop-shadow(0 0 12px rgba(100,210,255,.78))!important;
+}
+.maps-ref .checkpoint-ring.active{animation:checkpointPulseFast 1.05s cubic-bezier(.18,.82,.22,1) forwards!important;}
+@keyframes checkpointPulseFast{0%{opacity:.9;transform:scale(.62)}72%{opacity:.34;transform:scale(2.05)}100%{opacity:0;transform:scale(2.82)}}
+.maps-ref .map-tilt.checkpoint-flash{filter:saturate(1.08) contrast(1.08) brightness(1.08)!important;}
+.maps-reference-shell.maps-moving .maps-click-cue{opacity:.5!important;transition:opacity .22s ease!important;}
+.maps-reference-shell.maps-paused .maps-click-cue{opacity:.96!important;transition:opacity .22s ease!important;}

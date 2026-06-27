@@ -1409,50 +1409,46 @@ syncFinderVisibility();
     isRunning=true;finalPanoramaDone=false;
     shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');mapTilt.classList.add('navigation');
     if(cue)cue.textContent='Navigazione in corso…';updateSidebar(currentStop,'Percorso espositivo',`Verso ${stops[targetStop].title}: ${stops[targetStop].sub}`);
-    const segmentDuration=Math.max(5600,Math.min(13800,26000*delta*1.45)),t0=performance.now(),prev=new Set(triggeredCheckpoints);
+    const segmentDuration=Math.max(3000,Math.min(7200,13200*delta*1.18)),t0=performance.now(),prev=new Set(triggeredCheckpoints);
     cancelAnimationFrame(raf);
-    const tick=now=>{const raw=Math.min((now-t0)/segmentDuration,1);const local=travelProgress(raw,fromProgress,toProgress);currentProgress=lerp(fromProgress,toProgress,local);renderMovingPoint(prev,true);if(raw<1)raf=requestAnimationFrame(tick);else{currentProgress=toProgress;renderMovingPoint(prev,true);isRunning=false;currentStop=targetStop;settleAtStop(targetStop);}};
+    const tick=now=>{const raw=Math.min((now-t0)/segmentDuration,1);const local=travelProgress(raw,fromProgress,toProgress);currentProgress=lerp(fromProgress,toProgress,local);renderMovingPoint(prev,true);if(raw<1)raf=requestAnimationFrame(tick);else{currentProgress=toProgress;renderMovingPoint(prev,true);isRunning=false;currentStop=targetStop;settleAtStop(targetStop,true);}};
     raf=requestAnimationFrame(tick);
   }
   function animateFinalSequence(){
     if(isRunning)return;isRunning=true;finalPanoramaDone=false;
     shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');mapTilt.classList.add('navigation');
     if(cue)cue.textContent='La strada continua…';updateSidebar(currentStop,'Brescia · UniBS','Proseguimento degli studi: ingegneria informatica presso UniBS.');
-    const fromProgress=currentProgress,playerEnd=Math.min(fromProgress+.36,.82),cameraEnd=Math.min(fromProgress+.165,.58),duration=5700,t0=performance.now(),prev=new Set(triggeredCheckpoints);
+    const fromProgress=currentProgress,playerEnd=Math.min(fromProgress+.34,.94),duration=4100,t0=performance.now(),prev=new Set(triggeredCheckpoints),startCamera={...camera};
     cancelAnimationFrame(raf);
     const tick=now=>{
       const raw=Math.min((now-t0)/duration,1);
-      const playerLocal=easeInCubic(raw);
-      const cameraLocal=smootherstep(raw);
+      const playerLocal=easeInQuart(raw);
+      const panoLocal=easeInOutCubic(raw);
       currentProgress=lerp(fromProgress,playerEnd,playerLocal);
-      const cameraProgress=lerp(fromProgress,cameraEnd,cameraLocal);
       const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+4,totalLength));
-      moveCar(pt,getAngle(pt,next));updateProgress(distance);centerCameraOnProgress(cameraProgress,true);updatePhotoPinsByDistance(distance);updateCheckpoints(currentProgress,prev);updateFloatingPhotoPositions();
-      if(raw<1)raf=requestAnimationFrame(tick);else{animateReturnToPanorama();}
+      moveCar(pt,getAngle(pt,next));
+      updateProgress(distance);
+      camera={x:lerp(startCamera.x,PANORAMA.x,panoLocal),y:lerp(startCamera.y,PANORAMA.y,panoLocal),width:lerp(startCamera.width,PANORAMA.width,panoLocal),height:lerp(startCamera.height,PANORAMA.height,panoLocal)};
+      applyCamera(camera);
+      updatePhotoPinsByDistance(distance);updateCheckpoints(currentProgress,prev);updateFloatingPhotoPositions();
+      if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;finalPanoramaDone=true;shell.classList.remove('maps-moving','maps-final-wait');shell.classList.add('maps-panorama-return');if(cue)cue.textContent='Tocca per resettare';updateSidebar(stops.length-1,'Panoramica completa','Vista completa del percorso: da Lonato al proseguimento dopo UniBS.');nextButtons.forEach(btn=>btn.textContent='Reset');updateStepStates(stops.length-1);}
     };
     raf=requestAnimationFrame(tick);
   }
-  function animateReturnToPanorama(){
-    shell.classList.remove('maps-moving','maps-paused','at-goal');shell.classList.add('maps-panorama-return');
-    if(cue)cue.textContent='Ritorno alla panoramica…';updateSidebar(stops.length-1,'Sintesi conclusiva','Dal percorso scolastico alla scelta universitaria.');
-    const start={...camera},duration=2200,t0=performance.now();
-    cancelAnimationFrame(raf);
-    const tick=now=>{const raw=Math.min((now-t0)/duration,1),t=smootherstep(raw);camera={x:lerp(start.x,PANORAMA.x,t),y:lerp(start.y,PANORAMA.y,t),width:lerp(start.width,PANORAMA.width,t),height:lerp(start.height,PANORAMA.height,t)};applyCamera(camera);updateFloatingPhotoPositions();if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;finalPanoramaDone=true;shell.classList.remove('maps-moving','maps-final-wait');shell.classList.add('maps-panorama-return');if(cue)cue.textContent='Tocca per resettare';updateSidebar(stops.length-1,'Panoramica completa','Vista completa del percorso: da Lonato al proseguimento dopo UniBS.');nextButtons.forEach(btn=>btn.textContent='Reset');updateStepStates(stops.length-1);}};
-    raf=requestAnimationFrame(tick);
-  }
-  function renderMovingPoint(previous,followCamera){const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+4,totalLength));moveCar(pt,getAngle(pt,next));updateProgress(distance);if(followCamera)centerCameraOnPoint(pt,true);updatePhotoPinsByDistance(distance);updateCheckpoints(currentProgress,previous);updateFloatingPhotoPositions();}
+  function renderMovingPoint(previous,followCamera){const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+4,totalLength));moveCar(pt,getAngle(pt,next));updateProgress(distance);if(followCamera)centerCameraOnPoint(pt,false);updatePhotoPinsByDistance(distance);updateCheckpoints(currentProgress,previous);updateFloatingPhotoPositions();}
   function centerCameraOnProgress(progress,instant){const pt=routePath.getPointAtLength(progress*totalLength);centerCameraOnPoint(pt,instant);}
-  function centerCameraOnPoint(point,instant){const target=viewForPoint(point);camera=target;applyCamera(camera);}
+  function centerCameraOnPoint(point,instant){camera=viewForPoint(point);applyCamera(camera);}
   function viewForPoint(point){const rect=root.getBoundingClientRect(),aspect=rect.width/Math.max(1,rect.height),width=CAMERA_WIDTH,height=width/aspect;return clampViewBox({x:point.x-width/2,y:point.y-height/2,width,height});}
-  function travelProgress(raw,fromProgress,toProgress){return gaussianPhotoProgress(smootherstep(raw),fromProgress,toProgress);}
+  function travelProgress(raw,fromProgress,toProgress){return easeInOutSine(raw);}
   function gaussianPhotoProgress(raw,fromProgress,toProgress){const start=Math.min(fromProgress,toProgress),end=Math.max(fromProgress,toProgress),span=Math.max(.0001,end-start),centers=photoPins.map(p=>(p.p-start)/span).filter(c=>c>.04&&c<.96);if(!centers.length)return raw;const steps=260;const speedAt=u=>{let slow=0;for(const c of centers)slow=Math.max(slow,Math.exp(-Math.pow((u-c)/PHOTO_SLOW_SIGMA,2)/2));return Math.max(.42,1-PHOTO_SLOW_STRENGTH*slow);};let total=0,partial=0,prev=0,prevSpeed=speedAt(0);for(let i=1;i<=steps;i++){const u=i/steps,sp=speedAt(u),area=(prevSpeed+sp)*(u-prev)/2;total+=area;if(raw>=u)partial+=area;else if(raw>prev){const local=(raw-prev)/(u-prev),interp=prevSpeed+(sp-prevSpeed)*local;partial+=(prevSpeed+interp)*(raw-prev)/2;}prev=u;prevSpeed=sp;}return Math.min(1,Math.max(0,partial/total));}
-  function settleAtStop(index){updateFloatingPhotoPositions();updateSidebar(index);updateStepStates(index);shell.classList.add('nav','maps-paused');shell.classList.remove('maps-moving','maps-panorama-return','maps-final-wait');triggerCheckpoint(stops[index].id);if(cue)cue.textContent=index>=stops.length-1?'Tocca per il finale':'Tocca per proseguire';nextButtons.forEach(btn=>btn.textContent=index>=stops.length-1?'Continua':(index===0?'Avvia':'Prosegui'));}
+  function settleAtStop(index,forcePulse=false){updateFloatingPhotoPositions();updateSidebar(index);updateStepStates(index);shell.classList.add('nav','maps-paused');shell.classList.remove('maps-moving','maps-panorama-return','maps-final-wait');if(forcePulse)pulseCheckpoint(stops[index].id);else triggerCheckpoint(stops[index].id);if(cue)cue.textContent=index>=stops.length-1?'Tocca per il finale':'Tocca per proseguire';nextButtons.forEach(btn=>btn.textContent=index>=stops.length-1?'Continua':(index===0?'Avvia':'Prosegui'));}
   function resetToStop(index,instantCamera){currentStop=index;currentProgress=stops[index].p;finalPanoramaDone=false;const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+4,totalLength));moveCar(pt,getAngle(pt,next));updateProgress(distance);centerCameraOnPoint(pt,true);updateFloatingPhotoPositions();updateSidebar(index);updateStepStates(index);mapTilt.classList.add('navigation');if(index===0){shell.classList.remove('nav','maps-paused','maps-moving','at-goal','maps-panorama-return','maps-final-wait');if(cue)cue.textContent='Tocca la mappa per partire';}else{shell.classList.add('nav','maps-paused');shell.classList.remove('maps-moving','maps-panorama-return','maps-final-wait');triggerCheckpoint(stops[index].id);if(cue)cue.textContent=index>=stops.length-1?'Tocca per il finale':'Tocca per proseguire';}nextButtons.forEach(btn=>btn.textContent=index>=stops.length-1?'Continua':(index===0?'Avvia':'Prosegui'));}
   function resetNavigation(){cancelAnimationFrame(raf);isRunning=false;finalPanoramaDone=false;triggeredCheckpoints.clear();triggeredPhotoPins.clear();for(const timers of fadeTimers.values())timers.forEach(t=>clearTimeout(t));fadeTimers.clear();root.querySelectorAll('.checkpoint-ring').forEach(r=>r.classList.remove('active'));root.querySelectorAll('.floating-photo-pin,.map-photo-tile').forEach(p=>p.classList.remove('visible','fading','tile-pop'));progressPath.style.strokeDasharray=`0 ${totalLength}`;resetToStop(0,true);try{sndClick&&sndClick();}catch(err){}}
   function updateSidebar(index,titleOverride,subOverride){const stop=stops[index];if(sideTitle)sideTitle.textContent=titleOverride||stop.title;if(sideSub)sideSub.textContent=subOverride||stop.sub;updateStepStates(index);}
   function updateStepStates(index){sideSteps.forEach((btn,i)=>{btn.classList.toggle('active',i===index&&!finalPanoramaDone);btn.classList.toggle('done',i<index||finalPanoramaDone);});}
   function updateCheckpoints(progress,previous){stops.forEach(stop=>{if(progress>=stop.p-.002&&stop.id&&!triggeredCheckpoints.has(stop.id)&&!previous.has(stop.id))triggerCheckpoint(stop.id);});}
-  function triggerCheckpoint(ringId){if(!ringId||triggeredCheckpoints.has(ringId))return;triggeredCheckpoints.add(ringId);const ring=root.querySelector(`#${ringId}`);if(ring){ring.classList.remove('active');void ring.getBoundingClientRect();ring.classList.add('active');}mapTilt.classList.add('checkpoint-flash');setTimeout(()=>mapTilt.classList.remove('checkpoint-flash'),450);}
+  function triggerCheckpoint(ringId){if(!ringId||triggeredCheckpoints.has(ringId))return;triggeredCheckpoints.add(ringId);pulseCheckpoint(ringId);}
+  function pulseCheckpoint(ringId){const ring=root.querySelector(`#${ringId}`);if(ring){ring.classList.remove('active');void ring.getBoundingClientRect();ring.classList.add('active');}mapTilt.classList.add('checkpoint-flash');setTimeout(()=>mapTilt.classList.remove('checkpoint-flash'),520);}
   function moveCar(point,angle){car.setAttribute('transform',`translate(${point.x} ${point.y}) rotate(${angle})`);}
   function updateProgress(distance){progressPath.style.strokeDasharray=`${distance} ${totalLength}`;}
   function updatePhotoPinsByDistance(distance){for(const pin of photoPins){if(distance>=pin.distance&&!triggeredPhotoPins.has(pin.id)){triggeredPhotoPins.add(pin.id);const el=root.querySelector(`#${pin.id}`);if(el){el.classList.remove('visible','fading','tile-pop');void el.getBoundingClientRect();el.classList.add('visible','tile-pop');if(!el.classList.contains('map-photo-tile')){const timers=[setTimeout(()=>el.classList.add('fading'),2800),setTimeout(()=>el.classList.remove('visible','fading'),4050)];fadeTimers.set(pin.id,timers);}}}}}
@@ -1463,6 +1459,10 @@ syncFinderVisibility();
   function clampViewBox(view){const width=Math.min(view.width,WORLD.width),height=Math.min(view.height,WORLD.height);return{x:clamp(view.x,WORLD.x,WORLD.x+WORLD.width-width),y:clamp(view.y,WORLD.y,WORLD.y+WORLD.height-height),width,height};}
   function smootherstep(t){t=clamp(t,0,1);return t*t*t*(t*(t*6-15)+10);}
   function easeInCubic(t){t=clamp(t,0,1);return t*t*t;}
+  function easeInQuart(t){t=clamp(t,0,1);return t*t*t*t;}
+  function easeOutCubic(t){t=clamp(t,0,1);return 1-Math.pow(1-t,3);}
+  function easeInOutCubic(t){t=clamp(t,0,1);return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+  function easeInOutSine(t){t=clamp(t,0,1);return -(Math.cos(Math.PI*t)-1)/2;}
   function lerp(a,b,t){return a+(b-a)*t;}
   function clamp(v,min,max){return Math.min(Math.max(v,min),max);}
 })();
