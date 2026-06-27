@@ -286,8 +286,8 @@ function appicon(string $file, string $remote): string {
 
       <div class="mw-routecard maps-progress-card" aria-label="Stato navigazione">
         <div class="mw-rc-main">
-          <b data-maps-side-title>Esame orale</b>
-          <span data-maps-side-sub>Traccia dei 10 minuti iniziali: scuola, FSL, maturità e università.</span>
+          <b data-maps-side-title>Da dove parto</b>
+          <span data-maps-side-sub>Il percorso inizia al Cerebotani di Lonato: qui nasce la base tecnica da cui costruisco tutto il racconto.</span>
         </div>
         <div class="mw-rc-info" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8a9.2 9.2 0 1 0 0 18.4 9.2 9.2 0 0 0 0-18.4Zm.8 4.2v5.1l3.5 2.1-.9 1.5-4.4-2.6V7h1.8Z"/></svg></div>
       </div>

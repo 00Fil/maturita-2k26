@@ -5002,3 +5002,41 @@ body.login-screen.video-loading::after{
 }
 .maps-side-actions button:active{transform:scale(.99)!important;}
 .maps-reference-shell.maps-moving .maps-side-primary{opacity:.55!important;filter:none!important;}
+
+
+/* Maps final clean dots no snap narrative */
+.maps-ref-side .mw-pt,
+.maps-ref-side .mw-pt.start,
+.maps-ref-side .mw-pt.mid,
+.maps-ref-side .mw-pt.end,
+.maps-ref-side .mw-endpoint.active .mw-pt,
+.maps-ref-side .mw-endpoint.done .mw-pt{
+  background:#007aff!important;
+  border:1.5px solid rgba(255,255,255,.96)!important;
+  box-shadow:none!important;
+  filter:none!important;
+  outline:0!important;
+}
+.maps-ref-side .mw-pt::before,
+.maps-ref-side .mw-pt::after{display:none!important;content:none!important;}
+.maps-ref-side .mw-pt svg{filter:none!important;}
+.maps-ref-side .mw-route-line{background:rgba(255,255,255,.20)!important;box-shadow:none!important;filter:none!important;}
+.maps-ref .checkpoint-ring{filter:none!important;stroke:rgba(100,210,255,.72)!important;}
+.maps-ref .map-tilt.checkpoint-flash{filter:none!important;}
+.maps-reference-shell.nav .maps-ref,
+.maps-reference-shell.maps-moving .maps-ref,
+.maps-reference-shell.maps-paused .maps-ref,
+.maps-reference-shell.maps-panorama-return .maps-ref,
+.maps-reference-shell.nav .maps-ref .map-stage,
+.maps-reference-shell.maps-moving .maps-ref .map-stage,
+.maps-reference-shell.maps-paused .maps-ref .map-stage,
+.maps-reference-shell.maps-panorama-return .maps-ref .map-stage,
+.maps-reference-shell.nav .map-tilt,
+.maps-reference-shell.maps-moving .map-tilt,
+.maps-reference-shell.maps-paused .map-tilt,
+.maps-reference-shell.maps-panorama-return .map-tilt{
+  transition:none!important;
+}
+.maps-ref-side .maps-progress-card [data-maps-side-title]{font-size:14.8px!important;line-height:1.12!important;font-weight:760!important;}
+.maps-ref-side .maps-progress-card [data-maps-side-sub]{font-size:12px!important;line-height:1.42!important;font-weight:520!important;color:rgba(245,245,247,.64)!important;}
+.maps-ref-side .maps-progress-card{padding:14px 13px!important;}

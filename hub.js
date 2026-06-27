@@ -1385,6 +1385,15 @@ syncFinderVisibility();
     {x:1600,y:576,id:'photoPin-8'},
     {x:2240,y:320,id:'photoPin-9'}
   ];
+  const storyCards=[
+    {title:'Da dove parto',sub:'Il percorso inizia al Cerebotani di Lonato: qui nasce la base tecnica da cui costruisco tutto il racconto.'},
+    {title:'L’esperienza sul campo',sub:'A Bedizzole porto la scuola dentro l’azienda: il periodo in CS Metal Europe diventa il primo vero contatto con il lavoro.'},
+    {title:'Il passaggio decisivo',sub:'Il ritorno a Lonato rappresenta la maturità: chiudo un ciclo e trasformo quello che ho imparato in una direzione più chiara.'},
+    {title:'La direzione futura',sub:'Brescia e UniBS segnano il passo successivo: continuare con ingegneria informatica e dare continuità al percorso.'}
+  ];
+  const movingCopy={title:'Collegamento tra le tappe',sub:'La mappa accompagna il racconto da un passaggio all’altro, mantenendo il filo tra scuola, esperienza, esame e scelta universitaria.'};
+  const finalCopy={title:'Il percorso continua',sub:'Dopo UniBS la strada prosegue: il player esce dalla vista per lasciare spazio alla panoramica conclusiva del racconto.'};
+  const panoramaCopy={title:'Sintesi del percorso',sub:'La panoramica riunisce le quattro tappe principali e mostra il percorso completo: partenza, esperienza, maturità e futuro.'};
   let camera={x:0,y:0,width:CAMERA_WIDTH,height:900};
   let currentStop=0,currentProgress=0,isRunning=false,finalPanoramaDone=false,raf=null;
   const triggeredCheckpoints=new Set(), triggeredPhotoPins=new Set(), fadeTimers=new Map();
@@ -1408,16 +1417,16 @@ syncFinderVisibility();
     if(delta<.001){resetToStop(targetStop,false);return;}
     isRunning=true;finalPanoramaDone=false;
     shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');mapTilt.classList.add('navigation');
-    if(cue)cue.textContent='Navigazione in corso…';updateSidebar(currentStop,'Percorso espositivo',`Verso ${stops[targetStop].title}: ${stops[targetStop].sub}`);
+    if(cue)cue.textContent='Navigazione in corso…';updateSidebar(currentStop,movingCopy.title,movingCopy.sub);
     const segmentDuration=Math.max(3000,Math.min(7200,13200*delta*1.18)),t0=performance.now(),prev=new Set(triggeredCheckpoints);
     cancelAnimationFrame(raf);
-    const tick=now=>{const raw=Math.min((now-t0)/segmentDuration,1);const local=travelProgress(raw,fromProgress,toProgress);currentProgress=lerp(fromProgress,toProgress,local);renderMovingPoint(prev,true);if(raw<1)raf=requestAnimationFrame(tick);else{currentProgress=toProgress;renderMovingPoint(prev,true);isRunning=false;currentStop=targetStop;settleAtStop(targetStop,true);}};
+    const tick=now=>{const raw=Math.min((now-t0)/segmentDuration,1);const local=travelProgress(raw,fromProgress,toProgress);currentProgress=lerp(fromProgress,toProgress,local);renderMovingPoint(prev,true);if(raw<1)raf=requestAnimationFrame(tick);else{currentProgress=toProgress;const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+4,totalLength));moveCar(pt,getAngle(pt,next));updateProgress(distance);updatePhotoPinsByDistance(distance);updateCheckpoints(currentProgress,prev);updateFloatingPhotoPositions();isRunning=false;currentStop=targetStop;settleAtStop(targetStop,true);}};
     raf=requestAnimationFrame(tick);
   }
   function animateFinalSequence(){
     if(isRunning)return;isRunning=true;finalPanoramaDone=false;
     shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');mapTilt.classList.add('navigation');
-    if(cue)cue.textContent='La strada continua…';updateSidebar(currentStop,'Brescia · UniBS','Proseguimento degli studi: ingegneria informatica presso UniBS.');
+    if(cue)cue.textContent='La strada continua…';updateSidebar(currentStop,finalCopy.title,finalCopy.sub);
     const fromProgress=currentProgress;
     const routeEndProgress=.985;
     const cameraEnd=Math.min(fromProgress+.055,.93);
@@ -1457,7 +1466,7 @@ syncFinderVisibility();
         const raw=Math.min((now-start)/panoramaDuration,1),t=smootherstep(raw);
         camera={x:lerp(startCamera.x,PANORAMA.x,t),y:lerp(startCamera.y,PANORAMA.y,t),width:lerp(startCamera.width,PANORAMA.width,t),height:lerp(startCamera.height,PANORAMA.height,t)};
         applyCamera(camera);updateFloatingPhotoPositions();
-        if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;finalPanoramaDone=true;shell.classList.remove('maps-moving','maps-final-wait');shell.classList.add('maps-panorama-return');if(cue)cue.textContent='Tocca per resettare';updateSidebar(stops.length-1,'Panoramica completa','Vista completa del percorso: da Lonato al proseguimento dopo UniBS.');nextButtons.forEach(btn=>btn.textContent='Reset');updateStepStates(stops.length-1);}
+        if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;finalPanoramaDone=true;shell.classList.remove('maps-moving','maps-final-wait');shell.classList.add('maps-panorama-return');if(cue)cue.textContent='Tocca per resettare';updateSidebar(stops.length-1,panoramaCopy.title,panoramaCopy.sub);nextButtons.forEach(btn=>btn.textContent='Reset');updateStepStates(stops.length-1);}
       };
       raf=requestAnimationFrame(tick);
     };
@@ -1472,7 +1481,7 @@ syncFinderVisibility();
   function settleAtStop(index,forcePulse=false){updateFloatingPhotoPositions();updateSidebar(index);updateStepStates(index);shell.classList.add('nav','maps-paused');shell.classList.remove('maps-moving','maps-panorama-return','maps-final-wait');if(forcePulse)pulseCheckpoint(stops[index].id);else triggerCheckpoint(stops[index].id);if(cue)cue.textContent=index>=stops.length-1?'Tocca per il finale':'Tocca per proseguire';nextButtons.forEach(btn=>btn.textContent=index>=stops.length-1?'Continua':(index===0?'Avvia':'Prosegui'));}
   function resetToStop(index,instantCamera){currentStop=index;currentProgress=stops[index].p;finalPanoramaDone=false;const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+4,totalLength));moveCar(pt,getAngle(pt,next));updateProgress(distance);centerCameraOnPoint(pt,true);updateFloatingPhotoPositions();updateSidebar(index);updateStepStates(index);mapTilt.classList.add('navigation');if(index===0){shell.classList.remove('nav','maps-paused','maps-moving','at-goal','maps-panorama-return','maps-final-wait');if(cue)cue.textContent='Tocca la mappa per partire';}else{shell.classList.add('nav','maps-paused');shell.classList.remove('maps-moving','maps-panorama-return','maps-final-wait');triggerCheckpoint(stops[index].id);if(cue)cue.textContent=index>=stops.length-1?'Tocca per il finale':'Tocca per proseguire';}nextButtons.forEach(btn=>btn.textContent=index>=stops.length-1?'Continua':(index===0?'Avvia':'Prosegui'));}
   function resetNavigation(){cancelAnimationFrame(raf);isRunning=false;finalPanoramaDone=false;triggeredCheckpoints.clear();triggeredPhotoPins.clear();for(const timers of fadeTimers.values())timers.forEach(t=>clearTimeout(t));fadeTimers.clear();root.querySelectorAll('.checkpoint-ring').forEach(r=>r.classList.remove('active'));root.querySelectorAll('.floating-photo-pin,.map-photo-tile').forEach(p=>p.classList.remove('visible','fading','tile-pop'));progressPath.style.strokeDasharray=`0 ${totalLength}`;resetToStop(0,true);try{sndClick&&sndClick();}catch(err){}}
-  function updateSidebar(index,titleOverride,subOverride){const stop=stops[index];if(sideTitle)sideTitle.textContent=titleOverride||stop.title;if(sideSub)sideSub.textContent=subOverride||stop.sub;updateStepStates(index);}
+  function updateSidebar(index,titleOverride,subOverride){const stop=stops[index],story=storyCards[index]||storyCards[0];if(sideTitle)sideTitle.textContent=titleOverride||story.title||stop.title;if(sideSub)sideSub.textContent=subOverride||story.sub||stop.sub;updateStepStates(index);}
   function updateStepStates(index){sideSteps.forEach((btn,i)=>{btn.classList.toggle('active',i===index&&!finalPanoramaDone);btn.classList.toggle('done',i<index||finalPanoramaDone);});}
   function updateCheckpoints(progress,previous){stops.forEach(stop=>{if(progress>=stop.p-.002&&stop.id&&!triggeredCheckpoints.has(stop.id)&&!previous.has(stop.id))triggerCheckpoint(stop.id);});}
   function triggerCheckpoint(ringId){if(!ringId||triggeredCheckpoints.has(ringId))return;triggeredCheckpoints.add(ringId);pulseCheckpoint(ringId);}
