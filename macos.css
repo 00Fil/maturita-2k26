@@ -4225,3 +4225,31 @@ body.login-screen.video-loading::after{
 .maps-reference-shell.maps-final-wait .maps-click-cue{animation:mwHintPulse 1.8s ease-in-out infinite;opacity:.96;}
 @media(max-width:980px){.maps-ref .map-stage{inset:-42%!important}.maps-ref .map-tilt,.maps-ref .map-tilt.navigation{transform:scale(1.12) rotateX(50deg) rotateZ(-18deg) translateY(60px)!important;}}
 @media(max-width:760px){.maps-ref .map-stage{inset:-46%!important}.maps-ref .map-tilt,.maps-ref .map-tilt.navigation{transform:scale(1.14) rotateX(46deg) rotateZ(-16deg) translateY(54px)!important;}}
+
+/* ============================================================
+   Maps viewport-fixed background + final release camera
+   ============================================================ */
+.maps-ref{
+  background:#2d2e32!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+}
+.maps-ref::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background-color:#2d2e32;
+  background-image:
+    linear-gradient(rgba(255,255,255,.16) 1.4px,transparent 1.4px),
+    linear-gradient(90deg,rgba(255,255,255,.16) 1.4px,transparent 1.4px);
+  background-size:118px 118px;
+  background-position:center center;
+}
+.maps-ref .map-stage{background:transparent!important;background-image:none!important;z-index:1!important;}
+.maps-ref .map-tilt::before{display:none!important;content:none!important;}
+.maps-ref .floating-photo-layer,.maps-ref .maps-click-cue{z-index:12!important;}
+.maps-ref svg{background:transparent!important;}
+.maps-ref .land{fill:transparent!important;}
+.maps-ref .green-blob,.maps-ref .green-blob-soft{display:none!important;}
