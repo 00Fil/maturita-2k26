@@ -4202,3 +4202,26 @@ body.login-screen.video-loading::after{
 .maps-reference-shell.maps-final-wait .maps-click-cue{animation:mwHintPulse 1.8s ease-in-out infinite;opacity:.96;}
 @media(max-width:980px){.maps-ref .map-stage{inset:-42%!important}.maps-ref .map-tilt,.maps-ref .map-tilt.navigation{transform:scale(1.12) rotateX(50deg) rotateZ(-18deg) translateY(60px)!important;}}
 @media(max-width:760px){.maps-ref .map-stage{inset:-46%!important}.maps-ref .map-tilt,.maps-ref .map-tilt.navigation{transform:scale(1.14) rotateX(46deg) rotateZ(-16deg) translateY(54px)!important;}}
+
+/* ============================================================
+   Maps centered follow camera + straight final CSS
+   ============================================================ */
+.maps-ref{background:#2d2e32!important;overflow:hidden!important;}
+.maps-ref .map-stage{inset:-38%!important;overflow:hidden!important;background:#2d2e32!important;background-image:none!important;transform:none!important;}
+.maps-ref .map-tilt,
+.maps-ref .map-tilt.navigation{position:relative!important;width:100%!important;height:100%!important;transform:scale(1.10) rotateX(52deg) rotateZ(-19deg) translateY(64px)!important;transform-origin:center center!important;transition:none!important;background:transparent!important;background-image:none!important;filter:saturate(1) contrast(1.02)!important;}
+.maps-ref .map-tilt::before{content:"";position:absolute;inset:-62%;z-index:0;pointer-events:none;background-color:#2d2e32;background-image:linear-gradient(rgba(255,255,255,.16) 1.4px,transparent 1.4px),linear-gradient(90deg,rgba(255,255,255,.16) 1.4px,transparent 1.4px);background-size:118px 118px;background-position:center center;}
+.maps-ref svg{position:relative!important;z-index:1!important;background:transparent!important;}
+.maps-ref .land{fill:transparent!important;}
+.maps-ref .green-blob,.maps-ref .green-blob-soft{display:none!important;}
+.maps-ref .route-glow{stroke:rgba(10,132,255,.18)!important;stroke-width:24!important;filter:drop-shadow(0 0 12px rgba(10,132,255,.22))!important;}
+.maps-ref .route{stroke:#0a84ff!important;stroke-width:8!important;filter:drop-shadow(0 0 5px rgba(10,132,255,.35))!important;}
+.maps-ref .route-progress{stroke:#64d2ff!important;stroke-width:10!important;filter:drop-shadow(0 0 8px rgba(100,210,255,.42))!important;}
+.maps-ref .city-label{stroke:rgba(45,46,50,.88)!important;fill:rgba(245,245,247,.72)!important;}
+.maps-ref .pin-circle{fill:#3a3b40!important;stroke:rgba(255,255,255,.22)!important;}
+.maps-ref .floating-photo-pin{transform:translate(-50%,-96.5%)!important;transform-origin:50% 96.5%!important;transition:opacity 1.15s ease!important;}
+.maps-ref .floating-photo-pin.fading{opacity:0!important;}
+.maps-ref .photo-marker{left:0!important;bottom:0!important;transform-origin:50% 96.5%!important;filter:drop-shadow(0 22px 42px rgba(0,0,0,.34)) drop-shadow(0 0 18px rgba(10,132,255,.10))!important;}
+.maps-reference-shell.maps-final-wait .maps-click-cue{animation:mwHintPulse 1.8s ease-in-out infinite;opacity:.96;}
+@media(max-width:980px){.maps-ref .map-stage{inset:-42%!important}.maps-ref .map-tilt,.maps-ref .map-tilt.navigation{transform:scale(1.12) rotateX(50deg) rotateZ(-18deg) translateY(60px)!important;}}
+@media(max-width:760px){.maps-ref .map-stage{inset:-46%!important}.maps-ref .map-tilt,.maps-ref .map-tilt.navigation{transform:scale(1.14) rotateX(46deg) rotateZ(-16deg) translateY(54px)!important;}}

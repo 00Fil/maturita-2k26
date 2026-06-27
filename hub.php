@@ -302,12 +302,12 @@ function appicon(string $file, string $remote): string {
       <div class="map-stage">
         <div class="map-tilt" id="mapTilt">
           <svg id="mapSvg" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice">
-            <rect class="land" x="-1200" y="-900" width="3900" height="2900" />
+            <rect class="land" x="-1400" y="-900" width="7200" height="2900" />
 
             <!-- Percorso principale -->
-            <path class="route-glow" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 C2140 170 2400 85 2860 -90 C1450 205 1740 120 2640 -80" />
-            <path id="routePath" class="route" pathLength="1" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 C2140 170 2400 85 2860 -90 C1450 205 1740 120 2640 -80" />
-            <path id="progressPath" class="route-progress" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 C2140 170 2400 85 2860 -90 C1450 205 1740 120 2640 -80" />
+            <path class="route-glow" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L5600 220 C1450 205 1740 120 2640 -80" />
+            <path id="routePath" class="route" pathLength="1" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L5600 220 C1450 205 1740 120 2640 -80" />
+            <path id="progressPath" class="route-progress" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L5600 220 C1450 205 1740 120 2640 -80" />
 
             <text class="city-label" x="130" y="705">Lonato</text>
             <text class="city-label" x="700" y="575">Bedizzole</text>
