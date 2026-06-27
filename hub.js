@@ -1418,22 +1418,39 @@ syncFinderVisibility();
     if(isRunning)return;isRunning=true;finalPanoramaDone=false;
     shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');mapTilt.classList.add('navigation');
     if(cue)cue.textContent='La strada continua…';updateSidebar(currentStop,'Brescia · UniBS','Proseguimento degli studi: ingegneria informatica presso UniBS.');
-    const fromProgress=currentProgress,playerEnd=Math.min(fromProgress+.34,.94),duration=4100,t0=performance.now(),prev=new Set(triggeredCheckpoints),startCamera={...camera};
+    const fromProgress=currentProgress;
+    const playerEnd=Math.min(fromProgress+.34,.94);
+    const cameraEnd=Math.min(fromProgress+.155,.78);
+    const escapeDuration=3300;
+    const panoramaDuration=1850;
+    const t0=performance.now(),prev=new Set(triggeredCheckpoints);
     cancelAnimationFrame(raf);
-    const tick=now=>{
-      const raw=Math.min((now-t0)/duration,1);
+    const escapeTick=now=>{
+      const raw=Math.min((now-t0)/escapeDuration,1);
       const playerLocal=easeInQuart(raw);
-      const panoLocal=easeInOutCubic(raw);
+      const cameraLocal=easeOutCubic(raw);
       currentProgress=lerp(fromProgress,playerEnd,playerLocal);
+      const cameraProgress=lerp(fromProgress,cameraEnd,cameraLocal);
       const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+4,totalLength));
       moveCar(pt,getAngle(pt,next));
       updateProgress(distance);
-      camera={x:lerp(startCamera.x,PANORAMA.x,panoLocal),y:lerp(startCamera.y,PANORAMA.y,panoLocal),width:lerp(startCamera.width,PANORAMA.width,panoLocal),height:lerp(startCamera.height,PANORAMA.height,panoLocal)};
-      applyCamera(camera);
+      centerCameraOnProgress(cameraProgress,true);
       updatePhotoPinsByDistance(distance);updateCheckpoints(currentProgress,prev);updateFloatingPhotoPositions();
-      if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;finalPanoramaDone=true;shell.classList.remove('maps-moving','maps-final-wait');shell.classList.add('maps-panorama-return');if(cue)cue.textContent='Tocca per resettare';updateSidebar(stops.length-1,'Panoramica completa','Vista completa del percorso: da Lonato al proseguimento dopo UniBS.');nextButtons.forEach(btn=>btn.textContent='Reset');updateStepStates(stops.length-1);}
+      if(raw<1)raf=requestAnimationFrame(escapeTick);else{animateFinalPanoramaFromHere();}
     };
-    raf=requestAnimationFrame(tick);
+    const animateFinalPanoramaFromHere=()=>{
+      shell.classList.add('maps-panorama-return');
+      if(cue)cue.textContent='Ritorno alla panoramica…';
+      const startCamera={...camera},start=performance.now();
+      const tick=now=>{
+        const raw=Math.min((now-start)/panoramaDuration,1),t=smootherstep(raw);
+        camera={x:lerp(startCamera.x,PANORAMA.x,t),y:lerp(startCamera.y,PANORAMA.y,t),width:lerp(startCamera.width,PANORAMA.width,t),height:lerp(startCamera.height,PANORAMA.height,t)};
+        applyCamera(camera);updateFloatingPhotoPositions();
+        if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;finalPanoramaDone=true;shell.classList.remove('maps-moving','maps-final-wait');shell.classList.add('maps-panorama-return');if(cue)cue.textContent='Tocca per resettare';updateSidebar(stops.length-1,'Panoramica completa','Vista completa del percorso: da Lonato al proseguimento dopo UniBS.');nextButtons.forEach(btn=>btn.textContent='Reset');updateStepStates(stops.length-1);}
+      };
+      raf=requestAnimationFrame(tick);
+    };
+    raf=requestAnimationFrame(escapeTick);
   }
   function renderMovingPoint(previous,followCamera){const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+4,totalLength));moveCar(pt,getAngle(pt,next));updateProgress(distance);if(followCamera)centerCameraOnPoint(pt,false);updatePhotoPinsByDistance(distance);updateCheckpoints(currentProgress,previous);updateFloatingPhotoPositions();}
   function centerCameraOnProgress(progress,instant){const pt=routePath.getPointAtLength(progress*totalLength);centerCameraOnPoint(pt,instant);}
