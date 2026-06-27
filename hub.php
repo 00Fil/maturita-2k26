@@ -280,7 +280,8 @@ function appicon(string $file, string $remote): string {
         <div class="mw-route-line"></div>
         <button class="mw-endpoint route-start active" data-maps-step="0" type="button"><span class="mw-pt start"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Partenza</small><b>Cerebotani</b><em>IIS Luigi Cerebotani · Lonato</em></div></button>
         <button class="mw-endpoint route-stop" data-maps-step="1" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>CS Metal Europe</b><em>Tappa intermedia a Bedizzole</em></div></button>
-        <button class="mw-endpoint route-stop" data-maps-step="2" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>UniBS</b><em>La strada prosegue oltre l’università</em></div></button>
+        <button class="mw-endpoint route-stop" data-maps-step="2" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>Diploma</b><em>Di nuovo a Lonato</em></div></button>
+        <button class="mw-endpoint route-stop" data-maps-step="3" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>UniBS</b><em>La strada prosegue oltre l’università</em></div></button>
       </div>
 
       <div class="mw-routecard maps-progress-card" aria-label="Stato navigazione">
@@ -311,21 +312,24 @@ function appicon(string $file, string $remote): string {
             <path class="green-blob" d="M-420 840 C-230 720 40 770 120 930 C200 1090 -10 1240 -260 1180 C-510 1120 -640 980 -420 840Z" />
 
             <!-- Percorso principale -->
-            <path class="route-glow" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250 C1340 205 1480 200 1620 150 C1780 92 1960 128 2140 72 C2320 16 2500 52 2660 -42 C1340 205 1480 200 1620 150 C1780 92 1960 128 2140 72 C2320 16 2500 52 2660 -42" />
-            <path id="routePath" class="route" pathLength="1" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250 C1340 205 1480 200 1620 150 C1780 92 1960 128 2140 72 C2320 16 2500 52 2660 -42 C1340 205 1480 200 1620 150 C1780 92 1960 128 2140 72 C2320 16 2500 52 2660 -42" />
-            <path id="progressPath" class="route-progress" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250 C1340 205 1480 200 1620 150 C1780 92 1960 128 2140 72 C2320 16 2500 52 2660 -42 C1340 205 1480 200 1620 150 C1780 92 1960 128 2140 72 C2320 16 2500 52 2660 -42" />
+            <path class="route-glow" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C610 545 500 610 330 640 C520 620 720 450 900 300 C1030 260 1120 330 1220 250 C1500 115 1900 30 2640 -80" />
+            <path id="routePath" class="route" pathLength="1" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C610 545 500 610 330 640 C520 620 720 450 900 300 C1030 260 1120 330 1220 250 C1500 115 1900 30 2640 -80" />
+            <path id="progressPath" class="route-progress" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C610 545 500 610 330 640 C520 620 720 450 900 300 C1030 260 1120 330 1220 250 C1500 115 1900 30 2640 -80" />
 
             <text class="city-label" x="130" y="705">Lonato</text>
             <text class="city-label" x="610" y="545">Bedizzole</text>
+            <text class="city-label" x="272" y="698">Diploma</text>
             <text class="city-label" x="1160" y="210">Brescia</text>
 
             <circle id="ring-0" class="checkpoint-ring" cx="180" cy="650" r="30" />
             <circle id="ring-1" class="checkpoint-ring" cx="680" cy="490" r="30" />
-            <circle id="ring-2" class="checkpoint-ring" cx="1220" cy="250" r="30" />
+            <circle id="ring-2" class="checkpoint-ring" cx="330" cy="640" r="30" />
+            <circle id="ring-3" class="checkpoint-ring" cx="1220" cy="250" r="30" />
 
             <g class="poi-pin"><circle class="pin-circle" cx="180" cy="650" r="24" /><text class="pin-number" x="180" y="650">1</text></g>
             <g class="poi-pin"><circle class="pin-circle" cx="680" cy="490" r="24" /><text class="pin-number" x="680" y="490">2</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="1220" cy="250" r="24" /><text class="pin-number" x="1220" y="250">3</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="330" cy="640" r="24" /><text class="pin-number" x="330" y="640">3</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="1220" cy="250" r="24" /><text class="pin-number" x="1220" y="250">4</text></g>
 
             <g id="car" class="car" transform="translate(180 650)">
               <circle class="car-body" cx="0" cy="0" r="22" />
@@ -341,13 +345,19 @@ function appicon(string $file, string $remote): string {
           <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Lonato" /><div class="photo-label">Lonato</div></div></div>
         </div>
         <div class="floating-photo-pin" id="photoPin-1">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=85" alt="CS Metal Europe" /><div class="photo-label">CS Metal Europe</div></div></div>
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=900&q=85" alt="Verso Bedizzole" /><div class="photo-label">Verso Bedizzole</div></div></div>
         </div>
         <div class="floating-photo-pin" id="photoPin-2">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=85" alt="Verso Brescia" /><div class="photo-label">Verso Brescia</div></div></div>
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="assets/notes/optimized/pcto-cs-metal.webp" alt="CS Metal Europe" /><div class="photo-label">CS Metal Europe</div></div></div>
         </div>
         <div class="floating-photo-pin" id="photoPin-3">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=85" alt="UniBS" /><div class="photo-label">UniBS</div></div></div>
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=85" alt="CS Metal uffici" /><div class="photo-label">CS Metal · Uffici</div></div></div>
+        </div>
+        <div class="floating-photo-pin" id="photoPin-4">
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85" alt="Diploma" /><div class="photo-label">Diploma</div></div></div>
+        </div>
+        <div class="floating-photo-pin" id="photoPin-5">
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=85" alt="UniBS" /><div class="photo-label">UniBS</div></div></div>
         </div>
       </div>
 
