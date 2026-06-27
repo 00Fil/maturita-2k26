@@ -830,7 +830,7 @@ input, textarea { cursor: url("assets/cursors/text.svg") 14 14, text; }
 }
 /* ============================================================
    index.php — SCHERMATA DI BLOCCO IN STILE macOS
-   - sfondo video (assets/optimized/lock-lite.mp4, poster bg.png)
+   - sfondo video (assets/lock.mp4, poster bg.png)
    - orologio live, utente "Filippo Corsini" con foto
    - preloader col logo della scuola: blocca finché gli asset
      non sono caricati completamente

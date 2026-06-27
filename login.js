@@ -134,9 +134,9 @@ demoEnter.addEventListener('click', () => {
 });
 
 /* ============================================================
-   PRELOADER — la barra si completa sugli asset locali (font +
-   immagini). Il video è best-effort: ha un tetto massimo e NON
-   può mai bloccare il caricamento. Sblocco garantito entro 5s.
+   PRELOADER — la barra si completa sugli asset locali e sul video
+   MP4 della lock screen, scaricato/cache-ato per intero prima di
+   chiudere il caricamento iniziale.
    ============================================================ */
 (function preload() {
   const boot  = document.getElementById('boot');
@@ -158,21 +158,36 @@ demoEnter.addEventListener('click', () => {
     }));
   });
 
-  // video di sfondo: best-effort con tetto massimo (max 3s).
-  // NB: con un <source> che fallisce, l'evento 'error' arriva sul <source>,
-  // non sul <video> — per questo ascolto entrambi + timeout di sicurezza.
+  // video lock screen MP4: scaricato/cache-ato per intero prima di chiudere il boot.
+  // Questo permette di sostituire assets/lock.mp4 con una versione 1080p senza cambiare codice.
   tasks.push(new Promise((res) => {
     if (!video) return res();
+    const src = video.dataset.videoSrc || video.currentSrc || video.querySelector('source')?.src || 'assets/lock.mp4';
     let done = false;
     const fine = () => { if (!done) { done = true; res(); } };
-    if (video.readyState >= 3) return fine();
-    video.addEventListener('canplay', fine, { once: true });
-    video.addEventListener('loadeddata', fine, { once: true });
-    video.addEventListener('error', fine, { once: true });
-    const source = video.querySelector('source');
-    if (source) source.addEventListener('error', fine, { once: true });
-    setTimeout(fine, LOGIN_PERF.low ? 900 : 2200);
-    try { video.load(); } catch (e) {}
+
+    async function cacheFullVideo() {
+      try {
+        const response = await fetch(src, { cache: 'force-cache' });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const blob = await response.blob(); // download completo prima del resolve
+        if (!blob || !blob.size) throw new Error('Video vuoto');
+        const objectUrl = URL.createObjectURL(blob);
+        video.dataset.cachedObjectUrl = objectUrl;
+        video.src = objectUrl;
+        video.load();
+      } catch (e) {
+        // fallback: usa comunque il file MP4 normale, ma aspetta un frame se possibile
+        try { video.src = src; video.load(); } catch (_) {}
+      }
+
+      if (video.readyState >= 2) return fine();
+      video.addEventListener('loadeddata', fine, { once: true });
+      video.addEventListener('canplay', fine, { once: true });
+      video.addEventListener('error', fine, { once: true });
+    }
+
+    cacheFullVideo();
   }));
 
   // avanzamento barra a ogni asset pronto
@@ -200,8 +215,8 @@ demoEnter.addEventListener('click', () => {
   // tempo minimo per un'animazione elegante, poi completa appena pronti
   const minimo = new Promise((res) => setTimeout(res, 650));
   Promise.all([Promise.all(tasks), minimo]).then(completa).catch(completa);
-  // rete di sicurezza dura: il sito si sblocca comunque entro 5s
-  setTimeout(completa, LOGIN_PERF.low ? 2600 : 4200);
+  // rete di sicurezza solo per errori reali: normalmente aspetta il download completo del MP4
+  setTimeout(completa, LOGIN_PERF.low ? 12000 : 18000);
 })();
 
 /* ============================================================
