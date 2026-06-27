@@ -315,21 +315,21 @@ function appicon(string $file, string $remote): string {
             <path id="routePath" class="route" pathLength="1" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L5600 220" />
             <path id="progressPath" class="route-progress" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L5600 220" />
 
-            <g class="map-place-label">
-              <text class="city-label" x="130" y="705">Lonato</text>
-              <text class="city-caption" x="130" y="733">Inizio del percorso presso l’I.S.S. L. Cerebotani</text>
+            <g class="map-place-label label-below-route">
+              <text class="city-label" x="180" y="735">Lonato</text>
+              <text class="city-caption" x="180" y="763">Inizio del percorso presso l’I.S.S. L. Cerebotani</text>
             </g>
-            <g class="map-place-label">
-              <text class="city-label" x="700" y="575">Bedizzole</text>
-              <text class="city-caption" x="700" y="603">FSL presso CS Metal Europe</text>
+            <g class="map-place-label label-below-route">
+              <text class="city-label" x="760" y="610">Bedizzole</text>
+              <text class="city-caption" x="760" y="638">FSL presso CS Metal Europe</text>
             </g>
-            <g class="map-place-label">
-              <text class="city-label" x="1260" y="322">Lonato</text>
-              <text class="city-caption" x="1260" y="350">Conseguimento dell’esame di maturità</text>
+            <g class="map-place-label label-below-route">
+              <text class="city-label" x="1320" y="430">Lonato</text>
+              <text class="city-caption" x="1320" y="458">Conseguimento dell’esame di maturità</text>
             </g>
-            <g class="map-place-label">
-              <text class="city-label" x="1840" y="185">Brescia</text>
-              <text class="city-caption" x="1840" y="213">Ingegneria informatica presso UniBS</text>
+            <g class="map-place-label label-below-route">
+              <text class="city-label" x="1900" y="285">Brescia</text>
+              <text class="city-caption" x="1900" y="313">Ingegneria informatica presso UniBS</text>
             </g>
 
             <circle id="ring-0" class="checkpoint-ring" cx="180" cy="650" r="30" />
@@ -337,10 +337,34 @@ function appicon(string $file, string $remote): string {
             <circle id="ring-2" class="checkpoint-ring" cx="1320" cy="360" r="30" />
             <circle id="ring-3" class="checkpoint-ring" cx="1900" cy="220" r="30" />
 
-            <g class="poi-pin"><circle class="pin-circle" cx="180" cy="650" r="24" /><text class="pin-number" x="180" y="650">1</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="760" cy="520" r="24" /><text class="pin-number" x="760" y="520">2</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="1320" cy="360" r="24" /><text class="pin-number" x="1320" y="360">3</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="1900" cy="220" r="24" /><text class="pin-number" x="1900" y="220">4</text></g>
+            <g class="poi-pin poi-pin-3d" transform="translate(180 650)">
+              <ellipse class="pin-bowl-shadow" cx="0" cy="16" rx="43" ry="16" />
+              <circle class="pin-bowl-base" cx="0" cy="9" r="34" />
+              <circle class="pin-rim" cx="0" cy="0" r="34" />
+              <circle class="pin-inner-well" cx="0" cy="0" r="20" />
+              <text class="pin-number pin-number-3d" x="0" y="0">1</text>
+            </g>
+            <g class="poi-pin poi-pin-3d" transform="translate(760 520)">
+              <ellipse class="pin-bowl-shadow" cx="0" cy="16" rx="43" ry="16" />
+              <circle class="pin-bowl-base" cx="0" cy="9" r="34" />
+              <circle class="pin-rim" cx="0" cy="0" r="34" />
+              <circle class="pin-inner-well" cx="0" cy="0" r="20" />
+              <text class="pin-number pin-number-3d" x="0" y="0">2</text>
+            </g>
+            <g class="poi-pin poi-pin-3d" transform="translate(1320 360)">
+              <ellipse class="pin-bowl-shadow" cx="0" cy="16" rx="43" ry="16" />
+              <circle class="pin-bowl-base" cx="0" cy="9" r="34" />
+              <circle class="pin-rim" cx="0" cy="0" r="34" />
+              <circle class="pin-inner-well" cx="0" cy="0" r="20" />
+              <text class="pin-number pin-number-3d" x="0" y="0">3</text>
+            </g>
+            <g class="poi-pin poi-pin-3d" transform="translate(1900 220)">
+              <ellipse class="pin-bowl-shadow" cx="0" cy="16" rx="43" ry="16" />
+              <circle class="pin-bowl-base" cx="0" cy="9" r="34" />
+              <circle class="pin-rim" cx="0" cy="0" r="34" />
+              <circle class="pin-inner-well" cx="0" cy="0" r="20" />
+              <text class="pin-number pin-number-3d" x="0" y="0">4</text>
+            </g>
 
             <g id="car" class="car" transform="translate(180 650)">
               <circle class="car-body" cx="0" cy="0" r="22" />
