@@ -343,3 +343,61 @@ function mostraDemo(json, msTotali, statoHttp) {
     }
   ]);
 }
+
+
+/* ============================================================
+   Lock background watchdog — evita video nero/top bar nera intermittenti
+   ============================================================ */
+(function lockBackgroundWatchdog(){
+  const video = document.getElementById('bgVideo');
+  if (!video) {
+    document.body.classList.add('video-fallback');
+    return;
+  }
+
+  let retryTimer = 0;
+  let lastGood = 0;
+  const markGood = () => {
+    lastGood = performance.now();
+    document.body.classList.add('video-ok');
+    document.body.classList.remove('video-fallback');
+  };
+  const markFallback = () => {
+    document.body.classList.remove('video-ok');
+    document.body.classList.add('video-fallback');
+  };
+  const retry = () => {
+    clearTimeout(retryTimer);
+    retryTimer = setTimeout(() => {
+      try {
+        if (video.readyState < 2) video.load();
+        const p = video.play();
+        if (p && typeof p.catch === 'function') p.catch(() => markFallback());
+      } catch (e) {
+        markFallback();
+      }
+    }, 420);
+  };
+
+  ['loadeddata','canplay','canplaythrough','playing'].forEach(ev => {
+    video.addEventListener(ev, markGood, { passive:true });
+  });
+  ['error','abort','stalled','emptied'].forEach(ev => {
+    video.addEventListener(ev, () => { markFallback(); retry(); }, { passive:true });
+  });
+  video.addEventListener('waiting', () => {
+    if (performance.now() - lastGood > 1200) markFallback();
+    retry();
+  }, { passive:true });
+
+  // Stato iniziale: non mostrare mai il video finché non ha almeno un frame.
+  if (video.readyState >= 2) markGood(); else markFallback();
+  retry();
+
+  // Safety poll: se il browser perde il frame/decoder, torna al poster invece del nero.
+  setInterval(() => {
+    if (document.body.classList.contains('unlock')) return;
+    if (video.readyState >= 2 && !video.paused) markGood();
+    else if (performance.now() - lastGood > 1800) { markFallback(); retry(); }
+  }, 1500);
+})();
