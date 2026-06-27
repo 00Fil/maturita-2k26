@@ -4340,3 +4340,14 @@ body.login-screen.video-loading::after{
   52%{opacity:1;transform:perspective(520px) rotateX(10deg) translateY(-8px) scale(1.04);filter:drop-shadow(0 28px 22px rgba(0,0,0,.38)) brightness(1.08) blur(0);}
   100%{opacity:1;transform:perspective(520px) rotateX(0deg) translateY(0) scale(1);filter:drop-shadow(0 18px 18px rgba(0,0,0,.34)) brightness(1);}
 }
+
+
+/* Maps external flush grid replacement photo tiles */
+.maps-ref .floating-photo-layer{display:none!important;}
+.maps-ref .map-photo-tiles{pointer-events:none!important;}
+.maps-ref .map-photo-tile{opacity:0;transform-box:fill-box;transform-origin:center center;will-change:opacity,transform,filter;filter:none!important;}
+.maps-ref .map-photo-tile image{filter:saturate(1.02) contrast(1.02)!important;}
+.maps-ref .map-photo-tile .tile-photo-depth,.maps-ref .map-photo-tile .tile-photo-frame,.maps-ref .map-photo-tile .tile-photo-gloss{display:none!important;}
+.maps-ref .map-photo-tile.visible{opacity:1;}
+.maps-ref .map-photo-tile.tile-pop{animation:mapTileReplaceIn .82s cubic-bezier(.16,.86,.22,1) both!important;}
+@keyframes mapTileReplaceIn{0%{opacity:0;transform:scale(.72) rotateX(18deg);filter:brightness(.72) saturate(.9)!important;}58%{opacity:1;transform:scale(1.015) rotateX(0deg);filter:brightness(1.06) saturate(1.04)!important;}100%{opacity:1;transform:scale(1) rotateX(0deg);filter:brightness(1) saturate(1.02)!important;}}

@@ -1374,16 +1374,16 @@ syncFinderVisibility();
     {x:1900,y:220,id:'ring-3',title:'Brescia',sub:'Proseguimento degli studi: ingegneria informatica presso UniBS'}
   ];
   const photoPins=[
-    {x:320,y:640,id:'photoPin-0'},
-    {x:704,y:448,id:'photoPin-1'},
-    {x:832,y:448,id:'photoPin-2'},
-    {x:704,y:576,id:'photoPin-3'},
-    {x:832,y:576,id:'photoPin-4'},
-    {x:1280,y:320,id:'photoPin-5'},
-    {x:1408,y:320,id:'photoPin-6'},
-    {x:1280,y:448,id:'photoPin-7'},
-    {x:1408,y:448,id:'photoPin-8'},
-    {x:2048,y:192,id:'photoPin-9'}
+    {x:192,y:832,id:'photoPin-0'},
+    {x:448,y:704,id:'photoPin-1'},
+    {x:576,y:704,id:'photoPin-2'},
+    {x:448,y:832,id:'photoPin-3'},
+    {x:576,y:832,id:'photoPin-4'},
+    {x:1088,y:576,id:'photoPin-5'},
+    {x:1216,y:576,id:'photoPin-6'},
+    {x:1088,y:704,id:'photoPin-7'},
+    {x:1216,y:704,id:'photoPin-8'},
+    {x:2240,y:448,id:'photoPin-9'}
   ];
   let camera={x:0,y:0,width:CAMERA_WIDTH,height:900};
   let currentStop=0,currentProgress=0,isRunning=false,finalPanoramaDone=false,raf=null;
