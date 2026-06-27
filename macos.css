@@ -3517,3 +3517,69 @@ button,
 #maps-route-progress{stroke-width:12!important;stroke:#8fd0ff!important}
 .mw-pin[data-step-pin="1"],.mw-pin[data-step-pin="2"]{opacity:.95}
 .mw-pin[data-step-pin="3"] .pin-stem,.mw-pin[data-step-pin="3"] .pin-face{fill:#6d8cff!important}
+
+
+/* ============================================================
+   Alignment + minimal sidebar card + natural pointer pass
+   ============================================================ */
+/* Sidebar route line centered through the actual icon centers. */
+.mw-route{
+  --route-axis:12px;
+  padding:2px 2px 2px 0!important;
+}
+.mw-route-line{
+  left:calc(var(--route-axis) - 1px)!important;
+  top:13px!important;
+  bottom:15px!important;
+  width:2px!important;
+  background:rgba(255,255,255,.13)!important;
+}
+.mw-endpoint{
+  display:grid!important;
+  grid-template-columns:24px minmax(0,1fr)!important;
+  column-gap:10px!important;
+  align-items:start!important;
+  min-height:44px!important;
+  padding:4px 0 7px!important;
+}
+.mw-pt{
+  grid-column:1!important;
+  justify-self:center!important;
+  align-self:start!important;
+  margin:1px 0 0 0!important;
+  width:17px!important;
+  height:17px!important;
+  box-shadow:0 0 0 4px #1c1d21!important;
+}
+.mw-pt svg{width:12px!important;height:12px!important}
+.mw-endpoint>div{grid-column:2;min-width:0}
+.mw-endpoint:nth-of-type(4){min-height:70px!important}
+.mw-endpoint:nth-of-type(5){min-height:55px!important}
+
+/* Diploma label on map: make it visible and aligned, not hidden under nearby labels. */
+.mw-pin[data-step-pin="2"] .mw-caption{transform:translate(0,10px)}
+.mw-pin[data-step-pin="2"] .mw-caption text{font-size:14px!important;font-weight:840!important;stroke-width:2.8px!important}
+.mw-pin[data-step-pin="2"] .pin-stem,.mw-pin[data-step-pin="2"] .pin-face{fill:#0a84ff!important}
+
+/* Bottom sidebar card: minimal only. */
+.mw-routecard{
+  padding:14px 15px!important;
+  gap:10px!important;
+  min-height:0!important;
+  background:linear-gradient(180deg,#0a84ff,#0877ee)!important;
+  box-shadow:0 10px 24px rgba(10,120,240,.24), inset 0 1px 0 rgba(255,255,255,.22)!important;
+}
+.mw-routecard::after,.mw-rc-icons,.mw-rc-main em{display:none!important}
+.mw-rc-main b{font-size:28px!important;line-height:1!important}
+.mw-rc-main span{font-size:12px!important;margin-top:6px!important;color:rgba(255,255,255,.84)!important}
+.mw-rc-info{width:24px!important;height:24px!important;background:rgba(255,255,255,.16)!important}
+.mw-rc-info svg{width:15px!important;height:15px!important}
+
+/* Pointer: smaller, natural Apple blue, no shadows. */
+.puck-cast{display:none!important}
+.puck-white{r:16!important;fill:#fff!important;filter:none!important}
+.puck-blue{r:12.4!important;fill:#0A84FF!important;filter:none!important}
+.puck-blue-highlight{r:12.4!important;opacity:.16!important;filter:none!important;mix-blend-mode:normal!important}
+.puck-arrow{transform:none!important;filter:none!important;stroke:rgba(255,255,255,.68)!important;stroke-width:.45!important}
+.puck-arrow-shine{opacity:.18!important;filter:none!important}
+#maps-puck{filter:none!important}
