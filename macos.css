@@ -4629,3 +4629,166 @@ body.login-screen.video-loading::after{
   .maps-ref-side{padding:14px 12px!important;}
   .maps-ref-side .mw-endpoint em{max-width:180px!important;}
 }
+
+
+/* Maps glass minimal sidebar spacing */
+.maps-ref-side{
+  padding:20px 16px 16px!important;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.032) 54%,rgba(255,255,255,.022))!important;
+  border-right:1px solid rgba(255,255,255,.095)!important;
+  box-shadow:inset -1px 0 rgba(0,0,0,.22), 10px 0 34px rgba(0,0,0,.14)!important;
+  backdrop-filter:blur(30px) saturate(1.18)!important;
+  -webkit-backdrop-filter:blur(30px) saturate(1.18)!important;
+}
+.maps-ref-side::before{
+  background:linear-gradient(135deg,rgba(255,255,255,.095),transparent 34%,transparent 72%,rgba(255,255,255,.03))!important;
+  opacity:.42!important;
+}
+.maps-ref-side .mw-side-head{
+  margin-bottom:16px!important;
+  padding:10px 8px 12px!important;
+  border-radius:18px!important;
+  background:rgba(255,255,255,.035)!important;
+  border:1px solid rgba(255,255,255,.07)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.08)!important;
+}
+.maps-ref-side .mw-side-head h2{
+  font-size:21px!important;
+  font-weight:780!important;
+  letter-spacing:-.04em!important;
+}
+.maps-ref-side .mw-route-list{
+  gap:6px!important;
+  padding:2px 0 8px!important;
+}
+.maps-ref-side .mw-route-line{
+  left:18px!important;
+  top:34px!important;
+  bottom:34px!important;
+  width:1.5px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.10),rgba(255,255,255,.055))!important;
+  box-shadow:none!important;
+}
+.maps-ref-side .mw-endpoint{
+  min-height:61px!important;
+  grid-template-columns:38px minmax(0,1fr)!important;
+  padding:8px 9px 8px 0!important;
+  border-radius:17px!important;
+  background:transparent!important;
+  border:1px solid transparent!important;
+  box-shadow:none!important;
+}
+.maps-ref-side .mw-endpoint:hover{
+  background:rgba(255,255,255,.045)!important;
+  border-color:rgba(255,255,255,.065)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.055)!important;
+  transform:translateX(1px)!important;
+}
+.maps-ref-side .mw-endpoint:active{transform:translateX(1px) scale(.995)!important;}
+.maps-ref-side .mw-endpoint.active{
+  background:rgba(255,255,255,.072)!important;
+  border-color:rgba(255,255,255,.095)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.08)!important;
+}
+.maps-ref-side .mw-pt{
+  width:15px!important;
+  height:15px!important;
+  box-shadow:0 0 0 6px rgba(18,20,24,.82), inset 0 1px rgba(255,255,255,.24)!important;
+  background:rgba(245,245,247,.32)!important;
+}
+.maps-ref-side .mw-endpoint.active .mw-pt{
+  transform:scale(1.06)!important;
+  background:rgba(100,210,255,.88)!important;
+  box-shadow:0 0 0 6px rgba(18,20,24,.86),0 0 16px rgba(100,210,255,.26),inset 0 1px rgba(255,255,255,.42)!important;
+}
+.maps-ref-side .mw-endpoint.done .mw-pt{
+  background:rgba(52,199,89,.74)!important;
+  box-shadow:0 0 0 6px rgba(18,20,24,.80),inset 0 1px rgba(255,255,255,.30)!important;
+}
+.maps-ref-side .mw-pt svg{width:10px!important;height:10px!important;opacity:.9!important;}
+.maps-ref-side .mw-endpoint small{
+  font-size:9.5px!important;
+  font-weight:740!important;
+  letter-spacing:.045em!important;
+  color:rgba(245,245,247,.38)!important;
+}
+.maps-ref-side .mw-endpoint.active small{color:rgba(100,210,255,.72)!important;}
+.maps-ref-side .mw-endpoint b{
+  margin-top:3px!important;
+  font-size:14px!important;
+  font-weight:760!important;
+  line-height:1.08!important;
+  letter-spacing:-.022em!important;
+  color:rgba(245,245,247,.88)!important;
+}
+.maps-ref-side .mw-endpoint em{
+  margin-top:4px!important;
+  max-width:206px!important;
+  font-size:11.2px!important;
+  line-height:1.26!important;
+  color:rgba(245,245,247,.50)!important;
+}
+.maps-ref-side .maps-progress-card{
+  padding:13px!important;
+  border-radius:20px!important;
+  background:rgba(255,255,255,.052)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.075)!important;
+  backdrop-filter:blur(22px) saturate(1.12)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(1.12)!important;
+}
+.maps-ref-side .maps-progress-card .mw-card-dot{
+  background:rgba(100,210,255,.82)!important;
+  box-shadow:0 0 14px rgba(100,210,255,.24)!important;
+}
+.maps-ref-side .maps-progress-card [data-maps-side-title]{
+  font-size:15px!important;
+  font-weight:760!important;
+}
+.maps-ref-side .maps-progress-card [data-maps-side-sub]{
+  font-size:11.8px!important;
+  line-height:1.32!important;
+  color:rgba(245,245,247,.55)!important;
+}
+.maps-side-actions{
+  grid-template-columns:1fr 76px!important;
+  gap:8px!important;
+  margin-top:10px!important;
+}
+.maps-side-actions button{
+  border-radius:13px!important;
+  padding:10px 12px!important;
+  font-size:12.5px!important;
+  font-weight:740!important;
+  letter-spacing:-.01em!important;
+  box-shadow:none!important;
+}
+.maps-side-primary{
+  background:rgba(255,255,255,.082)!important;
+  color:rgba(245,245,247,.92)!important;
+  border:1px solid rgba(255,255,255,.095)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.07)!important;
+}
+.maps-side-primary::after{content:none!important;}
+.maps-side-secondary{
+  background:rgba(255,255,255,.035)!important;
+  color:rgba(245,245,247,.62)!important;
+  border:1px solid rgba(255,255,255,.065)!important;
+  box-shadow:inset 0 1px rgba(255,255,255,.045)!important;
+}
+.maps-side-actions button:hover{
+  filter:none!important;
+  background:rgba(255,255,255,.115)!important;
+  transform:translateY(-.5px)!important;
+}
+.maps-side-secondary:hover{background:rgba(255,255,255,.065)!important;}
+.maps-side-actions button:active{transform:scale(.99)!important;}
+.maps-reference-shell.maps-moving .maps-side-primary{opacity:.48!important;filter:none!important;}
+.win.maxi .maps-ref-side{padding:22px 18px 18px!important;}
+.win.maxi .maps-ref-side .mw-endpoint{min-height:64px!important;}
+@media(max-width:980px){
+  .maps-reference-shell{grid-template-columns:264px minmax(0,1fr)!important;}
+  .maps-ref-side .mw-endpoint em{max-width:176px!important;}
+  .maps-side-actions{grid-template-columns:1fr 72px!important;}
+}
