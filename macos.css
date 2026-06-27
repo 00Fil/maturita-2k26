@@ -4123,23 +4123,60 @@ body.login-screen.video-loading::after{
 .maps-ref .floating-photo-pin.visible .photo-marker{animation:premiumPhotoPinIn .62s cubic-bezier(.2,.78,.22,1) forwards;}
 
 /* ============================================================
-   Maps gaussian slowdown and fading photos
+   Maps Apple grey grid + spaced photos + Finder close fix
    ============================================================ */
-.maps-ref .floating-photo-pin{transition:opacity .85s ease!important;}
-.maps-ref .floating-photo-pin.fading{opacity:0!important;}
-.maps-reference-shell.maps-final-wait .maps-click-cue{animation:mwHintPulse 1.8s ease-in-out infinite;opacity:.96;}
-.maps-reference-shell.maps-final-wait .maps-side-primary{filter:saturate(1.12) brightness(1.08);}
-
-/* ============================================================
-   Maps smoother gaussian animation tuning
-   ============================================================ */
-.maps-ref .floating-photo-pin{transition:opacity 1.25s ease, transform 1.05s cubic-bezier(.16,1,.3,1)!important;}
-.maps-ref .floating-photo-pin.fading{opacity:0!important;}
-.maps-ref .car{transition:filter .45s ease!important;}
-.maps-reference-shell.maps-moving .maps-click-cue{transition:opacity .65s ease,transform .65s cubic-bezier(.16,1,.3,1)!important;}
-
-/* ============================================================
-   Maps airy route diploma label tuning
-   ============================================================ */
-.maps-ref .photo-label{font-size:12.2px!important;letter-spacing:-.025em!important;}
-.win.maxi .maps-ref .photo-label{font-size:13.2px!important;}
+.maps-ref{
+  background:#2b2c30!important;
+}
+.maps-ref .map-stage{
+  background-color:#2b2c30!important;
+  background-image:
+    linear-gradient(rgba(255,255,255,.085) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.085) 1px, transparent 1px),
+    linear-gradient(rgba(0,0,0,.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,0,0,.16) 1px, transparent 1px)!important;
+  background-size:64px 64px,64px 64px,16px 16px,16px 16px!important;
+  background-position:center!important;
+}
+.maps-ref svg{
+  background:transparent!important;
+}
+.maps-ref .land{
+  fill:transparent!important;
+}
+.maps-ref .green-blob,
+.maps-ref .green-blob-soft{
+  display:none!important;
+}
+.maps-ref .route-glow{
+  stroke:rgba(10,132,255,.18)!important;
+  stroke-width:24!important;
+  filter:drop-shadow(0 0 12px rgba(10,132,255,.22))!important;
+}
+.maps-ref .route{
+  stroke:#0a84ff!important;
+  stroke-width:8!important;
+  filter:drop-shadow(0 0 5px rgba(10,132,255,.35))!important;
+}
+.maps-ref .route-progress{
+  stroke:#64d2ff!important;
+  stroke-width:10!important;
+  filter:drop-shadow(0 0 8px rgba(100,210,255,.42))!important;
+}
+.maps-ref .city-label{
+  fill:rgba(245,245,247,.70)!important;
+  stroke:rgba(43,44,48,.86)!important;
+  stroke-width:5px!important;
+}
+.maps-ref .pin-circle{
+  fill:#3a3b40!important;
+  stroke:rgba(255,255,255,.22)!important;
+}
+.maps-ref .floating-photo-pin{
+  transform:translate(-50%,-112%)!important;
+  transition:opacity 1.1s ease!important;
+}
+.maps-ref .photo-marker{
+  filter:drop-shadow(0 22px 42px rgba(0,0,0,.34)) drop-shadow(0 0 18px rgba(10,132,255,.10))!important;
+}
+.finder-window.closing{pointer-events:none!important;}

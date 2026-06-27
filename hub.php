@@ -97,7 +97,7 @@ function appicon(string $file, string $remote): string {
   <button class="dicon" data-open="w-io"><span class="fico"><img src="assets/icons/pdf.svg" alt="" draggable="false" decoding="async"></span><span>Curriculum dello studente.pdf</span></button>
 </div>
 
-<section class="win open a-blue finder-window" id="w-pres" style="left:5.5%;top:6%;width:980px">
+<section class="win a-blue finder-window" id="w-pres" style="left:5.5%;top:6%;width:980px">
   <div class="titlebar finder-titlebar"><span class="wt">Applications</span>
     <div class="finder-nav" aria-hidden="true">
       <button type="button"><svg viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></svg></button>
@@ -304,32 +304,25 @@ function appicon(string $file, string $remote): string {
           <svg id="mapSvg" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice">
             <rect class="land" x="-1200" y="-900" width="3900" height="2900" />
 
-            <!-- Chiazze verde scuro: semplici, smooth, lineari, non sovrapposte -->
-            <path class="green-blob" d="M-260 120 C-40 10 210 50 300 210 C390 370 250 530 20 520 C-210 510 -430 330 -260 120Z" />
-            <path class="green-blob-soft" d="M720 20 C940 -80 1240 -20 1340 170 C1440 360 1260 500 1010 470 C760 440 560 220 720 20Z" />
-            <path class="green-blob" d="M150 650 C360 540 620 590 690 760 C760 930 540 1050 300 980 C60 910 -80 760 150 650Z" />
-            <path class="green-blob-soft" d="M930 650 C1140 520 1450 600 1540 790 C1630 980 1400 1120 1140 1040 C880 960 740 780 930 650Z" />
-            <path class="green-blob" d="M-420 840 C-230 720 40 770 120 930 C200 1090 -10 1240 -260 1180 C-510 1120 -640 980 -420 840Z" />
-
             <!-- Percorso principale -->
-            <path class="route-glow" d="M180 650 C330 610 470 560 620 515 C760 465 920 420 1080 360 C1240 300 1390 255 1520 220 C1760 160 2100 70 2640 -80" />
-            <path id="routePath" class="route" pathLength="1" d="M180 650 C330 610 470 560 620 515 C760 465 920 420 1080 360 C1240 300 1390 255 1520 220 C1760 160 2100 70 2640 -80" />
-            <path id="progressPath" class="route-progress" d="M180 650 C330 610 470 560 620 515 C760 465 920 420 1080 360 C1240 300 1390 255 1520 220 C1760 160 2100 70 2640 -80" />
+            <path class="route-glow" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 C2140 170 2400 85 2860 -90" />
+            <path id="routePath" class="route" pathLength="1" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 C2140 170 2400 85 2860 -90" />
+            <path id="progressPath" class="route-progress" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 C2140 170 2400 85 2860 -90" />
 
             <text class="city-label" x="130" y="705">Lonato</text>
-            <text class="city-label" x="555" y="575">Bedizzole</text>
-            <text class="city-label" x="1030" y="320">Diploma</text>
-            <text class="city-label" x="1460" y="185">Brescia</text>
+            <text class="city-label" x="700" y="575">Bedizzole</text>
+            <text class="city-label" x="1260" y="322">Diploma</text>
+            <text class="city-label" x="1840" y="185">Brescia</text>
 
             <circle id="ring-0" class="checkpoint-ring" cx="180" cy="650" r="30" />
-            <circle id="ring-1" class="checkpoint-ring" cx="620" cy="515" r="30" />
-            <circle id="ring-2" class="checkpoint-ring" cx="1080" cy="360" r="30" />
-            <circle id="ring-3" class="checkpoint-ring" cx="1520" cy="220" r="30" />
+            <circle id="ring-1" class="checkpoint-ring" cx="760" cy="520" r="30" />
+            <circle id="ring-2" class="checkpoint-ring" cx="1320" cy="360" r="30" />
+            <circle id="ring-3" class="checkpoint-ring" cx="1900" cy="220" r="30" />
 
             <g class="poi-pin"><circle class="pin-circle" cx="180" cy="650" r="24" /><text class="pin-number" x="180" y="650">1</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="620" cy="515" r="24" /><text class="pin-number" x="620" y="515">2</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="1080" cy="360" r="24" /><text class="pin-number" x="1080" y="360">3</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="1520" cy="220" r="24" /><text class="pin-number" x="1520" y="220">4</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="760" cy="520" r="24" /><text class="pin-number" x="760" y="520">2</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="1320" cy="360" r="24" /><text class="pin-number" x="1320" y="360">3</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="1900" cy="220" r="24" /><text class="pin-number" x="1900" y="220">4</text></g>
 
             <g id="car" class="car" transform="translate(180 650)">
               <circle class="car-body" cx="0" cy="0" r="22" />
