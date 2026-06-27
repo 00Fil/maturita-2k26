@@ -1386,7 +1386,7 @@ syncFinderVisibility();
     {p:.36, targetP:.42, active:2, icon:'straight', kicker:'Tra poco',       title:'Diploma',              copy:'Tra poche centinaia di metri raggiungi il Diploma, il primo grande traguardo del percorso.'},
     {p:.42, targetP:.58, active:2, icon:'arrived', kicker:'Tappa raggiunta', title:'Diploma',              copy:'Maturità conseguita. Prosegui dritto verso l’Università di Brescia.'},
     {p:.70, targetP:.86, active:3, icon:'straight', kicker:'Prosegui dritto', title:'Università · Brescia', copy:'Ingegneria Informatica: qui costruisci basi solide nel software e nei sistemi.'},
-    {p:1,   targetP:1,   active:4, icon:'arrived', kicker:'Sei arrivato',    title:'Estero · America',     copy:'Destinazione raggiunta: una carriera all’estero, con il sogno America.'}
+    {p:1,   targetP:1,   active:4, icon:'destination', kicker:'Sei arrivato',    title:'Estero · America',     copy:'Destinazione raggiunta: una carriera all’estero, con il sogno America.'}
   ];
 
   let vi=-1;
@@ -1408,9 +1408,10 @@ syncFinderVisibility();
   function setProgress(p){ progress.style.strokeDashoffset=(1-Math.max(0,Math.min(1,p))).toFixed(4); }
 
   const maneuverPaths={
-    overview:'M16 4 L25 19 L18.5 16 L18.5 28 L13.5 28 L13.5 16 L7 19 Z',
-    straight:'M16 3.5 L25 18.8 L18.4 15.9 L18.4 28.5 L13.6 28.5 L13.6 15.9 L7 18.8 Z',
-    arrived:'M16 4.5 C9.7 4.5 4.6 9.6 4.6 15.9 C4.6 22.2 9.7 27.3 16 27.3 C22.3 27.3 27.4 22.2 27.4 15.9 C27.4 9.6 22.3 4.5 16 4.5 Z M14.6 20.2 L9.9 15.5 L12.1 13.3 L14.6 15.8 L20.2 10.2 L22.4 12.4 Z'
+    overview:'M16 3.8 L25.2 18.9 L18.5 16.1 L18.5 28.2 L13.5 28.2 L13.5 16.1 L6.8 18.9 Z',
+    straight:'M16 3.6 L24.7 18.1 L18.4 15.4 L18.4 28.4 L13.6 28.4 L13.6 15.4 L7.3 18.1 Z',
+    arrived:'M16 4.2 C9.55 4.2 4.3 9.45 4.3 15.9 C4.3 22.35 9.55 27.6 16 27.6 C22.45 27.6 27.7 22.35 27.7 15.9 C27.7 9.45 22.45 4.2 16 4.2 Z M14.45 20.45 L9.65 15.65 L12.05 13.25 L14.45 15.65 L20.1 10 L22.5 12.4 Z',
+    destination:'M16 3.8 C11.1 3.8 7.1 7.75 7.1 12.65 C7.1 19.25 16 28.4 16 28.4 C16 28.4 24.9 19.25 24.9 12.65 C24.9 7.75 20.9 3.8 16 3.8 Z M16 15.75 C14.2 15.75 12.75 14.3 12.75 12.5 C12.75 10.7 14.2 9.25 16 9.25 C17.8 9.25 19.25 10.7 19.25 12.5 C19.25 14.3 17.8 15.75 16 15.75 Z'
   };
   function setManeuverIcon(name){
     const key=maneuverPaths[name] ? name : 'overview';

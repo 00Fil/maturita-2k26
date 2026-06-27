@@ -335,7 +335,7 @@ function appicon(string $file, string $remote): string {
               <circle class="puck-shadow" r="23"/>
               <circle class="puck-shell" r="18"/>
               <circle class="puck-inner" r="15.2"/>
-              <path class="puck-arrow" d="M0 -12.8 L9.2 11.8 C9.8 13.3 8.1 14.6 6.8 13.6 L0 8.2 L-6.8 13.6 C-8.1 14.6 -9.8 13.3 -9.2 11.8 Z"/>
+              <path class="puck-arrow" d="M0 -8.8 L6.2 8.2 C6.6 9.2 5.45 10.05 4.55 9.35 L0 5.85 L-4.55 9.35 C-5.45 10.05 -6.6 9.2 -6.2 8.2 Z"/>
               <path class="puck-glint" d="M-9.5 -7.3 C-4.5 -13.2 6.2 -13.4 11 -5.8"/>
               <circle class="puck-rim" r="18"/>
             </g>

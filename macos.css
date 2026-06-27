@@ -3374,3 +3374,65 @@ button,
 }
 .maps-app.nav .puck-arrow{opacity:1!important}
 .maps-app.nav .puck-shadow{opacity:.20}
+
+
+/* ============================================================
+   Fix indicazioni + navigation dot requested
+   ============================================================ */
+/* Le icone delle indicazioni devono restare visibili: SVG pieno, non testo nascosto. */
+.mw-banner-icon{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-size:0!important;
+  color:#fff!important;
+}
+.mw-banner-icon svg{
+  display:block!important;
+  width:30px!important;
+  height:30px!important;
+  overflow:visible!important;
+}
+.mw-banner-icon path{
+  display:block!important;
+  fill:currentColor!important;
+  opacity:1!important;
+  transform-origin:50% 50%;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.22));
+}
+.mw-banner-icon[data-icon="overview"] path,
+.mw-banner-icon[data-icon="straight"] path{ transform:scale(1); }
+.mw-banner-icon[data-icon="arrived"] path{ transform:scale(.94); }
+.mw-banner-icon[data-icon="destination"] path{ transform:scale(.96); }
+
+/* Dot navigazione: bordo lineare bianco e freccia più piccola. */
+.puck-shell{
+  r:16.5;
+  fill:#0a84ff!important;
+  filter:url(#mw-puck-refract);
+}
+.puck-inner{
+  r:13.4;
+  fill:url(#mw-puck-glass);
+  opacity:.92;
+}
+.puck-rim{
+  r:17.2;
+  fill:none!important;
+  stroke:#fff!important;
+  stroke-width:2.25!important;
+  opacity:.98!important;
+  vector-effect:non-scaling-stroke;
+  filter:drop-shadow(0 .7px 1px rgba(0,0,0,.18));
+}
+.puck-arrow{
+  fill:rgba(255,255,255,.97)!important;
+  stroke:rgba(255,255,255,.72)!important;
+  stroke-width:.55!important;
+  transform-box:fill-box;
+  transform-origin:center;
+  transform:scale(.82);
+  filter:drop-shadow(0 1px 1px rgba(0,52,130,.28));
+}
+.puck-glint{ opacity:.58; stroke-width:.95; }
+.puck-shadow{ opacity:.14; }
