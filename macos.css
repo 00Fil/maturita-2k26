@@ -3436,3 +3436,43 @@ button,
 }
 .puck-glint{ opacity:.58; stroke-width:.95; }
 .puck-shadow{ opacity:.14; }
+
+
+/* ============================================================
+   Final Apple Maps icon + ultra-smooth motion pass
+   ============================================================ */
+/* Indicazioni: icone sempre presenti e leggibili, stile Apple Maps turn-by-turn. */
+.mw-banner-icon{
+  width:48px!important;height:48px!important;border-radius:14px!important;
+  background:rgba(255,255,255,.18)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.30), inset 0 0 0 1px rgba(255,255,255,.14)!important;
+}
+.mw-banner-icon svg{width:32px!important;height:32px!important;display:block!important;overflow:visible!important}
+.mw-banner-icon path{fill:#fff!important;opacity:1!important;filter:drop-shadow(0 1px 1px rgba(0,0,0,.24));transition:opacity .22s ease, transform .34s var(--ease-apple, cubic-bezier(.22,1,.36,1))!important}
+.mw-banner-icon[data-icon="slightRight"] path{transform:scale(.92) translateX(-1px)}
+.mw-banner-icon[data-icon="arrived"] path{transform:scale(.92)}
+.mw-banner-icon[data-icon="destination"] path{transform:scale(.94)}
+
+/* Lista indicazioni: pin/iconcine visibili nella sidebar. */
+.mw-pt{display:flex!important;align-items:center!important;justify-content:center!important;width:17px!important;height:17px!important;margin-left:-2px!important;background:#6f747b!important;color:#fff!important;box-shadow:0 0 0 4px #1c1d21, inset 0 1px 0 rgba(255,255,255,.28)!important}
+.mw-pt svg{width:13px;height:13px;display:block;fill:currentColor}
+.mw-pt.start{background:#8e8e93!important}.mw-pt.mid{background:#70757c!important}.mw-pt.end{background:#ff453a!important;width:18px!important;height:18px!important}
+
+/* Dot navigazione esattamente tipo reference: disco bianco, centro blu, freccia bianca piccola. */
+.puck-cast{fill:#000;opacity:.16;filter:blur(3.5px);transform:translate(2px,5px)}
+.puck-white{fill:#fff;filter:drop-shadow(0 6px 12px rgba(0,0,0,.22)) drop-shadow(0 1px 1px rgba(255,255,255,.78))}
+.puck-blue{fill:#0A84FF;filter:drop-shadow(0 1px 2px rgba(0,70,170,.32))}
+.puck-blue-highlight{fill:url(#mw-puck-glass);opacity:.38;mix-blend-mode:screen}
+.puck-rim,.puck-shell,.puck-inner,.puck-shadow{display:none!important}
+.puck-arrow{fill:#fff!important;stroke:rgba(255,255,255,.84)!important;stroke-width:.5!important;transform:none!important;filter:drop-shadow(0 1px 1px rgba(0,57,145,.24))}
+.puck-arrow-shine{fill:rgba(255,255,255,.34);stroke:none;pointer-events:none}
+.puck-glint{display:none!important}
+
+/* Motion ancora più pulito: niente jerk, transizioni più lunghe e coerenti. */
+#maps-cam{transition:transform 1.95s cubic-bezier(.18,.86,.16,1)!important}
+#maps-puck{transition:transform 1.78s cubic-bezier(.18,.86,.16,1)!important}
+#maps-puck .puck-rot,.mw-pin-rot{transition:transform 1.78s cubic-bezier(.18,.86,.16,1)!important}
+#maps-route-progress{transition:stroke-dashoffset 1.86s cubic-bezier(.18,.86,.16,1)!important}
+.mw-banner{transition:background .48s ease, box-shadow .48s ease, transform .48s cubic-bezier(.22,1,.36,1), opacity .28s ease!important}
+.mw-pin.on .pin-stem,.mw-pin.on .pin-face{filter:url(#mw-pin-sh)!important}
+.mw-pin.on .pin-dot,.mw-pin.on .pin-dot-dest{transition:fill .45s ease, opacity .45s ease}

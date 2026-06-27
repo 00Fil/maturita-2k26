@@ -1385,7 +1385,7 @@ syncFinderVisibility();
   const seq=[
     {p:.36, targetP:.42, active:2, icon:'straight', kicker:'Tra poco',       title:'Diploma',              copy:'Tra poche centinaia di metri raggiungi il Diploma, il primo grande traguardo del percorso.'},
     {p:.42, targetP:.58, active:2, icon:'arrived', kicker:'Tappa raggiunta', title:'Diploma',              copy:'Maturità conseguita. Prosegui dritto verso l’Università di Brescia.'},
-    {p:.70, targetP:.86, active:3, icon:'straight', kicker:'Prosegui dritto', title:'Università · Brescia', copy:'Ingegneria Informatica: qui costruisci basi solide nel software e nei sistemi.'},
+    {p:.70, targetP:.86, active:3, icon:'slightRight', kicker:'Prosegui dritto', title:'Università · Brescia', copy:'Ingegneria Informatica: qui costruisci basi solide nel software e nei sistemi.'},
     {p:1,   targetP:1,   active:4, icon:'destination', kicker:'Sei arrivato',    title:'Estero · America',     copy:'Destinazione raggiunta: una carriera all’estero, con il sogno America.'}
   ];
 
@@ -1409,7 +1409,8 @@ syncFinderVisibility();
 
   const maneuverPaths={
     overview:'M16 3.8 L25.2 18.9 L18.5 16.1 L18.5 28.2 L13.5 28.2 L13.5 16.1 L6.8 18.9 Z',
-    straight:'M16 3.6 L24.7 18.1 L18.4 15.4 L18.4 28.4 L13.6 28.4 L13.6 15.4 L7.3 18.1 Z',
+    straight:'M16 3.4 L24.3 17.8 L18.3 15.3 L18.3 28.6 L13.7 28.6 L13.7 15.3 L7.7 17.8 Z',
+    slightRight:'M11.3 27.8 V14.6 C11.3 10.9 14.2 8.1 17.75 8.1 H20.6 L17.4 3.2 L20.9 1 L27.2 10.55 L20.9 20.1 L17.4 17.9 L20.6 13 H17.75 C16.9 13 16.2 13.7 16.2 14.6 V27.8 Z',
     arrived:'M16 4.2 C9.55 4.2 4.3 9.45 4.3 15.9 C4.3 22.35 9.55 27.6 16 27.6 C22.45 27.6 27.7 22.35 27.7 15.9 C27.7 9.45 22.45 4.2 16 4.2 Z M14.45 20.45 L9.65 15.65 L12.05 13.25 L14.45 15.65 L20.1 10 L22.5 12.4 Z',
     destination:'M16 3.8 C11.1 3.8 7.1 7.75 7.1 12.65 C7.1 19.25 16 28.4 16 28.4 C16 28.4 24.9 19.25 24.9 12.65 C24.9 7.75 20.9 3.8 16 3.8 Z M16 15.75 C14.2 15.75 12.75 14.3 12.75 12.5 C12.75 10.7 14.2 9.25 16 9.25 C17.8 9.25 19.25 10.7 19.25 12.5 C19.25 14.3 17.8 15.75 16 15.75 Z'
   };

@@ -279,11 +279,11 @@ function appicon(string $file, string $remote): string {
 
       <div class="mw-route" aria-label="Tappe del percorso">
         <div class="mw-route-line"></div>
-        <div class="mw-endpoint route-start"><span class="mw-pt start"></span><div><small>Partenza</small><b>Cerebotani</b><em>Inizio del percorso di studi</em></div></div>
-        <div class="mw-endpoint route-stop"><span class="mw-pt mid"></span><div><small>Tappa</small><b>FSL · PCTO</b><em>Esperienza sul campo</em></div></div>
-        <div class="mw-endpoint route-stop"><span class="mw-pt mid"></span><div><small>Tappa</small><b>Diploma</b><em>Maturità e primo traguardo</em></div></div>
-        <div class="mw-endpoint route-stop"><span class="mw-pt mid"></span><div><small>Tappa</small><b>Università · Brescia</b><em>Ingegneria Informatica</em></div></div>
-        <div class="mw-endpoint route-end"><span class="mw-pt end"></span><div><small>Arrivo</small><b>Estero · America</b><em>Opportunità di carriera</em></div></div>
+        <div class="mw-endpoint route-start"><span class="mw-pt start"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Partenza</small><b>Cerebotani</b><em>Inizio del percorso di studi</em></div></div>
+        <div class="mw-endpoint route-stop"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>FSL · PCTO</b><em>Esperienza sul campo</em></div></div>
+        <div class="mw-endpoint route-stop"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>Diploma</b><em>Maturità e primo traguardo</em></div></div>
+        <div class="mw-endpoint route-stop"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>Università · Brescia</b><em>Ingegneria Informatica</em></div></div>
+        <div class="mw-endpoint route-end"><span class="mw-pt end"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Arrivo</small><b>Estero · America</b><em>Opportunità di carriera</em></div></div>
       </div>
 
       <div class="mw-routecard" aria-label="Durata del percorso">
@@ -332,14 +332,14 @@ function appicon(string $file, string $remote): string {
 
           <g id="maps-puck" transform="translate(150 650)">
             <g class="puck-rot">
-              <circle class="puck-shadow" r="23"/>
-              <circle class="puck-shell" r="18"/>
-              <circle class="puck-inner" r="15.2"/>
-              <path class="puck-arrow" d="M0 -8.8 L6.2 8.2 C6.6 9.2 5.45 10.05 4.55 9.35 L0 5.85 L-4.55 9.35 C-5.45 10.05 -6.6 9.2 -6.2 8.2 Z"/>
-              <path class="puck-glint" d="M-9.5 -7.3 C-4.5 -13.2 6.2 -13.4 11 -5.8"/>
-              <circle class="puck-rim" r="18"/>
+              <circle class="puck-cast" r="27"/>
+              <circle class="puck-white" r="21"/>
+              <circle class="puck-blue" r="16.2"/>
+              <circle class="puck-blue-highlight" r="16.2"/>
+              <path class="puck-arrow" d="M0 -9.3 L6.35 8.1 C6.72 9.12 5.55 9.96 4.68 9.28 L0 5.55 L-4.68 9.28 C-5.55 9.96 -6.72 9.12 -6.35 8.1 Z"/>
+              <path class="puck-arrow-shine" d="M-3.4 5.5 L0 -7.2 L3.4 5.5 L0 2.75 Z"/>
             </g>
-          </g>
+          </g>g>
         </g>
       </svg>
 
