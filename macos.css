@@ -4351,3 +4351,20 @@ body.login-screen.video-loading::after{
 .maps-ref .map-photo-tile.visible{opacity:1;}
 .maps-ref .map-photo-tile.tile-pop{animation:mapTileReplaceIn .82s cubic-bezier(.16,.86,.22,1) both!important;}
 @keyframes mapTileReplaceIn{0%{opacity:0;transform:scale(.72) rotateX(18deg);filter:brightness(.72) saturate(.9)!important;}58%{opacity:1;transform:scale(1.015) rotateX(0deg);filter:brightness(1.06) saturate(1.04)!important;}100%{opacity:1;transform:scale(1) rotateX(0deg);filter:brightness(1) saturate(1.02)!important;}}
+
+
+/* Maps randomized crisp unclipped tile layout + slight dezoom */
+.maps-ref .map-photo-tile{
+  filter:none!important;
+  shape-rendering:crispEdges;
+}
+.maps-ref .map-photo-tile image{
+  image-rendering:auto!important;
+  filter:contrast(1.08) saturate(1.08) brightness(1.02)!important;
+}
+.maps-ref .map-photo-tile.tile-pop{animation:mapTileCrispReplaceIn .74s cubic-bezier(.16,.86,.22,1) both!important;}
+@keyframes mapTileCrispReplaceIn{
+  0%{opacity:0;transform:scale(.82);filter:brightness(.82) saturate(.96)!important;}
+  55%{opacity:1;transform:scale(1.01);filter:brightness(1.08) saturate(1.08)!important;}
+  100%{opacity:1;transform:scale(1);filter:brightness(1) saturate(1.02)!important;}
+}

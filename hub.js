@@ -1364,8 +1364,8 @@ syncFinderVisibility();
 
   const totalLength=routePath.getTotalLength();
   const WORLD={x:-1400,y:-900,width:7200,height:2900};
-  const CAMERA_WIDTH=1460;
-  const PANORAMA={x:-60,y:-70,width:2450,height:1380};
+  const CAMERA_WIDTH=1585;
+  const PANORAMA={x:-160,y:-120,width:2680,height:1510};
   const PHOTO_SLOW_SIGMA=.10, PHOTO_SLOW_STRENGTH=.50;
   const stops=[
     {x:180,y:650,id:'ring-0',title:'Lonato',sub:'Inizio del percorso presso l’I.S.S. L. Cerebotani'},
@@ -1376,14 +1376,14 @@ syncFinderVisibility();
   const photoPins=[
     {x:192,y:832,id:'photoPin-0'},
     {x:448,y:704,id:'photoPin-1'},
-    {x:576,y:704,id:'photoPin-2'},
-    {x:448,y:832,id:'photoPin-3'},
-    {x:576,y:832,id:'photoPin-4'},
+    {x:704,y:704,id:'photoPin-2'},
+    {x:576,y:832,id:'photoPin-3'},
+    {x:832,y:768,id:'photoPin-4'},
     {x:1088,y:576,id:'photoPin-5'},
-    {x:1216,y:576,id:'photoPin-6'},
-    {x:1088,y:704,id:'photoPin-7'},
-    {x:1216,y:704,id:'photoPin-8'},
-    {x:2240,y:448,id:'photoPin-9'}
+    {x:1344,y:576,id:'photoPin-6'},
+    {x:1216,y:704,id:'photoPin-7'},
+    {x:1472,y:640,id:'photoPin-8'},
+    {x:2112,y:448,id:'photoPin-9'}
   ];
   let camera={x:0,y:0,width:CAMERA_WIDTH,height:900};
   let currentStop=0,currentProgress=0,isRunning=false,finalPanoramaDone=false,raf=null;
