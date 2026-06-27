@@ -1381,12 +1381,12 @@ syncFinderVisibility();
   if(!cam||!stage||!route||!progress||!puck) return;
 
   // Percentuali lungo il path reale. Puck e progresso usano questi stessi valori.
-  const stopP=[0,.16,.34,.74,1];
+  const stopP=[0,.145,.326,.719,1];
   const seq=[
-    {p:.30, targetP:.34, active:2, icon:'straight', kicker:'Tra poco',       title:'Diploma',              copy:'Il Diploma è ben visibile: chiude il primo tratto, dopo scuola e PCTO.'},
-    {p:.34, targetP:.74, active:2, icon:'arrived', kicker:'Tappa raggiunta', title:'Diploma',              copy:'Maturità conseguita. Ora il percorso si allunga verso l’Università di Brescia.'},
-    {p:.74, targetP:.90, active:3, icon:'slightRight', kicker:'Tratto principale', title:'Università · Brescia', copy:'La parte universitaria resta il segmento più importante prima dell’obiettivo finale.'},
-    {p:1,   targetP:1,   active:4, icon:'destination', kicker:'Sei arrivato',    title:'Estero · America',     copy:'Dopo la formazione, la traiettoria porta verso opportunità all’estero.'}
+    {p:.285, targetP:.326, active:2, icon:'straight', stop:false, kicker:'Tra poco',       title:'Diploma',              copy:'Il Diploma è subito dopo FSL · PCTO: resta vicino, visibile dietro la tappa precedente.'},
+    {p:.326, targetP:.719, active:2, icon:'arrived', stop:true, kicker:'Tappa raggiunta', title:'Diploma',              copy:'Sei sopra la tappa Diploma: stato pulito, senza glow o rimbalzi inutili.'},
+    {p:.719, targetP:.92, active:3, icon:'slightRight', stop:true, kicker:'Tratto principale', title:'Università · Brescia', copy:'La parte universitaria è il segmento più lungo prima dell’obiettivo finale.'},
+    {p:1,   targetP:1,   active:4, icon:'destination', stop:true, kicker:'Sei arrivato',    title:'Estero · America',     copy:'Dopo la formazione, la traiettoria porta verso opportunità all’estero.'}
   ];
 
   let vi=-1;
@@ -1434,6 +1434,7 @@ syncFinderVisibility();
 
     if(navMode){
       const v=seq[vi];
+      app.classList.toggle('at-stop', !!v.stop);
       const pos=pt(v.p);
       const rot=headingFromPath(v.p, v.targetP);
       const S=1.68, cx=600, cy=525;
@@ -1446,18 +1447,20 @@ syncFinderVisibility();
       pins.forEach((g,i)=>{
         const r=g.querySelector('.mw-pin-rot');
         let t=`rotate(${-rot})`;
-        if(i===v.active) t+=' scale(1.08)';
+        if(i===v.active && !v.stop) t+=' scale(1.04)';
         if(r) r.setAttribute('transform',t);
         g.classList.toggle('on', i===v.active);
-        g.classList.toggle('done', stopP[i] < v.p-0.02 && i!==v.active);
+        g.classList.toggle('at-stop', !!v.stop && i===v.active);
+        g.classList.toggle('done', stopP[i] < v.p-0.018 && i!==v.active);
       });
       if(puckRot) puckRot.setAttribute('transform',`rotate(${-rot})`);
 
       kicker.textContent=v.kicker; title.textContent=v.title; copy.textContent=v.copy; setManeuverIcon(v.icon);
       hint.textContent=vi<last ? 'Tocca per proseguire' : 'Tocca per rivedere la panoramica';
     } else {
+      app.classList.remove('at-stop');
       cam.style.transform=`translate(600px,380px) scale(${userZoom}) translate(-600px,-380px)`;
-      pins.forEach(g=>{ const r=g.querySelector('.mw-pin-rot'); if(r) r.setAttribute('transform',''); g.classList.remove('on','done'); });
+      pins.forEach(g=>{ const r=g.querySelector('.mw-pin-rot'); if(r) r.setAttribute('transform',''); g.classList.remove('on','done','at-stop'); });
       if(puckRot) puckRot.setAttribute('transform','');
       const start=pt(0);
       puck.setAttribute('transform',`translate(${start.x.toFixed(2)} ${start.y.toFixed(2)})`);
