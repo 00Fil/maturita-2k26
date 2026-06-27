@@ -280,13 +280,13 @@ function appicon(string $file, string $remote): string {
         <div class="mw-route-line"></div>
         <button class="mw-endpoint route-start active" data-maps-step="0" type="button"><span class="mw-pt start"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Partenza</small><b>Cerebotani</b><em>IIS Luigi Cerebotani · Lonato</em></div></button>
         <button class="mw-endpoint route-stop" data-maps-step="1" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>CS Metal Europe</b><em>Tappa intermedia a Bedizzole</em></div></button>
-        <button class="mw-endpoint route-end" data-maps-step="2" type="button"><span class="mw-pt end"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Arrivo</small><b>UniBS</b><em>Università degli Studi di Brescia</em></div></button>
+        <button class="mw-endpoint route-stop" data-maps-step="2" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>UniBS</b><em>La strada prosegue oltre l’università</em></div></button>
       </div>
 
       <div class="mw-routecard maps-progress-card" aria-label="Stato navigazione">
         <div class="mw-rc-main">
-          <b data-maps-side-title>Pronto</b>
-          <span data-maps-side-sub>Tocca Prosegui o la mappa per partire.</span>
+          <b data-maps-side-title>Percorso</b>
+          <span data-maps-side-sub>Le tappe sono passaggi: dopo UniBS la strada continua.</span>
         </div>
         <div class="mw-rc-info" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8a9.2 9.2 0 1 0 0 18.4 9.2 9.2 0 0 0 0-18.4Zm.8 4.2v5.1l3.5 2.1-.9 1.5-4.4-2.6V7h1.8Z"/></svg></div>
       </div>
@@ -311,9 +311,9 @@ function appicon(string $file, string $remote): string {
             <path class="green-blob" d="M-420 840 C-230 720 40 770 120 930 C200 1090 -10 1240 -260 1180 C-510 1120 -640 980 -420 840Z" />
 
             <!-- Percorso principale -->
-            <path class="route-glow" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250" />
-            <path id="routePath" class="route" pathLength="1" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250" />
-            <path id="progressPath" class="route-progress" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250" />
+            <path class="route-glow" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250 C1305 215 1395 205 1510 145" />
+            <path id="routePath" class="route" pathLength="1" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250 C1305 215 1395 205 1510 145" />
+            <path id="progressPath" class="route-progress" d="M180 650 C260 590 310 520 380 500 C500 465 590 530 680 490 C770 450 800 330 900 300 C1030 260 1120 330 1220 250 C1305 215 1395 205 1510 145" />
 
             <text class="city-label" x="130" y="705">Lonato</text>
             <text class="city-label" x="610" y="545">Bedizzole</text>
