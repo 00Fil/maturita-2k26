@@ -4368,3 +4368,16 @@ body.login-screen.video-loading::after{
   55%{opacity:1;transform:scale(1.01);filter:brightness(1.08) saturate(1.08)!important;}
   100%{opacity:1;transform:scale(1);filter:brightness(1) saturate(1.02)!important;}
 }
+
+
+/* Maps grid-aligned spread tile layout */
+.maps-ref .map-photo-tile image{
+  image-rendering:auto!important;
+  filter:contrast(1.10) saturate(1.10) brightness(1.03)!important;
+}
+.maps-ref .map-photo-tile.tile-pop{animation:mapTileGridAlignedIn .78s cubic-bezier(.16,.86,.22,1) both!important;}
+@keyframes mapTileGridAlignedIn{
+  0%{opacity:0;transform:scale(.78);filter:brightness(.78) saturate(.94)!important;}
+  58%{opacity:1;transform:scale(1.01);filter:brightness(1.08) saturate(1.10)!important;}
+  100%{opacity:1;transform:scale(1);filter:brightness(1) saturate(1.04)!important;}
+}
