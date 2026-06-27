@@ -1368,18 +1368,16 @@ syncFinderVisibility();
   const PANORAMA={x:-60,y:-70,width:2450,height:1380};
   const PHOTO_SLOW_SIGMA=.10, PHOTO_SLOW_STRENGTH=.50;
   const stops=[
-    {x:180,y:650,id:'ring-0',title:'Cerebotani',sub:'Partenza da IIS Luigi Cerebotani'},
-    {x:760,y:520,id:'ring-1',title:'CS Metal Europe',sub:'Tappa a Bedizzole raggiunta. Clicca per proseguire.'},
-    {x:1320,y:360,id:'ring-2',title:'Diploma',sub:'Tappa Diploma raggiunta. Clicca per proseguire.'},
-    {x:1900,y:220,id:'ring-3',title:'UniBS',sub:'Tappa UniBS raggiunta. La strada continua oltre.'}
+    {x:180,y:650,id:'ring-0',title:'Lonato',sub:'Inizio del percorso presso l’I.S.S. L. Cerebotani'},
+    {x:760,y:520,id:'ring-1',title:'Bedizzole',sub:'FSL presso CS Metal Europe'},
+    {x:1320,y:360,id:'ring-2',title:'Lonato',sub:'Conseguimento dell’esame di maturità'},
+    {x:1900,y:220,id:'ring-3',title:'Brescia',sub:'Proseguimento degli studi: ingegneria informatica presso UniBS'}
   ];
   const photoPins=[
     {x:320,y:626,id:'photoPin-0'},
-    {x:600,y:550,id:'photoPin-1'},
-    {x:850,y:495,id:'photoPin-2'},
-    {x:1080,y:430,id:'photoPin-3'},
-    {x:1240,y:382,id:'photoPin-4'},
-    {x:2100,y:220,id:'photoPin-5'}
+    {x:760,y:520,id:'photoPin-1'},
+    {x:1320,y:360,id:'photoPin-2'},
+    {x:2100,y:220,id:'photoPin-3'}
   ];
   let camera={x:0,y:0,width:CAMERA_WIDTH,height:900};
   let currentStop=0,currentProgress=0,isRunning=false,finalPanoramaDone=false,raf=null;
@@ -1404,7 +1402,7 @@ syncFinderVisibility();
     if(delta<.001){resetToStop(targetStop,false);return;}
     isRunning=true;finalPanoramaDone=false;
     shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');mapTilt.classList.add('navigation');
-    if(cue)cue.textContent='Navigazione in corso…';updateSidebar(currentStop,'In movimento',`Verso ${stops[targetStop].title}`);
+    if(cue)cue.textContent='Navigazione in corso…';updateSidebar(currentStop,'Percorso espositivo',`Verso ${stops[targetStop].title}: ${stops[targetStop].sub}`);
     const segmentDuration=Math.max(5600,Math.min(13800,26000*delta*1.45)),t0=performance.now(),prev=new Set(triggeredCheckpoints);
     cancelAnimationFrame(raf);
     const tick=now=>{const raw=Math.min((now-t0)/segmentDuration,1);const local=travelProgress(raw,fromProgress,toProgress);currentProgress=lerp(fromProgress,toProgress,local);renderMovingPoint(prev,true);if(raw<1)raf=requestAnimationFrame(tick);else{currentProgress=toProgress;renderMovingPoint(prev,true);isRunning=false;currentStop=targetStop;settleAtStop(targetStop);}};
@@ -1413,7 +1411,7 @@ syncFinderVisibility();
   function animateFinalSequence(){
     if(isRunning)return;isRunning=true;finalPanoramaDone=false;
     shell.classList.add('nav','maps-moving');shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');mapTilt.classList.add('navigation');
-    if(cue)cue.textContent='La strada continua…';updateSidebar(currentStop,'Finale dinamico','La camera avanza, poi rallenta mentre il player accelera verso il bordo.');
+    if(cue)cue.textContent='La strada continua…';updateSidebar(currentStop,'Brescia · UniBS','Proseguimento degli studi: ingegneria informatica presso UniBS.');
     const fromProgress=currentProgress,playerEnd=Math.min(fromProgress+.36,.82),cameraEnd=Math.min(fromProgress+.165,.58),duration=5700,t0=performance.now(),prev=new Set(triggeredCheckpoints);
     cancelAnimationFrame(raf);
     const tick=now=>{
@@ -1430,10 +1428,10 @@ syncFinderVisibility();
   }
   function animateReturnToPanorama(){
     shell.classList.remove('maps-moving','maps-paused','at-goal');shell.classList.add('maps-panorama-return');
-    if(cue)cue.textContent='Ritorno alla panoramica…';updateSidebar(stops.length-1,'Ritorno panoramica','La visuale torna indietro in modo fluido.');
+    if(cue)cue.textContent='Ritorno alla panoramica…';updateSidebar(stops.length-1,'Sintesi conclusiva','Dal percorso scolastico alla scelta universitaria.');
     const start={...camera},duration=2200,t0=performance.now();
     cancelAnimationFrame(raf);
-    const tick=now=>{const raw=Math.min((now-t0)/duration,1),t=smootherstep(raw);camera={x:lerp(start.x,PANORAMA.x,t),y:lerp(start.y,PANORAMA.y,t),width:lerp(start.width,PANORAMA.width,t),height:lerp(start.height,PANORAMA.height,t)};applyCamera(camera);updateFloatingPhotoPositions();if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;finalPanoramaDone=true;shell.classList.remove('maps-moving','maps-final-wait');shell.classList.add('maps-panorama-return');if(cue)cue.textContent='Tocca per resettare';updateSidebar(stops.length-1,'Percorso aperto','Dopo UniBS il tragitto continua oltre la visuale.');nextButtons.forEach(btn=>btn.textContent='Reset');updateStepStates(stops.length-1);}};
+    const tick=now=>{const raw=Math.min((now-t0)/duration,1),t=smootherstep(raw);camera={x:lerp(start.x,PANORAMA.x,t),y:lerp(start.y,PANORAMA.y,t),width:lerp(start.width,PANORAMA.width,t),height:lerp(start.height,PANORAMA.height,t)};applyCamera(camera);updateFloatingPhotoPositions();if(raw<1)raf=requestAnimationFrame(tick);else{isRunning=false;finalPanoramaDone=true;shell.classList.remove('maps-moving','maps-final-wait');shell.classList.add('maps-panorama-return');if(cue)cue.textContent='Tocca per resettare';updateSidebar(stops.length-1,'Percorso futuro','Ingegneria informatica come naturale prosecuzione del percorso.');nextButtons.forEach(btn=>btn.textContent='Reset');updateStepStates(stops.length-1);}};
     raf=requestAnimationFrame(tick);
   }
   function renderMovingPoint(previous,followCamera){const distance=currentProgress*totalLength,pt=routePath.getPointAtLength(distance),next=routePath.getPointAtLength(Math.min(distance+4,totalLength));moveCar(pt,getAngle(pt,next));updateProgress(distance);if(followCamera)centerCameraOnPoint(pt,true);updatePhotoPinsByDistance(distance);updateCheckpoints(currentProgress,previous);updateFloatingPhotoPositions();}

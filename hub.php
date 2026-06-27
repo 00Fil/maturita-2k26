@@ -278,16 +278,16 @@ function appicon(string $file, string $remote): string {
 
       <div class="mw-route" aria-label="Tappe del percorso">
         <div class="mw-route-line"></div>
-        <button class="mw-endpoint route-start active" data-maps-step="0" type="button"><span class="mw-pt start"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Partenza</small><b>Cerebotani</b><em>IIS Luigi Cerebotani · Lonato</em></div></button>
-        <button class="mw-endpoint route-stop" data-maps-step="1" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>CS Metal Europe</b><em>Tappa a Bedizzole</em></div></button>
-        <button class="mw-endpoint route-stop" data-maps-step="2" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>Diploma</b><em>Tappa simbolica verso Brescia</em></div></button>
-        <button class="mw-endpoint route-stop" data-maps-step="3" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Tappa</small><b>UniBS</b><em>La strada prosegue oltre l’università</em></div></button>
+        <button class="mw-endpoint route-start active" data-maps-step="0" type="button"><span class="mw-pt start"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Lonato</small><b>I.S.S. L. Cerebotani</b><em>Inizio del percorso presso l’I.S.S. L. Cerebotani</em></div></button>
+        <button class="mw-endpoint route-stop" data-maps-step="1" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Bedizzole</small><b>FSL · CS Metal Europe</b><em>FSL presso CS Metal Europe</em></div></button>
+        <button class="mw-endpoint route-stop" data-maps-step="2" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Lonato</small><b>Esame di Maturità</b><em>Conseguimento dell’esame di maturità</em></div></button>
+        <button class="mw-endpoint route-stop" data-maps-step="3" type="button"><span class="mw-pt mid"><svg viewBox="0 0 20 20"><path d="M10 2.2C6.7 2.2 4 4.85 4 8.15c0 4.35 6 9.65 6 9.65s6-5.3 6-9.65c0-3.3-2.7-5.95-6-5.95Zm0 8.05a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2Z"/></svg></span><div><small>Brescia</small><b>UniBS</b><em>Proseguimento degli studi: ingegneria informatica presso UniBS</em></div></button>
       </div>
 
       <div class="mw-routecard maps-progress-card" aria-label="Stato navigazione">
         <div class="mw-rc-main">
-          <b data-maps-side-title>Percorso</b>
-          <span data-maps-side-sub>Le tappe sono passaggi: dopo UniBS la strada continua.</span>
+          <b data-maps-side-title>Esame orale</b>
+          <span data-maps-side-sub>Traccia dei 10 minuti iniziali: scuola, FSL, maturità e università.</span>
         </div>
         <div class="mw-rc-info" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8a9.2 9.2 0 1 0 0 18.4 9.2 9.2 0 0 0 0-18.4Zm.8 4.2v5.1l3.5 2.1-.9 1.5-4.4-2.6V7h1.8Z"/></svg></div>
       </div>
@@ -315,10 +315,22 @@ function appicon(string $file, string $remote): string {
             <path id="routePath" class="route" pathLength="1" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L5600 220" />
             <path id="progressPath" class="route-progress" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L5600 220" />
 
-            <text class="city-label" x="130" y="705">Lonato</text>
-            <text class="city-label" x="700" y="575">Bedizzole</text>
-            <text class="city-label" x="1260" y="322">Diploma</text>
-            <text class="city-label" x="1840" y="185">Brescia</text>
+            <g class="map-place-label">
+              <text class="city-label" x="130" y="705">Lonato</text>
+              <text class="city-caption" x="130" y="733">Inizio del percorso presso l’I.S.S. L. Cerebotani</text>
+            </g>
+            <g class="map-place-label">
+              <text class="city-label" x="700" y="575">Bedizzole</text>
+              <text class="city-caption" x="700" y="603">FSL presso CS Metal Europe</text>
+            </g>
+            <g class="map-place-label">
+              <text class="city-label" x="1260" y="322">Lonato</text>
+              <text class="city-caption" x="1260" y="350">Conseguimento dell’esame di maturità</text>
+            </g>
+            <g class="map-place-label">
+              <text class="city-label" x="1840" y="185">Brescia</text>
+              <text class="city-caption" x="1840" y="213">Ingegneria informatica presso UniBS</text>
+            </g>
 
             <circle id="ring-0" class="checkpoint-ring" cx="180" cy="650" r="30" />
             <circle id="ring-1" class="checkpoint-ring" cx="760" cy="520" r="30" />
@@ -341,21 +353,15 @@ function appicon(string $file, string $remote): string {
       <!-- Pin fuori dall'SVG: restano verticali, ma agganciati al percorso -->
       <div class="floating-photo-layer" id="floatingPhotoLayer">
         <div class="floating-photo-pin" id="photoPin-0">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Lonato" /><div class="photo-label">Lonato</div></div></div>
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=85" alt="Lonato" /><div class="photo-label">I.S.S. L. Cerebotani</div></div></div>
         </div>
-        <div class="floating-photo-pin" id="photoPin-1">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=900&q=85" alt="Verso Bedizzole" /><div class="photo-label">Verso Bedizzole</div></div></div>
+        <div class="floating-photo-pin collage-pin collage-pin-large" id="photoPin-1">
+          <div class="photo-marker collage-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 320 278" aria-hidden="true"><path class="pin-body-path" d="M64 2 H256 C294 2 318 29 318 69 V160 C318 198 292 224 254 224 H190 C181 224 174 230 170 239 L160 270 L150 239 C146 230 139 224 130 224 H64 C26 224 2 198 2 160 V69 C2 29 26 2 64 2 Z" /><path class="pin-body-highlight" d="M68 10 H252 C286 10 310 34 310 70" /></svg><div class="photo-window collage-window"><div class="collage-grid"><img src="assets/notes/optimized/pcto-cs-metal.webp" alt="FSL CS Metal Europe 1" /><img src="assets/notes/try-cs-metal.png" alt="FSL CS Metal Europe 2" /><img src="assets/notes/optimized/curriculum-cover.webp" alt="FSL CS Metal Europe 3" /><img src="assets/notes/optimized/sportly.webp" alt="FSL CS Metal Europe 4" /></div><div class="photo-label">FSL · CS Metal Europe</div></div></div>
         </div>
-        <div class="floating-photo-pin" id="photoPin-2">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="assets/notes/optimized/pcto-cs-metal.webp" alt="CS Metal Europe" /><div class="photo-label">CS Metal Europe</div></div></div>
+        <div class="floating-photo-pin collage-pin collage-pin-large" id="photoPin-2">
+          <div class="photo-marker collage-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 320 278" aria-hidden="true"><path class="pin-body-path" d="M64 2 H256 C294 2 318 29 318 69 V160 C318 198 292 224 254 224 H190 C181 224 174 230 170 239 L160 270 L150 239 C146 230 139 224 130 224 H64 C26 224 2 198 2 160 V69 C2 29 26 2 64 2 Z" /><path class="pin-body-highlight" d="M68 10 H252 C286 10 310 34 310 70" /></svg><div class="photo-window collage-window"><div class="collage-grid"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=700&q=85" alt="Esame di Maturità 1" /><img src="assets/notes/optimized/curriculum-page-1.webp" alt="Esame di Maturità 2" /><img src="assets/iisc-logo.png" alt="Esame di Maturità 3" /><img src="assets/notes/optimized/volo-tra-le-righe.webp" alt="Esame di Maturità 4" /></div><div class="photo-label">Esame di Maturità</div></div></div>
         </div>
         <div class="floating-photo-pin" id="photoPin-3">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=85" alt="CS Metal uffici" /><div class="photo-label">CS Metal · Uffici</div></div></div>
-        </div>
-        <div class="floating-photo-pin" id="photoPin-4">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85" alt="Esame di Maturità" /><div class="photo-label">Esame di Maturità</div></div></div>
-        </div>
-        <div class="floating-photo-pin" id="photoPin-5">
           <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=85" alt="UniBS" /><div class="photo-label">UniBS</div></div></div>
         </div>
       </div>

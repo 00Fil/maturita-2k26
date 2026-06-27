@@ -4239,3 +4239,21 @@ body.login-screen.video-loading::after{
 .maps-reference-shell.maps-final-wait .maps-click-cue{animation:mwHintPulse 1.8s ease-in-out infinite;opacity:.96;}
 @media(max-width:980px){.maps-ref .map-stage,.maps-reference-shell.nav .maps-ref .map-stage,.maps-reference-shell.maps-moving .maps-ref .map-stage,.maps-reference-shell.maps-paused .maps-ref .map-stage,.maps-reference-shell.maps-panorama-return .maps-ref .map-stage{inset:-42%!important}.maps-ref .map-tilt,.maps-ref .map-tilt.navigation,.maps-reference-shell.nav .map-tilt,.maps-reference-shell.maps-moving .map-tilt,.maps-reference-shell.maps-paused .map-tilt,.maps-reference-shell.maps-panorama-return .map-tilt{transform:scale(1.12) rotateX(50deg) rotateZ(-18deg) translateY(60px)!important;}}
 @media(max-width:760px){.maps-ref .map-stage,.maps-reference-shell.nav .maps-ref .map-stage,.maps-reference-shell.maps-moving .maps-ref .map-stage,.maps-reference-shell.maps-paused .maps-ref .map-stage,.maps-reference-shell.maps-panorama-return .maps-ref .map-stage{inset:-46%!important}.maps-ref .map-tilt,.maps-ref .map-tilt.navigation,.maps-reference-shell.nav .map-tilt,.maps-reference-shell.maps-moving .map-tilt,.maps-reference-shell.maps-paused .map-tilt,.maps-reference-shell.maps-panorama-return .map-tilt{transform:scale(1.14) rotateX(46deg) rotateZ(-16deg) translateY(54px)!important;}}
+
+
+/* Maps exposition sidebar labels and collage pins */
+.maps-ref .city-caption{font-size:15px;font-weight:720;fill:rgba(245,245,247,.66);paint-order:stroke;stroke:rgba(45,46,50,.92);stroke-width:5px;stroke-linejoin:round;letter-spacing:-.015em;}
+.maps-ref-side .mw-endpoint b{font-size:14px!important;line-height:1.08!important;}
+.maps-ref-side .mw-endpoint em{font-size:11.5px!important;line-height:1.22!important;color:rgba(255,255,255,.58)!important;max-width:168px!important;}
+.maps-ref-side .maps-progress-card [data-maps-side-title]{font-size:15px!important;}
+.maps-ref-side .maps-progress-card [data-maps-side-sub]{font-size:12px!important;line-height:1.25!important;color:rgba(255,255,255,.62)!important;}
+.maps-ref .collage-pin{width:320px!important;height:278px!important;transform:translate(-50%,-112%)!important;transform-origin:50% 112%!important;z-index:15!important;}
+.maps-ref .collage-marker{width:320px!important;height:278px!important;transform-origin:50% 112%!important;}
+.maps-ref .collage-marker .pin-body{width:320px!important;height:278px!important;}
+.maps-ref .collage-window{left:16px!important;top:16px!important;width:288px!important;height:184px!important;border-radius:38px!important;}
+.maps-ref .collage-grid{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;background:#0b1220;}
+.maps-ref .collage-grid img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.03);}
+.maps-ref .collage-window .photo-label{height:38px!important;font-size:13px!important;z-index:4;}
+.maps-ref #photoPin-1,.maps-ref #photoPin-2{z-index:16!important;}
+@media(max-width:980px){.maps-ref .collage-pin{width:270px!important;height:235px!important}.maps-ref .collage-marker,.maps-ref .collage-marker .pin-body{width:270px!important;height:235px!important}.maps-ref .collage-window{left:14px!important;top:14px!important;width:242px!important;height:154px!important;border-radius:32px!important}}
+@media(max-width:760px){.maps-ref .collage-pin{width:230px!important;height:200px!important}.maps-ref .collage-marker,.maps-ref .collage-marker .pin-body{width:230px!important;height:200px!important}.maps-ref .collage-window{left:12px!important;top:12px!important;width:206px!important;height:132px!important;border-radius:28px!important}}
