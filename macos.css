@@ -4284,3 +4284,59 @@ body.login-screen.video-loading::after{
 .maps-ref .pin-circle{fill:#3a3b40!important;stroke:rgba(255,255,255,.22)!important;stroke-width:2!important;filter:none!important;}
 .maps-ref .pin-number{font-size:20px!important;font-weight:850!important;text-anchor:middle!important;dominant-baseline:central!important;fill:#f5f5f7!important;stroke:none!important;paint-order:normal!important;letter-spacing:-.02em;}
 .maps-ref .pin-bowl-shadow,.maps-ref .pin-bowl-base,.maps-ref .pin-rim,.maps-ref .pin-inner-well,.maps-ref .pin-number-3d{display:none!important;}
+
+
+/* Maps restore pre-3D arrival animation */
+.maps-ref .checkpoint-ring{
+  fill:none!important;
+  stroke:#64d2ff!important;
+  stroke-width:5!important;
+  opacity:0!important;
+  transform-box:fill-box!important;
+  transform-origin:center!important;
+  filter:drop-shadow(0 0 10px rgba(100,210,255,.68))!important;
+}
+.maps-ref .checkpoint-ring.active{
+  animation:checkpointPulse 1.25s ease-out forwards!important;
+}
+.maps-ref .map-tilt.checkpoint-flash{
+  filter:saturate(1.05) contrast(1.08) brightness(1.07)!important;
+}
+.maps-ref .pin-circle{
+  fill:#171c24!important;
+  stroke:rgba(255,255,255,.16)!important;
+  stroke-width:2!important;
+}
+.maps-ref .pin-number{
+  font-size:16px!important;
+  font-weight:850!important;
+  fill:#64d2ff!important;
+  text-anchor:middle!important;
+  dominant-baseline:central!important;
+  stroke:none!important;
+}
+
+
+/* Maps experimental grid photo floor tiles */
+.maps-ref .floating-photo-layer{display:none!important;}
+.maps-ref .map-photo-tiles{pointer-events:none;}
+.maps-ref .map-photo-tile{opacity:0;transform-box:fill-box;transform-origin:center center;will-change:opacity,transform,filter;filter:drop-shadow(0 18px 18px rgba(0,0,0,.34));}
+.maps-ref .map-photo-tile image{filter:saturate(1.04) contrast(1.04);}
+.maps-ref .tile-photo-depth{fill:#111820;opacity:.92;transform:translateY(7px);}
+.maps-ref .tile-photo-frame{fill:#1d232b;stroke:rgba(255,255,255,.22);stroke-width:3;}
+.maps-ref .tile-photo-gloss{fill:url(#mapGrid);opacity:.06;stroke:rgba(255,255,255,.28);stroke-width:1.3;}
+.maps-ref .map-photo-tile.visible{opacity:1;}
+.maps-ref .map-photo-tile.tile-pop{animation:mapTileFloorIn 1.05s cubic-bezier(.16,.86,.22,1) both;}
+.maps-ref .map-photo-tile[data-tile-index="1"].tile-pop{animation-delay:.00s;}
+.maps-ref .map-photo-tile[data-tile-index="2"].tile-pop{animation-delay:.08s;}
+.maps-ref .map-photo-tile[data-tile-index="3"].tile-pop{animation-delay:.16s;}
+.maps-ref .map-photo-tile[data-tile-index="4"].tile-pop{animation-delay:.24s;}
+.maps-ref .map-photo-tile[data-tile-index="5"].tile-pop{animation-delay:.00s;}
+.maps-ref .map-photo-tile[data-tile-index="6"].tile-pop{animation-delay:.08s;}
+.maps-ref .map-photo-tile[data-tile-index="7"].tile-pop{animation-delay:.16s;}
+.maps-ref .map-photo-tile[data-tile-index="8"].tile-pop{animation-delay:.24s;}
+@keyframes mapTileFloorIn{
+  0%{opacity:0;transform:perspective(520px) rotateX(68deg) translateY(34px) scale(.72);filter:drop-shadow(0 0 0 rgba(0,0,0,0)) brightness(.75) blur(1.5px);}
+  52%{opacity:1;transform:perspective(520px) rotateX(10deg) translateY(-8px) scale(1.04);filter:drop-shadow(0 28px 22px rgba(0,0,0,.38)) brightness(1.08) blur(0);}
+  100%{opacity:1;transform:perspective(520px) rotateX(0deg) translateY(0) scale(1);filter:drop-shadow(0 18px 18px rgba(0,0,0,.34)) brightness(1);}
+}

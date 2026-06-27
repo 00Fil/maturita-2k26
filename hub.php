@@ -307,8 +307,31 @@ function appicon(string $file, string $remote): string {
                 <rect width="128" height="128" fill="#2d2e32" />
                 <path d="M128 0H0V128" fill="none" stroke="rgba(255,255,255,.16)" stroke-width="1.8" />
               </pattern>
+              <clipPath id="tileClip-0"><rect x="256" y="576" width="128" height="128" rx="18" /></clipPath>
+              <clipPath id="tileClip-1"><rect x="640" y="384" width="128" height="128" rx="18" /></clipPath>
+              <clipPath id="tileClip-2"><rect x="768" y="384" width="128" height="128" rx="18" /></clipPath>
+              <clipPath id="tileClip-3"><rect x="640" y="512" width="128" height="128" rx="18" /></clipPath>
+              <clipPath id="tileClip-4"><rect x="768" y="512" width="128" height="128" rx="18" /></clipPath>
+              <clipPath id="tileClip-5"><rect x="1216" y="256" width="128" height="128" rx="18" /></clipPath>
+              <clipPath id="tileClip-6"><rect x="1344" y="256" width="128" height="128" rx="18" /></clipPath>
+              <clipPath id="tileClip-7"><rect x="1216" y="384" width="128" height="128" rx="18" /></clipPath>
+              <clipPath id="tileClip-8"><rect x="1344" y="384" width="128" height="128" rx="18" /></clipPath>
+              <clipPath id="tileClip-9"><rect x="1984" y="128" width="128" height="128" rx="18" /></clipPath>
             </defs>
             <rect class="land" x="-1400" y="-900" width="7200" height="2900" />
+
+            <g class="map-photo-tiles" aria-hidden="true">
+              <g id="photoPin-0" class="map-photo-tile" data-tile-index="0"><rect class="tile-photo-depth" x="256" y="586" width="128" height="128" rx="18" /><rect class="tile-photo-frame" x="256" y="576" width="128" height="128" rx="18" /><image href="assets/maps-media/step-01-lonato-cerebotani.webp" x="256" y="576" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-0)" /><rect class="tile-photo-gloss" x="256" y="576" width="128" height="128" rx="18" /></g>
+              <g id="photoPin-1" class="map-photo-tile" data-tile-index="1"><rect class="tile-photo-depth" x="640" y="394" width="128" height="128" rx="18" /><rect class="tile-photo-frame" x="640" y="384" width="128" height="128" rx="18" /><image href="assets/maps-media/step-02-bedizzole-csmetal-01.webp" x="640" y="384" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-1)" /><rect class="tile-photo-gloss" x="640" y="384" width="128" height="128" rx="18" /></g>
+              <g id="photoPin-2" class="map-photo-tile" data-tile-index="2"><rect class="tile-photo-depth" x="768" y="394" width="128" height="128" rx="18" /><rect class="tile-photo-frame" x="768" y="384" width="128" height="128" rx="18" /><image href="assets/maps-media/step-02-bedizzole-csmetal-02.webp" x="768" y="384" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-2)" /><rect class="tile-photo-gloss" x="768" y="384" width="128" height="128" rx="18" /></g>
+              <g id="photoPin-3" class="map-photo-tile" data-tile-index="3"><rect class="tile-photo-depth" x="640" y="522" width="128" height="128" rx="18" /><rect class="tile-photo-frame" x="640" y="512" width="128" height="128" rx="18" /><image href="assets/maps-media/step-02-bedizzole-csmetal-03.webp" x="640" y="512" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-3)" /><rect class="tile-photo-gloss" x="640" y="512" width="128" height="128" rx="18" /></g>
+              <g id="photoPin-4" class="map-photo-tile" data-tile-index="4"><rect class="tile-photo-depth" x="768" y="522" width="128" height="128" rx="18" /><rect class="tile-photo-frame" x="768" y="512" width="128" height="128" rx="18" /><image href="assets/maps-media/step-02-bedizzole-csmetal-04.webp" x="768" y="512" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-4)" /><rect class="tile-photo-gloss" x="768" y="512" width="128" height="128" rx="18" /></g>
+              <g id="photoPin-5" class="map-photo-tile" data-tile-index="5"><rect class="tile-photo-depth" x="1216" y="266" width="128" height="128" rx="18" /><rect class="tile-photo-frame" x="1216" y="256" width="128" height="128" rx="18" /><image href="assets/maps-media/step-03-lonato-maturita-01.webp" x="1216" y="256" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-5)" /><rect class="tile-photo-gloss" x="1216" y="256" width="128" height="128" rx="18" /></g>
+              <g id="photoPin-6" class="map-photo-tile" data-tile-index="6"><rect class="tile-photo-depth" x="1344" y="266" width="128" height="128" rx="18" /><rect class="tile-photo-frame" x="1344" y="256" width="128" height="128" rx="18" /><image href="assets/maps-media/step-03-lonato-maturita-02.webp" x="1344" y="256" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-6)" /><rect class="tile-photo-gloss" x="1344" y="256" width="128" height="128" rx="18" /></g>
+              <g id="photoPin-7" class="map-photo-tile" data-tile-index="7"><rect class="tile-photo-depth" x="1216" y="394" width="128" height="128" rx="18" /><rect class="tile-photo-frame" x="1216" y="384" width="128" height="128" rx="18" /><image href="assets/maps-media/step-03-lonato-maturita-03.webp" x="1216" y="384" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-7)" /><rect class="tile-photo-gloss" x="1216" y="384" width="128" height="128" rx="18" /></g>
+              <g id="photoPin-8" class="map-photo-tile" data-tile-index="8"><rect class="tile-photo-depth" x="1344" y="394" width="128" height="128" rx="18" /><rect class="tile-photo-frame" x="1344" y="384" width="128" height="128" rx="18" /><image href="assets/maps-media/step-03-lonato-maturita-04.webp" x="1344" y="384" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-8)" /><rect class="tile-photo-gloss" x="1344" y="384" width="128" height="128" rx="18" /></g>
+              <g id="photoPin-9" class="map-photo-tile" data-tile-index="9"><rect class="tile-photo-depth" x="1984" y="138" width="128" height="128" rx="18" /><rect class="tile-photo-frame" x="1984" y="128" width="128" height="128" rx="18" /><image href="assets/maps-media/step-04-brescia-unibs.webp" x="1984" y="128" width="128" height="128" preserveAspectRatio="xMidYMid slice" clip-path="url(#tileClip-9)" /><rect class="tile-photo-gloss" x="1984" y="128" width="128" height="128" rx="18" /></g>
+            </g>
 
             <!-- Percorso principale -->
             <path class="route-glow" d="M180 650 C420 610 610 560 760 520 C950 465 1160 410 1320 360 C1500 305 1700 260 1900 220 L5600 220" />
@@ -351,20 +374,7 @@ function appicon(string $file, string $remote): string {
       </div>
 
       <!-- Pin fuori dall'SVG: restano verticali, ma agganciati al percorso -->
-      <div class="floating-photo-layer" id="floatingPhotoLayer">
-        <div class="floating-photo-pin" id="photoPin-0">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="assets/maps-media/step-01-lonato-cerebotani.webp" alt="Lonato" /><div class="photo-label">I.S.S. L. Cerebotani</div></div></div>
-        </div>
-        <div class="floating-photo-pin collage-pin collage-pin-large" id="photoPin-1">
-          <div class="photo-marker collage-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 320 278" aria-hidden="true"><path class="pin-body-path" d="M64 2 H256 C294 2 318 29 318 69 V160 C318 198 292 224 254 224 H190 C181 224 174 230 170 239 L160 270 L150 239 C146 230 139 224 130 224 H64 C26 224 2 198 2 160 V69 C2 29 26 2 64 2 Z" /><path class="pin-body-highlight" d="M68 10 H252 C286 10 310 34 310 70" /></svg><div class="photo-window collage-window"><div class="collage-grid"><img src="assets/maps-media/step-02-bedizzole-csmetal-01.webp" alt="FSL CS Metal Europe 1" /><img src="assets/maps-media/step-02-bedizzole-csmetal-02.webp" alt="FSL CS Metal Europe 2" /><img src="assets/maps-media/step-02-bedizzole-csmetal-03.webp" alt="FSL CS Metal Europe 3" /><img src="assets/maps-media/step-02-bedizzole-csmetal-04.webp" alt="FSL CS Metal Europe 4" /></div><div class="photo-label">FSL · CS Metal Europe</div></div></div>
-        </div>
-        <div class="floating-photo-pin collage-pin collage-pin-large" id="photoPin-2">
-          <div class="photo-marker collage-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 320 278" aria-hidden="true"><path class="pin-body-path" d="M64 2 H256 C294 2 318 29 318 69 V160 C318 198 292 224 254 224 H190 C181 224 174 230 170 239 L160 270 L150 239 C146 230 139 224 130 224 H64 C26 224 2 198 2 160 V69 C2 29 26 2 64 2 Z" /><path class="pin-body-highlight" d="M68 10 H252 C286 10 310 34 310 70" /></svg><div class="photo-window collage-window"><div class="collage-grid"><img src="assets/maps-media/step-03-lonato-maturita-01.webp" alt="Esame di Maturità 1" /><img src="assets/maps-media/step-03-lonato-maturita-02.webp" alt="Esame di Maturità 2" /><img src="assets/maps-media/step-03-lonato-maturita-03.webp" alt="Esame di Maturità 3" /><img src="assets/maps-media/step-03-lonato-maturita-04.webp" alt="Esame di Maturità 4" /></div><div class="photo-label">Esame di Maturità</div></div></div>
-        </div>
-        <div class="floating-photo-pin" id="photoPin-3">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="assets/maps-media/step-04-brescia-unibs.webp" alt="UniBS" /><div class="photo-label">UniBS</div></div></div>
-        </div>
-      </div>
+      <div class="floating-photo-layer" id="floatingPhotoLayer" aria-hidden="true"></div>
 
       <div class="maps-click-cue" data-maps-click-cue>Tocca la mappa per proseguire</div>
     </div>

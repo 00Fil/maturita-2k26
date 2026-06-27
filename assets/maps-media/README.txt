@@ -16,3 +16,4 @@ Nomi file richiesti:
 10. step-04-brescia-unibs.webp
 
 Formato consigliato: .webp, immagini ottimizzate, almeno 1200px sul lato lungo.
+Le immagini vengono usate come piastrelle fotografiche della griglia: non inserire testo dentro le immagini.
