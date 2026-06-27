@@ -134,9 +134,8 @@ demoEnter.addEventListener('click', () => {
 });
 
 /* ============================================================
-   PRELOADER — la barra si completa sugli asset locali (font +
-   immagini). Il video è best-effort: ha un tetto massimo e NON
-   può mai bloccare il caricamento. Sblocco garantito entro 5s.
+   PRELOADER — carica asset locali e prepara assets/lock.mp4.
+   Il video resta su URL reale per evitare falsi fallback con MP4 grandi.
    ============================================================ */
 (function preload() {
   const boot  = document.getElementById('boot');
@@ -158,21 +157,54 @@ demoEnter.addEventListener('click', () => {
     }));
   });
 
-  // video di sfondo: best-effort con tetto massimo (max 3s).
-  // NB: con un <source> che fallisce, l'evento 'error' arriva sul <source>,
-  // non sul <video> — per questo ascolto entrambi + timeout di sicurezza.
+  // video lock screen MP4: usa assets/lock.mp4 e lo scalda in cache.
+  // Non passiamo a objectURL: sugli MP4 grandi può causare falsi fallback.
   tasks.push(new Promise((res) => {
     if (!video) return res();
+    const src = video.dataset.videoSrc || video.querySelector('source')?.getAttribute('src') || 'assets/lock.mp4';
     let done = false;
     const fine = () => { if (!done) { done = true; res(); } };
-    if (video.readyState >= 3) return fine();
-    video.addEventListener('canplay', fine, { once: true });
-    video.addEventListener('loadeddata', fine, { once: true });
-    video.addEventListener('error', fine, { once: true });
-    const source = video.querySelector('source');
-    if (source) source.addEventListener('error', fine, { once: true });
-    setTimeout(fine, LOGIN_PERF.low ? 900 : 2200);
-    try { video.load(); } catch (e) {}
+
+    document.body.classList.add('video-loading');
+    document.body.classList.remove('video-error', 'video-fallback');
+
+    try {
+      video.preload = 'auto';
+      if (!video.currentSrc || !video.currentSrc.includes('lock.mp4')) video.src = src;
+      video.load();
+    } catch (e) {}
+
+    const waitFirstFrame = new Promise((resolve) => {
+      if (video.readyState >= 2) return resolve();
+      const ok = () => resolve();
+      video.addEventListener('loadedmetadata', ok, { once: true });
+      video.addEventListener('loadeddata', ok, { once: true });
+      video.addEventListener('canplay', ok, { once: true });
+      video.addEventListener('error', ok, { once: true });
+    });
+
+    const warmCache = (async () => {
+      try {
+        const response = await fetch(src, { cache: 'force-cache' });
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        if ('caches' in window) {
+          try {
+            const cache = await caches.open('lockscreen-video-v1');
+            await cache.put(src, response.clone());
+          } catch (e) {}
+        }
+        // Attende il download completo per scaldare la cache, ma il <video> resta su URL reale.
+        await response.blob();
+      } catch (e) {
+        console.warn('[lock-video] cache warm failed; using direct assets/lock.mp4', e);
+      }
+    })();
+
+    Promise.all([warmCache, waitFirstFrame]).then(() => {
+      document.body.classList.remove('video-loading', 'video-fallback', 'video-error');
+      document.body.classList.add('video-ok');
+      fine();
+    }).catch(() => fine());
   }));
 
   // avanzamento barra a ogni asset pronto
@@ -200,8 +232,8 @@ demoEnter.addEventListener('click', () => {
   // tempo minimo per un'animazione elegante, poi completa appena pronti
   const minimo = new Promise((res) => setTimeout(res, 650));
   Promise.all([Promise.all(tasks), minimo]).then(completa).catch(completa);
-  // rete di sicurezza dura: il sito si sblocca comunque entro 5s
-  setTimeout(completa, LOGIN_PERF.low ? 2600 : 4200);
+  // rete di sicurezza: normalmente il boot aspetta cache/frame del MP4.
+  setTimeout(completa, LOGIN_PERF.low ? 12000 : 18000);
 })();
 
 /* ============================================================
@@ -344,60 +376,59 @@ function mostraDemo(json, msTotali, statoHttp) {
   ]);
 }
 
-
 /* ============================================================
-   Lock background watchdog — evita video nero/top bar nera intermittenti
+   Lock background watchdog — no falso fallback se assets/lock.mp4 esiste
    ============================================================ */
 (function lockBackgroundWatchdog(){
   const video = document.getElementById('bgVideo');
-  if (!video) {
-    document.body.classList.add('video-fallback');
-    return;
-  }
+  if (!video) { document.body.classList.add('video-error'); return; }
 
   let retryTimer = 0;
-  let lastGood = 0;
+  const hasSource = () => !!(video.currentSrc || video.src || video.querySelector('source'));
   const markGood = () => {
-    lastGood = performance.now();
     document.body.classList.add('video-ok');
-    document.body.classList.remove('video-fallback');
+    document.body.classList.remove('video-loading','video-fallback','video-error');
   };
-  const markFallback = () => {
-    document.body.classList.remove('video-ok');
-    document.body.classList.add('video-fallback');
+  const markLoading = () => {
+    // Non è un fallback duro: il poster resta sotto, ma il file non viene considerato mancante.
+    document.body.classList.add('video-loading');
+    document.body.classList.remove('video-error','video-fallback');
+  };
+  const markError = () => {
+    document.body.classList.remove('video-ok','video-loading');
+    document.body.classList.add('video-error');
   };
   const retry = () => {
     clearTimeout(retryTimer);
     retryTimer = setTimeout(() => {
       try {
-        if (video.readyState < 2) video.load();
+        if (!hasSource()) return markError();
+        if (video.readyState < 1) video.load();
         const p = video.play();
-        if (p && typeof p.catch === 'function') p.catch(() => markFallback());
+        if (p && typeof p.catch === 'function') p.catch(() => {
+          if (video.readyState >= 2) markGood(); else markLoading();
+        });
       } catch (e) {
-        markFallback();
+        if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) markError();
+        else markLoading();
       }
-    }, 420);
+    }, 450);
   };
 
-  ['loadeddata','canplay','canplaythrough','playing'].forEach(ev => {
-    video.addEventListener(ev, markGood, { passive:true });
-  });
-  ['error','abort','stalled','emptied'].forEach(ev => {
-    video.addEventListener(ev, () => { markFallback(); retry(); }, { passive:true });
-  });
-  video.addEventListener('waiting', () => {
-    if (performance.now() - lastGood > 1200) markFallback();
+  ['loadedmetadata','loadeddata','canplay','canplaythrough','playing'].forEach(ev => video.addEventListener(ev, markGood, { passive:true }));
+  ['stalled','waiting'].forEach(ev => video.addEventListener(ev, () => { markLoading(); retry(); }, { passive:true }));
+  ['error','abort','emptied'].forEach(ev => video.addEventListener(ev, () => {
+    if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) markError();
+    else markLoading();
     retry();
-  }, { passive:true });
+  }, { passive:true }));
 
-  // Stato iniziale: non mostrare mai il video finché non ha almeno un frame.
-  if (video.readyState >= 2) markGood(); else markFallback();
+  if (video.readyState >= 2) markGood(); else markLoading();
   retry();
-
-  // Safety poll: se il browser perde il frame/decoder, torna al poster invece del nero.
   setInterval(() => {
     if (document.body.classList.contains('unlock')) return;
-    if (video.readyState >= 2 && !video.paused) markGood();
-    else if (performance.now() - lastGood > 1800) { markFallback(); retry(); }
-  }, 1500);
+    if (video.readyState >= 2) { markGood(); if (video.paused) retry(); }
+    else if (video.error || video.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) markError();
+    else { markLoading(); retry(); }
+  }, 1600);
 })();

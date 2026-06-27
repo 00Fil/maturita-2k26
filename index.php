@@ -8,6 +8,7 @@
 <!-- precarica il logo della scuola: serve subito al loader -->
 <link rel="preload" href="assets/iisc-logo.png" as="image" fetchpriority="high">
 <link rel="preload" href="assets/optimized/bg.webp" as="image" fetchpriority="high">
+<link rel="preload" href="assets/lock.mp4" as="video" type="video/mp4" fetchpriority="high">
 <link rel="stylesheet" href="macos.css?v=<?= @filemtime(__DIR__ . '/macos.css') ?>">
 </head>
 <body class="login-screen">
@@ -19,8 +20,8 @@
 </div>
 
 <!-- SFONDO VIDEO (poster di fallback: bg.png) -->
-<video class="wallpaper" id="bgVideo" autoplay muted loop playsinline preload="metadata" poster="assets/optimized/bg.webp">
-  <source src="assets/optimized/lock-lite.mp4" type="video/mp4">
+<video class="wallpaper" id="bgVideo" autoplay muted loop playsinline preload="auto" poster="assets/optimized/bg.webp" data-video-src="assets/lock.mp4">
+  <source src="assets/lock.mp4" type="video/mp4">
 </video>
 <div class="tahoe-light-field" aria-hidden="true">
   <span class="tl tl-a"></span>
