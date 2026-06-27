@@ -1383,22 +1383,22 @@ syncFinderVisibility();
   const OVERVIEW_CAMERA_WIDTH=1800;
   const NAV_CAMERA_WIDTH_DESKTOP=1500;
   const NAV_CAMERA_WIDTH_MOBILE=1520;
-  const TARGET_VX=.50, TARGET_VY=.63, CAMERA_SMOOTHNESS=.11;
-  const PHOTO_SLOW_SIGMA=.055;
-  const PHOTO_SLOW_STRENGTH=.72;
+  const TARGET_VX=.50, TARGET_VY=.63, CAMERA_SMOOTHNESS=.075;
+  const PHOTO_SLOW_SIGMA=.085;
+  const PHOTO_SLOW_STRENGTH=.62;
   const stops=[
     {x:180,y:650,id:'ring-0',title:'Cerebotani',sub:'Partenza da IIS Luigi Cerebotani'},
-    {x:560,y:525,id:'ring-1',title:'CS Metal Europe',sub:'Tappa a Bedizzole raggiunta. Clicca per proseguire.'},
-    {x:870,y:390,id:'ring-2',title:'Diploma',sub:'Tappa Diploma raggiunta. Clicca per proseguire.'},
-    {x:1220,y:250,id:'ring-3',title:'UniBS',sub:'Tappa UniBS raggiunta. La strada continua oltre.'}
+    {x:620,y:515,id:'ring-1',title:'CS Metal Europe',sub:'Tappa a Bedizzole raggiunta. Clicca per proseguire.'},
+    {x:1080,y:360,id:'ring-2',title:'Diploma',sub:'Tappa Diploma raggiunta. Clicca per proseguire.'},
+    {x:1520,y:220,id:'ring-3',title:'UniBS',sub:'Tappa UniBS raggiunta. La strada continua oltre.'}
   ];
   const photoPins=[
-    {x:260,y:620,id:'photoPin-0'},
-    {x:470,y:555,id:'photoPin-1'},
-    {x:625,y:498,id:'photoPin-2'},
-    {x:805,y:428,id:'photoPin-3'},
-    {x:1035,y:305,id:'photoPin-4'},
-    {x:1365,y:222,id:'photoPin-5'}
+    {x:285,y:618,id:'photoPin-0'},
+    {x:520,y:545,id:'photoPin-1'},
+    {x:655,y:503,id:'photoPin-2'},
+    {x:840,y:443,id:'photoPin-3'},
+    {x:1010,y:382,id:'photoPin-4'},
+    {x:1665,y:185,id:'photoPin-5'}
   ];
   let camera={x:0,y:0,width:1400,height:900};
   let currentStop=0,currentProgress=0,isRunning=false,finalPanoramaDone=false,finalOutPending=false,raf=null;
@@ -1433,7 +1433,7 @@ syncFinderVisibility();
     mapTilt.classList.add('navigation');
     if(cue)cue.textContent='Navigazione in corso…';
     updateSidebar(currentStop,'In movimento',`Verso ${stops[targetStop].title}`);
-    const segmentDuration=Math.max(3100,Math.min(8600,16000*delta*1.34));
+    const segmentDuration=Math.max(4200,Math.min(11200,21000*delta*1.42));
     const t0=performance.now(),startCamera={...camera},prev=new Set(triggeredCheckpoints);
     cancelAnimationFrame(raf);
     const tick=now=>{
@@ -1457,7 +1457,7 @@ syncFinderVisibility();
     shell.classList.add('nav','maps-moving'); shell.classList.remove('maps-paused','at-goal','maps-panorama-return','maps-final-wait');
     if(cue)cue.textContent='La strada continua…';
     updateSidebar(currentStop,'La strada continua','Il player esce dalla visuale. Poi clicca per tornare alla panoramica.');
-    const fromProgress=currentProgress,toProgress=1,startCamera={...camera},duration=6200,releaseAt=.28,t0=performance.now();
+    const fromProgress=currentProgress,toProgress=1,startCamera={...camera},duration=7800,releaseAt=.34,t0=performance.now();
     cancelAnimationFrame(raf);
     const tick=now=>{
       const raw=Math.min((now-t0)/duration,1),local=gaussianPhotoProgress(raw,fromProgress,toProgress);
@@ -1484,7 +1484,7 @@ syncFinderVisibility();
     shell.classList.add('nav','maps-moving','maps-panorama-return'); shell.classList.remove('maps-final-wait','maps-paused','at-goal');
     if(cue)cue.textContent='Ritorno alla panoramica…';
     updateSidebar(stops.length-1,'Ritorno panoramico','La visuale rientra lentamente sul percorso completo.');
-    const startCamera={...camera},overview=getOverviewCamera(),duration=3000,t0=performance.now();
+    const startCamera={...camera},overview=getOverviewCamera(),duration=4600,t0=performance.now();
     cancelAnimationFrame(raf);
     const tick=now=>{
       const raw=Math.min((now-t0)/duration,1),e=smootherstep(raw);
@@ -1506,11 +1506,11 @@ syncFinderVisibility();
     const start=Math.min(fromProgress,toProgress),end=Math.max(fromProgress,toProgress),span=Math.max(.0001,end-start);
     const centers=photoPins.map(p=>(p.p-start)/span).filter(c=>c>.035&&c<.965);
     if(!centers.length) return smootherstep(raw);
-    const steps=90;
+    const steps=180;
     const speedAt=u=>{
       let slow=0;
       for(const c of centers) slow=Math.max(slow,Math.exp(-Math.pow((u-c)/PHOTO_SLOW_SIGMA,2)/2));
-      return Math.max(.22,1-PHOTO_SLOW_STRENGTH*slow);
+      return Math.max(.32,1-PHOTO_SLOW_STRENGTH*slow);
     };
     let total=0,partial=0,prev=0,prevSpeed=speedAt(0);
     for(let i=1;i<=steps;i++){

@@ -312,24 +312,24 @@ function appicon(string $file, string $remote): string {
             <path class="green-blob" d="M-420 840 C-230 720 40 770 120 930 C200 1090 -10 1240 -260 1180 C-510 1120 -640 980 -420 840Z" />
 
             <!-- Percorso principale -->
-            <path class="route-glow" d="M180 650 C300 610 425 565 560 525 C650 495 760 455 870 390 C980 325 1100 280 1220 250 C1450 205 1740 120 2640 -80" />
-            <path id="routePath" class="route" pathLength="1" d="M180 650 C300 610 425 565 560 525 C650 495 760 455 870 390 C980 325 1100 280 1220 250 C1450 205 1740 120 2640 -80" />
-            <path id="progressPath" class="route-progress" d="M180 650 C300 610 425 565 560 525 C650 495 760 455 870 390 C980 325 1100 280 1220 250 C1450 205 1740 120 2640 -80" />
+            <path class="route-glow" d="M180 650 C330 610 470 560 620 515 C760 465 920 420 1080 360 C1240 300 1390 255 1520 220 C1760 160 2100 70 2640 -80" />
+            <path id="routePath" class="route" pathLength="1" d="M180 650 C330 610 470 560 620 515 C760 465 920 420 1080 360 C1240 300 1390 255 1520 220 C1760 160 2100 70 2640 -80" />
+            <path id="progressPath" class="route-progress" d="M180 650 C330 610 470 560 620 515 C760 465 920 420 1080 360 C1240 300 1390 255 1520 220 C1760 160 2100 70 2640 -80" />
 
             <text class="city-label" x="130" y="705">Lonato</text>
-            <text class="city-label" x="500" y="585">Bedizzole</text>
-            <text class="city-label" x="820" y="350">Diploma</text>
-            <text class="city-label" x="1160" y="210">Brescia</text>
+            <text class="city-label" x="555" y="575">Bedizzole</text>
+            <text class="city-label" x="1030" y="320">Diploma</text>
+            <text class="city-label" x="1460" y="185">Brescia</text>
 
             <circle id="ring-0" class="checkpoint-ring" cx="180" cy="650" r="30" />
-            <circle id="ring-1" class="checkpoint-ring" cx="560" cy="525" r="30" />
-            <circle id="ring-2" class="checkpoint-ring" cx="870" cy="390" r="30" />
-            <circle id="ring-3" class="checkpoint-ring" cx="1220" cy="250" r="30" />
+            <circle id="ring-1" class="checkpoint-ring" cx="620" cy="515" r="30" />
+            <circle id="ring-2" class="checkpoint-ring" cx="1080" cy="360" r="30" />
+            <circle id="ring-3" class="checkpoint-ring" cx="1520" cy="220" r="30" />
 
             <g class="poi-pin"><circle class="pin-circle" cx="180" cy="650" r="24" /><text class="pin-number" x="180" y="650">1</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="560" cy="525" r="24" /><text class="pin-number" x="560" y="525">2</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="870" cy="390" r="24" /><text class="pin-number" x="870" y="390">3</text></g>
-            <g class="poi-pin"><circle class="pin-circle" cx="1220" cy="250" r="24" /><text class="pin-number" x="1220" y="250">4</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="620" cy="515" r="24" /><text class="pin-number" x="620" y="515">2</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="1080" cy="360" r="24" /><text class="pin-number" x="1080" y="360">3</text></g>
+            <g class="poi-pin"><circle class="pin-circle" cx="1520" cy="220" r="24" /><text class="pin-number" x="1520" y="220">4</text></g>
 
             <g id="car" class="car" transform="translate(180 650)">
               <circle class="car-body" cx="0" cy="0" r="22" />
@@ -354,7 +354,7 @@ function appicon(string $file, string $remote): string {
           <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=85" alt="CS Metal uffici" /><div class="photo-label">CS Metal · Uffici</div></div></div>
         </div>
         <div class="floating-photo-pin" id="photoPin-4">
-          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85" alt="Diploma" /><div class="photo-label">Diploma</div></div></div>
+          <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=85" alt="Esame di Maturità" /><div class="photo-label">Esame di Maturità</div></div></div>
         </div>
         <div class="floating-photo-pin" id="photoPin-5">
           <div class="photo-marker"><div class="photo-anchor-shadow"></div><svg class="pin-body" viewBox="0 0 260 226" aria-hidden="true"><path class="pin-body-path" d="M54 2 H206 C236 2 258 25 258 55 V124 C258 154 236 178 206 178 H153 C145 178 140 182 136 189 L130 218 L124 189 C120 182 115 178 107 178 H54 C24 178 2 154 2 124 V55 C2 25 24 2 54 2 Z" /><path class="pin-body-highlight" d="M56 9 H204 C230 9 251 30 251 56" /></svg><div class="photo-window"><img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=85" alt="UniBS" /><div class="photo-label">UniBS</div></div></div>

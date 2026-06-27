@@ -4129,3 +4129,17 @@ body.login-screen.video-loading::after{
 .maps-ref .floating-photo-pin.fading{opacity:0!important;}
 .maps-reference-shell.maps-final-wait .maps-click-cue{animation:mwHintPulse 1.8s ease-in-out infinite;opacity:.96;}
 .maps-reference-shell.maps-final-wait .maps-side-primary{filter:saturate(1.12) brightness(1.08);}
+
+/* ============================================================
+   Maps smoother gaussian animation tuning
+   ============================================================ */
+.maps-ref .floating-photo-pin{transition:opacity 1.25s ease, transform 1.05s cubic-bezier(.16,1,.3,1)!important;}
+.maps-ref .floating-photo-pin.fading{opacity:0!important;}
+.maps-ref .car{transition:filter .45s ease!important;}
+.maps-reference-shell.maps-moving .maps-click-cue{transition:opacity .65s ease,transform .65s cubic-bezier(.16,1,.3,1)!important;}
+
+/* ============================================================
+   Maps airy route diploma label tuning
+   ============================================================ */
+.maps-ref .photo-label{font-size:12.2px!important;letter-spacing:-.025em!important;}
+.win.maxi .maps-ref .photo-label{font-size:13.2px!important;}
