@@ -171,14 +171,6 @@ function appicon(string $file, string $remote): string {
         <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M8 9h8M8 13h6"/></svg></span>
         <b>Curriculum</b>
       </button>
-      <button class="nr-folder" data-filter="pcto" type="button">
-        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M9 7V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V7"/><rect x="4" y="7" width="16" height="12" rx="2.4"/><path d="M4 12h16"/></svg></span>
-        <b>PCTO</b>
-      </button>
-      <button class="nr-folder" data-filter="projects" type="button">
-        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M8 8h8v8H8z"/><path d="M4 4h5v5H4zM15 4h5v5h-5zM4 15h5v5H4zM15 15h5v5h-5z"/></svg></span>
-        <b>Sportly</b>
-      </button>
       <button class="nr-folder" data-filter="extra" type="button">
         <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M12 4v16M5 9h14M7 15h10"/><path d="M6 20h12"/></svg></span>
         <b>Attività extra</b>
@@ -187,18 +179,27 @@ function appicon(string $file, string $remote): string {
         <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M4 19V5l8-2 8 2v14"/><path d="M8 9h8M8 13h8"/></svg></span>
         <b>Cultura</b>
       </button>
+      <button class="nr-folder" data-filter="projects" type="button">
+        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M8 8h8v8H8z"/><path d="M4 4h5v5H4zM15 4h5v5h-5zM4 15h5v5H4zM15 15h5v5h-5z"/></svg></span>
+        <b>Sportly</b>
+      </button>
+      <button class="nr-folder" data-filter="pcto" type="button">
+        <span class="nr-ico"><svg viewBox="0 0 24 24"><path d="M9 7V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V7"/><rect x="4" y="7" width="16" height="12" rx="2.4"/><path d="M4 12h16"/></svg></span>
+        <b>PCTO</b>
+      </button>
       <div class="nr-label">Tag</div>
       <div class="nr-tags">
         <button data-filter="scuola" type="button">#scuola</button>
         <button data-filter="oratorio" type="button">#oratorio</button>
         <button data-filter="arte" type="button">#arte</button>
+        <button data-filter="sport" type="button">#sport</button>
       </div>
     </aside>
 
     <aside class="nr-list" aria-label="Elenco note">
       <div class="nr-list-head">
         <h2 data-notes-title>Tutte le note</h2>
-        <span data-notes-count>7 note</span>
+        <span data-notes-count>8 note</span>
       </div>
       <div class="nr-items" data-notes-list></div>
     </aside>

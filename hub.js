@@ -965,44 +965,50 @@ if (rebBtn) {
     {
       id:'curriculum', filter:'curriculum', tags:['scuola'], title:'Curriculum', meta:'Documento', label:'Percorso personale',
       image:'assets/notes/optimized/curriculum-cover.webp', kind:'polaroid', caption:'Curriculum dello studente',
-      body:['Documento sintetico del percorso scolastico e delle attività svolte fuori dall’aula.', 'Raccoglie formazione, PCTO, competenze di indirizzo e attività extrascolastiche senza trasformarle in racconto celebrativo.'],
-      chips:['Tecnico - Informatica','ITIS “Cerebotani” - Lonato','In lavorazione']
+      body:['Documento sintetico del percorso scolastico e delle attività svolte dentro e fuori dall’aula.', 'Apre la sezione perché raccoglie il punto di partenza del racconto: formazione, competenze di indirizzo, PCTO, progetti e attività extrascolastiche.'],
+      chips:['Tecnico - Informatica','ITIS “Cerebotani” - Lonato','Percorso personale']
     },
     {
-      id:'pcto', filter:'pcto', tags:['scuola'], title:'CS Metal Europe', meta:'PCTO', label:'Formazione scuola-lavoro',
-      image:'assets/notes/optimized/pcto-cs-metal.webp', kind:'polaroid pcto', caption:'CS Metal Europe',
-      body:['Esperienza svolta presso CS METAL EUROPE S.R.L. come attività realizzata in ambiente lavorativo.', 'Il valore della nota è preciso: scuola e azienda entrano in contatto, e le competenze tecniche vengono osservate nel contesto reale di una struttura produttiva.'],
-      chips:['CS METAL EUROPE S.R.L.','Ambiente lavorativo','Scuola-lavoro']
-    },
-    {
-      id:'sportly', filter:'projects', tags:['oratorio'], title:'Sportly', meta:'Book. Play. Connect.', label:'Concept digitale',
-      image:'assets/notes/optimized/sportly.webp', kind:'polaroid wide', caption:'Identità progetto', link:'https://gpoi.denuvo.studio', linkLabel:'Apri progetto GPOI',
-      body:['Concept visivo e digitale collegato al mondo dello sport e della prenotazione.', 'La nota resta breve: un supporto creativo per mostrare attenzione a identità, interfaccia e presentazione del progetto.'],
-      chips:['Book','Play','Connect']
-    },
-    {
-      id:'cello', filter:'extra', tags:['arte'], title:'Violoncello', meta:'Musica', label:'Attività musicale',
+      id:'cello', filter:'extra', tags:['arte'], title:'Violoncello', meta:'Musica', label:'Costanza e disciplina',
       image:'assets/notes/optimized/violoncello.webp', kind:'photo-note cello', caption:'Scuola di Musica “Elia Marini”',
-      body:['Corso di Violoncello presso la Banda Musicale - Scuola di Musica “Elia Marini” di Calcinato.', 'Nel curriculum questa attività descrive un percorso musicale continuativo, legato a studio, ascolto, esercizio e disciplina dello strumento.'],
-      chips:['Violoncello','Calcinato','Scuola di musica']
+      body:['Il violoncello è stato un percorso musicale continuativo, fatto di studio, ascolto ed esercizio.', 'Mi ha insegnato il valore della costanza: i risultati non arrivano subito, ma si costruiscono con metodo, pazienza e impegno ripetuto nel tempo.'],
+      chips:['Costanza','Disciplina','Risultati nel tempo']
     },
     {
-      id:'educatore', filter:'extra', tags:['oratorio'], title:'Animatore ed educatore', meta:'Oratorio', label:'Cittadinanza attiva',
+      id:'basket', filter:'extra', tags:['sport'], title:'Basket', meta:'Squadra dilettantistica', label:'Lavoro di squadra',
+      image:null, kind:'photo-note wide basket', caption:'Basket dilettantistico',
+      body:['Gioco in una squadra dilettantistica di basket, un contesto in cui il risultato non dipende mai da una sola persona.', 'Questa esperienza mi ha insegnato che il lavoro di squadra è una qualità fondamentale: permette di arrivare molto più lontano che da soli, nello sport ma anche nel mondo scolastico e lavorativo.'],
+      chips:['Squadra','Collaborazione','Obiettivo comune']
+    },
+    {
+      id:'educatore', filter:'extra', tags:['oratorio'], title:'Educatore animatore', meta:'Oratorio', label:'Responsabilità educativa',
       image:'assets/notes/optimized/animatore-educatore.webp', kind:'photo-note group', caption:'Attività con i ragazzi',
-      body:['Attività di animatore ed educatore presso l’Oratorio di Bedizzole.', 'Consiste nel partecipare alla vita dell’oratorio con responsabilità educative, organizzative e relazionali verso bambini e ragazzi.'],
-      chips:['Oratorio di Bedizzole','Educazione','Gruppo']
+      body:['Come educatore e animatore all’Oratorio di Bedizzole lavoro in gruppo, organizzo attività per bambini e ragazzi e partecipo a momenti formativi, riflessivi e di viaggio.', 'Essere visto come un punto di riferimento vale più di qualsiasi compenso economico: significa restituire qualcosa del percorso che ho vissuto in passato e lasciare ai ragazzi un’esperienza che possa farli crescere.'],
+      chips:['Oratorio di Bedizzole','Punto di riferimento','Attività e viaggi']
     },
     {
-      id:'volontariato', filter:'extra', tags:['oratorio'], title:'Festa del Sorriso', meta:'Volontariato', label:'Tornei dei Roncai',
+      id:'volontariato', filter:'extra', tags:['oratorio'], title:'Volontariato', meta:'Servizio locale', label:'Comunità e appartenenza',
       image:'assets/notes/optimized/volontariato-festa-sorriso.webp', kind:'polaroid volontariato', caption:'Volontariato',
-      body:['Volontariato presso la Festa del Sorriso e i Tornei dei Roncai, collegato alle attività dell’Oratorio di Bedizzole.', 'L’esperienza riguarda il supporto pratico e organizzativo durante iniziative locali, con presenza nei periodi indicati dal curriculum.'],
-      chips:['Festa del Sorriso','Tornei dei Roncai','Volontariato']
+      body:['Ho svolto servizio da volontario come cameriere durante iniziative locali, tra cui la Festa del Sorriso e altre attività del territorio.', 'Questa esperienza racconta il valore dell’appartenenza a un gruppo e a una comunità: contribuire con il proprio tempo fa sentire parte di qualcosa di più grande.'],
+      chips:['Servizio','Comunità','Appartenenza']
     },
     {
-      id:'concorso', filter:'culture', tags:['arte'], title:'Volo tra le Righe', meta:'Contest', label:'Concorso letterario',
+      id:'concorso', filter:'culture', tags:['arte'], title:'Volo tra le Righe', meta:'Progetto culturale', label:'Creatività e progettazione',
       image:'assets/notes/optimized/volo-tra-le-righe.webp', kind:'polaroid poster', caption:'Giovani lettori', link:'https://volo.denuvo.studio', linkLabel:'Apri Volo tra le Righe',
-      body:['Partecipazione al contest letterario “Volo tra le Righe 3.0”.', 'Il curriculum riporta l’acquisizione dell’attestato di partecipazione: una nota culturale, legata a lettura, scrittura e confronto creativo.'],
-      chips:['Letterario','Attestato','Biblioteca']
+      body:['“Volo tra le Righe” nasce dall’incontro tra lettura, creatività e competenze digitali.', 'A partire da un libro e dalle mie conoscenze tecniche, il progetto lascia spazio all’inventiva: anche qui il lavoro di squadra aiuta a trasformare un’idea culturale in qualcosa di concreto e comunicabile.'],
+      chips:['Libro','Creatività','Progetto digitale']
+    },
+    {
+      id:'sportly', filter:'projects', tags:['sport'], title:'Sportly', meta:'Book. Play. Connect.', label:'Progetto completo',
+      image:'assets/notes/optimized/sportly.webp', kind:'polaroid wide', caption:'Identità progetto', link:'https://gpoi.denuvo.studio', linkLabel:'Apri progetto GPOI',
+      body:['Sportly è il primo progetto che ho seguito in modo completo, dalla fase iniziale di documentazione fino a un prototipo funzionante.', 'Il percorso comprende analisi, documenti di progetto, interfaccia, login e funzioni previste: per questo rappresenta un passaggio importante dalle idee alla realizzazione concreta.'],
+      chips:['Documentazione','Login','Prototipo funzionante']
+    },
+    {
+      id:'pcto', filter:'pcto', tags:['scuola'], title:'CS Metal Europe', meta:'Tirocinio', label:'Sintesi PCTO',
+      image:'assets/notes/optimized/pcto-cs-metal.webp', kind:'polaroid pcto', caption:'CS Metal Europe',
+      body:['Il tirocinio presso CS METAL EUROPE S.R.L. è stato il primo contatto strutturato con un ambiente aziendale reale.', 'Qui resta solo una sintesi: l’esperienza viene approfondita nell’app Calendario, dove sono organizzati tempi, attività e competenze osservate durante il PCTO.'],
+      chips:['Tirocinio','Ambiente aziendale','Apri Calendario']
     }
   ];
   const list=app.querySelector('[data-notes-list]');
@@ -1010,12 +1016,13 @@ if (rebBtn) {
   const title=app.querySelector('[data-notes-title]');
   const count=app.querySelector('[data-notes-count]');
   let filter='all', current='curriculum', large=false, showPoints=true;
-  const folderNames={all:'Tutte le note', curriculum:'Curriculum', pcto:'PCTO', projects:'Progetti', extra:'Attività extra', culture:'Cultura', scuola:'#scuola', oratorio:'#oratorio', arte:'#arte'};
+  const folderNames={all:'Tutte le note', curriculum:'Curriculum', pcto:'PCTO', projects:'Progetti', extra:'Attività extra', culture:'Cultura', scuola:'#scuola', oratorio:'#oratorio', arte:'#arte', sport:'#sport'};
   const noteThemes={
     curriculum:{ratio:0.7064, colors:['#1c9ec3','#6ab2af','#e6dcbd']},
     pcto:{ratio:1.5015, colors:['#638abf','#14326e','#293540']},
     sportly:{ratio:1.3333, colors:['#136696','#376e56','#0f365c']},
     cello:{ratio:1.3333, colors:['#546c2e','#bfab8c','#8b6d4c']},
+    basket:{ratio:1.3333, colors:['#d2691e','#2f3b52','#f2c14e']},
     educatore:{ratio:1.3333, colors:['#597493','#e2dbae','#1c2335']},
     volontariato:{ratio:1.4973, colors:['#2d3310','#7a7245','#505629']},
     concorso:{ratio:0.6999, colors:['#d1ae6c','#91a9bd','#394667']}
