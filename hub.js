@@ -976,7 +976,7 @@ if (rebBtn) {
     },
     {
       id:'basket', filter:'extra', tags:['sport'], title:'Basket', meta:'Squadra dilettantistica', label:'Lavoro di squadra',
-      image:null, kind:'photo-note wide basket', caption:'Basket dilettantistico',
+      image:'assets/notes/basket.png', kind:'photo-note wide basket', caption:'Basket dilettantistico',
       body:['Gioco in una squadra dilettantistica di basket, un contesto in cui il risultato non dipende mai da una sola persona.', 'Questa esperienza mi ha insegnato che il lavoro di squadra è una qualità fondamentale: permette di arrivare molto più lontano che da soli, nello sport ma anche nel mondo scolastico e lavorativo.'],
       chips:['Squadra','Collaborazione','Obiettivo comune']
     },
